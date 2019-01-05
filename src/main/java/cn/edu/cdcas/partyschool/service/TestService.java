@@ -1,7 +1,7 @@
-package cdcas.party.service;
+package cn.edu.cdcas.partyschool.service;
 
 import java.util.List;
-import cdcas.party.model.SysUser;
+import cn.edu.cdcas.partyschool.model.SysUser;
 
 public interface TestService {
 	public List<SysUser> findAllUser() throws Exception;

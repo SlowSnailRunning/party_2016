@@ -1,4 +1,4 @@
-package cdcas.party.model;
+package cn.edu.cdcas.partyschool.model;
 
 public class SysUser {
     private Long userId;

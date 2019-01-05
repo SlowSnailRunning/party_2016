@@ -1,8 +1,8 @@
-package cdcas.party.mapper;
+package cn.edu.cdcas.partyschool.mapper;
 
 import java.util.List;
 
-import cdcas.party.model.SysUser;
+import cn.edu.cdcas.partyschool.model.SysUser;
 
 public interface SysUserMapper {
 	public List<SysUser> selectAllUser() throws Exception;

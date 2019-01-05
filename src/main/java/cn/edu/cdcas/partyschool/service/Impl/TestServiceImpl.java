@@ -1,13 +1,13 @@
-package cdcas.party.service.Impl;
+package cn.edu.cdcas.partyschool.service.Impl;
 
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import cdcas.party.mapper.SysUserMapper;
-import cdcas.party.model.SysUser;
-import cdcas.party.service.TestService;
+import cn.edu.cdcas.partyschool.mapper.SysUserMapper;
+import cn.edu.cdcas.partyschool.model.SysUser;
+import cn.edu.cdcas.partyschool.service.TestService;
 
 @Service
 public class TestServiceImpl implements TestService{
