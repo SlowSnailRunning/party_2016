@@ -22,7 +22,7 @@ public class TestController {
 		return "test";
 	}
 	
-	@RequestMapping("/MyBatis")
+	@RequestMapping("/MyBatis") 
 	@ResponseBody
 	public List<SysUser> MyBatis() {
 		List<SysUser> userList = null;
