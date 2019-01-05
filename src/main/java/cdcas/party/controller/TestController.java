@@ -19,7 +19,7 @@ public class TestController {
 	@RequestMapping("/SpringMVC")
 	public String SpringMVC(Model model) {
 		model.addAttribute("msg","Spring MVC can work");
-		return "test";
+		return "test"; 
 	}
 	
 	@RequestMapping("/MyBatis") 
