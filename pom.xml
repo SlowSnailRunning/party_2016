@@ -22,6 +22,8 @@
 		<fastjson.version>1.2.7</fastjson.version>
 		<lang3.version>3.4</lang3.version>
 		<connector.version>5.1.36</connector.version>
+
+		<poi.version>4.0.1</poi.version>
 	</properties>
 
 	<dependencies>
@@ -196,6 +198,15 @@
 			<artifactId>commons-fileupload</artifactId>
 			<version>${commons-fileupload.version}</version>
 		</dependency> -->
+
+
+		<!-- "pio" API to access Microsoft Office files. -->
+		<dependency>
+			<groupId>org.apache.poi</groupId>
+			<artifactId>poi</artifactId>
+			<version>${poi.version}</version>
+		</dependency>
+
 	</dependencies>
 	
 	<build>
