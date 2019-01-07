@@ -41,5 +41,8 @@
 		<filter-name>CharacterEncodingFilter</filter-name>
 		<url-pattern>/*</url-pattern>
 	</filter-mapping>
-
+	<!--单账号单地点登录 -->
+	<listener>
+		<listener-class>b_ssm.controller.listener.LoginListenner</listener-class>
+	</listener> 
 </web-app>
