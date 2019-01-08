@@ -46,4 +46,10 @@
 		<property name="suffix" value=".jsp" />
 	</bean>
 	
+	<mvc:interceptors>
+		<mvc:interceptor>
+			<mvc:mapping path="/**"/>
+			<bean class="cn.edu.cdcas.partyschool.interceptor.ValidateSession"></bean>
+		</mvc:interceptor>
+	</mvc:interceptors>
 </beans>

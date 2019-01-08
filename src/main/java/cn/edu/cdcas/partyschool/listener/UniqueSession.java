@@ -24,15 +24,17 @@ public class UniqueSession implements HttpSessionAttributeListener{
 	public void attributeAdded(HttpSessionBindingEvent event) {
 		String name = event.getName();
 
-		if (name.equals("usercode")) {
-			User user = (User) event.getValue();
-			if (map.get(user.getName()) != null) {
-				HttpSession session = map.get(user.getName());
-				session.removeAttribute(user.getName());
+		if (name.equals("partySys_user")) {
+			String userNumber = ((User) event.getValue()).getNumber();
+			if (map.get(userNumber) != null) {
+				HttpSession session = map.get(userNumber);
+				session.removeAttribute(userNumber);
 				session.invalidate();
+				//???？？？？能否在此处加入一些信息，带到前端页面去提示 用户被挤下线
 				System.out.println("移除之前登录的当前账号！!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!！！！！！！！！！！！！！！！！！！！！！！！！！！！！！");
 			}
-			map.put(user.getName(), event.getSession());
+			map.put(userNumber, event.getSession());
+			System.out.println("创建当前登录的session");
 		}
 	}
 

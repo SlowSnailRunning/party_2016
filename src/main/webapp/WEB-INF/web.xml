@@ -43,6 +43,6 @@
 	</filter-mapping>
 	<!--单账号单地点登录 -->
 	<listener>
-		<listener-class>b_ssm.controller.listener.LoginListenner</listener-class>
+		<listener-class>cn.edu.cdcas.partyschool.listener.UniqueSession</listener-class>
 	</listener> 
 </web-app>
