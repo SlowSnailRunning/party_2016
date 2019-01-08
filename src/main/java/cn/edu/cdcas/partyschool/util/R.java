@@ -19,25 +19,25 @@ public class R {
     }
 
     public static final class user_type {
-        public static final String STUDENT = "student";
-        public static final String MANAGER = "manager";
+        public static final String STUDENT = "student";     //学生
+        public static final String MANAGER = "manager";     //管理员
 
     }
 
     public static final class question_type {
-        public static final int RADIO = 1;
-        public static final int CHECK = 2;
-        public static final int JUDGE = 3;
-        public static final int FILL_BLANK = 4;
-        public static final int SAQ = 5;
+        public static final int RADIO = 1;      //单选
+        public static final int CHECK = 2;      //多选
+        public static final int JUDGE = 3;      //判断
+        public static final int FILL_BLANK = 4; //填空
+        public static final int SAQ = 5;        //解答题
     }
 
     public static final class student_exam_state {
-        public static final int NO_STARTING = 0;
-        public static final int PASSING_FIRST_EXAM = 1;
-        public static final int NO_MAKE_UP = 2;
-        public static final int NOT_PASSING_MAKE_UP = 3;
-        public static final int PASSING_MAKE_UP = 4;
+        public static final int NO_STARTING = 0;            //未开考
+        public static final int PASSING_FIRST_EXAM = 1;     //首次考试通过
+        public static final int NO_MAKE_UP = 2;             //未补考
+        public static final int NOT_PASSING_MAKE_UP = 3;    //补考未通过
+        public static final int PASSING_MAKE_UP = 4;        //补考通过
 
     }
 
