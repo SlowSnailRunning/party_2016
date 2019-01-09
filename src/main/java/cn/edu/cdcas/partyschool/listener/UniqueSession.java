@@ -7,7 +7,7 @@ import javax.servlet.http.HttpSession;
 import javax.servlet.http.HttpSessionAttributeListener;
 import javax.servlet.http.HttpSessionBindingEvent;
 
-import cn.edu.cdcas.partyschool.model.User;
+import cn.edu.cdcas.partyschool.model.UserSnail;
 
 /**
  * 完成单账号，单地点登录
@@ -25,7 +25,7 @@ public class UniqueSession implements HttpSessionAttributeListener{
 		String name = event.getName();
 
 		if (name.equals("partySys_user")) {
-			String userNumber = ((User) event.getValue()).getNumber();
+			String userNumber = ((UserSnail) event.getValue()).getNumber();
 			if (map.get(userNumber) != null) {
 				HttpSession session = map.get(userNumber);
 				session.removeAttribute(userNumber);

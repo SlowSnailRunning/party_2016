@@ -1,6 +1,6 @@
 package cn.edu.cdcas.partyschool.model;
 
-public class SysUser {
+public class SysUserSnail {
     private Long userId;
 
     private String userCode;

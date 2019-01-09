@@ -1,8 +1,8 @@
 package cn.edu.cdcas.partyschool.service;
 
 import java.util.List;
-import cn.edu.cdcas.partyschool.model.SysUser;
+import cn.edu.cdcas.partyschool.model.SysUserSnail;
 
 public interface TestService {
-	public List<SysUser> findAllUser() throws Exception;
+	public List<SysUserSnail> findAllUser() throws Exception;
 }

@@ -1,14 +1,11 @@
 package cn.edu.cdcas.partyschool.controller;
 
-import java.util.ArrayList;
-
 import javax.servlet.http.HttpSession;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.ResponseBody;
 
-import cn.edu.cdcas.partyschool.model.User;
+import cn.edu.cdcas.partyschool.model.UserSnail;
 
 /**
  * PHP服务器与Java之间用户的认证
@@ -19,7 +16,7 @@ import cn.edu.cdcas.partyschool.model.User;
 public class LoginController {
 	@RequestMapping("/login")
 	public String login(String number,HttpSession httpSession) {
-		User user=new User();
+		UserSnail user=new UserSnail();
 		user.setName("usernaem");
 		user.setNumber(number);
 		user.setType("user type");

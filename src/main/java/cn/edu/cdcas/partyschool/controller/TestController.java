@@ -7,7 +7,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
-import cn.edu.cdcas.partyschool.model.SysUser;
+import cn.edu.cdcas.partyschool.model.SysUserSnail;
 import cn.edu.cdcas.partyschool.service.TestService;
 @Controller
 @RequestMapping("/test")
@@ -25,8 +25,8 @@ public class TestController {
 	
 	@RequestMapping("/MyBatis") 
 	@ResponseBody
-	public List<SysUser> MyBatis() {
-		List<SysUser> userList = null;
+	public List<SysUserSnail> MyBatis() {
+		List<SysUserSnail> userList = null;
 		try {
 			userList=testService.findAllUser();
 			System.out.println("MyBatis and fastjson can work");

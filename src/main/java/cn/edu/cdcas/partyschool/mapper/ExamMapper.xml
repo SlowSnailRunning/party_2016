@@ -1,0 +1,234 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.edu.cdcas.partyschool.mapper.ExamMapper">
+  <resultMap id="BaseResultMap" type="cn.edu.cdcas.partyschool.model.Exam">
+    <id column="party_exam_id" jdbcType="INTEGER" property="id" />
+    <result column="party_exam_exam_name" jdbcType="VARCHAR" property="examName" />
+    <result column="party_exam_exam_time" jdbcType="INTEGER" property="examTime" />
+    <result column="party_exam_create_time" jdbcType="TIMESTAMP" property="createTime" />
+    <result column="party_exam_state" jdbcType="INTEGER" property="state" />
+    <result column="party_exam_radio_num" jdbcType="INTEGER" property="radioNum" />
+    <result column="party_exam_radio_score" jdbcType="INTEGER" property="radioScore" />
+    <result column="party_exam_check_num" jdbcType="INTEGER" property="checkNum" />
+    <result column="party_exam_check_score" jdbcType="INTEGER" property="checkScore" />
+    <result column="party_exam_judge_num" jdbcType="INTEGER" property="judgeNum" />
+    <result column="party_exam_judge_score" jdbcType="INTEGER" property="judgeScore" />
+    <result column="party_exam_fill_num" jdbcType="INTEGER" property="fillNum" />
+    <result column="party_exam_fill_score" jdbcType="INTEGER" property="fillScore" />
+    <result column="party_exam_saq_num" jdbcType="INTEGER" property="saqNum" />
+    <result column="party_exam_saq_score" jdbcType="INTEGER" property="saqScore" />
+    <result column="party_exam_pass_score" jdbcType="INTEGER" property="passScore" />
+    <result column="party_exam_is_makeup" jdbcType="INTEGER" property="isMakeup" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    party_exam.id as party_exam_id, party_exam.exam_name as party_exam_exam_name, party_exam.exam_time as party_exam_exam_time, 
+    party_exam.create_time as party_exam_create_time, party_exam.`state` as `party_exam_state`, 
+    party_exam.radio_num as party_exam_radio_num, party_exam.radio_score as party_exam_radio_score, 
+    party_exam.check_num as party_exam_check_num, party_exam.check_score as party_exam_check_score, 
+    party_exam.judge_num as party_exam_judge_num, party_exam.judge_score as party_exam_judge_score, 
+    party_exam.fill_num as party_exam_fill_num, party_exam.fill_score as party_exam_fill_score, 
+    party_exam.saq_num as party_exam_saq_num, party_exam.saq_score as party_exam_saq_score, 
+    party_exam.pass_score as party_exam_pass_score, party_exam.is_makeup as party_exam_is_makeup
+  </sql>
+  <select id="queryById" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from party_exam party_exam
+    where party_exam.id = #{id,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteById" parameterType="java.lang.Integer">
+    delete from party_exam
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" keyColumn="id" keyProperty="id" parameterType="cn.edu.cdcas.partyschool.model.Exam" useGeneratedKeys="true">
+    insert into party_exam (exam_name, exam_time, create_time, 
+      `state`, radio_num, radio_score, 
+      check_num, check_score, judge_num, 
+      judge_score, fill_num, fill_score, 
+      saq_num, saq_score, pass_score, 
+      is_makeup)
+    values (#{examName,jdbcType=VARCHAR}, #{examTime,jdbcType=INTEGER}, #{createTime,jdbcType=TIMESTAMP}, 
+      #{state,jdbcType=INTEGER}, #{radioNum,jdbcType=INTEGER}, #{radioScore,jdbcType=INTEGER}, 
+      #{checkNum,jdbcType=INTEGER}, #{checkScore,jdbcType=INTEGER}, #{judgeNum,jdbcType=INTEGER}, 
+      #{judgeScore,jdbcType=INTEGER}, #{fillNum,jdbcType=INTEGER}, #{fillScore,jdbcType=INTEGER}, 
+      #{saqNum,jdbcType=INTEGER}, #{saqScore,jdbcType=INTEGER}, #{passScore,jdbcType=INTEGER}, 
+      #{isMakeup,jdbcType=INTEGER})
+  </insert>
+  <insert id="insertSelective" keyColumn="id" keyProperty="id" parameterType="cn.edu.cdcas.partyschool.model.Exam" useGeneratedKeys="true">
+    insert into party_exam
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="examName != null">
+        exam_name,
+      </if>
+      <if test="examTime != null">
+        exam_time,
+      </if>
+      <if test="createTime != null">
+        create_time,
+      </if>
+      <if test="state != null">
+        `state`,
+      </if>
+      <if test="radioNum != null">
+        radio_num,
+      </if>
+      <if test="radioScore != null">
+        radio_score,
+      </if>
+      <if test="checkNum != null">
+        check_num,
+      </if>
+      <if test="checkScore != null">
+        check_score,
+      </if>
+      <if test="judgeNum != null">
+        judge_num,
+      </if>
+      <if test="judgeScore != null">
+        judge_score,
+      </if>
+      <if test="fillNum != null">
+        fill_num,
+      </if>
+      <if test="fillScore != null">
+        fill_score,
+      </if>
+      <if test="saqNum != null">
+        saq_num,
+      </if>
+      <if test="saqScore != null">
+        saq_score,
+      </if>
+      <if test="passScore != null">
+        pass_score,
+      </if>
+      <if test="isMakeup != null">
+        is_makeup,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="examName != null">
+        #{examName,jdbcType=VARCHAR},
+      </if>
+      <if test="examTime != null">
+        #{examTime,jdbcType=INTEGER},
+      </if>
+      <if test="createTime != null">
+        #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="state != null">
+        #{state,jdbcType=INTEGER},
+      </if>
+      <if test="radioNum != null">
+        #{radioNum,jdbcType=INTEGER},
+      </if>
+      <if test="radioScore != null">
+        #{radioScore,jdbcType=INTEGER},
+      </if>
+      <if test="checkNum != null">
+        #{checkNum,jdbcType=INTEGER},
+      </if>
+      <if test="checkScore != null">
+        #{checkScore,jdbcType=INTEGER},
+      </if>
+      <if test="judgeNum != null">
+        #{judgeNum,jdbcType=INTEGER},
+      </if>
+      <if test="judgeScore != null">
+        #{judgeScore,jdbcType=INTEGER},
+      </if>
+      <if test="fillNum != null">
+        #{fillNum,jdbcType=INTEGER},
+      </if>
+      <if test="fillScore != null">
+        #{fillScore,jdbcType=INTEGER},
+      </if>
+      <if test="saqNum != null">
+        #{saqNum,jdbcType=INTEGER},
+      </if>
+      <if test="saqScore != null">
+        #{saqScore,jdbcType=INTEGER},
+      </if>
+      <if test="passScore != null">
+        #{passScore,jdbcType=INTEGER},
+      </if>
+      <if test="isMakeup != null">
+        #{isMakeup,jdbcType=INTEGER},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByIdSelective" parameterType="cn.edu.cdcas.partyschool.model.Exam">
+    update party_exam
+    <set>
+      <if test="examName != null">
+        exam_name = #{examName,jdbcType=VARCHAR},
+      </if>
+      <if test="examTime != null">
+        exam_time = #{examTime,jdbcType=INTEGER},
+      </if>
+      <if test="createTime != null">
+        create_time = #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="state != null">
+        `state` = #{state,jdbcType=INTEGER},
+      </if>
+      <if test="radioNum != null">
+        radio_num = #{radioNum,jdbcType=INTEGER},
+      </if>
+      <if test="radioScore != null">
+        radio_score = #{radioScore,jdbcType=INTEGER},
+      </if>
+      <if test="checkNum != null">
+        check_num = #{checkNum,jdbcType=INTEGER},
+      </if>
+      <if test="checkScore != null">
+        check_score = #{checkScore,jdbcType=INTEGER},
+      </if>
+      <if test="judgeNum != null">
+        judge_num = #{judgeNum,jdbcType=INTEGER},
+      </if>
+      <if test="judgeScore != null">
+        judge_score = #{judgeScore,jdbcType=INTEGER},
+      </if>
+      <if test="fillNum != null">
+        fill_num = #{fillNum,jdbcType=INTEGER},
+      </if>
+      <if test="fillScore != null">
+        fill_score = #{fillScore,jdbcType=INTEGER},
+      </if>
+      <if test="saqNum != null">
+        saq_num = #{saqNum,jdbcType=INTEGER},
+      </if>
+      <if test="saqScore != null">
+        saq_score = #{saqScore,jdbcType=INTEGER},
+      </if>
+      <if test="passScore != null">
+        pass_score = #{passScore,jdbcType=INTEGER},
+      </if>
+      <if test="isMakeup != null">
+        is_makeup = #{isMakeup,jdbcType=INTEGER},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateById" parameterType="cn.edu.cdcas.partyschool.model.Exam">
+    update party_exam
+    set exam_name = #{examName,jdbcType=VARCHAR},
+      exam_time = #{examTime,jdbcType=INTEGER},
+      create_time = #{createTime,jdbcType=TIMESTAMP},
+      `state` = #{state,jdbcType=INTEGER},
+      radio_num = #{radioNum,jdbcType=INTEGER},
+      radio_score = #{radioScore,jdbcType=INTEGER},
+      check_num = #{checkNum,jdbcType=INTEGER},
+      check_score = #{checkScore,jdbcType=INTEGER},
+      judge_num = #{judgeNum,jdbcType=INTEGER},
+      judge_score = #{judgeScore,jdbcType=INTEGER},
+      fill_num = #{fillNum,jdbcType=INTEGER},
+      fill_score = #{fillScore,jdbcType=INTEGER},
+      saq_num = #{saqNum,jdbcType=INTEGER},
+      saq_score = #{saqScore,jdbcType=INTEGER},
+      pass_score = #{passScore,jdbcType=INTEGER},
+      is_makeup = #{isMakeup,jdbcType=INTEGER}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+</mapper>
