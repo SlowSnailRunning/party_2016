@@ -6,7 +6,7 @@ import javax.servlet.http.HttpServletResponse;
 import org.springframework.web.servlet.HandlerInterceptor;
 import org.springframework.web.servlet.ModelAndView;
 
-import cn.edu.cdcas.partyschool.model.UserSnail;
+import cn.edu.cdcas.partyschool.model.UserSession;
 
 /**
  * 对于非公开url请求，校验session是否存在
@@ -20,7 +20,7 @@ public class ValidateSession implements HandlerInterceptor{
 	@Override
 	public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler)
 			throws Exception {
-		UserSnail user =  (UserSnail) (request.getSession()).getAttribute("partySys_user");
+		UserSession user =  (UserSession) (request.getSession()).getAttribute("partySys_user");
         String url = request.getRequestURI();
         for (String s : IGNORE_URI) {
             if (url.contains(s)) {

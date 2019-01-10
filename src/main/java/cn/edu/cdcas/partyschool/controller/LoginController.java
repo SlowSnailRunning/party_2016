@@ -5,7 +5,8 @@ import javax.servlet.http.HttpSession;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 
-import cn.edu.cdcas.partyschool.model.UserSnail;
+import cn.edu.cdcas.partyschool.model.UserSession;
+
 
 /**
  * PHP服务器与Java之间用户的认证
@@ -16,7 +17,7 @@ import cn.edu.cdcas.partyschool.model.UserSnail;
 public class LoginController {
 	@RequestMapping("/login")
 	public String login(String number,HttpSession httpSession) {
-		UserSnail user=new UserSnail();
+		UserSession user=new UserSession();
 		user.setName("usernaem");
 		user.setNumber(number);
 		user.setType("user type");
