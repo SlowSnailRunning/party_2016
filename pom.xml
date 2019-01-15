@@ -20,7 +20,7 @@
         <commons-fileupload.version>1.3.3</commons-fileupload.version>
 
         <tomcatjdbc.version>7.0.61</tomcatjdbc.version>
-        <fastjson.version>1.2.7</fastjson.version>
+        <fastjson.version>1.2.47</fastjson.version>
         <lang3.version>3.4</lang3.version>
         <connector.version>5.1.36</connector.version>
 
@@ -28,12 +28,6 @@
     </properties>
 
     <dependencies>
-        <!--fastjson -->
-        <dependency>
-            <groupId>com.alibaba</groupId>
-            <artifactId>fastjson</artifactId>
-            <version>1.2.35</version>
-        </dependency>
         <dependency>
             <groupId>aopalliance</groupId>
             <artifactId>aopalliance</artifactId>
@@ -77,6 +71,12 @@
                     <artifactId>mybatis-ehcache</artifactId>
                     <version>1.1.0</version>
                 </dependency>-->
+         <!--fastjson -->
+        <dependency>
+            <groupId>com.alibaba</groupId>
+            <artifactId>fastjson</artifactId>
+            <version>${fastjson.version}</version>
+        </dependency>
         <dependency>
             <groupId>junit</groupId>
             <artifactId>junit</artifactId>
@@ -86,8 +86,8 @@
         <!-- 日志文件管理包
             java日志：slf4j, log4j, logback, common-logging
             slf4j是规范、接口，编程方式
-             日志实现：log4j, logback, common-logging
-             使用slf4j+log4j
+		             日志实现：log4j, logback, common-logging
+		             使用slf4j+log4j
         -->
         <!-- log start -->
         <dependency>
