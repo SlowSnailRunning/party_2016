@@ -4,7 +4,7 @@ package cn.edu.cdcas.partyschool.model;
  * @author Snail
  *
  */
-public class UserSession{
+public class UserSession {
 	private String name;
 	private String number;
 	private String type;
