@@ -34,6 +34,24 @@ public class Question implements Serializable {
     private String optionD;
 
     private String result;
+    private Integer correct;
+    private Integer selected;
+
+    public Integer getCorrect() {
+        return correct;
+    }
+
+    public void setCorrect(Integer correct) {
+        this.correct = correct;
+    }
+
+    public Integer getSelected() {
+        return selected;
+    }
+
+    public void setSelected(Integer selected) {
+        this.selected = selected;
+    }
 
     private static final long serialVersionUID = 1L;
 

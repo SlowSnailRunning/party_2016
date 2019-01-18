@@ -11,14 +11,19 @@
     <result column="party_question_option_c" jdbcType="VARCHAR" property="optionC" />
     <result column="party_question_option_d" jdbcType="VARCHAR" property="optionD" />
     <result column="party_question_result" jdbcType="VARCHAR" property="result" />
+    <!--以下两列是手动添加的，如果涉及到以下sql语句映射问题请重新逆向工程生成mapper-->
+    <result column="party_question_correct" jdbcType="INTEGER" property="correct" />
+    <result column="party_question_selected" jdbcType="INTEGER" property="selected" />
   </resultMap>
   <sql id="Base_Column_List">
     party_question.id as party_question_id, party_question.`state` as `party_question_state`, 
     party_question.`type` as `party_question_type`, party_question.intro as party_question_intro, 
     party_question.option_a as party_question_option_a, party_question.option_b as party_question_option_b, 
     party_question.option_c as party_question_option_c, party_question.option_d as party_question_option_d, 
-    party_question.`result` as `party_question_result`
+    party_question.`result` as `party_question_result`,party_question.correct as party_question_correct,
+    party_question.selected as party_question_selected
   </sql>
+
   <select id="queryById" parameterType="java.lang.Integer" resultMap="BaseResultMap">
     select 
     <include refid="Base_Column_List" />

@@ -8,9 +8,6 @@ import org.springframework.web.bind.annotation.ResponseBody;
 @Controller
 @RequestMapping("/test")
 public class TestController {
-
-
-
 	@RequestMapping("/SpringMVC")
 	@ResponseBody
 	public String SpringMVC(Model model) {

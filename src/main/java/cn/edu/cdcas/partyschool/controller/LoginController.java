@@ -3,9 +3,12 @@ package cn.edu.cdcas.partyschool.controller;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.stereotype.Controller;
+import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import cn.edu.cdcas.partyschool.model.UserSession;
+
+import java.util.ArrayList;
 
 
 /**
@@ -13,10 +16,12 @@ import cn.edu.cdcas.partyschool.model.UserSession;
  * @author Snail
  *
  */
-@Controller
+@Controller()
 public class LoginController {
-	@RequestMapping("/login")
+	@RequestMapping( "/login")
 	public String login(String number,HttpSession httpSession) {
+		StringUtils stringUtils;
+		ArrayList ArrayList;
 		UserSession user=new UserSession();
 		user.setName("usernaem");
 		user.setNumber(number);
