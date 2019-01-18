@@ -1,4 +1,4 @@
 package cn.edu.cdcas.partyschool.service;
 
-public class CanDel {
+public interface CanDel {
 }
