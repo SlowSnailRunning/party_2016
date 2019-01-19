@@ -38,9 +38,6 @@
 	            </bean>
 	        </mvc:message-converters>
 	</mvc:annotation-driven>
-	<!-- 对静态资源的访问 -->
-	<mvc:resources mapping="/page/**" location="/page/" />
-
 	<!-- 配置视图解析器 要求将jstl的包加到classpath -->
 	<!-- ViewResolver -->
 	<bean class="org.springframework.web.servlet.view.InternalResourceViewResolver" >
@@ -49,7 +46,6 @@
 		<property name="prefix" value="/page/" />
 		<property name="suffix" value=".html" />
 	</bean>
-	
 	<!--<mvc:interceptors>
 		<mvc:interceptor>
 			<mvc:mapping path="/**"/>
