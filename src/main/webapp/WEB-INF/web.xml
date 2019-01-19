@@ -4,7 +4,7 @@
 	xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/javaee http://xmlns.jcp.org/xml/ns/javaee/web-app_3_1.xsd"
 	id="WebApp_ID" version="3.1">
 	<welcome-file-list>
-		<welcome-file>index.jsp</welcome-file>
+		<welcome-file>page/index.html</welcome-file>
 	</welcome-file-list>
 	<!-- spring容器 -->
 	<context-param>

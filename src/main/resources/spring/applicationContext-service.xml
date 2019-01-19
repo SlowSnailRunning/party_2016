@@ -15,8 +15,4 @@
 
 	<!-- service扫描 -->
 	<context:component-scan base-package="cn.edu.cdcas.partyschool.service"/>
-	<bean>
-
-		<property name="" value=""></property>
-	</bean>
 </beans>

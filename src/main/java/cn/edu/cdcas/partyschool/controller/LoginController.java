@@ -31,4 +31,10 @@ public class LoginController {
 		return "redirect:/jsp/index.jsp";
 //		return "index";
 	}
+	@RequestMapping({"/","/index"})
+	public String main()
+	{
+		System.out.println("qweqe");
+		return "index";
+	}
 }
