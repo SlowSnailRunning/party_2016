@@ -2,47 +2,43 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="cn.edu.cdcas.partyschool.mapper.QuestionMapper">
   <resultMap id="BaseResultMap" type="cn.edu.cdcas.partyschool.model.Question">
-    <id column="party_question_id" jdbcType="INTEGER" property="id" />
-    <result column="party_question_state" jdbcType="CHAR" property="state" />
-    <result column="party_question_type" jdbcType="INTEGER" property="type" />
-    <result column="party_question_intro" jdbcType="VARCHAR" property="intro" />
-    <result column="party_question_option_a" jdbcType="VARCHAR" property="optionA" />
-    <result column="party_question_option_b" jdbcType="VARCHAR" property="optionB" />
-    <result column="party_question_option_c" jdbcType="VARCHAR" property="optionC" />
-    <result column="party_question_option_d" jdbcType="VARCHAR" property="optionD" />
-    <result column="party_question_result" jdbcType="VARCHAR" property="result" />
-    <!--以下两列是手动添加的，如果涉及到以下sql语句映射问题请重新逆向工程生成mapper-->
-    <result column="party_question_correct" jdbcType="INTEGER" property="correct" />
-    <result column="party_question_selected" jdbcType="INTEGER" property="selected" />
+    <id column="id" jdbcType="INTEGER" property="id" />
+    <result column="state" jdbcType="CHAR" property="state" />
+    <result column="type" jdbcType="INTEGER" property="type" />
+    <result column="intro" jdbcType="VARCHAR" property="intro" />
+    <result column="option_a" jdbcType="VARCHAR" property="optionA" />
+    <result column="option_b" jdbcType="VARCHAR" property="optionB" />
+    <result column="option_c" jdbcType="VARCHAR" property="optionC" />
+    <result column="option_d" jdbcType="VARCHAR" property="optionD" />
+    <result column="result" jdbcType="VARCHAR" property="result" />
+    <result column="correct" jdbcType="INTEGER" property="correct" />
+    <result column="selected" jdbcType="INTEGER" property="selected" />
   </resultMap>
   <sql id="Base_Column_List">
-    party_question.id as party_question_id, party_question.`state` as `party_question_state`, 
-    party_question.`type` as `party_question_type`, party_question.intro as party_question_intro, 
-    party_question.option_a as party_question_option_a, party_question.option_b as party_question_option_b, 
-    party_question.option_c as party_question_option_c, party_question.option_d as party_question_option_d, 
-    party_question.`result` as `party_question_result`,party_question.correct as party_question_correct,
-    party_question.selected as party_question_selected
+    id, `state`, `type`, intro, option_a, option_b, option_c, option_d, `result`, correct, 
+    selected
   </sql>
-
   <select id="queryById" parameterType="java.lang.Integer" resultMap="BaseResultMap">
     select 
     <include refid="Base_Column_List" />
-    from party_question party_question
-    where party_question.id = #{id,jdbcType=INTEGER}
+    from party_question
+    where id = #{id,jdbcType=INTEGER}
   </select>
   <delete id="deleteById" parameterType="java.lang.Integer">
     delete from party_question
     where id = #{id,jdbcType=INTEGER}
   </delete>
-  <insert id="insert" keyColumn="id" keyProperty="id" parameterType="cn.edu.cdcas.partyschool.model.Question" useGeneratedKeys="true">
+  <insert id="insert" keyColumn="id" keyProperty="id" parameterType="cn.edu.cdcas.partyschool.mapper.QuestionMapper" useGeneratedKeys="true">
     insert into party_question (`state`, `type`, intro, 
       option_a, option_b, option_c, 
-      option_d, `result`)
+      option_d, `result`, correct, 
+      selected)
     values (#{state,jdbcType=CHAR}, #{type,jdbcType=INTEGER}, #{intro,jdbcType=VARCHAR}, 
       #{optionA,jdbcType=VARCHAR}, #{optionB,jdbcType=VARCHAR}, #{optionC,jdbcType=VARCHAR}, 
-      #{optionD,jdbcType=VARCHAR}, #{result,jdbcType=VARCHAR})
+      #{optionD,jdbcType=VARCHAR}, #{result,jdbcType=VARCHAR}, #{correct,jdbcType=INTEGER}, 
+      #{selected,jdbcType=INTEGER})
   </insert>
-  <insert id="insertSelective" keyColumn="id" keyProperty="id" parameterType="cn.edu.cdcas.partyschool.model.Question" useGeneratedKeys="true">
+  <insert id="insertSelective" keyColumn="id" keyProperty="id" parameterType="cn.edu.cdcas.partyschool.mapper.QuestionMapper" useGeneratedKeys="true">
     insert into party_question
     <trim prefix="(" suffix=")" suffixOverrides=",">
       <if test="state != null">
@@ -68,6 +64,12 @@
       </if>
       <if test="result != null">
         `result`,
+      </if>
+      <if test="correct != null">
+        correct,
+      </if>
+      <if test="selected != null">
+        selected,
       </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides=",">
@@ -95,9 +97,15 @@
       <if test="result != null">
         #{result,jdbcType=VARCHAR},
       </if>
+      <if test="correct != null">
+        #{correct,jdbcType=INTEGER},
+      </if>
+      <if test="selected != null">
+        #{selected,jdbcType=INTEGER},
+      </if>
     </trim>
   </insert>
-  <update id="updateByIdSelective" parameterType="cn.edu.cdcas.partyschool.model.Question">
+  <update id="updateByIdSelective" parameterType="cn.edu.cdcas.partyschool.mapper.QuestionMapper">
     update party_question
     <set>
       <if test="state != null">
@@ -124,10 +132,16 @@
       <if test="result != null">
         `result` = #{result,jdbcType=VARCHAR},
       </if>
+      <if test="correct != null">
+        correct = #{correct,jdbcType=INTEGER},
+      </if>
+      <if test="selected != null">
+        selected = #{selected,jdbcType=INTEGER},
+      </if>
     </set>
     where id = #{id,jdbcType=INTEGER}
   </update>
-  <update id="updateById" parameterType="cn.edu.cdcas.partyschool.model.Question">
+  <update id="updateById" parameterType="cn.edu.cdcas.partyschool.mapper.QuestionMapper">
     update party_question
     set `state` = #{state,jdbcType=CHAR},
       `type` = #{type,jdbcType=INTEGER},
@@ -136,7 +150,9 @@
       option_b = #{optionB,jdbcType=VARCHAR},
       option_c = #{optionC,jdbcType=VARCHAR},
       option_d = #{optionD,jdbcType=VARCHAR},
-      `result` = #{result,jdbcType=VARCHAR}
+      `result` = #{result,jdbcType=VARCHAR},
+      correct = #{correct,jdbcType=INTEGER},
+      selected = #{selected,jdbcType=INTEGER}
     where id = #{id,jdbcType=INTEGER}
   </update>
 </mapper>

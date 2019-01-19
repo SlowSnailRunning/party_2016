@@ -34,24 +34,16 @@ public class Question implements Serializable {
     private String optionD;
 
     private String result;
+
+    /**
+     * 答对次数
+     */
     private Integer correct;
+
+    /**
+     * 被抽中次数
+     */
     private Integer selected;
-
-    public Integer getCorrect() {
-        return correct;
-    }
-
-    public void setCorrect(Integer correct) {
-        this.correct = correct;
-    }
-
-    public Integer getSelected() {
-        return selected;
-    }
-
-    public void setSelected(Integer selected) {
-        this.selected = selected;
-    }
 
     private static final long serialVersionUID = 1L;
 
@@ -125,5 +117,21 @@ public class Question implements Serializable {
 
     public void setResult(String result) {
         this.result = result;
+    }
+
+    public Integer getCorrect() {
+        return correct;
+    }
+
+    public void setCorrect(Integer correct) {
+        this.correct = correct;
+    }
+
+    public Integer getSelected() {
+        return selected;
+    }
+
+    public void setSelected(Integer selected) {
+        this.selected = selected;
     }
 }

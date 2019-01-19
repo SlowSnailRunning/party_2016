@@ -1,17 +1,18 @@
 package cn.edu.cdcas.partyschool.mapper;
 
+
 import cn.edu.cdcas.partyschool.model.Question;
 
 public interface QuestionMapper {
     int deleteById(Integer id);
 
-    int insert(Question question);
+    int insert(Question record);
 
-    int insertSelective(Question question);
+    int insertSelective(Question record);
 
     Question queryById(Integer id);
 
-    int updateByIdSelective(Question question);
+    int updateByIdSelective(Question record);
 
-    int updateById(Question question);
+    int updateById(Question record);
 }
