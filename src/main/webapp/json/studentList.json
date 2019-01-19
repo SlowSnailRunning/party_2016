@@ -1,0 +1,34 @@
+{
+	"code": 0,
+	"msg": "",
+	"count": 15,
+	"data": [
+		{
+			
+            "studentId":"1",
+            "studentName":"张三",
+            "studentNumber":"201617015110",
+            "studentGrade":"2016级电子商务1",
+            "studentSex":"男",
+            "studentPhoneNumber":"13739471085",
+            "studentAddress":"成都",
+            "studentBirthday":"1997-04-39",
+            "createTime":"2018-12-08 21:31:48",
+            "updateTime":"2018-12-08 21:31:48"
+		},
+		{
+			
+            "studentId":"2",
+            "studentName":"张三",
+            "studentNumber":"201617015110",
+            "studentGrade":"2016级电子商务1",
+            "studentSex":"男",
+            "studentPhoneNumber":"13739471085",
+            "studentAddress":"成都",
+            "studentBirthday":"1997-04-39",
+            "createTime":"2018-12-08 21:31:48",
+            "updateTime":"2018-12-08 21:31:48"
+		}
+	]
+}	
+

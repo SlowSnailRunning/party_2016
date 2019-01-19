@@ -1,10 +1,27 @@
 {
 	"contentManagement": [
 		{
-			"title": "文章列表",
+			"title": "学生管理",
 			"icon": "icon-text",
-			"href": "page/news/newsList.html",
-			"spread": false
+			"href": "page/student/studentList.html",
+			"spread": false,
+			"children":[
+				{
+					"title": "学生信息",
+					"icon": "&#xe61c;",
+					"href": "page/student/studentList.html",
+					"spread": false
+				},
+				{
+					"title": "成绩查询",
+					"icon": "&#xe61c;",
+					"href": "page/student/studentList.html",
+					"spread": false
+				}
+			]
+
+
+
 		},
 		{
 			"title": "图片管理",
