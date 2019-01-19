@@ -52,4 +52,12 @@
 			<bean class="cn.edu.cdcas.partyschool.interceptor.ValidateSession"></bean>
 		</mvc:interceptor>
 	</mvc:interceptors>-->
+
+
+	<!-- file upload. -->
+	<bean id="multipartResolver" class="org.springframework.web.multipart.commons.CommonsMultipartResolver">
+		<property name="defaultEncoding" value="utf-8"/>
+		<property name="maxUploadSize" value="10485760000"/>
+		<property name="maxInMemorySize" value="40960"/>
+	</bean>
 </beans>
