@@ -1,8 +1,8 @@
-package cn.edu.cdcas.partyschool.mapper;
+package cn.edu.cdcas.partyschool.service;
 
 import cn.edu.cdcas.partyschool.model.User;
 
-public interface UserMapper {
+public interface UserService {
     int deleteById(Integer id);
 
     void clear();
@@ -16,4 +16,5 @@ public interface UserMapper {
     int updateByIdSelective(User user);
 
     int updateById(User user);
+
 }

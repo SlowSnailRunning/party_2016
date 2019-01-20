@@ -6,13 +6,15 @@ import cn.edu.cdcas.partyschool.model.Question;
 public interface QuestionMapper {
     int deleteById(Integer id);
 
-    int insert(Question record);
+    void clear();
 
-    int insertSelective(Question record);
+    int insert(Question question);
+
+    int insertSelective(Question question);
 
     Question queryById(Integer id);
 
-    int updateByIdSelective(Question record);
+    int updateByIdSelective(Question question);
 
-    int updateById(Question record);
+    int updateById(Question question);
 }
