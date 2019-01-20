@@ -23,8 +23,8 @@
         <fastjson.version>1.2.47</fastjson.version>
         <lang3.version>3.4</lang3.version>
         <connector.version>5.1.36</connector.version>
-
         <poi.version>4.0.1</poi.version>
+        <jedis.version>2.9.0</jedis.version>
     </properties>
 
     <dependencies>
@@ -71,6 +71,32 @@
                     <artifactId>mybatis-ehcache</artifactId>
                     <version>1.1.0</version>
                 </dependency>-->
+        <dependency>
+            <groupId>redis.clients</groupId>
+            <artifactId>jedis</artifactId>
+            <version>${jedis.version}</version>
+        </dependency>
+        <!-- start：redis替代tomcat容器中的session
+            千万不要修改下面的版本！！！！！！
+            Spring Data Redis -->
+        <dependency>
+            <groupId>org.springframework.data</groupId>
+            <artifactId>spring-data-redis</artifactId>
+            <version>1.7.3.RELEASE</version>
+        </dependency>
+        <!-- Spring Session -->
+        <dependency>
+            <groupId>org.springframework.session</groupId>
+            <artifactId>spring-session</artifactId>
+            <version>1.2.2.RELEASE</version>
+        </dependency>
+        <dependency>
+            <groupId>org.apache.commons</groupId>
+            <artifactId>commons-pool2</artifactId>
+            <version>2.4.2</version>
+        </dependency>
+        <!--！！！！！！！！！！！！！！！end-->
+
          <!--fastjson -->
         <dependency>
             <groupId>com.alibaba</groupId>

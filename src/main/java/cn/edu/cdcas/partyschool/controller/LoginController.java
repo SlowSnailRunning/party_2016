@@ -20,14 +20,16 @@ import java.util.ArrayList;
 public class LoginController {
 	@RequestMapping( "/login")
 	public String login(String number,HttpSession httpSession) {
-		StringUtils stringUtils;
-		ArrayList ArrayList;
 		UserSession user=new UserSession();
+		
 		user.setName("usernaem");
 		user.setNumber(number);
 		user.setType("user type");
 		httpSession.setAttribute("partySys_user", user);
-		
+
+		UserSession partySysUser = (UserSession) httpSession.getAttribute("partySys_user");
+		partySysUser.getName();
+
 		return "redirect:/jsp/index.jsp";
 //		return "index";
 	}

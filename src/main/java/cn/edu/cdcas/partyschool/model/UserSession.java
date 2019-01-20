@@ -1,10 +1,13 @@
 package cn.edu.cdcas.partyschool.model;
+
+import java.io.Serializable;
+
 /**
  * 用户的session
  * @author Snail
  *
  */
-public class UserSession {
+public class UserSession implements Serializable {
 	private String name;
 	private String number;
 	private String type;
