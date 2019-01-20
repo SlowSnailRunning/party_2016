@@ -28,7 +28,6 @@ public class ValidateSession implements HandlerInterceptor{
             }
         }
         if (user == null) {
-        	
             response.sendRedirect(request.getContextPath()+"/jsp/test.jsp");
             return false;
         }
