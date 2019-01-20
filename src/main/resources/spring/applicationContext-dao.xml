@@ -49,8 +49,23 @@
 		<property name="basePackage" value="cn.edu.cdcas.partyschool.mapper"/>
 		<!-- 使用sqlSessionFactoryBeanName -->
 		<property name="sqlSessionFactoryBeanName" value="sqlSessionFactory"/>
-
-
 	</bean>
 
+
+	<!--jedis,单机-->
+	<bean id="jedisSingle" class="redis.clients.jedis.JedisPool">
+		<constructor-arg name="host" value="${redis.host}"/>
+		<constructor-arg name="port" value="${redis.port}"/>
+	</bean>
+	<!--jedis工具-->
+	<bean id="jedisSingleUtil" class="cn.edu.cdcas.partyschool.util.impl.JedisClientSingle"/>
+
+
+	<bean class="org.springframework.session.data.redis.config.annotation.web.http.RedisHttpSessionConfiguration">
+
+	</bean>
+	<bean class="org.springframework.data.redis.connection.jedis.JedisConnectionFactory">
+		<property name="hostName" value="${redis.host}" />
+		<property name="port" value="${redis.port}" />
+	</bean>
 </beans>
