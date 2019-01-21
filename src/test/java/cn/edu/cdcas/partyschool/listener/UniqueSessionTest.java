@@ -1,6 +1,8 @@
 package cn.edu.cdcas.partyschool.listener;
 
 import cn.edu.cdcas.partyschool.model.UserSession;
+import cn.edu.cdcas.partyschool.util.impl.JedisClientSingle;
+import com.alibaba.fastjson.JSON;
 import org.junit.Test;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 import redis.clients.jedis.Jedis;
@@ -23,20 +25,22 @@ public class UniqueSessionTest {
     }
     @Test
     public void te(){
+        //
         ClassPathXmlApplicationContext applicationContext = new ClassPathXmlApplicationContext("classpath:spring/applicationContext-dao.xml");
         JedisPool jedisPool=(JedisPool) applicationContext.getBean("jedisSingle");
         Jedis jedis=jedisPool.getResource();
-        ArrayList<UserSession> sessionArrayList = new ArrayList<>();
 
         UserSession userSession = new UserSession();
         userSession.setName("name1111");
-        sessionArrayList.add(userSession);
-        UserSession userSession1 = new UserSession();
-        userSession1.setName("name2222");
-        sessionArrayList.add(userSession1);
+        userSession.setNumber("201617");
+
+        String string = JSON.toJSONString(userSession);
+        jedis.set("usersession",string);
+
+        UserSession session = JSON.parseObject(jedis.get("usersession"), UserSession.class);
+        System.out.println(session.getName());
 
 
-//        jedis.hset("keyy","fielddd",);
         System.out.println(jedis.get("test"));
 
         jedis.close();

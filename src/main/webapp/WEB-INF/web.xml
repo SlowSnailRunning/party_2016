@@ -29,7 +29,7 @@
 		<url-pattern>*.do</url-pattern>
 	</servlet-mapping>
 
-
+<!--	spring-session-redis需要的拦截器
 	<filter>
 		<filter-name>springSessionRepositoryFilter</filter-name>
 		<filter-class>org.springframework.web.filter.DelegatingFilterProxy</filter-class>
@@ -39,7 +39,7 @@
 		<url-pattern>/*</url-pattern>
 		<dispatcher>REQUEST</dispatcher>
 		<dispatcher>ERROR</dispatcher>
-	</filter-mapping>
+	</filter-mapping>-->
 
 	<!-- post编码过滤器 -->
 	<filter>
@@ -58,7 +58,7 @@
 
 
 	<!--单账号单地点登录，加入spring-redis-session后失效，改到SpringMVC中实现 -->
-<!--	<listener>
+	<listener>
 		<listener-class>cn.edu.cdcas.partyschool.listener.UniqueSession</listener-class>
-	</listener> -->
+	</listener>
 </web-app>

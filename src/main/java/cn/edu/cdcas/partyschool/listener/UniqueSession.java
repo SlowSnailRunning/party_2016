@@ -19,19 +19,17 @@ import org.springframework.beans.factory.annotation.Autowired;
  *
  */
 public class UniqueSession implements HttpSessionAttributeListener{
-	private Map<String, HttpSession> map = new HashMap<String, HttpSession>();
-	@Autowired
-	private JedisClientSingle jedisClientSingle;
+	private static Map<String, HttpSession> map = new HashMap<>();
 
 	/**
-	 *@Describe: 当向session中添加数据时触发  			spring:session:sessions:????????????????????????????????????
-	 * 从所有session中拿到学号，如果redis的session中的一个学号与当前session学号相同，则删除redis中的session，重新添加
+	 *@Describe: 当向session中添加数据时触发
+	 *
 	 *@Author Snail
 	 *@Date 2019/1/19
 	 */
 	@Override
 	public void attributeAdded(HttpSessionBindingEvent event) {
-/*		String name = event.getName();
+		String name = event.getName();
 		if (name.equals("partySys_user")) {
 			String userNumber = ((UserSession) event.getValue()).getNumber();
 			if (map.get(userNumber) != null) {
@@ -39,13 +37,11 @@ public class UniqueSession implements HttpSessionAttributeListener{
 				session.removeAttribute(userNumber);
 				session.invalidate();
 				//???？？？？能否在此处加入一些信息，带到前端页面去提示 用户被挤下线
-				System.out.println("移除之前登录的当前账号！!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!！！！！！！！！！！！！！！！！！！！！！！！！！！！！！");
+//				System.out.println("移除之前登录的当前账号！!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!！！！！！！！！！！！！！！！！！！！！！！！！！！！！！");
 			}
 			map.put(userNumber, event.getSession());
-			System.out.println("创建当前登录的session");
-		}*/
-		System.out.println("dfasf");
-		Set keys = jedisClientSingle.keys("spring:session:sessions:????????????????????????????????????");
+//			System.out.println("创建当前登录的session");
+		}
 	}
 
 	@Override

@@ -77,14 +77,13 @@
             <version>${jedis.version}</version>
         </dependency>
         <!-- start：redis替代tomcat容器中的session
-            千万不要修改下面的版本！！！！！！
             Spring Data Redis -->
-        <dependency>
+       <!-- <dependency>
             <groupId>org.springframework.data</groupId>
             <artifactId>spring-data-redis</artifactId>
             <version>1.7.3.RELEASE</version>
         </dependency>
-        <!-- Spring Session -->
+        &lt;!&ndash; Spring Session &ndash;&gt;
         <dependency>
             <groupId>org.springframework.session</groupId>
             <artifactId>spring-session</artifactId>
@@ -94,7 +93,7 @@
             <groupId>org.apache.commons</groupId>
             <artifactId>commons-pool2</artifactId>
             <version>2.4.2</version>
-        </dependency>
+        </dependency>-->
         <!--！！！！！！！！！！！！！！！end-->
 
          <!--fastjson -->

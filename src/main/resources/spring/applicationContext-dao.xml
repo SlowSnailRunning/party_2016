@@ -61,11 +61,12 @@
 	<bean id="jedisSingleUtil" class="cn.edu.cdcas.partyschool.util.impl.JedisClientSingle"/>
 
 
-	<bean class="org.springframework.session.data.redis.config.annotation.web.http.RedisHttpSessionConfiguration">
+<!--	spring存储session到redis需要的bean
+<bean class="org.springframework.session.data.redis.config.annotation.web.http.RedisHttpSessionConfiguration">
 
 	</bean>
 	<bean class="org.springframework.data.redis.connection.jedis.JedisConnectionFactory">
 		<property name="hostName" value="${redis.host}" />
 		<property name="port" value="${redis.port}" />
-	</bean>
+	</bean>-->
 </beans>
