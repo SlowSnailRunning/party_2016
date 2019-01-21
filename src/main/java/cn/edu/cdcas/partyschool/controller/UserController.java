@@ -8,7 +8,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
-import org.springframework.web.multipart.commons.CommonsMultipartFile;
+import org.springframework.web.multipart.MultipartFile;
 
 import javax.annotation.Resource;
 import java.io.IOException;
@@ -33,22 +33,24 @@ public class UserController {
 
     @ResponseBody
     @RequestMapping("/upload")
-    public String upload(@RequestParam("file") CommonsMultipartFile file) {
+    public String upload(@RequestParam("file") MultipartFile file) {
         ExcelUtil excelUtil = new ExcelUtil();
         Map<Integer, List<String>> map = null;
         User user = new User();
         try {
             map = excelUtil.getDataMap(file, 7);
             map.forEach((key, value) -> {
-                user.setIdx(Integer.valueOf(value.get(0)));
-                user.setGrade(value.get(1));
-                user.setDepartment(value.get(2));
-                user.setMajor(value.get(3));
-                user.setName(value.get(4));
-                user.setStudentNo(value.get(5));
-                user.setPartyNumber(value.get(6));
+                if (key != -1) {
+                    user.setIdx(Integer.valueOf(value.get(0)));
+                    user.setGrade(value.get(1));
+                    user.setDepartment(value.get(2));
+                    user.setMajor(value.get(3));
+                    user.setName(value.get(4));
+                    user.setStudentNo(value.get(5));
+                    user.setPartyNumber(value.get(6));
+                    userService.insertSelective(user);
+                }
             });
-            userService.insertSelective(user);
         } catch (IOException e) {
             return "上传错误!";
         }

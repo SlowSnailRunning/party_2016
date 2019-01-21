@@ -8,7 +8,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
-import org.springframework.web.multipart.commons.CommonsMultipartFile;
+import org.springframework.web.multipart.MultipartFile;
 
 import javax.annotation.Resource;
 import java.io.IOException;
@@ -34,22 +34,24 @@ public class QuestionController {
 
     @ResponseBody
     @RequestMapping("/upload")
-    public String upload(@RequestParam("file") CommonsMultipartFile file) {
+    public String upload(@RequestParam("file") MultipartFile file) {
         ExcelUtil excelUtil = new ExcelUtil();
         Map<Integer, List<String>> map = null;
         Question question = new Question();
         try {
             map = excelUtil.getDataMap(file, 7);
             map.forEach((key, value) -> {
-                question.setIntro(value.get(0));
-                question.setOptionA(value.get(1));
-                question.setOptionB(value.get(2));
-                question.setOptionC(value.get(3));
-                question.setOptionD(value.get(4));
-                question.setResult(value.get(5));
-                question.setType(Integer.valueOf(value.get(6)));
+                if (key != -1) {
+                    question.setIntro(value.get(0));
+                    question.setOptionA(value.get(1));
+                    question.setOptionB(value.get(2));
+                    question.setOptionC(value.get(3));
+                    question.setOptionD(value.get(4));
+                    question.setResult(value.get(5));
+                    question.setType(Integer.valueOf(value.get(6)));
+                    questionService.insertSelective(question);
+                }
             });
-            questionService.insertSelective(question);
         } catch (IOException e) {
             return "上传错误!";
         }
