@@ -73,7 +73,7 @@
                                 make_up_start, make_up_end, make_up_score,
                                 party_number, `type`)
         values (#{idx,jdbcType=INTEGER}, #{examId,jdbcType=INTEGER}, #{studentNo,jdbcType=CHAR},
-                #{name,jdbcType=VARCHAR}, #{class,jdbcType=VARCHAR}, #{department,jdbcType=VARCHAR},
+                #{name,jdbcType=VARCHAR}, #{clazz,jdbcType=VARCHAR}, #{department,jdbcType=VARCHAR},
                 #{grade,jdbcType=VARCHAR}, #{major,jdbcType=VARCHAR}, #{sex,jdbcType=VARCHAR},
                 #{graduated,jdbcType=CHAR}, #{excellent,jdbcType=CHAR}, #{examState,jdbcType=INTEGER},
                 #{examStart,jdbcType=TIMESTAMP}, #{examEnd,jdbcType=TIMESTAMP}, #{examScore,jdbcType=INTEGER},
@@ -96,7 +96,7 @@
             <if test="name != null">
                 `name`,
             </if>
-            <if test="class != null">
+            <if test="clazz != null">
                 `class`,
             </if>
             <if test="department != null">
@@ -158,7 +158,7 @@
             <if test="name != null">
                 #{name,jdbcType=VARCHAR},
             </if>
-            <if test="class != null">
+            <if test="clazz != null">
                 #{clazz,jdbcType=VARCHAR},
             </if>
             <if test="department != null">
