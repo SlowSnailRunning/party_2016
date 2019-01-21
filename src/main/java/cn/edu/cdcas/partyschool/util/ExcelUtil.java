@@ -5,7 +5,7 @@ import org.apache.poi.hssf.usermodel.HSSFFont;
 import org.apache.poi.hssf.usermodel.HSSFWorkbook;
 import org.apache.poi.ss.usermodel.*;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
-import org.springframework.web.multipart.commons.CommonsMultipartFile;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
 import java.util.*;
@@ -25,9 +25,9 @@ public class ExcelUtil {
      *
      * @return the map transformed by excel.
      */
-    public Map<Integer, List<String>> getDataMap(CommonsMultipartFile excelFile, int colNum) throws IOException {
+    public Map<Integer, List<String>> getDataMap(MultipartFile excelFile, int colNum) throws IOException {
         Map<Integer, List<String>> map = null;
-        String suffix = excelFile.getName().substring(excelFile.getName().lastIndexOf("."));
+        String suffix = excelFile.getOriginalFilename().substring(excelFile.getOriginalFilename().lastIndexOf("."));
 
         Workbook workbook;
         if (suffix.equals(".xls"))
