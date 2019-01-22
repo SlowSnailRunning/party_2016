@@ -1,6 +1,7 @@
 package cn.edu.cdcas.partyschool.mapper;
 
 import cn.edu.cdcas.partyschool.model.Statistics;
+import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
 
@@ -10,5 +11,6 @@ import java.util.List;
  * @Created by YR
  */
 public interface StatisticsMapper {
-    public List<Statistics> statisticsCorrect();
+    public List<Statistics> statisticsCorrect(@Param(value ="pageSize") int pageSize,@Param(value ="currentPage") int currentPage);
+    public int statisticsTotal();
 }

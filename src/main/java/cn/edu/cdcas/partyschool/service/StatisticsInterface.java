@@ -1,9 +1,7 @@
 package cn.edu.cdcas.partyschool.service;
 
-import cn.edu.cdcas.partyschool.model.Statistics;
-
-import java.util.List;
+import cn.edu.cdcas.partyschool.util.impl.StatisticsPage;
 
 public interface StatisticsInterface {
-    public List<Statistics> statisticsCorrect();
+    public StatisticsPage statisticsCorrect(int pageSize,int currentPage);
 }

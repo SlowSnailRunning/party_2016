@@ -1,27 +1,46 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="cn.edu.cdcas.partyschool.mapper.StatisticsMapper">
-    <select id="statisticsCorrect" resultType="cn.edu.cdcas.partyschool.model.Statistics">
-        SELECT id , intro,  type, m.selected as selected, m.correct as correct FROM party_question LEFT OUTER JOIN
-( SELECT d.question_id,t.selected AS selected,t.selected-d.wrong as correct FROM (
+    <select id="statisticsCorrect"  parameterType="int"  resultType="cn.edu.cdcas.partyschool.model.Statistics">
+     SELECT
+	id ,
+	intro,
+  type,
+	m.selected as selected,
+	m.correct as correct
+FROM
+	party_question
+LEFT OUTER JOIN (
 	SELECT
-		question_id,
-		COUNT(*) AS selected
+		d.question_id,
+		t.selected AS selected,
+		1 - d.wrong/t.selected  AS correct
 	FROM
-		party_answer
-	GROUP BY
-		question_id ) AS t,
-		( SELECT
-			question_id,
-			COUNT(*) AS wrong
-		FROM
-			party_answer
-		WHERE
-			score = 0
-		GROUP BY
-			question_id ) AS d
-		WHERE
-			t.question_id = d.question_id
-) as m ON  m.question_id=party_question.id
+		(
+			SELECT
+				question_id,
+				COUNT(*) AS selected
+			FROM
+				party_answer
+			GROUP BY
+				question_id
+		) AS t,
+		(
+			SELECT
+				question_id,
+				COUNT(*) AS wrong
+			FROM
+				party_answer
+			WHERE
+				score = 0
+			GROUP BY
+				question_id
+		) AS d
+	WHERE
+		t.question_id = d.question_id
+) AS m ON m.question_id = party_question.id order by selected DESC LIMIT #{currentPage} ,#{pageSize}
     </select>
+	<select id="statisticsTotal" resultType="int">
+		SELECT count(*) as total from party_question
+	</select>
 </mapper>
