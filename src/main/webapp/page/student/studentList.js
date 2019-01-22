@@ -66,7 +66,14 @@ layui.use(['form','layer','laydate','table','laytpl'],function(){
             layer.msg("请输入搜索的内容");
         }
     });
+    //导入考生列表
+    $(".addNewsList_btn").click(function(){
 
+    })
+
+    $(".addNews_btn").click(function(){
+        addNews();
+    })
     //添加学生
     function addNews(edit){
         var index = layui.layer.open({
@@ -100,9 +107,7 @@ layui.use(['form','layer','laydate','table','laytpl'],function(){
             layui.layer.full(index);
         })
     }
-    $(".addNews_btn").click(function(){
-        addNews();
-    })
+
 
     //批量删除
     $(".delAll_btn").click(function(){
