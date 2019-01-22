@@ -56,7 +56,6 @@ public class UserController {
         }
         return "上传成功!";
     }
-
     @ResponseBody
     @RequestMapping(value = "/clear", method = RequestMethod.GET)
     private String clear() {
