@@ -70,16 +70,29 @@ layui.use(['form','layer','laydate','upload','table','laytpl'],function(){
          // layer.msg("dsfdsfsaf");
         var upload = layui.upload; //得到 upload 对象
 
+        //获取当前网址，如： http://localhost:8083/uimcardprj/share/meun.jsp
+        //var curWwwPath = window.document.location.href;
+
+        //var pos = curWwwPath.indexOf(pathName);
+        //获取主机地址，如： http://localhost:8083
+       // var localhostPaht = curWwwPath.substring(0, pos);
+        //获取主机地址之后的目录，如： uimcardprj/share/meun.jsp
+        var pathName = window.document.location.pathname;
+        //获取带"/"的项目名，如：/uimcardprj
+        var projectName = pathName.substring(0, pathName.substr(1).indexOf('/') + 1);
+
         //创建一个上传组件
         upload.render({
             elem: '#uploadDiv'
-            ,url: '/user/upload.do'
+            ,url: projectName+'/user/upload.do'
+            ,accept: 'file'
+            ,exts: 'xls|xlsx'
             ,done: function(res, index, upload){ //上传后的回调
                 layer.msg("su");
             }
-            //,accept: 'file' //允许上传的文件类型
-            //,size: 50 //最大允许上传的文件大小
-            //,……
+            ,error: function(){
+                layer.msg("error");
+            }
         })
     })
 
