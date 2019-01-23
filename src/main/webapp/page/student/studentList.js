@@ -69,7 +69,23 @@ layui.use(['form','layer','laydate','table','laytpl'],function(){
     //导入考生列表
     $(".addNewsList_btn").click(function(){
 
-    })
+        layer.open({
+            title: '在线调试'
+            ,content: '可以填写任意的layer代码'
+        });
+        /* var upload = layui.upload; //得到 upload 对象
+         //创建一个上传组件
+         upload.render({
+             elem: '#test1'
+             ,url: '/user/upload.do'//
+             ,done: function(res, index, upload){ //上传后的回调
+
+             }
+             //,accept: 'file' //允许上传的文件类型
+             //,size: 50 //最大允许上传的文件大小
+             //,……
+         })*/
+    });
 
     $(".addNews_btn").click(function(){
         addNews();
