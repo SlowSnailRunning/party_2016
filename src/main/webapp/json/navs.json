@@ -1,27 +1,84 @@
 {
 	"contentManagement": [
 		{
-			"title": "学生管理",
+			"title": "考试管理",
 			"icon": "icon-text",
 			"href": "page/student/studentList.html",
 			"spread": false,
 			"children":[
 				{
-					"title": "学生信息",
+					"title": "当前考试",
 					"icon": "&#xe61c;",
 					"href": "page/student/studentList.html",
 					"spread": false
 				},
 				{
-					"title": "成绩查询",
+					"title": "考试操作",
 					"icon": "&#xe61c;",
 					"href": "page/student/studentList.html",
 					"spread": false
 				}
 			]
-
-
-
+		},
+		{
+		"title": "学生管理",
+		"icon": "icon-text",
+		"href": "page/student/studentList.html",
+		"spread": false,
+		"children":[
+			{
+				"title": "考生列表",
+				"icon": "&#xe61c;",
+				"href": "page/student/studentList.html",
+				"spread": false
+			},
+			{
+				"title": "成绩查询",
+				"icon": "&#xe61c;",
+				"href": "page/student/studentList.html",
+				"spread": false
+			}
+		]
+		},
+		{
+			"title": "题库管理",
+			"icon": "icon-text",
+			"href": "page/student/studentList.html",
+			"spread": false,
+			"children":[
+				{
+					"title": "题库列表",
+					"icon": "&#xe61c;",
+					"href": "page/student/studentList.html",
+					"spread": false
+				},
+				{
+					"title": "其他",
+					"icon": "&#xe61c;",
+					"href": "page/student/studentList.html",
+					"spread": false
+				}
+			]
+		},
+		{
+			"title": "管理员管理",
+			"icon": "icon-text",
+			"href": "page/student/studentList.html",
+			"spread": false,
+			"children":[
+				{
+					"title": "管理员列表",
+					"icon": "&#xe61c;",
+					"href": "page/student/studentList.html",
+					"spread": false
+				},
+				{
+					"title": "其他",
+					"icon": "&#xe61c;",
+					"href": "page/student/studentList.html",
+					"spread": false
+				}
+			]
 		},
 		{
 			"title": "图片管理",
