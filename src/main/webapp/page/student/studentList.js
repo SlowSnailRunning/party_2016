@@ -1,4 +1,4 @@
-layui.use(['form','layer','laydate','table','laytpl'],function(){
+layui.use(['form','layer','laydate','upload','table','laytpl'],function(){
     var form = layui.form,
         layer = parent.layer === undefined ? layui.layer : top.layer,
         $ = layui.jquery,
@@ -63,29 +63,25 @@ layui.use(['form','layer','laydate','table','laytpl'],function(){
                 }
             })
         }else{
-            layer.msg("请输入搜索的内容");
+            layer.msg("请输入搜索内容");
         }
     });
-    //导入考生列表
     $(".addNewsList_btn").click(function(){
+         // layer.msg("dsfdsfsaf");
+        var upload = layui.upload; //得到 upload 对象
 
-        layer.open({
-            title: '在线调试'
-            ,content: '可以填写任意的layer代码'
-        });
-        /* var upload = layui.upload; //得到 upload 对象
-         //创建一个上传组件
-         upload.render({
-             elem: '#test1'
-             ,url: '/user/upload.do'//
-             ,done: function(res, index, upload){ //上传后的回调
-
-             }
-             //,accept: 'file' //允许上传的文件类型
-             //,size: 50 //最大允许上传的文件大小
-             //,……
-         })*/
-    });
+        //创建一个上传组件
+        upload.render({
+            elem: '#uploadDiv'
+            ,url: '/user/upload.do'
+            ,done: function(res, index, upload){ //上传后的回调
+                layer.msg("su");
+            }
+            //,accept: 'file' //允许上传的文件类型
+            //,size: 50 //最大允许上传的文件大小
+            //,……
+        })
+    })
 
     $(".addNews_btn").click(function(){
         addNews();
@@ -95,7 +91,7 @@ layui.use(['form','layer','laydate','table','laytpl'],function(){
         var index = layui.layer.open({
             title : "添加学生",
             type : 2,
-            content : "studentAdd.htm",
+            content : "studentAdd.html",
             success : function(layero, index){
                 var body = layui.layer.getChildFrame('body', index);
                 if(edit){
