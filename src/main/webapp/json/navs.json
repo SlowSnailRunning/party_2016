@@ -43,19 +43,19 @@
 		{
 			"title": "题库管理",
 			"icon": "icon-text",
-			"href": "page/student/studentList.html",
+			"href": "page/question/statisticsList.html",
 			"spread": false,
 			"children":[
 				{
 					"title": "题库列表",
 					"icon": "&#xe61c;",
-					"href": "page/student/studentList.html",
+					"href": "page/question/statisticsList.html",
 					"spread": false
 				},
 				{
-					"title": "其他",
+					"title": "考题分析",
 					"icon": "&#xe61c;",
-					"href": "page/student/studentList.html",
+					"href": "page/question/statisticsList.html",
 					"spread": false
 				}
 			]
