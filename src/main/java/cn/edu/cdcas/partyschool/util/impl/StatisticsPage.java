@@ -1,5 +1,7 @@
 package cn.edu.cdcas.partyschool.util.impl;
 import cn.edu.cdcas.partyschool.model.Statistics;
+import org.apache.poi.ss.formula.functions.Count;
+
 import java.util.List;
 /**
  * @Description TODO
@@ -7,20 +9,44 @@ import java.util.List;
  * @Created by YR
  */
 public class StatisticsPage {
-    private int total;
-   // private int pageSize;
-   // private int currentPage;
-    List<Statistics> Statistics;
-    public int getTotal() {
-        return total;
+    private int code;
+    private String msg;
+    private String count;
+    private int status;
+    List<Statistics> data;
+    public int getCode() {
+        return code;
     }
-    public void setTotal(int total) {
-        this.total = total;
+    public void setCode(int code) {
+        this.code = code;
     }
-    public List<cn.edu.cdcas.partyschool.model.Statistics> getStatistics() {
-        return Statistics;
+    public String getMsg() {
+        return msg;
     }
-    public void setStatistics(List<cn.edu.cdcas.partyschool.model.Statistics> statistics) {
-        Statistics = statistics;
+    public void setMsg(String msg) {
+        this.msg = msg;
+    }
+    public String getCount() {
+        return count;
+    }
+
+    public void setCount(String count) {
+        this.count = count;
+    }
+
+    public int getStatus() {
+        return status;
+    }
+
+    public void setStatus(int status) {
+        this.status = status;
+    }
+
+    public List<Statistics> getData() {
+        return data;
+    }
+
+    public void setData(List<Statistics> data) {
+        this.data = data;
     }
 }

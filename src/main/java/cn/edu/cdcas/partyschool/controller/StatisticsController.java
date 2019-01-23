@@ -21,9 +21,9 @@ public class StatisticsController {
     @Autowired
    private StatisticsInterface statisticsInterface;
     @RequestMapping("/statisticsCorrect")
-    public StatisticsPage statisticsCorrect(@RequestParam(defaultValue ="5",required=false)int pageSize, @RequestParam(defaultValue ="0",required=false)int currentPage)
+    public StatisticsPage statisticsCorrect(@RequestParam(value ="limit", defaultValue ="5",required=false)int pageSize, @RequestParam(value = "page" ,defaultValue ="1",required=false)int currentPage)
     {
-        StatisticsPage statisticsPage = statisticsInterface.statisticsCorrect(pageSize,currentPage);
+        StatisticsPage statisticsPage = statisticsInterface.statisticsCorrect(pageSize,currentPage-1);
         System.out.println(statisticsPage);
         return statisticsPage;
     }

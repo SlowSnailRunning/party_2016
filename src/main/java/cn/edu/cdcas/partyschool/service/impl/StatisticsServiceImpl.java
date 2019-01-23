@@ -23,8 +23,13 @@ public class StatisticsServiceImpl implements StatisticsInterface {
             int type=Integer.parseInt(statistic.getType());
             statistics.get(i).setType(StatisticsUtil.getTypeString(type));
         }
-        statisticsPage.setStatistics(statistics);
-        statisticsPage.setTotal(statisticsMapper.statisticsTotal());
+        statisticsPage.setCode(0);
+        statisticsPage.setCount(statisticsMapper.statisticsTotal());
+        statisticsPage.setMsg("success");
+        statisticsPage.setStatus(200);
+        statisticsPage.setData(statistics);
+        /*statisticsPage.setStatistics(statistics);
+        statisticsPage.setTotal(statisticsMapper.statisticsTotal());*/
         return statisticsPage;
     }
 }
