@@ -11,7 +11,7 @@ import java.util.List;
 public class StatisticsPage {
     private int code;
     private String msg;
-    private String count;
+    private int count;
     private int status;
     List<Statistics> data;
     public int getCode() {
@@ -26,11 +26,11 @@ public class StatisticsPage {
     public void setMsg(String msg) {
         this.msg = msg;
     }
-    public String getCount() {
+    public int getCount() {
         return count;
     }
 
-    public void setCount(String count) {
+    public void setCount(int count) {
         this.count = count;
     }
 

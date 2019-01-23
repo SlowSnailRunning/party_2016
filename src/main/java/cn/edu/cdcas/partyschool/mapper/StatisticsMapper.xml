@@ -5,7 +5,7 @@
      SELECT
 	id ,
 	intro,
-  type,
+    type,
 	m.selected as selected,
 	m.correct as correct
 FROM
@@ -40,7 +40,7 @@ LEFT OUTER JOIN (
 		t.question_id = d.question_id
 ) AS m ON m.question_id = party_question.id order by selected DESC LIMIT #{currentPage} ,#{pageSize}
     </select>
-	<select id="statisticsTotal" resultType="String">
+	<select id="statisticsTotal" resultType="int">
 		SELECT count(*) as total from party_question
 	</select>
 </mapper>

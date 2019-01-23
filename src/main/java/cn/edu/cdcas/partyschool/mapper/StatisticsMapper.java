@@ -12,5 +12,5 @@ import java.util.List;
  */
 public interface StatisticsMapper {
     public List<Statistics> statisticsCorrect(@Param(value ="pageSize") int pageSize,@Param(value ="currentPage") int currentPage);
-    public String statisticsTotal();
+    public int statisticsTotal();
 }

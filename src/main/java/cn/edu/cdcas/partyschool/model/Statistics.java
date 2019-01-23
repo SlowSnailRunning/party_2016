@@ -1,15 +1,24 @@
 package cn.edu.cdcas.partyschool.model;
+
+import com.alibaba.fastjson.annotation.JSONField;
+
 /**
  * @Description TODO
  * @Date 2019/1/22 11:05
  * @Created by YR
  */
 public class Statistics {
+    @JSONField(ordinal=1)
     private Integer  id;
+    @JSONField(ordinal=2)
     private String intro;
-    private Integer selected;
-    private String  correct;
+    @JSONField(ordinal=3)
     private String type;
+    @JSONField(ordinal=4)
+    private Integer selected;
+    @JSONField(ordinal=5)
+    private String  correct;
+
     public Integer getId() {
         return id;
     }
