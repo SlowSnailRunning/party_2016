@@ -3,15 +3,17 @@ package cn.edu.cdcas.partyschool.controller;
 import cn.edu.cdcas.partyschool.model.User;
 import cn.edu.cdcas.partyschool.service.UserService;
 import cn.edu.cdcas.partyschool.util.ExcelUtil;
-import org.springframework.stereotype.Controller;
+import cn.edu.cdcas.partyschool.util.JSONResult;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.annotation.Resource;
+import javax.servlet.http.HttpServletRequest;
 import java.io.IOException;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -23,17 +25,24 @@ import java.util.Map;
  * @date 2019-01-20
  */
 
-@Controller
+@RestController
 @RequestMapping("/user")
 public class UserController {
 
     @Resource
     private UserService userService;
 
-
-    @ResponseBody
+    /**
+     * upload the list of student attending exam in a excel.
+     *
+     * @param file
+     * @return
+     */
     @RequestMapping("/upload")
-    public String upload(@RequestParam("file") MultipartFile file) {
+    public JSONResult upload(@RequestParam("file") MultipartFile file) {
+        if (!userService.isEmpty()) {
+            return new JSONResult(1, "导入前请清空学生列表!", 404);
+        }
         ExcelUtil excelUtil = new ExcelUtil();
         Map<Integer, List<String>> map = null;
         User user = new User();
@@ -52,15 +61,55 @@ public class UserController {
                 }
             });
         } catch (IOException e) {
-            return "上传错误!";
+            return new JSONResult(1, e.getMessage(), 404);
         }
-        return "上传成功!";
+
+        return new JSONResult(0, "考生导入成功!", 200);
     }
-    @ResponseBody
+
+    /**
+     * show information of all students attending this exam in the front.
+     *
+     * @param page
+     * @param limit
+     * @return
+     */
+    @RequestMapping(value = "/all", method = RequestMethod.GET)
+    public Map<String, Object> showAllStuInfo(@RequestParam(value = "page", required = false) int page, @RequestParam(value = "limit", required = false) int limit) {
+        Map<String, Object> map = new HashMap<>();
+        List<User> data = this.userService.queryAll();
+        map.put("code", 0);
+        map.put("msg", "success");
+        map.put("count", userService.queryStuNums());
+        map.put("status", 200);
+        map.put("data", data);
+        return map;
+    }
+
+    /**
+     * delete student by his stuNo.
+     *
+     * @param request the object of request
+     * @return
+     */
+    @RequestMapping(value = "/delete", method = RequestMethod.POST)
+    public JSONResult deleteStu(HttpServletRequest request) {
+        String stuNo = request.getParameter("studentNo");
+        this.userService.deleteByStuNo(stuNo);
+        return new JSONResult(0, "删除成功!", 200);
+    }
+
+
+    /**
+     * clear all students attending exam.
+     * it's necessary before you start a new exam .
+     *
+     * @return
+     */
     @RequestMapping(value = "/clear", method = RequestMethod.GET)
-    private String clear() {
+    public JSONResult clear() {
         userService.clear();
-        return "清空完成";
+        return new JSONResult(0, "清空成功!", 200);
     }
 
 }

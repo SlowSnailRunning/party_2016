@@ -25,7 +25,7 @@ layui.use(['form', 'layer', 'laydate', 'upload', 'table', 'laytpl'], function ()
             {field: 'name', title: '姓名', width: 100, align: "center"},
             {field: 'studentNo', title: '学号', width: 150, align: 'center'},
             {field: 'partyNumber', title: '党校号', width: 86, align: 'center'},
-            {field: 'examState', title: '考试状态', width: 86, align: 'center'},
+            {field: 'examStateStr', title: '考试状态', width: 86, align: 'center'},
             {field: 'examScore', title: '考试成绩', width: 86, align: 'center'},
             {field: 'makeUpScore', title: '补考成绩', width: 86, align: 'center'},
             {title: '操作', width: 170, templet: '#newsListBar', fixed: "right", align: "center"}
@@ -82,10 +82,11 @@ layui.use(['form', 'layer', 'laydate', 'upload', 'table', 'laytpl'], function ()
             , accept: 'file'
             , exts: 'xls|xlsx'
             , done: function (res, index, upload) { //上传后的回调
-                layer.msg("su");
+                layer.msg(res['msg']); //show the message from the backend.
+                if (res['code'] === 0)
+                    tableIns.reload();  //if import succeeded,reload this table.
             }
             , error: function () {
-                layer.msg("error");
             }
         })
     });
@@ -133,18 +134,19 @@ layui.use(['form', 'layer', 'laydate', 'upload', 'table', 'laytpl'], function ()
     $(".delAll_btn").click(function () {
         var checkStatus = table.checkStatus('newsListTable'),
             data = checkStatus.data,
-            newsId = [];
+            stuNo = [];
         if (data.length > 0) {
             for (var i in data) {
-                newsId.push(data[i].newsId);
+                stuNo.push(data[i].studentNo);
             }
-            layer.confirm('确定删除选中的文章？', {icon: 3, title: '提示信息'}, function (index) {
-                // $.get("删除文章接口",{
-                //     newsId : newsId  //将需要删除的newsId作为参数传入
-                // },function(data){
-                tableIns.reload();
-                layer.close(index);
-                // })
+            layer.confirm('确定删除选中的学生吗？', {icon: 3, title: '提示信息'}, function (index) {
+                alert("jifdsji");
+                $.post("/user/delete1.do", {
+                    stuNo: stuNo  //将需要删除的newsId作为参数传入
+                }, function (data) {
+                    tableIns.reload();
+                    layer.close(index);
+                });
             })
         } else {
             layer.msg("请选择需要删除的文章");
@@ -157,13 +159,13 @@ layui.use(['form', 'layer', 'laydate', 'upload', 'table', 'laytpl'], function ()
             data = obj.data;
 
         if (layEvent === 'edit') { //编辑
-            alert(data.studentId + "  " + data.studentName);
+            alert(data.studentNo + "  " + data.name);
             addNews(data);
-            alert(data.studentId + "  " + data.studentName);
+            alert(data.studentNo + "  " + data.name);
         } else if (layEvent === 'del') { //删除
             layer.confirm('确定删除此学生？', {icon: 3, title: '提示信息'}, function (index) {
-                $.post("/user/delete", {
-                    studentId: data.studentId  //将需要删除的newsId作为参数传入
+                $.post("/user/delete.do", {
+                    studentNo: data.studentNo  //将需要删除的学生学号作为参数传入
                 }, function (data) {
                     tableIns.reload();
                     layer.close(index);
