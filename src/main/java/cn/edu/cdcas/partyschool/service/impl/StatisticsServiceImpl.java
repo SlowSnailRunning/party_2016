@@ -6,7 +6,10 @@ import cn.edu.cdcas.partyschool.util.impl.StatisticsPage;
 import cn.edu.cdcas.partyschool.util.impl.StatisticsUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.util.StringUtils;
 
+import java.text.DecimalFormat;
+import java.text.NumberFormat;
 import java.util.List;
 @Service
 public class StatisticsServiceImpl implements StatisticsInterface {
@@ -28,8 +31,8 @@ public class StatisticsServiceImpl implements StatisticsInterface {
         statisticsPage.setMsg("success");
         statisticsPage.setStatus(200);
         statisticsPage.setData(statistics);
-        /*statisticsPage.setStatistics(statistics);
-        statisticsPage.setTotal(statisticsMapper.statisticsTotal());*/
+        /*new DecimalFormat("00.###%").format();*/
+        System.out.println( );
         return statisticsPage;
     }
 }
