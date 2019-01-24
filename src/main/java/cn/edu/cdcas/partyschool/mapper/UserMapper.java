@@ -2,6 +2,8 @@ package cn.edu.cdcas.partyschool.mapper;
 
 import cn.edu.cdcas.partyschool.model.User;
 
+import java.util.List;
+
 public interface UserMapper {
     int deleteById(Integer id);
 
@@ -13,7 +15,11 @@ public interface UserMapper {
 
     User queryById(Integer id);
 
+    List<User> queryAll();
+
     int updateByIdSelective(User user);
 
     int updateById(User user);
+
+    int queryStuNums();
 }

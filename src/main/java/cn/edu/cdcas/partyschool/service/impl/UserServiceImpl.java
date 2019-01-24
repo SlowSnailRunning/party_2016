@@ -6,6 +6,7 @@ import cn.edu.cdcas.partyschool.service.UserService;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
+import java.util.List;
 
 @Service
 public class UserServiceImpl implements UserService {
@@ -38,6 +39,11 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
+    public List<User> queryAll() {
+        return userMapper.queryAll();
+    }
+
+    @Override
     public int updateByIdSelective(User user) {
         return userMapper.updateByIdSelective(user);
     }
@@ -46,4 +52,16 @@ public class UserServiceImpl implements UserService {
     public int updateById(User user) {
         return userMapper.updateById(user);
     }
+
+    @Override
+    public int queryStuNums() {
+        return userMapper.queryStuNums();
+    }
+    
+    @Override
+    public boolean isEmpty() {
+        return userMapper.queryStuNums() == 0;
+    }
+
+
 }

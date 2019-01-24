@@ -53,6 +53,16 @@
         from party_user
         where id = #{id,jdbcType=INTEGER}
     </select>
+    <select id="queryStuNums" resultType="java.lang.Integer">
+        select count(*)
+        from party_user
+        where type = 'student'
+    </select>
+    <select id="queryAll" resultType="cn.edu.cdcas.partyschool.model.User" resultMap="BaseResultMap">
+        select *
+        from party_user
+        where type = 'student'
+    </select>
     <delete id="deleteById" parameterType="java.lang.Integer">
         delete
         from party_user

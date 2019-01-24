@@ -71,6 +71,8 @@ public class User implements Serializable {
      */
     private Integer examState;
 
+    private String examStateStr;    //考试状态字符串显示,以传至前台.
+
     /**
      * 学生开始考试时间
      */
@@ -157,7 +159,7 @@ public class User implements Serializable {
         return clazz;
     }
 
-    public void setClass(String clazz) {
+    public void setClazz(String clazz) {
         this.clazz = clazz;
     }
 
@@ -215,6 +217,33 @@ public class User implements Serializable {
 
     public void setExamState(Integer examState) {
         this.examState = examState;
+        String s = null;
+        switch (examState) {
+            case 0:
+                s = "未考";
+                break;
+            case 1:
+                s = "首次考试通过";
+                break;
+            case 2:
+                s = "未补考";
+                break;
+            case 3:
+                s = "补考未过";
+                break;
+            case 4:
+                s = "补考通过";
+                break;
+        }
+        this.setExamStateStr(s);
+    }
+
+    public String getExamStateStr() {
+        return examStateStr;
+    }
+
+    public void setExamStateStr(String examStateStr) {
+        this.examStateStr = examStateStr;
     }
 
     public Date getExamStart() {
