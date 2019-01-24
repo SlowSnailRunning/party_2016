@@ -16,6 +16,8 @@ layui.use(['form','layer','laydate','upload','table','laytpl'],function(){
         limit : 20,
         limits:[10,15,20,25],
         id : "statisticsListTable",
+        toolbar: 'default',
+        defaultToolbar: ['filter', 'print', 'exports'],
         cols:[[
             {type: 'checkbox', fixed:'left', width:50},
             {field: 'id', title: 'ID', width:60, align:"center"},
