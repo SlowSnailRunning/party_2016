@@ -7,6 +7,8 @@ import java.util.List;
 public interface UserService {
     int deleteById(Integer id);
 
+    int deleteByStuNo(String stuNo);
+
     void clear();
 
     int insert(User user);

@@ -7,6 +7,8 @@ import java.util.List;
 public interface UserMapper {
     int deleteById(Integer id);
 
+    int deleteByStuNo(String stuNo);
+
     void clear();
 
     int insert(User user);
@@ -22,4 +24,5 @@ public interface UserMapper {
     int updateById(User user);
 
     int queryStuNums();
+
 }

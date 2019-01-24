@@ -73,6 +73,11 @@
         from party_user
         where type = 'student'
     </delete>
+    <delete id="deleteByStuNo">
+        delete
+        from party_user
+        where student_no = #{stuNo,jdbcType=CHAR}
+    </delete>
     <insert id="insert" keyColumn="id" keyProperty="id" parameterType="cn.edu.cdcas.partyschool.model.User"
             useGeneratedKeys="true">
         insert into party_user (idx, exam_id, student_no,

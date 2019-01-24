@@ -19,6 +19,11 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
+    public int deleteByStuNo(String stuNo) {
+        return userMapper.deleteByStuNo(stuNo);
+    }
+
+    @Override
     public void clear() {
         userMapper.clear();
     }
@@ -57,7 +62,7 @@ public class UserServiceImpl implements UserService {
     public int queryStuNums() {
         return userMapper.queryStuNums();
     }
-    
+
     @Override
     public boolean isEmpty() {
         return userMapper.queryStuNums() == 0;
