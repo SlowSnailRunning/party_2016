@@ -71,12 +71,6 @@
 					"icon": "&#xe61c;",
 					"href": "/page/user/userList.html",
 					"spread": false
-				},
-				{
-					"title": "添加管理员",
-					"icon": "&#xe61c;",
-					"href": "page/user/userAdd.html",
-					"spread": false
 				}
 			]
 		},
