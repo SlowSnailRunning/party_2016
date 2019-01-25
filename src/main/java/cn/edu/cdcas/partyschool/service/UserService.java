@@ -1,6 +1,7 @@
 package cn.edu.cdcas.partyschool.service;
 
 import cn.edu.cdcas.partyschool.model.User;
+import cn.edu.cdcas.partyschool.util.JSONResult;
 
 import java.util.List;
 
@@ -26,5 +27,6 @@ public interface UserService {
     int queryStuNums();
 
     boolean isEmpty();    //judge whether the numbers of student is empty.
+    JSONResult addManger(User user);
 
 }

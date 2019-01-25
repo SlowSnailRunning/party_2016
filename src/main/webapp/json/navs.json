@@ -63,19 +63,19 @@
 		{
 			"title": "管理员管理",
 			"icon": "icon-text",
-			"href": "page/student/studentList.html",
+			"href": "page/user/userList.html",
 			"spread": false,
 			"children":[
 				{
 					"title": "管理员列表",
 					"icon": "&#xe61c;",
-					"href": "page/student/studentList.html",
+					"href": "/page/user/userList.html",
 					"spread": false
 				},
 				{
-					"title": "其他",
+					"title": "添加管理员",
 					"icon": "&#xe61c;",
-					"href": "page/student/studentList.html",
+					"href": "page/user/userAdd.html",
 					"spread": false
 				}
 			]

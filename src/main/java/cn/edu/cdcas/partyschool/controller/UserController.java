@@ -4,6 +4,7 @@ import cn.edu.cdcas.partyschool.model.User;
 import cn.edu.cdcas.partyschool.service.UserService;
 import cn.edu.cdcas.partyschool.util.ExcelUtil;
 import cn.edu.cdcas.partyschool.util.JSONResult;
+import org.apache.poi.util.SystemOutLogger;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -117,7 +118,6 @@ public class UserController {
         return new JSONResult(0, "已删除所选学生!", 200);
     }
 
-
     /**
      * clear all students attending exam.
      * it's necessary before you start a new exam .
@@ -128,6 +128,11 @@ public class UserController {
     public JSONResult clear() {
         userService.clear();
         return new JSONResult(0, "清空成功!", 200);
+    }
+
+    @RequestMapping("/addManger")
+    public JSONResult addManger(User user) {
+        return userService.addManger(user);
     }
 
 }

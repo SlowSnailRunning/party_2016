@@ -24,5 +24,6 @@ public interface UserMapper {
     int updateById(User user);
 
     int queryStuNums();
+    int queryByStuendtNo(User user);
 
 }
