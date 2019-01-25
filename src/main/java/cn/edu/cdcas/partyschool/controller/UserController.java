@@ -13,6 +13,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 import java.io.IOException;
 import java.util.Arrays;
 import java.util.HashMap;
@@ -139,10 +140,14 @@ public class UserController {
         userService.clear();
         return new JSONResult(0, "清空成功!", 200);
     }
-
     @RequestMapping("/addManger")
     public JSONResult addManger(User user) {
         return userService.addManger(user);
+    }
+    @RequestMapping("/MangerAuthority")
+    public JSONResult MangerAuthorityControl(HttpSession httpSession)
+    {
+        return userService.MangerAuthorityControl(httpSession);
     }
 
 }

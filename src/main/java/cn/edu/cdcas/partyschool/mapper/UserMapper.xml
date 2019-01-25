@@ -47,7 +47,6 @@
         party_number,
         `type`
     </sql>
-
     <select id="queryByStuendtNo" parameterType="cn.edu.cdcas.partyschool.model.User" resultType="java.lang.Integer">
         select
         COUNT(*)

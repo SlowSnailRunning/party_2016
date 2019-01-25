@@ -7,6 +7,7 @@ import cn.edu.cdcas.partyschool.util.JSONResult;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
+import javax.servlet.http.HttpSession;
 import java.util.List;
 
 @Service
@@ -73,13 +74,13 @@ public class UserServiceImpl implements UserService {
     public boolean isEmpty() {
         return userMapper.queryStuNums() == 0;
     }
+
     @Override
     public JSONResult addManger(User user) {
         try {
             //先查询
             int flag = userMapper.queryByStuendtNo(user);
-            if (flag != 0)//存在
-            {
+            if (flag != 0) {//存在
                 return new JSONResult(1, "用户账号已存在！！", 200);
             } else {//不存在
                 userMapper.insert(user);
@@ -90,6 +91,18 @@ public class UserServiceImpl implements UserService {
             return new JSONResult(3, "数据库异常！！，联系管理员", 200);
         }
     }
+
+    @Override
+    /*需在登陆时session中设置httpSession.setAttribute("authority")*/
+    public JSONResult MangerAuthorityControl(HttpSession httpSession) {
+        /* httpSession.setAttribute("authority","ROOT");*/
+        if ("ROOT" == httpSession.getAttribute("authority")) {//是超级管理员，给管理员管理权限
+            return new JSONResult(0, "", 0);
+        } else {
+            return new JSONResult(1, "", 0);
+        }
+    }
+
     public boolean exists(User user) {
         return userMapper.queryByStuNo(user.getStudentNo()) != null;
     }

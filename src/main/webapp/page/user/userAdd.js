@@ -22,7 +22,7 @@ layui.use(['form', 'layer', 'jquery'], function () {
             } else {
                 layer.msg(data.msg, {time: 400});
             }
-        })
+        });
         return false;
     });
     form.verify({account: [/^[\S]{12,15}$/, '密码必须12到15位，且不能出现空格']});
