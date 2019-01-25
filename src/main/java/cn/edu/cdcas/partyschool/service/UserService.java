@@ -23,6 +23,8 @@ public interface UserService {
 
     List<User> queryAll();
 
+    int updateByIdSelective(User user);
+
     int updateByStuNoSelective(User user);
 
     int updateByStuNo(User user);
@@ -31,7 +33,10 @@ public interface UserService {
 
     boolean isEmpty();    //judge whether the numbers of student is empty.
 
-    JSONResult addManger(User user);
+
+    int insertManger(User user);
+
+    boolean existsManager(User user);
 
     JSONResult MangerAuthorityControl(HttpSession httpSession);
 

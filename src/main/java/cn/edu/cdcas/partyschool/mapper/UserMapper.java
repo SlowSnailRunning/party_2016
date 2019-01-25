@@ -21,11 +21,14 @@ public interface UserMapper {
 
     List<User> queryAll();
 
+    int updateByIdSelective(User user);
+
     int updateByStuNoSelective(User user);
 
     int updateByStuNo(User user);
 
     int queryStuNums();
-    int queryByStuendtNo(User user);
+
+    int queryManagerNums(User user);
 
 }
