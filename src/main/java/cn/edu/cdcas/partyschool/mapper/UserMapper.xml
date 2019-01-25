@@ -48,11 +48,11 @@
         `type`
     </sql>
 
-    <select id="queryByStuendtNo" parameterType="cn.edu.cdcas.partyschool.model.User" resultType="java.lang.Integer">
-        select
-        COUNT(*)
+    <select id="queryManagerNums" parameterType="cn.edu.cdcas.partyschool.model.User" resultType="java.lang.Integer">
+        select COUNT(*)
         from party_user
-        where student_no = #{studentNo,jdbcType=CHAR} and (type ='ROOT' or type = 'manger')
+        where student_no = #{studentNo,jdbcType=CHAR}
+          and (type = 'ROOT' or type = 'manger')
     </select>
 
 

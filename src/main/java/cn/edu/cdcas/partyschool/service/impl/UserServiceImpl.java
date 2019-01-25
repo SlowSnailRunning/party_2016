@@ -3,7 +3,6 @@ package cn.edu.cdcas.partyschool.service.impl;
 import cn.edu.cdcas.partyschool.mapper.UserMapper;
 import cn.edu.cdcas.partyschool.model.User;
 import cn.edu.cdcas.partyschool.service.UserService;
-import cn.edu.cdcas.partyschool.util.JSONResult;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
@@ -78,23 +77,18 @@ public class UserServiceImpl implements UserService {
     public boolean isEmpty() {
         return userMapper.queryStuNums() == 0;
     }
+
     @Override
-    public JSONResult addManger(User user) {
-        try {
-            //先查询
-            int flag = userMapper.queryByStuendtNo(user);
-            if (flag != 0)//存在
-            {
-                return new JSONResult(1, "用户账号已存在！！", 200);
-            } else {//不存在
-                userMapper.insert(user);
-                return new JSONResult(0, "添加成功！！", 200);
-            }
-        } catch (Exception e) {//异常
-            e.printStackTrace();
-            return new JSONResult(3, "数据库异常！！，联系管理员", 200);
-        }
+    public int insertManger(User user) {
+        return userMapper.insert(user);
     }
+
+    @Override
+    public boolean existsManager(User user) {
+        return userMapper.queryManagerNums(user) > 0;
+    }
+
+    @Override
     public boolean exists(User user) {
         return userMapper.queryByStuNo(user.getStudentNo()) != null;
     }

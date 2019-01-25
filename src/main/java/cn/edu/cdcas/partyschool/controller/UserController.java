@@ -4,7 +4,6 @@ import cn.edu.cdcas.partyschool.model.User;
 import cn.edu.cdcas.partyschool.service.UserService;
 import cn.edu.cdcas.partyschool.util.ExcelUtil;
 import cn.edu.cdcas.partyschool.util.JSONResult;
-import org.apache.poi.util.SystemOutLogger;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -142,7 +141,19 @@ public class UserController {
 
     @RequestMapping("/addManger")
     public JSONResult addManger(User user) {
-        return userService.addManger(user);
+        try {
+            //先查询
+            if (userService.existsManager(user))//存在
+            {
+                return new JSONResult(1, "用户账号已存在！！", 200);
+            } else {//不存在
+                userService.insert(user);
+                return new JSONResult(0, "添加成功！！", 200);
+            }
+        } catch (Exception e) {//异常
+            e.printStackTrace();
+            return new JSONResult(3, "数据库异常！！，联系管理员", 200);
+        }
     }
 
 }
