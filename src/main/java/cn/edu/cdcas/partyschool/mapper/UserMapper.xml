@@ -47,15 +47,8 @@
         party_number,
         `type`
     </sql>
-<<<<<<< HEAD
-    <select id="queryByStuendtNo" parameterType="cn.edu.cdcas.partyschool.model.User" resultType="java.lang.Integer">
-        select
-        COUNT(*)
-=======
-
     <select id="queryManagerNums" parameterType="cn.edu.cdcas.partyschool.model.User" resultType="java.lang.Integer">
         select COUNT(*)
->>>>>>> 7a39a8db6d7403f26dcc29a3cb8744b477646d38
         from party_user
         where student_no = #{studentNo,jdbcType=CHAR}
           and (type = 'ROOT' or type = 'manger')
