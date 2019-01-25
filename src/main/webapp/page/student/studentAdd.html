@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html>
 <head>
@@ -10,8 +9,8 @@
     <meta name="apple-mobile-web-app-status-bar-style" content="black">
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="format-detection" content="telephone=no">
-    <link rel="stylesheet" href="../../layui/css/layui.css" media="all" />
-    <link rel="stylesheet" href="../../css/public.css" media="all" />
+    <link rel="stylesheet" href="../../layui/css/layui.css" media="all"/>
+    <link rel="stylesheet" href="../../css/public.css" media="all"/>
     <script type="text/javascript" src="../../layui/layui.js"></script>
 </head>
 <body class="childrenBody">
@@ -21,59 +20,58 @@
             <div class="layui-col-md9 layui-col-xs7">
 
                 <div class="layui-form-item magt3">
+                    <label class="layui-form-label">序号:</label>
+                    <div class="layui-input-block">
+                        <input type="text" class="layui-input idx" name="idx" required lay-verify="required">
+                    </div>
+                </div>
+
+
+                <div class="layui-form-item magt3">
+                    <label class="layui-form-label">年级:</label>
+                    <div class="layui-input-block">
+                        <input type="text" name="grade" class="layui-input grade" required lay-verify="required">
+                    </div>
+                </div>
+
+                <div class="layui-form-item magt3">
+                    <label class="layui-form-label">学院:</label>
+                    <div class="layui-input-block">
+                        <input type="text" name="department" class="layui-input department" required
+                               lay-verify="required">
+                    </div>
+                </div>
+
+                <div class="layui-form-item magt3">
+                    <label class="layui-form-label">专业:</label>
+                    <div class="layui-input-block">
+                        <input type="text" name="major" class="layui-input major" required lay-verify="required">
+                    </div>
+                </div>
+
+                <div class="layui-form-item magt3">
                     <label class="layui-form-label">学生姓名:</label>
                     <div class="layui-input-block">
-                        <input type="text" class="layui-input studentName" name="studentName"  required lay-verify="required">
+                        <input type="text" class="layui-input name" name="name" required lay-verify="required">
                     </div>
                 </div>
 
                 <div class="layui-form-item magt3">
                     <label class="layui-form-label ">学号:</label>
                     <div class="layui-input-block">
-                        <input type="text" name="studentNumber" class="layui-input studentNumber" required lay-verify="required">
+                        <input type="text" name="studentNo" class="layui-input studentNo" required
+                               lay-verify="required">
                     </div>
                 </div>
 
                 <div class="layui-form-item magt3">
-                    <label class="layui-form-label">班级:</label>
+                    <label class="layui-form-label">党校号:</label>
                     <div class="layui-input-block">
-                        <input type="text" name="studentGrade" class="layui-input studentGrade" required lay-verify="required">
+                        <input type="text" name="partyNumber" class="layui-input partyNumber" required
+                               lay-verify="required">
                     </div>
                 </div>
 
-                <div class="layui-form-item magt3">
-                    <label class="layui-form-label">性别:</label>
-                    <div class="layui-input-block studentSex">
-                        <input type="radio"  name="studentSex" value="男" title="男"  >
-                        <input type="radio"  name="studentSex" value="女" title="女">
-                        <input type="radio"  name="studentSex" value="保密" title="保密">
-                    </div>
-                </div>
-
-                <div class="layui-form-item">
-                    <div class="layui-inline">
-                        <label class="layui-form-label">验证手机</label>
-                        <div class="layui-input-inline">
-                            <input type="tel" name="studentPhoneNumber" lay-verify="required|phone" autocomplete="on" class="layui-input studentPhoneNumber">
-                        </div>
-                    </div>
-                </div>
-
-                   <div class="layui-form-item magt3">
-                    <label class="layui-form-label">地址:</label>
-                    <div class="layui-input-block">
-                        <input type="text" name="studentAddress" class="layui-input studentAddress" required lay-verify="required">
-                    </div>
-                </div>
-
-
-
-                    <div class="layui-inline">
-                        <label class="layui-form-label">出生日期</label>
-                        <div class="layui-input-inline">
-                            <input type="text" name="studentBirthday" id="date" lay-verify="date" placeholder="yyyy-MM-dd" autocomplete="on" class="layui-input studentBirthday">
-                        </div>
-                    </div>
 
                 <div class="layui-form-item magt3">
                     <button class="layui-btn" lay-submit lay-filter="signAdd">提交</button>
@@ -81,43 +79,44 @@
             </div>
         </div>
 
-            </div>
-   </form>
+    </div>
+</form>
 
 <script>
-    layui.use('laydate', function(){
+    layui.use('laydate', function () {
         var laydate = layui.laydate;
         //执行一个laydate实例
         laydate.render({
             elem: '#date' //指定元素
-            ,format:'yyyy-MM-dd'
+            , format: 'yyyy-MM-dd'
         });
     });
 </script>
 
 <script>
-    layui.use('form', function(){
+    layui.use('form', function () {
         var form = layui.form;
         //监听提交
         //signAdd为提交按钮的id
-        form.on('submit(signAdd)', function(data){
-            $.post("/user/studentAdd",data.field,
-                function(data){
-                    if(data.status == 200){
-                        alert('hello world!');
+        form.on('submit(signAdd)', function (data) {
+            // console.log(data.field);
+            $.post("/user/add.do", data.field,
+                function (data) {
+                    console.log(data);
+                    return;
+                    if (data.status === 200) {
                         layer.msg("添加成功");
                         var index = parent.layer.getFrameIndex(window.name); //获取窗口索引
                         parent.layer.close(index); // 关闭layer
-                       //使父页面重新刷新
+                        //使父页面重新刷新
                         parent.location.reload();
 
-                    }
-                    else{
+                    } else {
                         layer.msg("添加失败");
                         var index = parent.layer.getFrameIndex(window.name); //获取窗口索引
                         parent.layer.close(index); // 关闭layer
                     }
-                },"json");
+                }, "json");
             return false;
         });
     });

@@ -96,25 +96,25 @@ layui.use(['form', 'layer', 'laydate', 'upload', 'table', 'laytpl'], function ()
     });
 
     //添加学生
-    function addNews(edit) {
+    function addNews(original_data) {
         var index = layui.layer.open({
             title: "添加学生",
             type: 2,
             content: "studentAdd.html",
             success: function (layero, index) {
                 var body = layui.layer.getChildFrame('body', index);
-                if (edit) {
-                    body.find(".studentName").val(edit.studentName);
-                    body.find(".studentNumber").val(edit.studentNumber);
-                    body.find(".studentGrade").val(edit.studentGrade);
-                    body.find(".studentSex input[value=" + edit.studentSex + "]").prop("checked", "checked");
-                    body.find(".studentPhoneNumber").val(edit.studentPhoneNumber);
-                    body.find(".studentAddress").val(edit.studentAddress);
-                    body.find(".studentBirthday").val(edit.studentBirthday);
+                if (original_data) {
+                    body.find(".idx").val(original_data.idx);
+                    body.find(".grade").val(original_data.grade);
+                    body.find(".department").val(original_data.department);
+                    body.find(".major").val(original_data.major);
+                    body.find(".name").val(original_data.name);
+                    body.find(".studentNo").val(original_data.studentNo);
+                    body.find(".partyNumber").val(original_data.partyNumber);
                     form.render();
                 }
                 setTimeout(function () {
-                    layui.layer.tips('点击此处返回文章列表', '.layui-layer-setwin .layui-layer-close', {
+                    layui.layer.tips('点击此处返回考生列表', '.layui-layer-setwin .layui-layer-close', {
                         tips: 3
                     });
                 }, 500)
@@ -168,9 +168,9 @@ layui.use(['form', 'layer', 'laydate', 'upload', 'table', 'laytpl'], function ()
             data = obj.data;
 
         if (layEvent === 'edit') { //编辑
-            alert(data.studentNo + "  " + data.name);
+            // alert(data.studentNo + "  " + data.name);
+            // console.log(data);
             addNews(data);
-            alert(data.studentNo + "  " + data.name);
         } else if (layEvent === 'del') { //删除
             layer.confirm('确定删除此学生？', {icon: 3, title: '提示信息'}, function (index) {
                 $.post("/user/delete-individual.do", {

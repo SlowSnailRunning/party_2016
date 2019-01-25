@@ -17,11 +17,13 @@ public interface UserMapper {
 
     User queryById(Integer id);
 
+    User queryByStuNo(String stuNo);
+
     List<User> queryAll();
 
-    int updateByIdSelective(User user);
+    int updateByStuNoSelective(User user);
 
-    int updateById(User user);
+    int updateByStuNo(User user);
 
     int queryStuNums();
     int queryByStuendtNo(User user);

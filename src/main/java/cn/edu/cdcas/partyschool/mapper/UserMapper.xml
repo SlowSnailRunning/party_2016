@@ -72,6 +72,11 @@
         from party_user
         where type = 'student'
     </select>
+    <select id="queryByStuNo" resultType="cn.edu.cdcas.partyschool.model.User">
+        select *
+        from party_user
+        where student_no = #{stuNo,jdbcType=CHAR}
+    </select>
     <delete id="deleteById" parameterType="java.lang.Integer">
         delete
         from party_user
@@ -232,7 +237,7 @@
             </if>
         </trim>
     </insert>
-    <update id="updateByIdSelective" parameterType="cn.edu.cdcas.partyschool.model.User">
+    <update id="updateByStuNoSelective" parameterType="cn.edu.cdcas.partyschool.model.User">
         update party_user
         <set>
             <if test="idx != null">
@@ -296,9 +301,9 @@
                 `type` = #{type,jdbcType=CHAR},
             </if>
         </set>
-        where id = #{id,jdbcType=INTEGER}
+        where student_no = #{studentNo,jdbcType=INTEGER}
     </update>
-    <update id="updateById" parameterType="cn.edu.cdcas.partyschool.model.User">
+    <update id="updateByStuNo" parameterType="cn.edu.cdcas.partyschool.model.User">
         update party_user
         set idx           = #{idx,jdbcType=INTEGER},
             exam_id       = #{examId,jdbcType=INTEGER},
@@ -320,7 +325,7 @@
             make_up_score = #{makeUpScore,jdbcType=INTEGER},
             party_number  = #{partyNumber,jdbcType=VARCHAR},
             `type`        = #{type,jdbcType=CHAR}
-        where id = #{id,jdbcType=INTEGER}
+        where student_no = #{studentNo,jdbcType=INTEGER}
     </update>
 
 </mapper>
