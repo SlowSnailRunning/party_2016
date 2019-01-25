@@ -111,8 +111,6 @@ layui.use(['form', 'layer', 'laydate', 'upload', 'table', 'laytpl'], function ()
                     body.find(".studentPhoneNumber").val(edit.studentPhoneNumber);
                     body.find(".studentAddress").val(edit.studentAddress);
                     body.find(".studentBirthday").val(edit.studentBirthday);
-
-
                     form.render();
                 }
                 setTimeout(function () {
@@ -132,7 +130,7 @@ layui.use(['form', 'layer', 'laydate', 'upload', 'table', 'laytpl'], function ()
 
     //批量删除
     $(".delAll_btn").click(function () {
-        var checkStatus = table.checkStatus('newsListTable'),
+        var checkStatus = table.checkStatus('studentListTable'),
             data = checkStatus.data,
             stuNo = [];
         if (data.length > 0) {
@@ -140,17 +138,28 @@ layui.use(['form', 'layer', 'laydate', 'upload', 'table', 'laytpl'], function ()
                 stuNo.push(data[i].studentNo);
             }
             layer.confirm('确定删除选中的学生吗？', {icon: 3, title: '提示信息'}, function (index) {
-                alert("jifdsji");
-                $.post("/user/delete1.do", {
-                    stuNo: stuNo  //将需要删除的newsId作为参数传入
+                $.post("/user/delete-multiple.do", {
+                    stuNo: stuNo  //将需要删除的stuNo作为参数传入
                 }, function (data) {
+                    layer.msg(JSON.parse(data)['msg']);     //"删除成功!" or "清空成功!" from backend.
                     tableIns.reload();
                     layer.close(index);
                 });
-            })
+            });
         } else {
-            layer.msg("请选择需要删除的文章");
+            layer.msg("请选择需要删除的学生");
         }
+    });
+
+    //清空所有考生
+    $(".clearAllStu_btn").click(function () {
+        layer.confirm('确认清空此学生列表吗?', {icon: 3, title: '提示信息'}, function (index) {
+            $.post("/user/clear.do", function (data) {
+                layer.msg(JSON.parse(data)['msg']);     //"清空成功!" from backend.
+                tableIns.reload();
+                layer.close(index);
+            });
+        });
     });
 
     //列表操作
@@ -164,7 +173,7 @@ layui.use(['form', 'layer', 'laydate', 'upload', 'table', 'laytpl'], function ()
             alert(data.studentNo + "  " + data.name);
         } else if (layEvent === 'del') { //删除
             layer.confirm('确定删除此学生？', {icon: 3, title: '提示信息'}, function (index) {
-                $.post("/user/delete.do", {
+                $.post("/user/delete-individual.do", {
                     studentNo: data.studentNo  //将需要删除的学生学号作为参数传入
                 }, function (data) {
                     tableIns.reload();

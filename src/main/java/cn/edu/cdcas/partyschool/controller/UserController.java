@@ -13,6 +13,7 @@ import org.springframework.web.multipart.MultipartFile;
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import java.io.IOException;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -92,11 +93,28 @@ public class UserController {
      * @param request the object of request
      * @return
      */
-    @RequestMapping(value = "/delete", method = RequestMethod.POST)
-    public JSONResult deleteStu(HttpServletRequest request) {
+    @RequestMapping(value = "/delete-individual", method = RequestMethod.POST)
+    public JSONResult deleteSingleStu(HttpServletRequest request) {
         String stuNo = request.getParameter("studentNo");
         this.userService.deleteByStuNo(stuNo);
         return new JSONResult(0, "删除成功!", 200);
+    }
+
+    /**
+     * @param stuNo the array of student numbers to be deleted.
+     * @return
+     */
+    @RequestMapping(value = "/delete-multiple", method = RequestMethod.POST)
+    public JSONResult deleteMultipleStu(@RequestParam("stuNo[]") String[] stuNo) {
+        if (stuNo.length == userService.queryStuNums()) {
+            return clear();
+        }
+
+        //delete the student whose student number contained in this array.
+        for (String sno : stuNo) userService.deleteByStuNo(sno);
+
+        System.out.println(Arrays.toString(stuNo));
+        return new JSONResult(0, "已删除所选学生!", 200);
     }
 
 
@@ -106,7 +124,7 @@ public class UserController {
      *
      * @return
      */
-    @RequestMapping(value = "/clear", method = RequestMethod.GET)
+    @RequestMapping(value = "/clear", method = RequestMethod.POST)
     public JSONResult clear() {
         userService.clear();
         return new JSONResult(0, "清空成功!", 200);
