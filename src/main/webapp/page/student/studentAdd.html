@@ -19,6 +19,9 @@
         <div class="layui-row layui-col-space10">
             <div class="layui-col-md9 layui-col-xs7">
 
+                <!--the id of student in db.-->
+                <input type="text" class="layui-input layui-hide id" name="id">
+
                 <div class="layui-form-item magt3">
                     <label class="layui-form-label">序号:</label>
                     <div class="layui-input-block">
@@ -83,34 +86,21 @@
 </form>
 
 <script>
-    layui.use('laydate', function () {
-        var laydate = layui.laydate;
-        //执行一个laydate实例
-        laydate.render({
-            elem: '#date' //指定元素
-            , format: 'yyyy-MM-dd'
-        });
-    });
-</script>
-
-<script>
     layui.use('form', function () {
         var form = layui.form;
         //监听提交
         //signAdd为提交按钮的id
         form.on('submit(signAdd)', function (data) {
             // console.log(data.field);
-            $.post("/user/add.do", data.field,
+            // return;
+            $.post("/user/add-update.do", data.field,
                 function (data) {
-                    console.log(data);
-                    return;
                     if (data.status === 200) {
-                        layer.msg("添加成功");
+                        layer.msg(data['msg']);
                         var index = parent.layer.getFrameIndex(window.name); //获取窗口索引
                         parent.layer.close(index); // 关闭layer
                         //使父页面重新刷新
                         parent.location.reload();
-
                     } else {
                         layer.msg("添加失败");
                         var index = parent.layer.getFrameIndex(window.name); //获取窗口索引

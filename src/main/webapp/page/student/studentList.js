@@ -18,7 +18,8 @@ layui.use(['form', 'layer', 'laydate', 'upload', 'table', 'laytpl'], function ()
         id: "studentListTable",
         cols: [[
             {type: 'checkbox', fixed: 'left', width: 50},
-            {field: 'idx', title: 'ID', width: 86, align: "center"},
+            {field: 'id', title: 'ID', width: 86, align: "center", hide: true},
+            {field: 'idx', title: '序号', width: 86, align: "center"},
             {field: 'grade', title: '年级', width: 86, align: "center"},
             {field: 'department', title: '学院', width: 100, align: "center"},
             {field: 'major', title: '专业', width: 160, align: "center"},
@@ -61,7 +62,6 @@ layui.use(['form', 'layer', 'laydate', 'upload', 'table', 'laytpl'], function ()
         }
     });
     $(".addNewsList_btn").click(function () {
-        // layer.msg("dsfdsfsaf");
         var upload = layui.upload; //得到 upload 对象
 
         //获取当前网址，如： http://localhost:8083/uimcardprj/share/meun.jsp
@@ -95,7 +95,7 @@ layui.use(['form', 'layer', 'laydate', 'upload', 'table', 'laytpl'], function ()
         addNews();
     });
 
-    //添加学生
+    //添加和修改考生信息
     function addNews(original_data) {
         var index = layui.layer.open({
             title: "添加学生",
@@ -104,6 +104,7 @@ layui.use(['form', 'layer', 'laydate', 'upload', 'table', 'laytpl'], function ()
             success: function (layero, index) {
                 var body = layui.layer.getChildFrame('body', index);
                 if (original_data) {
+                    body.find(".id").val(original_data.id);
                     body.find(".idx").val(original_data.idx);
                     body.find(".grade").val(original_data.grade);
                     body.find(".department").val(original_data.department);
@@ -168,8 +169,6 @@ layui.use(['form', 'layer', 'laydate', 'upload', 'table', 'laytpl'], function ()
             data = obj.data;
 
         if (layEvent === 'edit') { //编辑
-            // alert(data.studentNo + "  " + data.name);
-            // console.log(data);
             addNews(data);
         } else if (layEvent === 'del') { //删除
             layer.confirm('确定删除此学生？', {icon: 3, title: '提示信息'}, function (index) {

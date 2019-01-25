@@ -228,6 +228,73 @@
             </if>
         </trim>
     </insert>
+    <update id="updateByIdSelective" parameterType="cn.edu.cdcas.partyschool.model.User">
+        update party_user
+        <set>
+            <if test="idx != null">
+                idx = #{idx,jdbcType=INTEGER},
+            </if>
+            <if test="examId != null">
+                exam_id = #{examId,jdbcType=INTEGER},
+            </if>
+            <if test="studentNo != null">
+                student_no = #{studentNo,jdbcType=CHAR},
+            </if>
+            <if test="name != null">
+                `name` = #{name,jdbcType=VARCHAR},
+            </if>
+            <if test="clazz != null">
+                `class` = #{clazz,jdbcType=VARCHAR},
+            </if>
+            <if test="department != null">
+                department = #{department,jdbcType=VARCHAR},
+            </if>
+            <if test="grade != null">
+                grade = #{grade,jdbcType=VARCHAR},
+            </if>
+            <if test="major != null">
+                major = #{major,jdbcType=VARCHAR},
+            </if>
+            <if test="sex != null">
+                sex = #{sex,jdbcType=VARCHAR},
+            </if>
+            <if test="graduated != null">
+                graduated = #{graduated,jdbcType=CHAR},
+            </if>
+            <if test="excellent != null">
+                excellent = #{excellent,jdbcType=CHAR},
+            </if>
+            <if test="examState != null">
+                exam_state = #{examState,jdbcType=INTEGER},
+            </if>
+            <if test="examStart != null">
+                exam_start = #{examStart,jdbcType=TIMESTAMP},
+            </if>
+            <if test="examEnd != null">
+                exam_end = #{examEnd,jdbcType=TIMESTAMP},
+            </if>
+            <if test="examScore != null">
+                exam_score = #{examScore,jdbcType=INTEGER},
+            </if>
+            <if test="makeUpStart != null">
+                make_up_start = #{makeUpStart,jdbcType=TIMESTAMP},
+            </if>
+            <if test="makeUpEnd != null">
+                make_up_end = #{makeUpEnd,jdbcType=TIMESTAMP},
+            </if>
+            <if test="makeUpScore != null">
+                make_up_score = #{makeUpScore,jdbcType=INTEGER},
+            </if>
+            <if test="partyNumber != null">
+                party_number = #{partyNumber,jdbcType=VARCHAR},
+            </if>
+            <if test="type != null">
+                `type` = #{type,jdbcType=CHAR},
+            </if>
+        </set>
+        where id = #{id,jdbcType=INTEGER}
+    </update>
+
     <update id="updateByStuNoSelective" parameterType="cn.edu.cdcas.partyschool.model.User">
         update party_user
         <set>
@@ -318,5 +385,6 @@
             `type`        = #{type,jdbcType=CHAR}
         where student_no = #{studentNo,jdbcType=INTEGER}
     </update>
+
 
 </mapper>

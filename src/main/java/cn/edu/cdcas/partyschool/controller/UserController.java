@@ -68,14 +68,14 @@ public class UserController {
         return new JSONResult(0, "考生导入成功!", 200);
     }
 
-    @RequestMapping("/add")
+    @RequestMapping("/add-update")
     public JSONResult addStu(User user) {
-        if (userService.exists(user)) {
-            userService.updateByStuNoSelective(user);
-            return new JSONResult(0, "信息修改成功!", 200);
+        if (user.getId() == null) { //if 'id' is null,insert a new student.
+            userService.insertSelective(user);
+            return new JSONResult(0, "添加考生成功!", 200);
         }
-        userService.insertSelective(user);
-        return new JSONResult(0, "添加考生成功!", 200);
+        userService.updateByIdSelective(user);
+        return new JSONResult(0, "信息修改成功!", 200);
     }
 
     /**

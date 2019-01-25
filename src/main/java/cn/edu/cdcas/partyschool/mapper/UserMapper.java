@@ -21,6 +21,8 @@ public interface UserMapper {
 
     List<User> queryAll();
 
+    int updateByIdSelective(User user);
+
     int updateByStuNoSelective(User user);
 
     int updateByStuNo(User user);

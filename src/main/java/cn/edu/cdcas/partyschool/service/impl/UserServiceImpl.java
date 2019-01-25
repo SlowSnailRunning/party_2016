@@ -54,6 +54,11 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
+    public int updateByIdSelective(User user) {
+        return userMapper.updateByIdSelective(user);
+    }
+
+    @Override
     public int updateByStuNoSelective(User user) {
         return userMapper.updateByStuNoSelective(user);
     }
