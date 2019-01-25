@@ -17,14 +17,17 @@ public interface UserService {
 
     User queryById(Integer id);
 
+    User queryByStuNo(String stuNo);
+
     List<User> queryAll();
 
-    int updateByIdSelective(User user);
+    int updateByStuNoSelective(User user);
 
-    int updateById(User user);
+    int updateByStuNo(User user);
 
     int queryStuNums();
 
     boolean isEmpty();    //judge whether the numbers of student is empty.
 
+    boolean exists(User user);
 }

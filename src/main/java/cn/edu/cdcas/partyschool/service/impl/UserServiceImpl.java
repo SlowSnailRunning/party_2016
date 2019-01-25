@@ -44,18 +44,23 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
+    public User queryByStuNo(String stuNo) {
+        return userMapper.queryByStuNo(stuNo);
+    }
+
+    @Override
     public List<User> queryAll() {
         return userMapper.queryAll();
     }
 
     @Override
-    public int updateByIdSelective(User user) {
-        return userMapper.updateByIdSelective(user);
+    public int updateByStuNoSelective(User user) {
+        return userMapper.updateByStuNoSelective(user);
     }
 
     @Override
-    public int updateById(User user) {
-        return userMapper.updateById(user);
+    public int updateByStuNo(User user) {
+        return userMapper.updateByStuNo(user);
     }
 
     @Override
@@ -66,6 +71,11 @@ public class UserServiceImpl implements UserService {
     @Override
     public boolean isEmpty() {
         return userMapper.queryStuNums() == 0;
+    }
+
+    @Override
+    public boolean exists(User user) {
+        return userMapper.queryByStuNo(user.getStudentNo()) != null;
     }
 
 
