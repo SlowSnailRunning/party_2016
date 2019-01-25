@@ -21,7 +21,7 @@
 			]
 		},
 		{
-		"title": "学生管理",
+		"title": "考生信息",
 		"icon": "icon-text",
 		"href": "page/student/studentList.html",
 		"spread": false,
@@ -41,15 +41,15 @@
 		]
 		},
 		{
-			"title": "题库管理",
+			"title": "题库信息",
 			"icon": "icon-text",
-			"href": "page/question/statisticsList.html",
+			"href": "page/question/questionList.html",
 			"spread": false,
 			"children":[
 				{
 					"title": "题库列表",
 					"icon": "&#xe61c;",
-					"href": "page/question/statisticsList.html",
+					"href": "page/question/questionList.html",
 					"spread": false
 				},
 				{
