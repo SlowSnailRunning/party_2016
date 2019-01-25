@@ -1,32 +1,32 @@
-layui.use('table', function(){
+layui.use('table', function () {
     var table = layui.table;
-    var loading=layer.load();
+    var loading = layer.load();
     table.render({
         elem: '#test'
-        ,url:'/statisticsCorrect.do'
-        ,toolbar: '#toolbarDemo'
-        ,title: '考试分析数据'
-        ,limit:10
-        ,loading:true
+        , url: '/statisticsCorrect.do'
+        , toolbar: '#toolbarDemo'
+        , title: '考试分析数据'
+        , limit: 10
+        , loading: true
         /*,toolbar: 'default'*/
-        ,defaultToolbar: ['filter', 'print', 'exports']
-        ,limits:[10,20,100,200]
-        ,cols:[[
+        , defaultToolbar: ['filter', 'print', 'exports']
+        , limits: [10, 20, 100, 200]
+        , cols: [[
             /*{type: 'checkbox', fixed:'left', width:50},*/
-            {title: '序号',type:'numbers'},
-            {field: 'id', title: 'ID', width:60, align:"center",hide:true},
-            {field: 'intro', title: '内容',align:"center"},
-            {field: 'type', title: '类型',width:150,align:'center'},
-            {field: 'selected', title: '选中次数', width:150, align:'center',sort:true },
-            {field: 'correct', title: '正确率',align:'center',sort:true},
-            {title: '操作', width:170, templet:'#barDemo',fixed:"right",align:"center"}
+            {title: '序号', type: 'numbers'},
+            {field: 'id', title: 'ID', width: 60, align: "center", hide: true},
+            {field: 'intro', title: '内容', align: "center"},
+            {field: 'type', title: '类型', width: 150, align: 'center'},
+            {field: 'selected', title: '选中次数', width: 150, align: 'center', sort: true},
+            {field: 'correct', title: '正确率', align: 'center', sort: true},
+            {title: '操作', width: 170, templet: '#barDemo', fixed: "right", align: "center"}
         ]]
-        ,page: true
+        , page: true
     });
     layer.close(loading);
-    table.on('tool(test)', function(obj){
+    table.on('tool(test)', function (obj) {
         var data = obj.data;
-        if(data.type=="单选"||data.type=="多选") {
+        if (data.type == "单选" || data.type == "多选") {
             if (obj.event === 'look') {
                 $.post('/getQuestion.do?question_id=' + data.id, {}, function (str) {
                     var obj = JSON.parse(str);
@@ -40,9 +40,8 @@ layui.use('table', function(){
                     });
                 });
             }
-        }else
-        {
-            layer.msg('请看表格',{time:400});
+        } else {
+            layer.msg('请看表格', {time: 400});
         }
     });
 });
