@@ -1,6 +1,7 @@
 package cn.edu.cdcas.partyschool.service.impl;
 
 import cn.edu.cdcas.partyschool.mapper.UserMapper;
+import cn.edu.cdcas.partyschool.model.Manger;
 import cn.edu.cdcas.partyschool.model.User;
 import cn.edu.cdcas.partyschool.service.UserService;
 import cn.edu.cdcas.partyschool.util.JSONResult;
@@ -8,7 +9,9 @@ import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpSession;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 @Service
 public class UserServiceImpl implements UserService {
@@ -79,7 +82,7 @@ public class UserServiceImpl implements UserService {
     @Override
     /*需在登陆时session中设置httpSession.setAttribute("authority")*/
     public JSONResult MangerAuthorityControl(HttpSession httpSession) {
-        /* httpSession.setAttribute("authority","ROOT");*/
+         httpSession.setAttribute("authority","ROOT");
         if ("ROOT" == httpSession.getAttribute("authority")) {//是超级管理员，给管理员管理权限
             return new JSONResult(0, "", 0);
         } else {
@@ -98,4 +101,31 @@ public class UserServiceImpl implements UserService {
     public boolean exists(User user) {
         return userMapper.queryByStuNo(user.getStudentNo()) != null;
     }
+
+    @Override
+    public Map<String,Object> queryMangerMap(int page ,int limit) {
+        Map<String, Object> map = new HashMap<>();
+        List<Manger> list = userMapper.queryMangerList((page-1)*limit,limit);
+        map.put("code", 0);
+        map.put("msg", "success");
+        map.put("count", userMapper.queryMangerCount());
+        map.put("status", 200);
+        map.put("data", list);
+        return map;
+    }
+    public Map<String,Object>  dimQueryMangerByName(String name) {
+        Map<String, Object> map = new HashMap<>();
+        List<Manger> list = userMapper.dimQueryMangerByName(name);
+        map.put("code", 0);
+        map.put("msg", "success");
+        map.put("count",list.size());//直接给list大小
+        map.put("status", 200);
+        map.put("data", list);
+        return map;
+        }
+
+
+
+
+
 }

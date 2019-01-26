@@ -18,7 +18,7 @@ public class StatisticsServiceImpl implements StatisticsInterface {
     public StatisticsPage statisticsCorrect(int pageSize,int currentPage)
     {
         StatisticsPage statisticsPage = new StatisticsPage();
-        List<Statistics> statistics = statisticsMapper.statisticsCorrect(pageSize,currentPage);
+        List<Statistics> statistics = statisticsMapper.statisticsCorrect(pageSize,(currentPage-1)*pageSize);
         Statistics statistic=null;
         for (int i=0;i<statistics.size();i++)
         {

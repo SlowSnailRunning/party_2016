@@ -61,11 +61,34 @@
         from party_user
         where id = #{id,jdbcType=INTEGER}
     </select>
+
+    <select id="queryMangerCount" resultType="java.lang.Integer">
+        select count(*)
+        from party_user
+        where type = 'ROOT' or  type = 'manger'
+    </select>
+
     <select id="queryStuNums" resultType="java.lang.Integer">
         select count(*)
         from party_user
         where type = 'student'
     </select>
+
+
+
+    <select id="dimQueryMangerByName" resultType="cn.edu.cdcas.partyschool.model.Manger" parameterType="java.lang.String" >
+        select id,student_no studentNo,`name`,sex,`type`
+        from party_user
+        where (type = 'ROOT' or type = 'manger') and name like '%${name}%'
+    </select>
+
+
+    <select id="queryMangerList" resultType="cn.edu.cdcas.partyschool.model.Manger" parameterType="java.lang.Integer" >
+        select id,student_no studentNo,`name`,sex,`type`
+        from party_user
+        where (type = 'ROOT' or type = 'manger') limit #{page},#{limit}
+    </select>
+
     <select id="queryAll" resultType="cn.edu.cdcas.partyschool.model.User" resultMap="BaseResultMap">
         select *
         from party_user

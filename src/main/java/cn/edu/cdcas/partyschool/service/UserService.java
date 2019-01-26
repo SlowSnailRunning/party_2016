@@ -5,6 +5,7 @@ import cn.edu.cdcas.partyschool.util.JSONResult;
 
 import javax.servlet.http.HttpSession;
 import java.util.List;
+import java.util.Map;
 
 public interface UserService {
     int deleteById(Integer id);
@@ -33,7 +34,6 @@ public interface UserService {
 
     boolean isEmpty();    //judge whether the numbers of student is empty.
 
-
     int insertManger(User user);
 
     boolean existsManager(User user);
@@ -41,4 +41,10 @@ public interface UserService {
     JSONResult MangerAuthorityControl(HttpSession httpSession);
 
     boolean exists(User user);
+
+    Map<String,Object> queryMangerMap(int page ,int limit);
+
+
+    Map<String,Object> dimQueryMangerByName(String name);
+
 }

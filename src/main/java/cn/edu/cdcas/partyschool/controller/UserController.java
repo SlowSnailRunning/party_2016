@@ -4,6 +4,7 @@ import cn.edu.cdcas.partyschool.model.User;
 import cn.edu.cdcas.partyschool.service.UserService;
 import cn.edu.cdcas.partyschool.util.ExcelUtil;
 import cn.edu.cdcas.partyschool.util.JSONResult;
+import org.apache.ibatis.annotations.Param;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -160,5 +161,15 @@ public class UserController {
     {
         return userService.MangerAuthorityControl(httpSession);
     }
+    @RequestMapping("/allManger")
+    public Map<String, Object> queryMangerMap(@RequestParam(defaultValue ="1" ) int page, @RequestParam(defaultValue = "5") int limit) {
+        return userService.queryMangerMap(page,limit);
+    }
+    @RequestMapping("/dimQueryMangerByName")
+    public Map<String, Object> dimQueryMangerByName(String name)
+    {
+       return userService.dimQueryMangerByName(name);
+    }
+
 
 }
