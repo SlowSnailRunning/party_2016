@@ -59,17 +59,25 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
+    public List<User> queryAllByPaging(int offsetSize, int pageSize) {
+        return userMapper.queryAllByPaging(offsetSize, pageSize);
+    }
+
+    @Override
     public int updateByIdSelective(User user) {
         return userMapper.updateByIdSelective(user);
     }
+
     @Override
     public int updateByStuNoSelective(User user) {
         return userMapper.updateByStuNoSelective(user);
     }
+
     @Override
     public int updateByStuNo(User user) {
         return userMapper.updateByStuNo(user);
     }
+
     @Override
     public int queryStuNums() {
         return userMapper.queryStuNums();
@@ -79,6 +87,7 @@ public class UserServiceImpl implements UserService {
     public boolean isEmpty() {
         return userMapper.queryStuNums() == 0;
     }
+
     @Override
     /*需在登陆时session中设置httpSession.setAttribute("authority")*/
     public JSONResult MangerAuthorityControl(HttpSession httpSession) {
@@ -89,14 +98,17 @@ public class UserServiceImpl implements UserService {
             return new JSONResult(1, "", 0);
         }
     }
+
     @Override
     public int insertManger(User user) {
         return userMapper.insert(user);
     }
+
     @Override
     public boolean existsManager(User user) {
         return userMapper.queryManagerNums(user) > 0;
     }
+
     @Override
     public boolean exists(User user) {
         return userMapper.queryByStuNo(user.getStudentNo()) != null;

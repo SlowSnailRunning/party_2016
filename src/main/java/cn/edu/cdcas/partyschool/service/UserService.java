@@ -24,6 +24,8 @@ public interface UserService {
 
     List<User> queryAll();
 
+    List<User> queryAllByPaging(int offsetSize, int pageSize);
+
     int updateByIdSelective(User user);
 
     int updateByStuNoSelective(User user);

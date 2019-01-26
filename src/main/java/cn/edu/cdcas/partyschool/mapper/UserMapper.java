@@ -23,6 +23,8 @@ public interface UserMapper {
 
     List<User> queryAll();
 
+    List<User> queryAllByPaging(@Param("offsetSize") int offsetSize, @Param("pageSize") int pageSize);
+
     int updateByIdSelective(User user);
 
     int updateByStuNoSelective(User user);
