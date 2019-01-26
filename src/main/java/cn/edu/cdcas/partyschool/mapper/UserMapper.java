@@ -25,6 +25,8 @@ public interface UserMapper {
 
     List<User> queryAllByPaging(@Param("offsetSize") int offsetSize, @Param("pageSize") int pageSize);
 
+    List<User> queryAllByPagingAndKey(@Param("offsetSize") int offsetSize, @Param("pageSize") int pageSize, @Param("field") String field, @Param("value") String value);
+
     int updateByIdSelective(User user);
 
     int updateByStuNoSelective(User user);
@@ -33,6 +35,7 @@ public interface UserMapper {
 
     int queryStuNums();
 
+    int queryStuNumsByField(@Param("field") String field, @Param("value") String value);
 
     int queryManagerNums(User user);
 

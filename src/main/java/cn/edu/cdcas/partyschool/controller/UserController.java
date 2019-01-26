@@ -4,7 +4,7 @@ import cn.edu.cdcas.partyschool.model.User;
 import cn.edu.cdcas.partyschool.service.UserService;
 import cn.edu.cdcas.partyschool.util.ExcelUtil;
 import cn.edu.cdcas.partyschool.util.JSONResult;
-import org.apache.ibatis.annotations.Param;
+import cn.edu.cdcas.partyschool.util.JSONTableResult;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -15,7 +15,6 @@ import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -87,17 +86,26 @@ public class UserController {
      * @return
      */
     @RequestMapping(value = "/all", method = RequestMethod.GET)
-    public Map<String, Object> showAllStuInfo(@RequestParam(value = "page", required = false) int page, @RequestParam(value = "limit", required = false) int limit) {
-        Map<String, Object> map = new HashMap<>();
-        List<User> data = this.userService.queryAllByPaging((page - 1) * limit, limit);
-        data.forEach(user -> System.out.println(user.getStudentNo()));
+    public JSONTableResult showAllStuInfo(@RequestParam(value = "page", required = false) int page, @RequestParam(value = "limit", required = false) int limit
+            , @RequestParam(value = "field", required = false, defaultValue = "") String field, @RequestParam(value = "value", required = false) String value) {
+//        Map<String, Object> map = new HashMap<>();
+        List<User> data;
+        int count = 0;
+        if (field.equals("")) {
+            count = userService.queryStuNums();
+            data = userService.queryAllByPaging((page - 1) * limit, limit);
+        } else {
+            count = userService.queryStuNumsByField(field, value);
+            data = this.userService.queryAllByPagingAndKey((page - 1) * limit, limit, field, value);
+        }
 
-        map.put("code", 0);
-        map.put("msg", "success");
-        map.put("count", userService.queryStuNums());
-        map.put("status", 200);
-        map.put("data", data);
-        return map;
+        return new JSONTableResult(0, "success", count, 200, data);
+//        map.put("code", 0);
+//        map.put("msg", "success");
+//        map.put("count", userService.queryStuNums());
+//        map.put("status", 200);
+//        map.put("data", data);
+//        return map;
     }
 
     /**
@@ -161,14 +169,15 @@ public class UserController {
     public JSONResult MangerAuthorityControl(HttpSession httpSession) {
         return userService.MangerAuthorityControl(httpSession);
     }
+
     @RequestMapping("/allManger")
-    public Map<String, Object> queryMangerMap(@RequestParam(defaultValue ="1" ) int page, @RequestParam(defaultValue = "5") int limit) {
-        return userService.queryMangerMap(page,limit);
+    public Map<String, Object> queryMangerMap(@RequestParam(defaultValue = "1") int page, @RequestParam(defaultValue = "5") int limit) {
+        return userService.queryMangerMap(page, limit);
     }
+
     @RequestMapping("/dimQueryMangerByName")
-    public Map<String, Object> dimQueryMangerByName(String name)
-    {
-       return userService.dimQueryMangerByName(name);
+    public Map<String, Object> dimQueryMangerByName(String name) {
+        return userService.dimQueryMangerByName(name);
     }
 
 

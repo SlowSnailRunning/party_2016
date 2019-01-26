@@ -64,6 +64,11 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
+    public List<User> queryAllByPagingAndKey(int offsetSize, int pageSize, String field, String value) {
+        return userMapper.queryAllByPagingAndKey(offsetSize, pageSize, field, value);
+    }
+
+    @Override
     public int updateByIdSelective(User user) {
         return userMapper.updateByIdSelective(user);
     }
@@ -84,6 +89,11 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
+    public int queryStuNumsByField(String field, String value) {
+        return userMapper.queryStuNumsByField(field, value);
+    }
+
+    @Override
     public boolean isEmpty() {
         return userMapper.queryStuNums() == 0;
     }
@@ -91,7 +101,7 @@ public class UserServiceImpl implements UserService {
     @Override
     /*需在登陆时session中设置httpSession.setAttribute("authority")*/
     public JSONResult MangerAuthorityControl(HttpSession httpSession) {
-         httpSession.setAttribute("authority","ROOT");
+        httpSession.setAttribute("authority", "ROOT");
         if ("ROOT" == httpSession.getAttribute("authority")) {//是超级管理员，给管理员管理权限
             return new JSONResult(0, "", 0);
         } else {
@@ -115,9 +125,9 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public Map<String,Object> queryMangerMap(int page ,int limit) {
+    public Map<String, Object> queryMangerMap(int page, int limit) {
         Map<String, Object> map = new HashMap<>();
-        List<Manger> list = userMapper.queryMangerList((page-1)*limit,limit);
+        List<Manger> list = userMapper.queryMangerList((page - 1) * limit, limit);
         map.put("code", 0);
         map.put("msg", "success");
         map.put("count", userMapper.queryMangerCount());
@@ -125,19 +135,17 @@ public class UserServiceImpl implements UserService {
         map.put("data", list);
         return map;
     }
-    public Map<String,Object>  dimQueryMangerByName(String name) {
+
+    public Map<String, Object> dimQueryMangerByName(String name) {
         Map<String, Object> map = new HashMap<>();
         List<Manger> list = userMapper.dimQueryMangerByName(name);
         map.put("code", 0);
         map.put("msg", "success");
-        map.put("count",list.size());//直接给list大小
+        map.put("count", list.size());//直接给list大小
         map.put("status", 200);
         map.put("data", list);
         return map;
-        }
-
-
-
+    }
 
 
 }

@@ -26,6 +26,8 @@ public interface UserService {
 
     List<User> queryAllByPaging(int offsetSize, int pageSize);
 
+    List<User> queryAllByPagingAndKey(int offsetSize, int pageSize, String field, String value);
+
     int updateByIdSelective(User user);
 
     int updateByStuNoSelective(User user);
@@ -33,6 +35,8 @@ public interface UserService {
     int updateByStuNo(User user);
 
     int queryStuNums();
+
+    int queryStuNumsByField(String field, String value);
 
     boolean isEmpty();    //judge whether the numbers of student is empty.
 
@@ -44,9 +48,9 @@ public interface UserService {
 
     boolean exists(User user);
 
-    Map<String,Object> queryMangerMap(int page ,int limit);
+    Map<String, Object> queryMangerMap(int page, int limit);
 
 
-    Map<String,Object> dimQueryMangerByName(String name);
+    Map<String, Object> dimQueryMangerByName(String name);
 
 }
