@@ -89,7 +89,7 @@ public class UserController {
     @RequestMapping(value = "/all", method = RequestMethod.GET)
     public Map<String, Object> showAllStuInfo(@RequestParam(value = "page", required = false) int page, @RequestParam(value = "limit", required = false) int limit) {
         Map<String, Object> map = new HashMap<>();
-        List<User> data = this.userService.queryAll();
+        List<User> data = this.userService.queryAllByPaging((page - 1) * limit, limit);
         map.put("code", 0);
         map.put("msg", "success");
         map.put("count", userService.queryStuNums());
@@ -139,6 +139,7 @@ public class UserController {
         userService.clear();
         return new JSONResult(0, "清空成功!", 200);
     }
+
     @RequestMapping("/addManger")
     public JSONResult addManger(User user) {
         try {
@@ -155,9 +156,9 @@ public class UserController {
             return new JSONResult(3, "数据库异常！！，联系管理员", 200);
         }
     }
+
     @RequestMapping("/MangerAuthority")
-    public JSONResult MangerAuthorityControl(HttpSession httpSession)
-    {
+    public JSONResult MangerAuthorityControl(HttpSession httpSession) {
         return userService.MangerAuthorityControl(httpSession);
     }
 

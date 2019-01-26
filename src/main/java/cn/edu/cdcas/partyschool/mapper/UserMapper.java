@@ -1,6 +1,7 @@
 package cn.edu.cdcas.partyschool.mapper;
 
 import cn.edu.cdcas.partyschool.model.User;
+import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
 
@@ -20,6 +21,8 @@ public interface UserMapper {
     User queryByStuNo(String stuNo);
 
     List<User> queryAll();
+
+    List<User> queryAllByPaging(@Param("offsetSize") int offsetSize, @Param("pageSize") int pageSize);
 
     int updateByIdSelective(User user);
 
