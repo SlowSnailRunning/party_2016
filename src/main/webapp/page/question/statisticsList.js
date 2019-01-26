@@ -8,19 +8,26 @@ layui.use('table', function () {
         , title: '考试分析数据'
         , limit: 10
         , loading: true
-        , height : "full-25"
+        , height: "full-25"
         /*,toolbar: 'default'*/
         , defaultToolbar: ['filter', 'print', 'exports']
-        , limits: [5,10, 20, 100, 200]
+        , limits: [5, 10, 20, 100, 200]
         , cols: [[
             /*{type: 'checkbox', fixed:'left', width:50},*/
             {title: '序号', type: 'numbers'},
             {field: 'id', title: 'ID', width: 60, align: "center", hide: true},
             {field: 'intro', title: '内容', align: "center"},
-            {field: 'type', title: '类型', width: 150, align: 'center'},
-            {field: 'selected', title: '选中次数', width: 150, align: 'center', sort: true},
-            {field: 'correct', title: '正确率', align: 'center', sort: true},
-            {title: '操作', width: 170, templet: '#barDemo', fixed: "right", align: "center"}
+            {field: 'type', title: '类型', width: 80, align: 'center'},
+            {field: 'selected', title: '选中次数', width: 100, align: 'center', sort: true},
+            {field: 'correct', title: '正确率', width: 80,align: 'center', sort: true,
+                templet: function (d) { return Number(d.correct * 100).toFixed() + "%";}
+            },
+            {field: 'optionA', title: 'A', width: 60, align: "center", hide: true},
+            {field: 'optionB', title: 'B', width: 60, align: "center", hide: true},
+            {field: 'optionC', title: 'C', width: 60, align: "center", hide: true},
+            {field: 'optionD', title: 'D', width: 60, align: "center", hide: true},
+
+            {title: '操作', width: 90, templet: '#barDemo', fixed: "right", align: "center"}
         ]]
         , page: true
     });

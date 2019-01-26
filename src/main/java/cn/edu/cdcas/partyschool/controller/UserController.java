@@ -114,6 +114,7 @@ public class UserController {
      * @param request the object of request
      * @return
      */
+
     @RequestMapping(value = "/delete-individual", method = RequestMethod.POST)
     public JSONResult deleteSingleStu(HttpServletRequest request) {
         int stuId = Integer.valueOf(request.getParameter("stuId"));

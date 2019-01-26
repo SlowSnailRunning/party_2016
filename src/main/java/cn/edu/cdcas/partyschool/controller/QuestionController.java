@@ -13,18 +13,9 @@ import org.springframework.web.multipart.MultipartFile;
 
 import javax.annotation.Resource;
 import java.io.IOException;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-
-
-/**
- * The question controller related with operations of question,
- * such as uploading and downloading excel file and so on.
- *
- * @author Char Jin
- * @date 2019-01-20
- */
-
 
 @Controller
 @RequestMapping("/question")
@@ -58,7 +49,27 @@ public class QuestionController {
         }
         return new JSONResult(0, "题库导入成功!", 200);
     }
+    /**
+     *@Describe: 查找题库，包括有/无条件
+     *
+     *@Author Snail
+     *@Date 2019/1/26
+     */
+    @ResponseBody
+    @RequestMapping("/selectQue")
+    public Map<String, Object> showAllStuInfo(@RequestParam(required = false,defaultValue = "1") int page, @RequestParam(required = false,defaultValue = "20") int limit,
+                                              @RequestParam(required = false,defaultValue="") String intro,@RequestParam(required = false,defaultValue="")String type) {
+        //page：防止错误的page参数
+        Map<String,Object> map = null;
+        try {
+            map = this.questionService.selectQue(page-1<0?0:page-1,limit,intro.trim(),type.trim());
+        } catch (Exception e) {
+            e.printStackTrace();
+            //到异常页面，通知管理员
 
+        }
+        return map;
+    }
     @ResponseBody
     @RequestMapping(value = "/clear", method = RequestMethod.POST)
     private String clear() {
