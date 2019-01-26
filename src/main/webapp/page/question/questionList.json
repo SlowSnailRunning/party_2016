@@ -1,0 +1,41 @@
+{"code": 0,
+  "msg": "success",
+  "count": 3,
+  "data": [
+    {
+      "idSort": "1",
+      "intro": "测试数据",
+      "option_a": "选项A",
+      "option_b": "选项B",
+      "option_c": "选项C",
+      "option_d": "选项D",
+      "result": "选项D",
+      "type" : "单选题",
+      "isUse":"checked"
+    },
+    {
+      "idSort": "1",
+      "intro": "测试数据",
+      "option_a": "选项A",
+      "option_b": "选项B",
+      "option_c": "选项C",
+      "option_d": "选项D",
+      "result": "选项D",
+      "type" : "单选题",
+      "isUse":"checked"
+    },
+    {
+      "idSort": "1",
+      "intro": "测试数据",
+      "option_a": "选项A",
+      "option_b": "选项B",
+      "option_c": "选项C",
+      "option_d": "选项D",
+      "result": "选项D",
+      "type" : "单选题",
+      "isUse":"checked"
+    }
+  ]
+}
+
+

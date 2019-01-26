@@ -9,7 +9,8 @@ layui.use(['form', 'layer', 'laydate', 'upload', 'table', 'laytpl'], function ()
     //新闻列表
     var tableIns = table.render({
         elem: '#studentList',
-        url: '/question/selectQue.do',
+       /* url: '/question/selectQue.do',*/
+        url:'questionList.json',
         cellMinWidth: 95,
         page: true,
         height: "full-125",
@@ -19,6 +20,7 @@ layui.use(['form', 'layer', 'laydate', 'upload', 'table', 'laytpl'], function ()
         cols: [[
             {type: 'checkbox', fixed: 'left', width: 50},
             {field: 'id', title: 'ID', width: 86, align: "center", hide: true},
+            {title: '序号', type: 'numbers'},
             {field: 'idSort', title: '序号', width: 86, align: "center"},
             {field: 'intro', title: '题干', width: 86, align: "center"},
             {field: 'option_a', title: '选项A', width: 86, align: "center"},
@@ -27,19 +29,41 @@ layui.use(['form', 'layer', 'laydate', 'upload', 'table', 'laytpl'], function ()
             {field: 'option_d', title: '选项D', width: 100, align: "center"},
             {field: 'result', title: '正确答案', width: 150, align: 'center'},
             {field: 'type', title: '试题类型', width: 86, align: 'center'},
-            {field: 'state', title: '题目状态', width: 86, align: 'center'}
+            {field: 'isUse', title: '是否启用', align:'center', templet:function(d){
+                    return '<input type="checkbox" name="isUse" lay-filter="isUse" lay-skin="switch" lay-text="是|否" '+d.isUse+'>'
+                }},
         ]]
     });
 
     //是否置顶
-    form.on('switch(newsTop)', function (data) {
+    var data2;
+    table.on('row(studentList)', function(obj){
+         data2 = obj.data;
+/*
+        layer.alert(JSON.stringify(data2), {
+            title: '当前行数据：'
+        });*/
+    });
+    form.on('switch(isUse)', function (data) {
         var index = layer.msg('修改中，请稍候', {icon: 16, time: false, shade: 0.8});
         setTimeout(function () {
             layer.close(index);
             if (data.elem.checked) {
-                layer.msg("置顶成功！");
+
+
+                $.post("question.json", {
+
+
+                    isUse: JSON.stringify(data2)//将需要删除的学生学号作为参数传入
+                }, function (data) {
+                    tableIns.reload();
+                    layer.close(index);
+                    layer.msg("启用成功！");
+
+                })
+
             } else {
-                layer.msg("取消置顶成功！");
+                layer.msg("禁用成功！");
             }
         }, 500);
     });
