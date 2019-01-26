@@ -9,7 +9,7 @@ layui.use(['form', 'layer', 'laydate', 'upload', 'table', 'laytpl'], function ()
     //新闻列表
     var tableIns = table.render({
         elem: '#studentList',
-        url: '/user/all.do',
+        url: '/question/selectQue.do',
         cellMinWidth: 95,
         page: true,
         height: "full-125",
@@ -19,17 +19,15 @@ layui.use(['form', 'layer', 'laydate', 'upload', 'table', 'laytpl'], function ()
         cols: [[
             {type: 'checkbox', fixed: 'left', width: 50},
             {field: 'id', title: 'ID', width: 86, align: "center", hide: true},
-            {field: 'idx', title: '序号', width: 86, align: "center"},
-            {field: 'grade', title: '年级', width: 86, align: "center"},
-            {field: 'department', title: '学院', width: 100, align: "center"},
-            {field: 'major', title: '专业', width: 160, align: "center"},
-            {field: 'name', title: '姓名', width: 100, align: "center"},
-            {field: 'studentNo', title: '学号', width: 150, align: 'center'},
-            {field: 'partyNumber', title: '党校号', width: 86, align: 'center'},
-            {field: 'examStateStr', title: '考试状态', width: 86, align: 'center'},
-            {field: 'examScore', title: '考试成绩', width: 86, align: 'center'},
-            {field: 'makeUpScore', title: '补考成绩', width: 86, align: 'center'},
-            {title: '操作', width: 170, templet: '#newsListBar', fixed: "right", align: "center"}
+            {field: 'idSort', title: '序号', width: 86, align: "center"},
+            {field: 'intro', title: '题干', width: 86, align: "center"},
+            {field: 'option_a', title: '选项A', width: 86, align: "center"},
+            {field: 'option_b', title: '选项B', width: 100, align: "center"},
+            {field: 'option_c', title: '选项C', width: 160, align: "center"},
+            {field: 'option_d', title: '选项D', width: 100, align: "center"},
+            {field: 'result', title: '正确答案', width: 150, align: 'center'},
+            {field: 'type', title: '试题类型', width: 86, align: 'center'},
+            {field: 'state', title: '题目状态', width: 86, align: 'center'}
         ]]
     });
 
@@ -62,6 +60,25 @@ layui.use(['form', 'layer', 'laydate', 'upload', 'table', 'laytpl'], function ()
         }
     });
     $(".addNewsList_btn").click(function () {
+        if(true){
+            //tableIns为空
+            addQue();
+        }else{////tableIns不为空
+
+            layer.confirm('发现题库数据不为空！！', {
+                btn: ['追加导入','为我清空题库后导入'] //按钮
+            }, function(){
+                addQue();
+            }, function(){
+                $.post("/question/clear.do", function (data) {
+                    layer.msg(JSON.parse(data)['msg']);     //"清空成功!" from backend.
+                });
+                addQue();
+                tableIns.reload();
+            });
+        }
+    });
+    function addQue(){
         var upload = layui.upload; //得到 upload 对象
 
         //获取当前网址，如： http://localhost:8083/uimcardprj/share/meun.jsp
@@ -78,7 +95,7 @@ layui.use(['form', 'layer', 'laydate', 'upload', 'table', 'laytpl'], function ()
         //创建一个上传组件
         upload.render({
             elem: '#uploadDiv'
-            , url: projectName + '/user/upload.do'
+            , url: projectName + '/question/upload.do'
             , accept: 'file'
             , exts: 'xls|xlsx'
             , done: function (res, index, upload) { //上传后的回调
@@ -87,9 +104,10 @@ layui.use(['form', 'layer', 'laydate', 'upload', 'table', 'laytpl'], function ()
                     tableIns.reload();  //if import succeeded,reload this table.
             }
             , error: function () {
+                layer.msg("网络故障，稍后再试吧！");
             }
-        })
-    });
+        });
+    }
 
     $(".addNews_btn").click(function () {
         addNews();
@@ -133,14 +151,14 @@ layui.use(['form', 'layer', 'laydate', 'upload', 'table', 'laytpl'], function ()
     $(".delAll_btn").click(function () {
         var checkStatus = table.checkStatus('studentListTable'),
             data = checkStatus.data,
-            stuId = [];
+            stuNo = [];
         if (data.length > 0) {
             for (var i in data) {
-                stuId.push(data[i].id);
+                stuNo.push(data[i].studentNo);
             }
             layer.confirm('确定删除选中的学生吗？', {icon: 3, title: '提示信息'}, function (index) {
                 $.post("/user/delete-multiple.do", {
-                    stuId: stuId  //将需要删除的stuNo作为参数传入
+                    stuNo: stuNo  //将需要删除的stuNo作为参数传入
                 }, function (data) {
                     layer.msg(JSON.parse(data)['msg']);     //"删除成功!" or "清空成功!" from backend.
                     tableIns.reload();
@@ -173,7 +191,7 @@ layui.use(['form', 'layer', 'laydate', 'upload', 'table', 'laytpl'], function ()
         } else if (layEvent === 'del') { //删除
             layer.confirm('确定删除此学生？', {icon: 3, title: '提示信息'}, function (index) {
                 $.post("/user/delete-individual.do", {
-                    stuId: data.id  //将需要删除的学生学号作为参数传入
+                    studentNo: data.studentNo  //将需要删除的学生学号作为参数传入
                 }, function (data) {
                     tableIns.reload();
                     layer.close(index);

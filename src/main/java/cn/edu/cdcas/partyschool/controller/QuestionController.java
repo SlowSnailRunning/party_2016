@@ -3,6 +3,7 @@ package cn.edu.cdcas.partyschool.controller;
 import cn.edu.cdcas.partyschool.model.Question;
 import cn.edu.cdcas.partyschool.service.QuestionService;
 import cn.edu.cdcas.partyschool.util.ExcelUtil;
+import cn.edu.cdcas.partyschool.util.JSONResult;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -34,7 +35,7 @@ public class QuestionController {
 
     @ResponseBody
     @RequestMapping("/upload")
-    public String upload(@RequestParam("file") MultipartFile file) {
+    public JSONResult upload(@RequestParam("file") MultipartFile file) {
         ExcelUtil excelUtil = new ExcelUtil();
         Map<Integer, List<String>> map = null;
         Question question = new Question();
@@ -53,13 +54,13 @@ public class QuestionController {
                 }
             });
         } catch (IOException e) {
-            return "上传错误!";
+            return new JSONResult(1, e.getMessage(), 404);
         }
-        return "上传成功!";
+        return new JSONResult(0, "题库导入成功!", 200);
     }
 
     @ResponseBody
-    @RequestMapping(value = "/clear", method = RequestMethod.GET)
+    @RequestMapping(value = "/clear", method = RequestMethod.POST)
     private String clear() {
         questionService.clear();
         return "清空完成";

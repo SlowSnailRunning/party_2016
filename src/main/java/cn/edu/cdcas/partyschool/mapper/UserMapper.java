@@ -1,6 +1,8 @@
 package cn.edu.cdcas.partyschool.mapper;
 
+import cn.edu.cdcas.partyschool.model.Manger;
 import cn.edu.cdcas.partyschool.model.User;
+import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
 
@@ -21,6 +23,8 @@ public interface UserMapper {
 
     List<User> queryAll();
 
+    List<User> queryAllByPaging(@Param("offsetSize") int offsetSize, @Param("pageSize") int pageSize);
+
     int updateByIdSelective(User user);
 
     int updateByStuNoSelective(User user);
@@ -29,6 +33,14 @@ public interface UserMapper {
 
     int queryStuNums();
 
+
     int queryManagerNums(User user);
+
+    List<Manger> queryMangerList(@Param(value = "page") int page, @Param(value = "limit") int limit);
+
+    List<Manger> dimQueryMangerByName(@Param(value = "name") String name);
+
+    int queryMangerCount();//查看管理员数量
+
 
 }

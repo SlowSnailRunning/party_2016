@@ -4,6 +4,7 @@ import cn.edu.cdcas.partyschool.model.User;
 import cn.edu.cdcas.partyschool.service.UserService;
 import cn.edu.cdcas.partyschool.util.ExcelUtil;
 import cn.edu.cdcas.partyschool.util.JSONResult;
+import org.apache.ibatis.annotations.Param;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -12,8 +13,8 @@ import org.springframework.web.multipart.MultipartFile;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 import java.io.IOException;
-import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -88,7 +89,9 @@ public class UserController {
     @RequestMapping(value = "/all", method = RequestMethod.GET)
     public Map<String, Object> showAllStuInfo(@RequestParam(value = "page", required = false) int page, @RequestParam(value = "limit", required = false) int limit) {
         Map<String, Object> map = new HashMap<>();
-        List<User> data = this.userService.queryAll();
+        List<User> data = this.userService.queryAllByPaging((page - 1) * limit, limit);
+        data.forEach(user -> System.out.println(user.getStudentNo()));
+
         map.put("code", 0);
         map.put("msg", "success");
         map.put("count", userService.queryStuNums());
@@ -98,32 +101,30 @@ public class UserController {
     }
 
     /**
-     * delete student by his stuNo.
+     * delete student by his stuId.
      *
      * @param request the object of request
      * @return
      */
     @RequestMapping(value = "/delete-individual", method = RequestMethod.POST)
     public JSONResult deleteSingleStu(HttpServletRequest request) {
-        String stuNo = request.getParameter("studentNo");
-        this.userService.deleteByStuNo(stuNo);
+        int stuId = Integer.valueOf(request.getParameter("stuId"));
+        this.userService.deleteById(stuId);
         return new JSONResult(0, "删除成功!", 200);
     }
 
     /**
-     * @param stuNo the array of student numbers to be deleted.
+     * @param stuId the array of student numbers to be deleted.
      * @return
      */
     @RequestMapping(value = "/delete-multiple", method = RequestMethod.POST)
-    public JSONResult deleteMultipleStu(@RequestParam("stuNo[]") String[] stuNo) {
-        if (stuNo.length == userService.queryStuNums()) {
+    public JSONResult deleteMultipleStu(@RequestParam("stuId[]") int[] stuId) {
+        if (stuId.length == userService.queryStuNums()) {
             return clear();
         }
 
-        //delete the student whose student number contained in this array.
-        for (String sno : stuNo) userService.deleteByStuNo(sno);
-
-        System.out.println(Arrays.toString(stuNo));
+        //delete the student whose student id contained in this array.
+        for (int sid : stuId) userService.deleteById(sid);
         return new JSONResult(0, "已删除所选学生!", 200);
     }
 
@@ -155,5 +156,20 @@ public class UserController {
             return new JSONResult(3, "数据库异常！！，联系管理员", 200);
         }
     }
+
+    @RequestMapping("/MangerAuthority")
+    public JSONResult MangerAuthorityControl(HttpSession httpSession) {
+        return userService.MangerAuthorityControl(httpSession);
+    }
+    @RequestMapping("/allManger")
+    public Map<String, Object> queryMangerMap(@RequestParam(defaultValue ="1" ) int page, @RequestParam(defaultValue = "5") int limit) {
+        return userService.queryMangerMap(page,limit);
+    }
+    @RequestMapping("/dimQueryMangerByName")
+    public Map<String, Object> dimQueryMangerByName(String name)
+    {
+       return userService.dimQueryMangerByName(name);
+    }
+
 
 }

@@ -1,8 +1,11 @@
 package cn.edu.cdcas.partyschool.service;
 
 import cn.edu.cdcas.partyschool.model.User;
+import cn.edu.cdcas.partyschool.util.JSONResult;
 
+import javax.servlet.http.HttpSession;
 import java.util.List;
+import java.util.Map;
 
 public interface UserService {
     int deleteById(Integer id);
@@ -21,6 +24,8 @@ public interface UserService {
 
     List<User> queryAll();
 
+    List<User> queryAllByPaging(int offsetSize, int pageSize);
+
     int updateByIdSelective(User user);
 
     int updateByStuNoSelective(User user);
@@ -35,5 +40,13 @@ public interface UserService {
 
     boolean existsManager(User user);
 
+    JSONResult MangerAuthorityControl(HttpSession httpSession);
+
     boolean exists(User user);
+
+    Map<String,Object> queryMangerMap(int page ,int limit);
+
+
+    Map<String,Object> dimQueryMangerByName(String name);
+
 }

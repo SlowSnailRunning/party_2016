@@ -8,9 +8,10 @@ layui.use('table', function () {
         , title: '考试分析数据'
         , limit: 10
         , loading: true
+        , height : "full-25"
         /*,toolbar: 'default'*/
         , defaultToolbar: ['filter', 'print', 'exports']
-        , limits: [10, 20, 100, 200]
+        , limits: [5,10, 20, 100, 200]
         , cols: [[
             /*{type: 'checkbox', fixed:'left', width:50},*/
             {title: '序号', type: 'numbers'},
