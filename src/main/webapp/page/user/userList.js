@@ -19,32 +19,13 @@ layui.use(['form', 'layer', 'table', 'laytpl'], function () {
             {field: 'id', align: "center", hide: true},
             {field: 'studentNo', title: '账号', align: "center"},
             {field: 'name', title: '姓名', align: "center"},
-            {field: 'type', title: '类型', align: "center"},
+            {field: 'type', title: '类型', align: "center", templet:function (d) {
+                if(d.type=="ROOT")
+                    return "超级管理员";
+                else
+                    return "管理员";
+                }},
             {title: '操作', templet: '#userListBar', align: "center"}
-            /*{type: "checkbox", fixed:"left", width:50},
-            {field: 'userName', title: '用户名', minWidth:100, align:"center"},
-            {field: 'userEmail', title: '用户邮箱', minWidth:200, align:'center',templet:function(d){
-                return '<a class="layui-blue" href="mailto:'+d.userEmail+'">'+d.userEmail+'</a>';
-            }},
-            {field: 'userSex', title: '用户性别', align:'center'},
-            {field: 'userStatus', title: '用户状态',  align:'center',templet:function(d){
-                return d.userStatus == "0" ? "正常使用" : "限制使用";
-            }},
-            {field: 'userGrade', title: '用户等级', align:'center',templet:function(d){
-                if(d.userGrade == "0"){
-                    return "注册会员";
-                }else if(d.userGrade == "1"){
-                    return "中级会员";
-                }else if(d.userGrade == "2"){
-                    return "高级会员";
-                }else if(d.userGrade == "3"){
-                    return "钻石会员";
-                }else if(d.userGrade == "4"){
-                    return "超级会员";
-                }
-            }},
-            {field: 'userEndTime', title: '最后登录时间', align:'center',minWidth:150},
-            {title: '操作', minWidth:175, templet:'#userListBar',fixed:"right",align:"center"}*/
         ]]
     });
     var active = {
@@ -54,12 +35,8 @@ layui.use(['form', 'layer', 'table', 'laytpl'], function () {
             table.reload('userListTable', {
                 url: '/user/dimQueryMangerByName.do',
                 method: 'get',
-                page: {
-                    curr: 1 //重新从第 1 页开始
-                }
-                , where: {
-                    name: name //传入日期参数
-                }
+                page: {  curr: 1 }, //重新从第 1 页开始
+                where: { name: name  }//传入日期参数
             });
         }
     };
@@ -72,7 +49,6 @@ layui.use(['form', 'layer', 'table', 'laytpl'], function () {
         }
         active[type] ? active[type].call(this) : '';
     });
-
     //添加用户
     function addUser(edit) {
         var index = layui.layer.open({
@@ -160,7 +136,7 @@ layui.use(['form', 'layer', 'table', 'laytpl'], function () {
         } else if (layEvent === 'del') { //删除
             layer.confirm('确定删除此用户？', {icon: 3, title: '提示信息'}, function (index) {
                 $.post("/user/delete-individual.do", {
-                    studentNo: data.studentNo  //将需要删除的newsId作为参数传入
+                    stuId: data.id  //将需要删除的newsId作为参数传入
                 }, function (data) {
                     if (data.code != 0) {
                         layer.close(index);

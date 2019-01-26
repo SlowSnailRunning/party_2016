@@ -7,7 +7,11 @@
 	intro,
     type,
 	m.selected as selected,
-	m.correct as correct
+	m.correct as correct,
+	option_a as optionA,
+	option_b as optionB,
+	option_c as optionC,
+	option_d as optionD
 FROM
 	party_question
 LEFT OUTER JOIN (
