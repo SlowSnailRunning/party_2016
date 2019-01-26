@@ -101,7 +101,7 @@ public class UserServiceImpl implements UserService {
     @Override
     /*需在登陆时session中设置httpSession.setAttribute("authority")*/
     public JSONResult MangerAuthorityControl(HttpSession httpSession) {
-        httpSession.setAttribute("authority", "ROOT");
+      /*  httpSession.setAttribute("authority", "ROOT");*/
         if ("ROOT" == httpSession.getAttribute("authority")) {//是超级管理员，给管理员管理权限
             return new JSONResult(0, "", 0);
         } else {
