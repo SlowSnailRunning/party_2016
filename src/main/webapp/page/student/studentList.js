@@ -48,19 +48,38 @@ layui.use(['form', 'layer', 'laydate', 'upload', 'table', 'laytpl'], function ()
 
     //搜索【此功能需要后台配合，所以暂时没有动态效果演示】
     $(".search_btn").on("click", function () {
-        if ($(".searchVal").val() != '') {
-            table.reload("newsListTable", {
+        var field = $(".select-retrieval-column").val(),
+            value = $(".searchVal").val();
+        if (field !== '' && value !== '') {
+            table.reload("studentListTable", {
                 page: {
                     curr: 1 //重新从第 1 页开始
                 },
                 where: {
-                    key: $(".searchVal").val()  //搜索的关键字
+                    field: field, //the name of field searched in database.
+                    value: value  //搜索的关键字
                 }
             })
+        } else if (field === '') {
+            layer.msg("请选择检索列");
         } else {
             layer.msg("请输入搜索内容");
         }
     });
+
+    $(".remove_retrieval_btn").click(function () {
+        $(".searchVal").val('');
+        // $(".select-retrieval-column").options[0].selected(true);
+        table.reload("studentListTable", {
+            page: {
+                curr: 1 //重新从第 1 页开始
+            },
+            where: {
+                field: ''   //set field as '' to avoid error to retrieve data in db.
+            }
+        })
+    });
+
     $(".addNewsList_btn").click(function () {
         var upload = layui.upload; //得到 upload 对象
 
