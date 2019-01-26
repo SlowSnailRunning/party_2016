@@ -27,6 +27,14 @@
         correct,
         selected
     </sql>
+    <sql id="queryQueWhere">
+        <if test="intro!=null and intro!=''">
+            and intro like '%${intro}%'
+        </if>
+        <if test="type!=null and type!=''">
+            and `type`=#{type}
+        </if>
+    </sql>
     <select id="queryById" parameterType="java.lang.Integer" resultMap="BaseResultMap">
         select
         <include refid="Base_Column_List"/>
@@ -171,4 +179,20 @@
             selected = #{selected,jdbcType=INTEGER}
         where id = #{id,jdbcType=INTEGER}
     </update>
+
+    <select id="selectQueList" resultMap="BaseResultMap">
+      select
+        <include refid="Base_Column_List"/>
+      from party_question
+      <where>
+          <include refid="queryQueWhere"/>
+      </where>
+       LIMIT #{start},#{pageSize}
+    </select>
+    <select id="countQue" resultType="int">
+        select count(*) from party_question
+        <where>
+            <include refid="queryQueWhere"/>
+        </where>
+    </select>
 </mapper>

@@ -21,10 +21,10 @@ layui.use(['form', 'layer', 'laydate', 'upload', 'table', 'laytpl'], function ()
             {field: 'id', title: 'ID', width: 86, align: "center", hide: true},
             {field: 'idSort', title: '序号', width: 86, align: "center"},
             {field: 'intro', title: '题干', width: 86, align: "center"},
-            {field: 'option_a', title: '选项A', width: 86, align: "center"},
-            {field: 'option_b', title: '选项B', width: 100, align: "center"},
-            {field: 'option_c', title: '选项C', width: 160, align: "center"},
-            {field: 'option_d', title: '选项D', width: 100, align: "center"},
+            {field: 'optionA', title: '选项A', width: 86, align: "center"},
+            {field: 'optionB', title: '选项B', width: 100, align: "center"},
+            {field: 'optionC', title: '选项C', width: 160, align: "center"},
+            {field: 'optionD', title: '选项D', width: 100, align: "center"},
             {field: 'result', title: '正确答案', width: 150, align: 'center'},
             {field: 'type', title: '试题类型', width: 86, align: 'center'},
             {field: 'state', title: '题目状态', width: 86, align: 'center'}
@@ -63,7 +63,7 @@ layui.use(['form', 'layer', 'laydate', 'upload', 'table', 'laytpl'], function ()
         if(true){
             //tableIns为空
             addQue();
-        }else{////tableIns不为空
+        }else{////tableIns不为空,第一次点击没有反应，第二次直接弹出来
             layer.confirm('发现题库数据不为空！！', {
                 btn: ['追加导入','为我清空题库后导入'] //按钮
             }, function(){

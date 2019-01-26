@@ -2,6 +2,9 @@ package cn.edu.cdcas.partyschool.mapper;
 
 
 import cn.edu.cdcas.partyschool.model.Question;
+import org.apache.ibatis.annotations.Param;
+
+import java.util.List;
 
 public interface QuestionMapper {
     int deleteById(Integer id);
@@ -17,4 +20,9 @@ public interface QuestionMapper {
     int updateByIdSelective(Question question);
 
     int updateById(Question question);
+
+    List<Question> selectQueList(@Param(value = "start")int start,@Param(value = "pageSize") int pageSize,
+                                 @Param(value = "intro") String intro,@Param(value = "type") String type) throws Exception;
+
+    int countQue(@Param("intro") String intro,@Param("type") String type) throws Exception;
 }
