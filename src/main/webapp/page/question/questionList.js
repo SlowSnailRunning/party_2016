@@ -64,7 +64,6 @@ layui.use(['form', 'layer', 'laydate', 'upload', 'table', 'laytpl'], function ()
             //tableIns为空
             addQue();
         }else{////tableIns不为空
-
             layer.confirm('发现题库数据不为空！！', {
                 btn: ['追加导入','为我清空题库后导入'] //按钮
             }, function(){
