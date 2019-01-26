@@ -6,10 +6,6 @@ import cn.edu.cdcas.partyschool.model.Question;
 import java.util.Map;
 
 public interface QuestionService {
-    int deleteById(Integer id);
-
-    void clear();
-
     int insert(Question record);
 
     int insertSelective(Question record);
@@ -23,4 +19,8 @@ public interface QuestionService {
     Map<String, Object> selectQue(int currentPage, int pageSize, String intro, String type) throws Exception;
 
     int queryQueNums(String intro, String type) throws Exception;
+
+    void deleteById(int[] id) throws Exception;
+
+    void clear() throws Exception;
 }

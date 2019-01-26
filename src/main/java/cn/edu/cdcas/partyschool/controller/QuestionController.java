@@ -4,6 +4,7 @@ import cn.edu.cdcas.partyschool.model.Question;
 import cn.edu.cdcas.partyschool.service.QuestionService;
 import cn.edu.cdcas.partyschool.util.ExcelUtil;
 import cn.edu.cdcas.partyschool.util.JSONResult;
+import com.sun.org.glassfish.gmbal.ParameterNames;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -70,11 +71,40 @@ public class QuestionController {
         }
         return map;
     }
+    /**
+     *@Describe: 清空题库
+     *
+     *@Author Snail
+     *@Date 2019/1/26
+     */
     @ResponseBody
     @RequestMapping(value = "/clear", method = RequestMethod.POST)
-    private String clear() {
-        questionService.clear();
-        return "清空完成";
+    private boolean clear() {
+        try {
+            questionService.clear();
+            return true;
+        } catch (Exception e) {
+            e.printStackTrace();
+            return false;
+        }
+    }
+    /**
+     *@Describe: 删除选中
+     *
+     *@Author Snail
+     *@Date 2019/1/26
+     */
+    @ResponseBody
+    @RequestMapping(value = "delete-multiple",method=RequestMethod.POST)
+    private boolean deleteMultipleQue(int[] queId){
+        try {
+            questionService.deleteById(queId);
+            return true;
+        } catch (Exception e) {
+            e.printStackTrace();
+            return false;
+        }
+
     }
 
 }

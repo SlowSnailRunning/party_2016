@@ -9,28 +9,27 @@ layui.use(['form', 'layer', 'laydate', 'upload', 'table', 'laytpl'], function ()
     //新闻列表
     var tableIns = table.render({
         elem: '#studentList',
-       /* url: '/question/selectQue.do',*/
-        url:'questionList.json',
+        url: '/question/selectQue.do',
+       /* url:'questionList.json',*/
         cellMinWidth: 95,
         page: true,
         height: "full-125",
         limit: 20,
         limits: [10, 15, 20, 25],
-        id: "studentListTable",
+        id: "questionListTable",
         cols: [[
             {type: 'checkbox', fixed: 'left', width: 50},
             {field: 'id', title: 'ID', width: 86, align: "center", hide: true},
             {title: '序号', type: 'numbers'},
-            {field: 'idSort', title: '序号', width: 86, align: "center"},
-            {field: 'intro', title: '题干', width: 86, align: "center"},
-            {field: 'optionA', title: '选项A', width: 86, align: "center"},
-            {field: 'optionB', title: '选项B', width: 100, align: "center"},
-            {field: 'optionC', title: '选项C', width: 160, align: "center"},
-            {field: 'optionD', title: '选项D', width: 100, align: "center"},
-            {field: 'result', title: '正确答案', width: 150, align: 'center'},
-            {field: 'type', title: '试题类型', width: 86, align: 'center'},
-            {field: 'isUse', title: '是否启用', align:'center', templet:function(d){
-                    return '<input type="checkbox" name="isUse" lay-filter="isUse" lay-skin="switch" lay-text="是|否" '+d.isUse+'>'
+            {field: 'intro', title: '题干', width: 0, align: "center"},
+            {field: 'optionA', title: '选项A', width: 110, align: "center"},
+            {field: 'optionB', title: '选项B', width: 110, align: "center"},
+            {field: 'optionC', title: '选项C', width: 110, align: "center"},
+            {field: 'optionD', title: '选项D', width: 110, align: "center"},
+            {field: 'result', title: '答案', width: 80, align: 'center'},
+            {field: 'type', title: '试题类型', width: 100, align: 'center'},
+            {field: 'state', title: '是否启用', width: 86,align:'center', templet:function(d){
+                    return '<input type="checkbox" name="state" lay-filter="state" lay-skin="switch" lay-text="是|否" '+d.state+'>'
                 }},
         ]]
     });
@@ -44,7 +43,7 @@ layui.use(['form', 'layer', 'laydate', 'upload', 'table', 'laytpl'], function ()
             title: '当前行数据：'
         });*/
     });
-    form.on('switch(isUse)', function (data) {
+    form.on('switch(state)', function (data) {
         var index = layer.msg('修改中，请稍候', {icon: 16, time: false, shade: 0.8});
         setTimeout(function () {
             layer.close(index);
@@ -54,12 +53,11 @@ layui.use(['form', 'layer', 'laydate', 'upload', 'table', 'laytpl'], function ()
                 $.post("question.json", {
 
 
-                    isUse: JSON.stringify(data2)//将需要删除的学生学号作为参数传入
+                    state: JSON.stringify(data2)//将需要删除的学生学号作为参数传入
                 }, function (data) {
                     tableIns.reload();
                     layer.close(index);
                     layer.msg("启用成功！");
-
                 })
 
             } else {
@@ -171,17 +169,17 @@ layui.use(['form', 'layer', 'laydate', 'upload', 'table', 'laytpl'], function ()
 
 
     //批量删除
-    $(".delAll_btn").click(function () {
-        var checkStatus = table.checkStatus('studentListTable'),
+    $(".delChecked_btn").click(function () {
+        var checkStatus = table.checkStatus('questionListTable'),
             data = checkStatus.data,
-            stuNo = [];
+            queId = [];
         if (data.length > 0) {
             for (var i in data) {
-                stuNo.push(data[i].studentNo);
+                queId.push(data[i].id);
             }
             layer.confirm('确定删除选中的学生吗？', {icon: 3, title: '提示信息'}, function (index) {
-                $.post("/user/delete-multiple.do", {
-                    stuNo: stuNo  //将需要删除的stuNo作为参数传入
+                $.post("/question/delete-multiple.do", {
+                    queid: queId  //将需要删除的stuNo作为参数传入
                 }, function (data) {
                     layer.msg(JSON.parse(data)['msg']);     //"删除成功!" or "清空成功!" from backend.
                     tableIns.reload();
@@ -193,13 +191,16 @@ layui.use(['form', 'layer', 'laydate', 'upload', 'table', 'laytpl'], function ()
         }
     });
 
-    //清空所有考生
+    //清空所有
     $(".clearAllStu_btn").click(function () {
         layer.confirm('确认清空此学生列表吗?', {icon: 3, title: '提示信息'}, function (index) {
-            $.post("/user/clear.do", function (data) {
-                layer.msg(JSON.parse(data)['msg']);     //"清空成功!" from backend.
+            $.post("/question/clear.do", function (data) {
+                if(data=='true'){
+                    layer.msg("清空成功!");     //"清空成功!" from backend.
+                }else {
+                    layer.msg("清空失败!");
+                }
                 tableIns.reload();
-                layer.close(index);
             });
         });
     });

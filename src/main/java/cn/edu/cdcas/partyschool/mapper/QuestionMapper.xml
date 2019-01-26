@@ -41,15 +41,6 @@
         from party_question
         where id = #{id,jdbcType=INTEGER}
     </select>
-    <delete id="deleteById" parameterType="java.lang.Integer">
-        delete
-        from party_question
-        where id = #{id,jdbcType=INTEGER}
-    </delete>
-    <delete id="clear">
-        delete
-        from party_question
-    </delete>
     <insert id="insert" keyColumn="id" keyProperty="id" parameterType="cn.edu.cdcas.partyschool.mapper.QuestionMapper"
             useGeneratedKeys="true">
         insert into party_question (`state`, `type`, intro,
@@ -195,4 +186,12 @@
             <include refid="queryQueWhere"/>
         </where>
     </select>
+    <delete id="clear">
+        delete from party_question
+    </delete>
+    <delete id="deleteById" parameterType="java.lang.Integer">
+        delete
+        from party_question
+        where id = #{id,jdbcType=INTEGER}
+    </delete>
 </mapper>

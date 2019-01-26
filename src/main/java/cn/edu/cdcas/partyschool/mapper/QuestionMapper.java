@@ -7,10 +7,6 @@ import org.apache.ibatis.annotations.Param;
 import java.util.List;
 
 public interface QuestionMapper {
-    int deleteById(Integer id);
-
-    void clear();
-
     int insert(Question question);
 
     int insertSelective(Question question);
@@ -25,4 +21,8 @@ public interface QuestionMapper {
                                  @Param(value = "intro") String intro,@Param(value = "type") String type) throws Exception;
 
     int countQue(@Param("intro") String intro,@Param("type") String type) throws Exception;
+
+    void clear() throws Exception;
+
+    int deleteById(Integer id) throws Exception;
 }

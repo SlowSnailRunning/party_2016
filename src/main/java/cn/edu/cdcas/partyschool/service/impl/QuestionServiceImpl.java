@@ -17,16 +17,6 @@ public class QuestionServiceImpl implements QuestionService {
     private QuestionMapper questionMapper;
 
     @Override
-    public int deleteById(Integer id) {
-        return questionMapper.deleteById(id);
-    }
-
-    @Override
-    public void clear() {
-        questionMapper.clear();
-    }
-
-    @Override
     public int insert(Question question) {
         return questionMapper.insert(question);
     }
@@ -50,6 +40,7 @@ public class QuestionServiceImpl implements QuestionService {
     public int updateById(Question question) {
         return questionMapper.updateById(question);
     }
+
     /**
      *@Describe: 匹配题目类型，返回map
      *
@@ -90,11 +81,27 @@ public class QuestionServiceImpl implements QuestionService {
         }
         return map;
     }
-
     @Override
     public int queryQueNums(String intro, String type) throws Exception {
         int countQue=questionMapper.countQue(intro,type);
         return countQue;
+    }
+
+    @Override
+    public void deleteById(int[] queId) throws Exception {
+        if (queId.length == queryQueNums("","")) {
+            clear();
+            return;
+        }
+        for (int id : queId) {
+            questionMapper.deleteById(id);
+        }
+        return;
+    }
+
+    @Override
+    public void clear() throws Exception {
+        questionMapper.clear();
     }
 
 }

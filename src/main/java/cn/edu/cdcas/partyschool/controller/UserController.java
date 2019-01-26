@@ -130,7 +130,7 @@ public class UserController {
     public JSONResult deleteMultipleStu(@RequestParam("stuId[]") int[] stuId) {
         if (stuId.length == userService.queryStuNums()) {
             return clear();
-        }
+    }
 
         //delete the student whose student id contained in this array.
         for (int sid : stuId) userService.deleteById(sid);
