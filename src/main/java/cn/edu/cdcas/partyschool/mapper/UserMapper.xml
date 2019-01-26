@@ -99,7 +99,7 @@
         from party_user
         where student_no = #{stuNo,jdbcType=CHAR}
     </select>
-    <select id="queryAllByPaging" resultType="cn.edu.cdcas.partyschool.model.User">
+    <select id="queryAllByPaging" resultType="cn.edu.cdcas.partyschool.model.User" resultMap="BaseResultMap">
         select *
         from party_user
         where type = 'student'

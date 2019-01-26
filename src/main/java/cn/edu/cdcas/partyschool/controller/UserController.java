@@ -15,7 +15,6 @@ import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
-import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -91,6 +90,8 @@ public class UserController {
     public Map<String, Object> showAllStuInfo(@RequestParam(value = "page", required = false) int page, @RequestParam(value = "limit", required = false) int limit) {
         Map<String, Object> map = new HashMap<>();
         List<User> data = this.userService.queryAllByPaging((page - 1) * limit, limit);
+        data.forEach(user -> System.out.println(user.getStudentNo()));
+
         map.put("code", 0);
         map.put("msg", "success");
         map.put("count", userService.queryStuNums());
@@ -100,32 +101,30 @@ public class UserController {
     }
 
     /**
-     * delete student by his stuNo.
+     * delete student by his stuId.
      *
      * @param request the object of request
      * @return
      */
     @RequestMapping(value = "/delete-individual", method = RequestMethod.POST)
     public JSONResult deleteSingleStu(HttpServletRequest request) {
-        String stuNo = request.getParameter("studentNo");
-        this.userService.deleteByStuNo(stuNo);
+        int stuId = Integer.valueOf(request.getParameter("stuId"));
+        this.userService.deleteById(stuId);
         return new JSONResult(0, "删除成功!", 200);
     }
 
     /**
-     * @param stuNo the array of student numbers to be deleted.
+     * @param stuId the array of student numbers to be deleted.
      * @return
      */
     @RequestMapping(value = "/delete-multiple", method = RequestMethod.POST)
-    public JSONResult deleteMultipleStu(@RequestParam("stuNo[]") String[] stuNo) {
-        if (stuNo.length == userService.queryStuNums()) {
+    public JSONResult deleteMultipleStu(@RequestParam("stuId[]") int[] stuId) {
+        if (stuId.length == userService.queryStuNums()) {
             return clear();
         }
 
-        //delete the student whose student number contained in this array.
-        for (String sno : stuNo) userService.deleteByStuNo(sno);
-
-        System.out.println(Arrays.toString(stuNo));
+        //delete the student whose student id contained in this array.
+        for (int sid : stuId) userService.deleteById(sid);
         return new JSONResult(0, "已删除所选学生!", 200);
     }
 

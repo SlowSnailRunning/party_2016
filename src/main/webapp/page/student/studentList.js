@@ -133,14 +133,14 @@ layui.use(['form', 'layer', 'laydate', 'upload', 'table', 'laytpl'], function ()
     $(".delAll_btn").click(function () {
         var checkStatus = table.checkStatus('studentListTable'),
             data = checkStatus.data,
-            stuNo = [];
+            stuId = [];
         if (data.length > 0) {
             for (var i in data) {
-                stuNo.push(data[i].studentNo);
+                stuId.push(data[i].id);
             }
             layer.confirm('确定删除选中的学生吗？', {icon: 3, title: '提示信息'}, function (index) {
                 $.post("/user/delete-multiple.do", {
-                    stuNo: stuNo  //将需要删除的stuNo作为参数传入
+                    stuId: stuId  //将需要删除的stuNo作为参数传入
                 }, function (data) {
                     layer.msg(JSON.parse(data)['msg']);     //"删除成功!" or "清空成功!" from backend.
                     tableIns.reload();
@@ -173,7 +173,7 @@ layui.use(['form', 'layer', 'laydate', 'upload', 'table', 'laytpl'], function ()
         } else if (layEvent === 'del') { //删除
             layer.confirm('确定删除此学生？', {icon: 3, title: '提示信息'}, function (index) {
                 $.post("/user/delete-individual.do", {
-                    studentNo: data.studentNo  //将需要删除的学生学号作为参数传入
+                    stuId: data.id  //将需要删除的学生学号作为参数传入
                 }, function (data) {
                     tableIns.reload();
                     layer.close(index);
