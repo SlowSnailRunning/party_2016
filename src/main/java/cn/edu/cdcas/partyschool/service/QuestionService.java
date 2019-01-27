@@ -23,4 +23,6 @@ public interface QuestionService {
     void deleteById(int[] id) throws Exception;
 
     void clear() throws Exception;
+
+    int updateState(Integer id,String state)throws Exception;
 }

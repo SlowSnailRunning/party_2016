@@ -38,30 +38,38 @@ layui.use(['form', 'layer', 'laydate', 'upload', 'table', 'laytpl'], function ()
     var data2;
     table.on('row(studentList)', function(obj){
          data2 = obj.data;
-/*
-        layer.alert(JSON.stringify(data2), {
+/*        layer.alert(JSON.stringify(data2), {
             title: '当前行数据：'
         });*/
     });
     form.on('switch(state)', function (data) {
         var index = layer.msg('修改中，请稍候', {icon: 16, time: false, shade: 0.8});
+        var result="";
         setTimeout(function () {
+/*            console.log(data2["id"]);
+            console.log(data2["state"]);
+            console.log(data2["state"]=="checked"?"":"checked");*/
+            $.ajaxSettings.async = false;
+            $.post("/question/modifyState.do", {
+                state: data2["state"]=="checked"?"":"checked",
+                id:data2["id"]
+            }, function (res) {
+                result=res;
+            })
             layer.close(index);
+            $.ajaxSettings.async = true;
             if (data.elem.checked) {
-
-
-                $.post("question.json", {
-
-
-                    state: JSON.stringify(data2)//将需要删除的学生学号作为参数传入
-                }, function (data) {
-                    tableIns.reload();
-                    layer.close(index);
+                console.log(result);
+                if(result=="true")
                     layer.msg("启用成功！");
-                })
-
+                else
+                    layer.msg("启用失败！");
             } else {
-                layer.msg("禁用成功！");
+                if(result=="true")
+                    layer.msg("禁用成功！");
+                else {
+                    layer.msg("禁用失败！")
+                }
             }
         }, 500);
     });
@@ -113,6 +121,7 @@ layui.use(['form', 'layer', 'laydate', 'upload', 'table', 'laytpl'], function ()
         //获取带"/"的项目名，如：/uimcardprj
         var projectName = pathName.substring(0, pathName.substr(1).indexOf("/page") + 1);
 
+        //var index = layer.msg('文件上传中，请稍候', {icon: 16, time: false, shade: 0.8});
         //创建一个上传组件
         upload.render({
             elem: '#uploadDiv'
@@ -120,11 +129,13 @@ layui.use(['form', 'layer', 'laydate', 'upload', 'table', 'laytpl'], function ()
             , accept: 'file'
             , exts: 'xls|xlsx'
             , done: function (res, index, upload) { //上传后的回调
+                //layer.close(index);
                 layer.msg(res['msg']); //show the message from the backend.
                 if (res['code'] === 0)
                     tableIns.reload();  //if import succeeded,reload this table.
             }
             , error: function () {
+                //layer.close(index);
                 layer.msg("网络故障，稍后再试吧！");
             }
         });
@@ -179,9 +190,13 @@ layui.use(['form', 'layer', 'laydate', 'upload', 'table', 'laytpl'], function ()
             }
             layer.confirm('确定删除选中的学生吗？', {icon: 3, title: '提示信息'}, function (index) {
                 $.post("/question/delete-multiple.do", {
-                    queid: queId  //将需要删除的stuNo作为参数传入
+                    queId: queId  //将需要删除的stuNo作为参数传入
                 }, function (data) {
-                    layer.msg(JSON.parse(data)['msg']);     //"删除成功!" or "清空成功!" from backend.
+                    if(data=="true"){
+                        layer.msg("删除成功！")
+                    }else{
+                        layer.msg("删除失败！")
+                    }
                     tableIns.reload();
                     layer.close(index);
                 });
