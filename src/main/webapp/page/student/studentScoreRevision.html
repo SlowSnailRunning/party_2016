@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>修改考生成绩</title>
+    <meta name="renderer" content="webkit">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="format-detection" content="telephone=no">
+    <link rel="stylesheet" href="../../layui/css/layui.css" media="all"/>
+    <link rel="stylesheet" href="../../css/public.css" media="all"/>
+    <script type="text/javascript" src="../../layui/layui.js"></script>
+</head>
+<body class="childrenBody">
+<form class="layui-form layui-row layui-col-space10">
+    <div class="layui-col-md9 layui-col-xs12">
+        <div class="layui-row layui-col-space10">
+            <div class="layui-col-md9 layui-col-xs7">
+
+                <!--the id of student in db.-->
+                <input type="text" class="layui-input layui-hide id" name="id">
+
+                <div class="layui-form-item magt3">
+                    <label class="layui-form-label">考试成绩:</label>
+                    <div class="layui-input-block">
+                        <input type="text" class="layui-input examScore" name="examScore" required
+                               lay-verify="required">
+                    </div>
+                </div>
+
+
+                <div class="layui-form-item magt3">
+                    <label class="layui-form-label">补考成绩:</label>
+                    <div class="layui-input-block">
+                        <input type="text" name="makeUpScore" class="layui-input makeUpScore" required
+                               lay-verify="required">
+                    </div>
+                </div>
+
+
+                <div class="layui-form-item magt3 layui-center">
+                    <button class="layui-btn" lay-submit lay-filter="signAdd">提交</button>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</form>
+
+<script type="text/javascript" src="studentScoreRevision.js"></script>
+</body>
+</html>
