@@ -59,7 +59,6 @@ layui.use(['form', 'layer', 'laydate', 'upload', 'table', 'laytpl'], function ()
             layer.close(index);
             $.ajaxSettings.async = true;
             if (data.elem.checked) {
-                console.log(result);
                 if(result=="true")
                     layer.msg("启用成功！");
                 else
