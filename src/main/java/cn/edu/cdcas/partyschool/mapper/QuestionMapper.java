@@ -25,4 +25,6 @@ public interface QuestionMapper {
     void clear() throws Exception;
 
     int deleteById(Integer id) throws Exception;
+
+    int updateState(@Param("id") Integer id,@Param("state") String state) throws Exception;
 }

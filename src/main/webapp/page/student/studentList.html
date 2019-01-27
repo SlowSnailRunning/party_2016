@@ -49,18 +49,8 @@
         </form>
     </blockquote>
     <table id="studentList" lay-filter="studentList"></table>
-    <!--审核状态-->
-    <script type="text/html" id="newsStatus">
-        {{#  if(d.newsStatus == "1"){ }}
-        <span class="layui-red">等待审核</span>
-        {{#  } else if(d.newsStatus == "0"){ }}
-        <span class="layui-blue">已存草稿</span>
-        {{#  } else { }}
-        审核通过
-        {{#  }}}
-    </script>
-    <!--操作-->
-    <script type="text/html" id="newsListBar">
+
+    <script type="text/html" id="studentListBar">
         <a class="layui-btn layui-btn-xs" lay-event="edit">编辑</a>
         <a class="layui-btn layui-btn-xs layui-btn-danger" lay-event="del">删除</a>
     </script>

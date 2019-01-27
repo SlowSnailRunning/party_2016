@@ -104,4 +104,10 @@ public class QuestionServiceImpl implements QuestionService {
         questionMapper.clear();
     }
 
+    @Override
+    public int updateState(Integer id, String state) throws Exception {
+        return questionMapper.updateState(id,state);
+    }
+
+
 }

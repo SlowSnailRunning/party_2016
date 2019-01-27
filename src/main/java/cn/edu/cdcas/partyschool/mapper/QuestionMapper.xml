@@ -194,4 +194,9 @@
         from party_question
         where id = #{id,jdbcType=INTEGER}
     </delete>
+    <update id="updateState">
+        update party_question
+        set `state`=#{state}
+        where `id`=#{id}
+    </update>
 </mapper>

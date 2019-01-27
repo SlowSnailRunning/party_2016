@@ -29,7 +29,7 @@ layui.use(['form', 'layer', 'laydate', 'upload', 'table', 'laytpl'], function ()
             {field: 'examStateStr', title: '考试状态', width: 86, align: 'center'},
             {field: 'examScore', title: '考试成绩', width: 86, align: 'center'},
             {field: 'makeUpScore', title: '补考成绩', width: 86, align: 'center'},
-            {title: '操作', width: 170, templet: '#newsListBar', fixed: "right", align: "center"}
+            {title: '操作', width: 120, templet: '#studentListBar', fixed: "right", align: "center"}
         ]]
     });
 
