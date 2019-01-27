@@ -10,7 +10,7 @@ layui.use(['form', 'layer', 'laydate', 'upload', 'table', 'laytpl'], function ()
     var tableIns = table.render({
         elem: '#studentList',
         url: '/question/selectQue.do',
-       /* url:'questionList.json',*/
+      /* url:'questionList.json',*/
         cellMinWidth: 95,
         page: true,
         height: "full-125",
@@ -33,39 +33,41 @@ layui.use(['form', 'layer', 'laydate', 'upload', 'table', 'laytpl'], function ()
                 }},
         ]]
     });
-
-    //是否置顶
+    //是否启动
     var data2;
     table.on('row(studentList)', function(obj){
          data2 = obj.data;
-/*
-        layer.alert(JSON.stringify(data2), {
-            title: '当前行数据：'
+        /*layer.alert(JSON.stringify(data2), {
+            title: '当前行数据:'
         });*/
     });
     form.on('switch(state)', function (data) {
         var index = layer.msg('修改中，请稍候', {icon: 16, time: false, shade: 0.8});
         setTimeout(function () {
             layer.close(index);
+            /*表示启用*/
             if (data.elem.checked) {
-
-
-                $.post("question.json", {
-
-
-                    state: JSON.stringify(data2)//将需要删除的学生学号作为参数传入
+                  data2.state="checked";
+                $.post("/active", {//将需要启动的题id和state作为参数传入
+                    state: JSON.stringify("{"+"id:"+data2.id+","+"state:"+data2.state+"}")
                 }, function (data) {
                     tableIns.reload();
                     layer.close(index);
-                    layer.msg("启用成功！");
+                    layer.msg("启用成功!");
                 })
-
+             //表示禁用
             } else {
-                layer.msg("禁用成功！");
+                data2.state="";
+                $.post("/forbid", { //将需要禁止的题id和state作为参数传入
+                    state: JSON.stringify("{"+"id:"+data2.id+","+"state:"+data2.state+"}")
+                }, function (data) {
+                    tableIns.reload();
+                    layer.close(index);
+                    layer.msg("禁用成功!");
+                })
             }
         }, 500);
     });
-
     //搜索【此功能需要后台配合，所以暂时没有动态效果演示】
     $(".search_btn").on("click", function () {
         if ($(".searchVal").val() != '') {

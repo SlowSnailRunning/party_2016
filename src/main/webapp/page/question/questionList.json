@@ -11,7 +11,7 @@
       "option_d": "选项D",
       "result": "选项D",
       "type" : "单选题",
-      "isUse":"checked"
+      "state":"checked"
     },
     {
       "idSort": "1",
@@ -22,7 +22,7 @@
       "option_d": "选项D",
       "result": "选项D",
       "type" : "单选题",
-      "isUse":"checked"
+      "state":"checked"
     },
     {
       "idSort": "1",
@@ -33,7 +33,7 @@
       "option_d": "选项D",
       "result": "选项D",
       "type" : "单选题",
-      "isUse":"checked"
+      "state":""
     }
   ]
 }
