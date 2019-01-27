@@ -6,9 +6,9 @@ layui.use(['form', 'layer', 'laydate', 'upload', 'table', 'laytpl'], function ()
         laytpl = layui.laytpl,
         table = layui.table;
 
-    //新闻列表
+    //题库列表
     var tableIns = table.render({
-        elem: '#studentList',
+        elem: '#questionList',
         url: '/question/selectQue.do',
        /* url:'questionList.json',*/
         cellMinWidth: 95,
@@ -21,7 +21,7 @@ layui.use(['form', 'layer', 'laydate', 'upload', 'table', 'laytpl'], function ()
             {type: 'checkbox', fixed: 'left', width: 50},
             {field: 'id', title: 'ID', width: 86, align: "center", hide: true},
             {title: '序号', type: 'numbers'},
-            {field: 'intro', title: '题干', width: 0, align: "center"},
+            {field: 'intro', title: '题干',  align: "center"},
             {field: 'optionA', title: '选项A', width: 110, align: "center"},
             {field: 'optionB', title: '选项B', width: 110, align: "center"},
             {field: 'optionC', title: '选项C', width: 110, align: "center"},
@@ -34,9 +34,9 @@ layui.use(['form', 'layer', 'laydate', 'upload', 'table', 'laytpl'], function ()
         ]]
     });
 
-    //是否置顶
+    //是否启动
     var data2;
-    table.on('row(studentList)', function(obj){
+    table.on('row(questionList)', function(obj){
          data2 = obj.data;
 /*        layer.alert(JSON.stringify(data2), {
             title: '当前行数据：'
@@ -75,18 +75,55 @@ layui.use(['form', 'layer', 'laydate', 'upload', 'table', 'laytpl'], function ()
     });
 
     //搜索【此功能需要后台配合，所以暂时没有动态效果演示】
+   /* console.log($('#search option:selected').val());*/
+   /* var value=$('#search option:selected').val();*/
+     var search;
+    form.on('select(search)', function(data){
+              search=data.value;
+        if(search!="context") {
+            $(".searchVal").hide();
+        }
+        else{
+
+            $(".searchVal").show();
+        }
+        console.log(search); //得到被选中的值
+
+    });
+
     $(".search_btn").on("click", function () {
-        if ($(".searchVal").val() != '') {
-            table.reload("newsListTable", {
+        if (search!="context") {
+            table.reload("questionListTable", {
                 page: {
                     curr: 1 //重新从第 1 页开始
                 },
                 where: {
-                    key: $(".searchVal").val()  //搜索的关键字
+                    type: search,  //按类型搜索
+                    context:""
                 }
             })
+            console.log("一");
         } else {
+            if ($(".searchVal").val()!=''){
+
+                table.reload("questionListTable", {
+                    page: {
+                        curr: 1 //重新从第 1 页开始
+                    },
+                    where: {
+                        type:"",
+                        context:$(".searchVal").val()   //按题干搜索
+                    }
+                })
+                console.log("er");
+
+                return ;
+
+            }
+
             layer.msg("请输入搜索内容");
+
+
         }
     });
     $(".addNewsList_btn").click(function () {

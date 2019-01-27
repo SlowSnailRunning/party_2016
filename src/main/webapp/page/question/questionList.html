@@ -17,13 +17,40 @@
 <form class="layui-form">
     <blockquote class="layui-elem-quote quoteBox">
         <form class="layui-form">
+
             <div class="layui-inline">
-                按 题目类型/题干
+
+                    <div class="layui-input-inline">
+                        <!--<select name="modules" lay-verify="required" lay-search="" lay-filter="search" id="search">
+
+                            <option value="type" name="question" selected>题目类型</option>
+                            <option value="context" name="question">题干</option>
+                        </select>-->
+
+                        <select name="modules" lay-verify="required" lay-search="" lay-filter="search" id="search" >
+                            <option value="">请选择</option>
+                            <optgroup label="按照题类型">
+                                <option value="单" name="question" >单选题</option>
+                                <option value="多" name="question">多选题</option>
+                                <option value="判" name="question">多选题</option>
+                                <option value="填" name="question">填空题</option>
+                            </optgroup>
+                            <optgroup label="其他">
+                                <option value="context" name="question">按照题内容</option>
+                            </optgroup>
+
+                        </select>
+                    </div>
+                </div>
+
+            <div class="layui-inline">
                 <div class="layui-input-inline">
                     <input type="text" class="layui-input searchVal" placeholder="请输入搜索的内容"/>
                 </div>
-                <a class="layui-btn search_btn" data-type="reload">搜索</a>
+                <a class="layui-btn search_btn" data-type="reload" id="">搜索</a>
             </div>
+        </div>
+
             <div class="layui-inline" id="uploadDiv">
                 <a class="layui-btn layui-btn-normal addNewsList_btn"><i class="layui-icon">&#xe67c;</i>上传题库</a>
             </div>
@@ -38,13 +65,14 @@
             </div>
         </form>
     </blockquote>
-    <table id="studentList" lay-filter="studentList"></table>
+    <table id="questionList" lay-filter="questionList"></table>
     <!--操作-->
     <script type="text/html" id="newsListBar">
         <a class="layui-btn layui-btn-xs" lay-event="edit">编辑</a>
         <a class="layui-btn layui-btn-xs layui-btn-danger" lay-event="del">删除</a>
     </script>
 </form>
+<script src="../../js/jquery-3.3.1.js" charset="utf-8"></script>
 <script type="text/javascript" src="../../layui/layui.js"></script>
 <script type="text/javascript" src="questionList.js"></script>
 </body>
