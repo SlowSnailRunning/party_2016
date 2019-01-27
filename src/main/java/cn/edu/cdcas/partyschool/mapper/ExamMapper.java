@@ -14,4 +14,6 @@ public interface ExamMapper {
     int updateByIdSelective(Exam exam);
 
     int updateById(Exam exam);
+
+    int selectState() throws Exception;
 }

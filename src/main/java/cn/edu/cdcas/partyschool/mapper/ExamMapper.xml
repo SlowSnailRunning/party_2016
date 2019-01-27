@@ -231,4 +231,10 @@
       is_makeup = #{isMakeup,jdbcType=INTEGER}
     where id = #{id,jdbcType=INTEGER}
   </update>
+
+  <select id="selectState" resultType="int">
+    select count(*)
+    from party_exam
+    where `state`=1
+  </select>
 </mapper>

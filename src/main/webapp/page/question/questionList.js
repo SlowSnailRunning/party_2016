@@ -180,6 +180,7 @@ layui.use(['form', 'layer', 'laydate', 'upload', 'table', 'laytpl'], function ()
 
     //批量删除
     $(".delChecked_btn").click(function () {
+
         var checkStatus = table.checkStatus('questionListTable'),
             data = checkStatus.data,
             queId = [];
@@ -187,7 +188,7 @@ layui.use(['form', 'layer', 'laydate', 'upload', 'table', 'laytpl'], function ()
             for (var i in data) {
                 queId.push(data[i].id);
             }
-            layer.confirm('确定删除选中的学生吗？', {icon: 3, title: '提示信息'}, function (index) {
+            layer.confirm('确定删除选中的题目吗？', {icon: 3, title: '提示信息'}, function (index) {
                 $.post("/question/delete-multiple.do", {
                     queId: queId  //将需要删除的stuNo作为参数传入
                 }, function (data) {

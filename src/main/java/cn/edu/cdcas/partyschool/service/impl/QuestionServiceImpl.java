@@ -16,19 +16,9 @@ public class QuestionServiceImpl implements QuestionService {
     @Resource
     private QuestionMapper questionMapper;
 
-    @Override
+/*    @Override
     public int insert(Question question) {
         return questionMapper.insert(question);
-    }
-
-    @Override
-    public int insertSelective(Question question) {
-        return questionMapper.insertSelective(question);
-    }
-
-    @Override
-    public Question queryById(Integer id) {
-        return questionMapper.queryById(id);
     }
 
     @Override
@@ -39,8 +29,15 @@ public class QuestionServiceImpl implements QuestionService {
     @Override
     public int updateById(Question question) {
         return questionMapper.updateById(question);
+    }*/
+    @Override
+    public Question queryById(Integer id) {
+        return questionMapper.queryById(id);
     }
-
+    @Override
+    public int insertSelective(Question question) {
+        return questionMapper.insertSelective(question);
+    }
     /**
      *@Describe: 匹配题目类型，返回map
      *

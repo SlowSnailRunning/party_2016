@@ -7,15 +7,15 @@ import org.apache.ibatis.annotations.Param;
 import java.util.List;
 
 public interface QuestionMapper {
-    int insert(Question question);
+/*    int insert(Question question);
+
+    int updateByIdSelective(Question question);
+
+    int updateById(Question question);*/
 
     int insertSelective(Question question);
 
     Question queryById(Integer id);
-
-    int updateByIdSelective(Question question);
-
-    int updateById(Question question);
 
     List<Question> selectQueList(@Param(value = "start")int start,@Param(value = "pageSize") int pageSize,
                                  @Param(value = "intro") String intro,@Param(value = "type") String type) throws Exception;
