@@ -3,12 +3,14 @@ package cn.edu.cdcas.partyschool.service.impl;
 import cn.edu.cdcas.partyschool.mapper.ExamMapper;
 import cn.edu.cdcas.partyschool.service.ExamService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 /**
  * @Author Snail
  * @Describe
  * @CreateTime 2019/1/27
  */
+@Service
 public class ExamServiceImpl implements ExamService {
     @Autowired
     private ExamMapper examMapper;

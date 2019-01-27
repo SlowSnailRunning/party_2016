@@ -1,11 +1,10 @@
 package cn.edu.cdcas.partyschool.controller;
 
 import cn.edu.cdcas.partyschool.service.ExamService;
-import cn.edu.cdcas.partyschool.service.impl.ExamServiceImpl;
+import cn.edu.cdcas.partyschool.service.QuestionService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-
 import javax.annotation.Resource;
 
 /**
@@ -17,14 +16,19 @@ import javax.annotation.Resource;
 @RequestMapping("/exam")
 public class ExamController {
 
-    @Resource
-    private ExamServiceImpl examService;
-
+    @Autowired
+    private ExamService examService;
+    /**
+     *@Describe: 查找在当前时间是否存在考试
+     * 
+     *@Author Snail
+     *@Date 2019/1/27
+     */
     @RequestMapping("/haveExam")
     private boolean haveExam(){
         try {
-            int rowsAffected=examService.selectState();
-            if(rowsAffected==0){
+            int rows=examService.selectState();
+            if(rows==0){
                 return false;
             }else {
                 return true;

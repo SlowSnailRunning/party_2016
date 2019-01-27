@@ -217,11 +217,25 @@ layui.use(['form', 'layer', 'laydate', 'upload', 'table', 'laytpl'], function ()
 
     //批量删除
     $(".delChecked_btn").click(function () {
-
         var checkStatus = table.checkStatus('questionListTable'),
-            data = checkStatus.data,
-            queId = [];
-        if (data.length > 0) {
+            data = checkStatus.data;
+        if (data.length <= 0) {
+            layer.msg("请选择需要删除的学生");
+            return;
+        }
+
+        var havaExam="";
+        $.ajaxSettings.async = false;
+        $.post("/exam/haveExam.do",function (res) {
+            havaExam=res;
+        })
+        $.ajaxSettings.async = true;
+        if(havaExam=="true"){
+            //有考试，不允许删除题目
+            layer.alert('考试期间，不允许删除题目！你可以禁用题目使其不在考卷中再次出现！',{icon:4});
+            tableIns.reload();
+        }else{
+            var queId = [];
             for (var i in data) {
                 queId.push(data[i].id);
             }
@@ -238,8 +252,6 @@ layui.use(['form', 'layer', 'laydate', 'upload', 'table', 'laytpl'], function ()
                     layer.close(index);
                 });
             });
-        } else {
-            layer.msg("请选择需要删除的学生");
         }
     });
 
