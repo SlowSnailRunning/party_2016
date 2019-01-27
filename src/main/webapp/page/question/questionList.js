@@ -257,16 +257,24 @@ layui.use(['form', 'layer', 'laydate', 'upload', 'table', 'laytpl'], function ()
 
     //清空所有
     $(".clearAllStu_btn").click(function () {
-        layer.confirm('确认清空此学生列表吗?', {icon: 3, title: '提示信息'}, function (index) {
-            $.post("/question/clear.do", function (data) {
-                if(data=='true'){
-                    layer.msg("清空成功!");     //"清空成功!" from backend.
-                }else {
-                    layer.msg("清空失败!");
-                }
+        $.post("/exam/haveExam.do",function (res) {
+            if(res=="true"){
+                layer.alert('考试期间，不允许清空题库！',{icon:4});
                 tableIns.reload();
-            });
-        });
+            }else {
+                layer.confirm('确认清空题库吗?', {icon: 3, title: '提示信息'}, function (index) {
+                    $.post("/question/clear.do", function (data) {
+                        if(data=='true'){
+                            layer.msg("清空成功!");     //"清空成功!" from backend.
+                        }else {
+                            layer.msg("清空失败!");
+                        }
+                        tableIns.reload();
+                    });
+                });
+            }
+        })
+
     });
 
     //列表操作
