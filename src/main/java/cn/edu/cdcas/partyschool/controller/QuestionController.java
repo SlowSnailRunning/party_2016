@@ -55,9 +55,9 @@ public class QuestionController {
     @RequestMapping("/selectQue")
     public Map<String, Object> showAllStuInfo(@RequestParam(required = false,defaultValue = "1") int page, @RequestParam(required = false,defaultValue = "20") int limit,
                                               @RequestParam(required = false,defaultValue="") String intro,@RequestParam(required = false,defaultValue="")String type) {
-        //page：防止错误的page参数
         Map<String,Object> map = null;
         try {
+            //page：防止错误的page参数
             map = this.questionService.selectQue(page-1<0?0:page-1,limit,intro.trim(),type.trim());
         } catch (Exception e) {
             e.printStackTrace();

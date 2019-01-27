@@ -6,15 +6,13 @@ import cn.edu.cdcas.partyschool.model.Question;
 import java.util.Map;
 
 public interface QuestionService {
-    int insert(Question record);
-
-    int insertSelective(Question record);
+/*    int insert(Question record);
+    int updateById(Question record);
+    int updateByIdSelective(Question record);*/
 
     Question queryById(Integer id);
 
-    int updateByIdSelective(Question record);
-
-    int updateById(Question record);
+    int insertSelective(Question record);
 
     Map<String, Object> selectQue(int currentPage, int pageSize, String intro, String type) throws Exception;
 
