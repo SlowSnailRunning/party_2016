@@ -65,7 +65,7 @@ public class ExamController {
      *@Describe: 删除一个考试
      *
      * */
-    @RequestMapping("deleteExam")
+    @RequestMapping("/deleteExam")
     private boolean deleteExam(Integer id){
         try{
             int rows = examService.deleteById(id);
@@ -81,4 +81,48 @@ public class ExamController {
             return false;
         }
     }
+
+    /**
+     *@Describe: 更新一个考试
+     *
+     * */
+    @RequestMapping("/updateExam")
+    private boolean updateExam(Exam exam){
+        try{
+            int rows = examService.updateByIdSelective(exam);
+            if(rows<=0){
+                return false;
+            }
+            else{
+                return true;
+            }
+
+        } catch (Exception e) {
+            e.printStackTrace();
+            return false;
+        }
+    }
+
+    /**
+     *@Describe: 查询一个考试
+     *
+     * */
+    @RequestMapping("/queryExam")
+    private boolean queryExam(Integer id){
+        try{
+            Exam exam = examService.queryById(id);
+            if(exam!=null){
+                return true;
+            }
+            else{
+                return false;
+            }
+
+        } catch (Exception e) {
+            e.printStackTrace();
+            return false;
+        }
+    }
+
+
 }

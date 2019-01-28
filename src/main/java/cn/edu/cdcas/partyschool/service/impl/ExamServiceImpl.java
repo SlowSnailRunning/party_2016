@@ -42,4 +42,20 @@ public class ExamServiceImpl implements ExamService {
     public int deleteById(Integer id) throws Exception {
         return examMapper.deleteById(id);
     }
+
+    /**
+     *@Describe: 更新一个考试
+     */
+    @Override
+    public int updateByIdSelective(Exam exam) throws Exception {
+        return examMapper.updateByIdSelective(exam);
+    }
+
+    /**
+     *@Describe: 查询一个考试
+     */
+    @Override
+    public Exam queryById(Integer id) throws Exception {
+        return examMapper.queryById(id);
+    }
 }
