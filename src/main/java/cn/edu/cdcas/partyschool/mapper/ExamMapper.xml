@@ -27,7 +27,7 @@
     party_exam.check_num as party_exam_check_num, party_exam.check_score as party_exam_check_score, 
     party_exam.judge_num as party_exam_judge_num, party_exam.judge_score as party_exam_judge_score, 
     party_exam.fill_num as party_exam_fill_num, party_exam.fill_score as party_exam_fill_score, 
-    party_exam.saq_num as party， _exam_saq_num, party_exam.saq_score as party_exam_saq_score,
+    party_exam.saq_num as party_exam_saq_num, party_exam.saq_score as party_exam_saq_score,
     party_exam.pass_score as party_exam_pass_score, party_exam.is_makeup as party_exam_is_makeup
   </sql>
   <select id="queryById" parameterType="java.lang.Integer" resultMap="BaseResultMap">
