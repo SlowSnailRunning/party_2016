@@ -81,7 +81,7 @@ layui.use(['form', 'layer', 'laydate', 'upload', 'table', 'laytpl'], function ()
     $(".searchVal").hide();
     form.on('select(search)', function(data){
               search=data.value;
-        if(search!="context") {
+        if(search!="intro") {
             $(".searchVal").hide();
         }
         else{
@@ -93,7 +93,7 @@ layui.use(['form', 'layer', 'laydate', 'upload', 'table', 'laytpl'], function ()
 
     $(".search_btn").on("click", function () {
         //按照单选题、多选题、、、、
-        if (search!="context") {
+        if (search!="intro") {
             table.reload("questionListTable", {
                 page: {
                     curr: 1 //重新从第 1 页开始
@@ -117,7 +117,7 @@ layui.use(['form', 'layer', 'laydate', 'upload', 'table', 'laytpl'], function ()
                         /*type:"",*/
                         /*context:$(".searchVal").val() */  //按题干搜索
                     },
-                    url:'/question/select.do'+'?context='+$(".searchVal").val()
+                    url:'/question/select.do'+'?intro='+$(".searchVal").val()
                 })
                 console.log("er");
                 return ;

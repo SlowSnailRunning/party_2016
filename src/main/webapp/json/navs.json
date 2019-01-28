@@ -2,19 +2,19 @@
 	"contentManagement": [
 		{
 			"title": "考试管理",
-			"icon": "icon-text",
+			"icon": "&#xe617;",
 			"href": "page/student/studentList.html",
 			"spread": false,
 			"children":[
 				{
 					"title": "当前考试",
-					"icon": "&#xe61c;",
+					"icon": "&#xe605;",
 					"href": "page/student/studentList.html",
 					"spread": false
 				},
 				{
 					"title": "考试操作",
-					"icon": "&#xe61c;",
+					"icon": "&#xe600;",
 					"href": "page/student/studentList.html",
 					"spread": false
 				}
@@ -22,19 +22,19 @@
 		},
 		{
 		"title": "考生信息",
-		"icon": "icon-text",
+		"icon": "&#xe71f;",
 		"href": "page/student/studentList.html",
 		"spread": false,
 		"children":[
 			{
 				"title": "考生列表",
-				"icon": "&#xe61c;",
+				"icon": "&#xe6d5;",
 				"href": "page/student/studentList.html",
 				"spread": false
 			},
 			{
 				"title": "成绩查询",
-				"icon": "&#xe61c;",
+				"icon": "&#xe605;",
 				"href": "page/student/studentScoreList.html",
 				"spread": false
 			}
@@ -42,19 +42,19 @@
 		},
 		{
 			"title": "题库信息",
-			"icon": "icon-text",
+			"icon": "&#xe613;",
 			"href": "page/question/questionList.html",
 			"spread": false,
 			"children":[
 				{
 					"title": "题库列表",
-					"icon": "&#xe61c;",
+					"icon": "&#xe630;",
 					"href": "page/question/questionList.html",
 					"spread": false
 				},
 				{
 					"title": "考题分析",
-					"icon": "&#xe6b2;",
+					"icon": "&#xe619;",
 					"href": "page/question/statisticsList.html",
 					"spread": false
 				}
