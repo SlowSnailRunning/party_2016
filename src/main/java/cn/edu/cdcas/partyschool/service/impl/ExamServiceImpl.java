@@ -28,10 +28,18 @@ public class ExamServiceImpl implements ExamService {
     }
 
     /**
-     *@Describe: 新增考试
+     *@Describe: 新增一个考试
      */
     @Override
     public int insertSelective(Exam exam) throws Exception {
         return examMapper.insertSelective(exam);
+    }
+
+    /**
+     *@Describe: 删除一个考试
+     */
+    @Override
+    public int deleteById(Integer id) throws Exception {
+        return examMapper.deleteById(id);
     }
 }
