@@ -2,23 +2,23 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="cn.edu.cdcas.partyschool.mapper.ExamMapper">
   <resultMap id="BaseResultMap" type="cn.edu.cdcas.partyschool.model.Exam">
-    <id column="party_exam_id" jdbcType="INTEGER" property="id" />
-    <result column="party_exam_exam_name" jdbcType="VARCHAR" property="examName" />
-    <result column="party_exam_exam_time" jdbcType="INTEGER" property="examTime" />
-    <result column="party_exam_create_time" jdbcType="TIMESTAMP" property="createTime" />
-    <result column="party_exam_state" jdbcType="INTEGER" property="state" />
-    <result column="party_exam_radio_num" jdbcType="INTEGER" property="radioNum" />
-    <result column="party_exam_radio_score" jdbcType="INTEGER" property="radioScore" />
-    <result column="party_exam_check_num" jdbcType="INTEGER" property="checkNum" />
-    <result column="party_exam_check_score" jdbcType="INTEGER" property="checkScore" />
-    <result column="party_exam_judge_num" jdbcType="INTEGER" property="judgeNum" />
-    <result column="party_exam_judge_score" jdbcType="INTEGER" property="judgeScore" />
-    <result column="party_exam_fill_num" jdbcType="INTEGER" property="fillNum" />
-    <result column="party_exam_fill_score" jdbcType="INTEGER" property="fillScore" />
-    <result column="party_exam_saq_num" jdbcType="INTEGER" property="saqNum" />
-    <result column="party_exam_saq_score" jdbcType="INTEGER" property="saqScore" />
-    <result column="party_exam_pass_score" jdbcType="INTEGER" property="passScore" />
-    <result column="party_exam_is_makeup" jdbcType="INTEGER" property="isMakeup" />
+    <id column="id" jdbcType="INTEGER" property="id" />
+    <result column="exam_name" jdbcType="VARCHAR" property="examName" />
+    <result column="exam_time" jdbcType="INTEGER" property="examTime" />
+    <result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
+    <result column="state" jdbcType="INTEGER" property="state" />
+    <result column="radio_num" jdbcType="INTEGER" property="radioNum" />
+    <result column="radio_score" jdbcType="INTEGER" property="radioScore" />
+    <result column="check_num" jdbcType="INTEGER" property="checkNum" />
+    <result column="check_score" jdbcType="INTEGER" property="checkScore" />
+    <result column="judge_num" jdbcType="INTEGER" property="judgeNum" />
+    <result column="judge_score" jdbcType="INTEGER" property="judgeScore" />
+    <result column="fill_num" jdbcType="INTEGER" property="fillNum" />
+    <result column="fill_score" jdbcType="INTEGER" property="fillScore" />
+    <result column="saq_num" jdbcType="INTEGER" property="saqNum" />
+    <result column="saq_score" jdbcType="INTEGER" property="saqScore" />
+    <result column="pass_score" jdbcType="INTEGER" property="passScore" />
+    <result column="is_makeup" jdbcType="INTEGER" property="isMakeup" />
   </resultMap>
   <sql id="Base_Column_List">
     party_exam.id as party_exam_id, party_exam.exam_name as party_exam_exam_name, party_exam.exam_time as party_exam_exam_time, 
@@ -33,7 +33,7 @@
   <select id="queryById" parameterType="java.lang.Integer" resultMap="BaseResultMap">
     select 
     <include refid="Base_Column_List" />
-    from party_exam party_exam
+    from party_exam as party_exam
     where party_exam.id = #{id,jdbcType=INTEGER}
   </select>
   <delete id="deleteById" parameterType="java.lang.Integer">
