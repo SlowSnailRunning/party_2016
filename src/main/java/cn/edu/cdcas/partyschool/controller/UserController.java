@@ -12,9 +12,13 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.annotation.Resource;
+import javax.servlet.ServletOutputStream;
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
+import java.io.UnsupportedEncodingException;
+import java.net.URLEncoder;
 import java.util.List;
 import java.util.Map;
 
@@ -66,6 +70,28 @@ public class UserController {
         }
 
         return new JSONResult(0, "考生导入成功!", 200);
+    }
+
+    /**
+     * download the score table of student in Excel.
+     *
+     * @param response
+     * @throws UnsupportedEncodingException
+     */
+    @RequestMapping("/download-score")
+    public void download(HttpServletResponse response) throws UnsupportedEncodingException {
+        response.setContentType("application/x-xls");
+        response.setCharacterEncoding("utf-8");
+        response.addHeader("Content-Disposition", "attachment;filename=" + URLEncoder.encode("学生成绩表.xls", "utf-8"));
+
+        try {
+            ExcelUtil excelUtil = new ExcelUtil();
+            ServletOutputStream out = response.getOutputStream();
+            excelUtil.exportStudentScore(userService.queryAll(), out);  //write the excel into output stream.
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
     }
 
     @RequestMapping("/add-update")
@@ -130,7 +156,7 @@ public class UserController {
     public JSONResult deleteMultipleStu(@RequestParam("stuId[]") int[] stuId) {
         if (stuId.length == userService.queryStuNums()) {
             return clear();
-    }
+        }
 
         //delete the student whose student id contained in this array.
         for (int sid : stuId) userService.deleteById(sid);

@@ -4,7 +4,7 @@ layui.use(['form', 'layer', 'table'], function () {
         $ = layui.jquery,
         table = layui.table;
 
-    //新闻列表
+    //学生成绩表
     var tableIns = table.render({
         elem: '#studentScoreList',
         url: '/user/all.do',
@@ -64,7 +64,6 @@ layui.use(['form', 'layer', 'table'], function () {
         })
     });
 
-
     //列表操作
     table.on('tool(studentScoreList)', function (obj) {
         var layEvent = obj.event,
@@ -89,7 +88,7 @@ layui.use(['form', 'layer', 'table'], function () {
         if (layEvent === 'view_error') {
             layui.layer.open({
                 type: 2,
-                title: data.name+'错题预览:',
+                title: data.name + '错题预览:',
                 content: 'studentErrorDisplay.html',
                 area: ['400px', '225px'],
                 success: function (object, index) {
