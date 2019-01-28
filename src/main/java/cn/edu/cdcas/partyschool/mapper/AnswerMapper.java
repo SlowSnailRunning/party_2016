@@ -2,6 +2,8 @@ package cn.edu.cdcas.partyschool.mapper;
 
 import cn.edu.cdcas.partyschool.model.Answer;
 
+import java.util.List;
+
 public interface AnswerMapper {
     int deleteById(Integer id);
 
@@ -14,4 +16,6 @@ public interface AnswerMapper {
     int updateByIdSelective(Answer answer);
 
     int updateById(Answer answer);
+
+    List<Answer> queryAnswerByStuNo(String stuNo);
 }

@@ -1,125 +1,163 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="cn.edu.cdcas.partyschool.mapper.AnswerMapper">
-  <resultMap id="BaseResultMap" type="cn.edu.cdcas.partyschool.model.Answer">
-    <id column="party_answer_id" jdbcType="INTEGER" property="id" />
-    <result column="party_answer_student_no" jdbcType="CHAR" property="studentNo" />
-    <result column="party_answer_exam_id" jdbcType="INTEGER" property="examId" />
-    <result column="party_answer_question_id" jdbcType="INTEGER" property="questionId" />
-    <result column="party_answer_answer" jdbcType="VARCHAR" property="answer" />
-    <result column="party_answer_score" jdbcType="INTEGER" property="score" />
-    <result column="party_answer_question_type" jdbcType="INTEGER" property="questionType" />
-    <result column="party_answer_result" jdbcType="VARCHAR" property="result" />
-  </resultMap>
-  <sql id="Base_Column_List">
-    party_answer.id as party_answer_id, party_answer.student_no as party_answer_student_no, 
-    party_answer.exam_id as party_answer_exam_id, party_answer.question_id as party_answer_question_id, 
-    party_answer.answer as party_answer_answer, party_answer.score as party_answer_score, 
-    party_answer.question_type as party_answer_question_type, party_answer.`result` as `party_answer_result`
-  </sql>
-  <select id="queryById" parameterType="java.lang.Integer" resultMap="BaseResultMap">
-    select 
-    <include refid="Base_Column_List" />
-    from party_answer party_answer
-    where party_answer.id = #{id,jdbcType=INTEGER}
-  </select>
-  <delete id="deleteById" parameterType="java.lang.Integer">
-    delete from party_answer
-    where id = #{id,jdbcType=INTEGER}
-  </delete>
-  <insert id="insert" keyColumn="id" keyProperty="id" parameterType="cn.edu.cdcas.partyschool.model.Answer" useGeneratedKeys="true">
-    insert into party_answer (student_no, exam_id, question_id, 
-      answer, score, question_type, 
-      `result`)
-    values (#{studentNo,jdbcType=CHAR}, #{examId,jdbcType=INTEGER}, #{questionId,jdbcType=INTEGER}, 
-      #{answer,jdbcType=VARCHAR}, #{score,jdbcType=INTEGER}, #{questionType,jdbcType=INTEGER}, 
-      #{result,jdbcType=VARCHAR})
-  </insert>
-  <insert id="insertSelective" keyColumn="id" keyProperty="id" parameterType="cn.edu.cdcas.partyschool.model.Answer" useGeneratedKeys="true">
-    insert into party_answer
-    <trim prefix="(" suffix=")" suffixOverrides=",">
-      <if test="studentNo != null">
+    <resultMap id="BaseResultMap" type="cn.edu.cdcas.partyschool.model.Answer">
+        <id column="id" jdbcType="INTEGER" property="id"/>
+        <result column="student_no" jdbcType="CHAR" property="studentNo"/>
+        <result column="exam_id" jdbcType="INTEGER" property="examId"/>
+        <result column="question_id" jdbcType="INTEGER" property="questionId"/>
+        <result column="answer" jdbcType="VARCHAR" property="answer"/>
+        <result column="score" jdbcType="INTEGER" property="score"/>
+        <result column="question_type" jdbcType="INTEGER" property="questionType"/>
+        <result column="result" jdbcType="VARCHAR" property="result"/>
+    </resultMap>
+
+    <resultMap id="WrongResultMap" type="cn.edu.cdcas.partyschool.model.Answer">
+        <result column="question_id" jdbcType="INTEGER" property="questionId"/>
+        <result column="answer" jdbcType="VARCHAR" property="answer"/>
+        <result column="result" jdbcType="VARCHAR" property="result"/>
+        <association property="question" javaType="cn.edu.cdcas.partyschool.model.Question">
+            <id column="id" jdbcType="INTEGER" property="id"/>
+            <result column="intro" jdbcType="VARCHAR" property="intro"/>
+            <result column="option_a" jdbcType="VARCHAR" property="optionA"/>
+            <result column="option_b" jdbcType="VARCHAR" property="optionB"/>
+            <result column="option_c" jdbcType="VARCHAR" property="optionC"/>
+            <result column="option_d" jdbcType="VARCHAR" property="optionD"/>
+        </association>
+
+
+    </resultMap>
+    <sql id="Base_Column_List">
+        id,
         student_no,
-      </if>
-      <if test="examId != null">
         exam_id,
-      </if>
-      <if test="questionId != null">
         question_id,
-      </if>
-      <if test="answer != null">
         answer,
-      </if>
-      <if test="score != null">
         score,
-      </if>
-      <if test="questionType != null">
         question_type,
-      </if>
-      <if test="result != null">
-        `result`,
-      </if>
-    </trim>
-    <trim prefix="values (" suffix=")" suffixOverrides=",">
-      <if test="studentNo != null">
-        #{studentNo,jdbcType=CHAR},
-      </if>
-      <if test="examId != null">
-        #{examId,jdbcType=INTEGER},
-      </if>
-      <if test="questionId != null">
-        #{questionId,jdbcType=INTEGER},
-      </if>
-      <if test="answer != null">
-        #{answer,jdbcType=VARCHAR},
-      </if>
-      <if test="score != null">
-        #{score,jdbcType=INTEGER},
-      </if>
-      <if test="questionType != null">
-        #{questionType,jdbcType=INTEGER},
-      </if>
-      <if test="result != null">
-        #{result,jdbcType=VARCHAR},
-      </if>
-    </trim>
-  </insert>
-  <update id="updateByIdSelective" parameterType="cn.edu.cdcas.partyschool.model.Answer">
-    update party_answer
-    <set>
-      <if test="studentNo != null">
-        student_no = #{studentNo,jdbcType=CHAR},
-      </if>
-      <if test="examId != null">
-        exam_id = #{examId,jdbcType=INTEGER},
-      </if>
-      <if test="questionId != null">
-        question_id = #{questionId,jdbcType=INTEGER},
-      </if>
-      <if test="answer != null">
-        answer = #{answer,jdbcType=VARCHAR},
-      </if>
-      <if test="score != null">
-        score = #{score,jdbcType=INTEGER},
-      </if>
-      <if test="questionType != null">
-        question_type = #{questionType,jdbcType=INTEGER},
-      </if>
-      <if test="result != null">
-        `result` = #{result,jdbcType=VARCHAR},
-      </if>
-    </set>
-    where id = #{id,jdbcType=INTEGER}
-  </update>
-  <update id="updateById" parameterType="cn.edu.cdcas.partyschool.model.Answer">
-    update party_answer
-    set student_no = #{studentNo,jdbcType=CHAR},
-      exam_id = #{examId,jdbcType=INTEGER},
-      question_id = #{questionId,jdbcType=INTEGER},
-      answer = #{answer,jdbcType=VARCHAR},
-      score = #{score,jdbcType=INTEGER},
-      question_type = #{questionType,jdbcType=INTEGER},
-      `result` = #{result,jdbcType=VARCHAR}
-    where id = #{id,jdbcType=INTEGER}
-  </update>
+        `result`
+    </sql>
+    <select id="queryById" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from party_answer
+        where id = #{id,jdbcType=INTEGER}
+    </select>
+    <select id="queryAnswerByStuNo" resultType="cn.edu.cdcas.partyschool.model.Answer" resultMap="WrongResultMap">
+        select party_answer.question_id,
+               intro,
+               option_a,
+               option_b,
+               option_c,
+               option_d,
+               answer,
+               party_answer.result
+        from `party_answer`,
+             `party_question`
+        where party_answer.question_id = party_question.id
+          and student_no = #{stuNo}
+          and score = 0;
+    </select>
+    <delete id="deleteById" parameterType="java.lang.Integer">
+        delete
+        from party_answer
+        where id = #{id,jdbcType=INTEGER}
+    </delete>
+    <insert id="insert" keyColumn="id" keyProperty="id" parameterType="cn.edu.cdcas.partyschool.model.Answer"
+            useGeneratedKeys="true">
+        insert into party_answer (student_no, exam_id, question_id,
+                                  answer, score, question_type,
+                                  `result`)
+        values (#{studentNo,jdbcType=CHAR}, #{examId,jdbcType=INTEGER}, #{questionId,jdbcType=INTEGER},
+                #{answer,jdbcType=VARCHAR}, #{score,jdbcType=INTEGER}, #{questionType,jdbcType=INTEGER},
+                #{result,jdbcType=VARCHAR})
+    </insert>
+    <insert id="insertSelective" keyColumn="id" keyProperty="id" parameterType="cn.edu.cdcas.partyschool.model.Answer"
+            useGeneratedKeys="true">
+        insert into party_answer
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="studentNo != null">
+                student_no,
+            </if>
+            <if test="examId != null">
+                exam_id,
+            </if>
+            <if test="questionId != null">
+                question_id,
+            </if>
+            <if test="answer != null">
+                answer,
+            </if>
+            <if test="score != null">
+                score,
+            </if>
+            <if test="questionType != null">
+                question_type,
+            </if>
+            <if test="result != null">
+                `result`,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="studentNo != null">
+                #{studentNo,jdbcType=CHAR},
+            </if>
+            <if test="examId != null">
+                #{examId,jdbcType=INTEGER},
+            </if>
+            <if test="questionId != null">
+                #{questionId,jdbcType=INTEGER},
+            </if>
+            <if test="answer != null">
+                #{answer,jdbcType=VARCHAR},
+            </if>
+            <if test="score != null">
+                #{score,jdbcType=INTEGER},
+            </if>
+            <if test="questionType != null">
+                #{questionType,jdbcType=INTEGER},
+            </if>
+            <if test="result != null">
+                #{result,jdbcType=VARCHAR},
+            </if>
+        </trim>
+    </insert>
+    <update id="updateByIdSelective" parameterType="cn.edu.cdcas.partyschool.model.Answer">
+        update party_answer
+        <set>
+            <if test="studentNo != null">
+                student_no = #{studentNo,jdbcType=CHAR},
+            </if>
+            <if test="examId != null">
+                exam_id = #{examId,jdbcType=INTEGER},
+            </if>
+            <if test="questionId != null">
+                question_id = #{questionId,jdbcType=INTEGER},
+            </if>
+            <if test="answer != null">
+                answer = #{answer,jdbcType=VARCHAR},
+            </if>
+            <if test="score != null">
+                score = #{score,jdbcType=INTEGER},
+            </if>
+            <if test="questionType != null">
+                question_type = #{questionType,jdbcType=INTEGER},
+            </if>
+            <if test="result != null">
+                `result` = #{result,jdbcType=VARCHAR},
+            </if>
+        </set>
+        where id = #{id,jdbcType=INTEGER}
+    </update>
+    <update id="updateById" parameterType="cn.edu.cdcas.partyschool.model.Answer">
+        update party_answer
+        set student_no    = #{studentNo,jdbcType=CHAR},
+            exam_id       = #{examId,jdbcType=INTEGER},
+            question_id   = #{questionId,jdbcType=INTEGER},
+            answer        = #{answer,jdbcType=VARCHAR},
+            score         = #{score,jdbcType=INTEGER},
+            question_type = #{questionType,jdbcType=INTEGER},
+            `result`      = #{result,jdbcType=VARCHAR}
+        where id = #{id,jdbcType=INTEGER}
+    </update>
 </mapper>

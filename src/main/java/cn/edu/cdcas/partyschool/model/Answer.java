@@ -40,6 +40,8 @@ public class Answer implements Serializable {
      */
     private Integer questionType;
 
+    private Question question;
+
     /**
      * 正确答案
      */
@@ -109,5 +111,13 @@ public class Answer implements Serializable {
 
     public void setResult(String result) {
         this.result = result;
+    }
+
+    public Question getQuestion() {
+        return question;
+    }
+
+    public void setQuestion(Question question) {
+        this.question = question;
     }
 }
