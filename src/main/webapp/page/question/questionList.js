@@ -77,13 +77,14 @@ layui.use(['form', 'layer', 'laydate', 'upload', 'table', 'laytpl'], function ()
    /* console.log($('#search option:selected').val());*/
    /* var value=$('#search option:selected').val();*/
      var search;
+     //默认关键字输入框隐藏
+    $(".searchVal").hide();
     form.on('select(search)', function(data){
               search=data.value;
         if(search!="context") {
             $(".searchVal").hide();
         }
         else{
-
             $(".searchVal").show();
         }
         console.log(search); //得到被选中的值
@@ -91,34 +92,35 @@ layui.use(['form', 'layer', 'laydate', 'upload', 'table', 'laytpl'], function ()
     });
 
     $(".search_btn").on("click", function () {
+        //按照单选题、多选题、、、、
         if (search!="context") {
             table.reload("questionListTable", {
                 page: {
                     curr: 1 //重新从第 1 页开始
                 },
                 where: {
-                    type: search,  //按类型搜索
-                    context:"",
+                   /* type: search,*/  //按类型搜索
+                    /*context:"",*/
 
-                }
+                },
+                url:'/question/select.do'+'?type='+search
             })
             console.log("一");
         } else {
+            //按关键字搜索
             if ($(".searchVal").val()!=''){
-
                 table.reload("questionListTable", {
                     page: {
                         curr: 1 //重新从第 1 页开始
                     },
                     where: {
-                        type:"",
-                        context:$(".searchVal").val()   //按题干搜索
-                    }
+                        /*type:"",*/
+                        /*context:$(".searchVal").val() */  //按题干搜索
+                    },
+                    url:'/question/select.do'+'?context='+$(".searchVal").val()
                 })
                 console.log("er");
-
                 return ;
-
             }
 
             layer.msg("请输入搜索内容");
