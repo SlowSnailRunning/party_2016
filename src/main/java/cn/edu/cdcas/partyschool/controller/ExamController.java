@@ -3,6 +3,7 @@ package cn.edu.cdcas.partyschool.controller;
 import cn.edu.cdcas.partyschool.model.Exam;
 import cn.edu.cdcas.partyschool.service.ExamService;
 import cn.edu.cdcas.partyschool.service.QuestionService;
+import org.mybatis.spring.annotation.MapperScan;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -40,7 +41,7 @@ public class ExamController {
         }
     }
     /**
-     *@Describe: 新增考试
+     *@Describe: 新增一个考试
      *
      * */
     @RequestMapping("/addExam")
@@ -60,4 +61,68 @@ public class ExamController {
         }
 
     }
+    /**
+     *@Describe: 删除一个考试
+     *
+     * */
+    @RequestMapping("/deleteExam")
+    private boolean deleteExam(Integer id){
+        try{
+            int rows = examService.deleteById(id);
+            if(rows<=0){
+                return false;
+            }
+            else{
+                return true;
+            }
+
+        } catch (Exception e) {
+            e.printStackTrace();
+            return false;
+        }
+    }
+
+    /**
+     *@Describe: 更新一个考试
+     *
+     * */
+    @RequestMapping("/updateExam")
+    private boolean updateExam(Exam exam){
+        try{
+            int rows = examService.updateByIdSelective(exam);
+            if(rows<=0){
+                return false;
+            }
+            else{
+                return true;
+            }
+
+        } catch (Exception e) {
+            e.printStackTrace();
+            return false;
+        }
+    }
+
+    /**
+     *@Describe: 查询一个考试
+     *
+     * */
+    @RequestMapping("/queryExam")
+    private boolean queryExam(Integer id){
+        try{
+            Exam exam = examService.queryById(id);
+            if(exam!=null){
+                return true;
+            }
+            else{
+                return false;
+            }
+
+        } catch (Exception e) {
+            e.printStackTrace();
+            return false;
+        }
+    }
+
+
 }
