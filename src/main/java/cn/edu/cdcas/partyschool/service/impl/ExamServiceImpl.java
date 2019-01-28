@@ -1,6 +1,7 @@
 package cn.edu.cdcas.partyschool.service.impl;
 
 import cn.edu.cdcas.partyschool.mapper.ExamMapper;
+import cn.edu.cdcas.partyschool.model.Exam;
 import cn.edu.cdcas.partyschool.service.ExamService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -24,5 +25,13 @@ public class ExamServiceImpl implements ExamService {
     public int selectState() throws Exception {
         return examMapper.selectState();
 
+    }
+
+    /**
+     *@Describe: 新增考试
+     */
+    @Override
+    public int insertSelective(Exam exam) throws Exception {
+        return examMapper.insertSelective(exam);
     }
 }

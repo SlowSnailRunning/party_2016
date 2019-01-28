@@ -1,5 +1,6 @@
 package cn.edu.cdcas.partyschool.controller;
 
+import cn.edu.cdcas.partyschool.model.Exam;
 import cn.edu.cdcas.partyschool.service.ExamService;
 import cn.edu.cdcas.partyschool.service.QuestionService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -37,5 +38,26 @@ public class ExamController {
             e.printStackTrace();
             return false;
         }
+    }
+    /**
+     *@Describe: 新增考试
+     *
+     * */
+    @RequestMapping("/addExam")
+    private boolean addExam(Exam exam){
+        try{
+            int rows = examService.insertSelective(exam);
+            if(rows<=0){
+                return false;
+            }
+            else{
+                return true;
+            }
+
+        }catch (Exception e) {
+            e.printStackTrace();
+            return false;
+        }
+
     }
 }
