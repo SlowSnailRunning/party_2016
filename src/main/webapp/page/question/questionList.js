@@ -98,7 +98,7 @@ layui.use(['form', 'layer', 'laydate', 'upload', 'table', 'laytpl'], function ()
                 },
                 where: {
                     type: search,  //按类型搜索
-                    context:"",
+                    intro:"",
 
                 }
             })
@@ -112,10 +112,10 @@ layui.use(['form', 'layer', 'laydate', 'upload', 'table', 'laytpl'], function ()
                     },
                     where: {
                         type:"",
-                        context:$(".searchVal").val()   //按题干搜索
+                        intro:$(".searchVal").val()   //按题干搜索
                     }
                 })
-                console.log("er");
+                //console.log("er");
 
                 return ;
 
