@@ -18,9 +18,20 @@ layui.use('table', function () {
             {field: 'id', title: 'ID', width: 60, align: "center", hide: true},
             {field: 'intro', title: '内容', align: "center"},
             {field: 'type', title: '类型', width: 80, align: 'center'},
-            {field: 'selected', title: '选中次数', width: 100, align: 'center', sort: true},
-            {field: 'correct', title: '正确率', width: 80,align: 'center', sort: true,
-                templet: function (d) { return Number(d.correct * 100).toFixed() + "%";}
+            {
+                field: 'selected', title: '选中次数', width: 100, align: 'center', sort: true
+                , templet: function (d) {
+                    if (d.selected == null)
+                        return "0";
+                    else
+                        return d.selected;
+                }
+            },
+            {
+                field: 'correct', title: '正确率', width: 80, align: 'center', sort: true,
+                templet: function (d) {
+                    return Number(d.correct * 100).toFixed() + "%";
+                }
             },
             {field: 'optionA', title: 'A', width: 60, align: "center", hide: true},
             {field: 'optionB', title: 'B', width: 60, align: "center", hide: true},
