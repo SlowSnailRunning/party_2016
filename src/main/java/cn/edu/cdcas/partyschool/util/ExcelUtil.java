@@ -77,19 +77,26 @@ public class ExcelUtil {
         sheet.setDefaultColumnWidth(14);
 
         for (int i = 0; i < columnCount; i++) {
-            HSSFCell cell = header.createCell(i);
+            HSSFCell cell = header.createCell(i, CellType.STRING);
+            cell.setCellStyle(this.createHSSFCellStyle(workbook, "宋体", 12, BorderStyle.THIN, true, false));
             cell.setCellValue(header_list.get(i));
-            cell.setCellStyle(this.createHSSFCellStyle(workbook, "宋体", 10, true, BorderStyle.THIN));
         }
 
-        HSSFCellStyle contentCellStyle = this.createHSSFCellStyle(workbook, "宋体", 10, false, BorderStyle.THIN);
+        HSSFCellStyle contentCellStyle = this.createHSSFCellStyle(workbook, "宋体", 12, BorderStyle.THIN, false, false);
         for (int rowNum = 0; rowNum < rowCount; rowNum++) {
             HSSFRow row = sheet.createRow(rowNum + 1);
             List<String> row_list = map.get(rowNum);
             for (int colNum = 0; colNum < columnCount; colNum++) {
-                HSSFCell cell = row.createCell(colNum);
-                cell.setCellValue(row_list.get(colNum));
-                cell.setCellStyle(contentCellStyle);
+                if (colNum == 0 || colNum == 5 || colNum == 6 || colNum == 7) {
+                    HSSFCellStyle numericCellStyle = this.createHSSFCellStyle(workbook, "宋体", 12, BorderStyle.THIN, false, true);
+                    HSSFCell cell = row.createCell(colNum, CellType.NUMERIC);
+                    cell.setCellStyle(numericCellStyle);
+                    cell.setCellValue(Double.valueOf(row_list.get(colNum)));
+                } else {
+                    HSSFCell cell = row.createCell(colNum, CellType.STRING);
+                    cell.setCellStyle(contentCellStyle);
+                    cell.setCellValue(row_list.get(colNum));
+                }
             }
         }
 
@@ -141,14 +148,19 @@ public class ExcelUtil {
      * @param borderStyle
      * @return HSSFCellStyle
      */
-    public HSSFCellStyle createHSSFCellStyle(HSSFWorkbook workbook, String fontName, int fontSize, boolean fontBold,
-                                             BorderStyle borderStyle) {
+    public HSSFCellStyle createHSSFCellStyle(HSSFWorkbook workbook, String fontName, int fontSize, BorderStyle borderStyle,
+                                             boolean fontBold, boolean isNumeric) {
         HSSFCellStyle style = workbook.createCellStyle();
         HSSFFont font = workbook.createFont();
         font.setFontName(fontName);
         font.setFontHeightInPoints((short) fontSize);
         font.setBold(fontBold);
         style.setFont(font);
+
+        if (isNumeric) {
+            HSSFDataFormat dataFormat = workbook.createDataFormat();
+            style.setDataFormat(dataFormat.getFormat("#"));
+        }
 
         style.setBorderBottom(borderStyle);
         style.setBorderTop(borderStyle);
