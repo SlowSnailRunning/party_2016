@@ -23,6 +23,7 @@
             <result column="option_b" jdbcType="VARCHAR" property="optionB"/>
             <result column="option_c" jdbcType="VARCHAR" property="optionC"/>
             <result column="option_d" jdbcType="VARCHAR" property="optionD"/>
+            <result column="type" jdbcType="INTEGER" property="type"/>
         </association>
 
 
@@ -44,7 +45,8 @@
         where id = #{id,jdbcType=INTEGER}
     </select>
     <select id="queryAnswerByStuNo" resultType="cn.edu.cdcas.partyschool.model.Answer" resultMap="WrongResultMap">
-        select party_answer.question_id,
+        select party_question.type,
+               party_answer.question_id,
                intro,
                option_a,
                option_b,
@@ -56,7 +58,9 @@
              `party_question`
         where party_answer.question_id = party_question.id
           and student_no = #{stuNo}
-          and score = 0;
+          and score = 0
+        order by party_question.type
+        limit #{offsetSize},#{pageSize}
     </select>
     <delete id="deleteById" parameterType="java.lang.Integer">
         delete

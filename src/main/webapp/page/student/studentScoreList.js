@@ -88,13 +88,13 @@ layui.use(['form', 'layer', 'table'], function () {
         if (layEvent === 'view_error') {
             layui.layer.open({
                 type: 2,
-                title: data.name + '错题预览:',
+                title: data.name + ' ' + data.studentNo + '  错题预览:',
                 content: 'studentErrorDisplay.html',
-                area: ['400px', '225px'],
+                area: ['820px', '400px'],
                 success: function (object, index) {
                     var body = layui.layer.getChildFrame('body', index);
                     if (data) {
-                        /*adding........*/
+                        body.find("#studentNo").val(data.studentNo);
                         form.render();
                     }
                 }
