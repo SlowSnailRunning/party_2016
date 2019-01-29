@@ -18,8 +18,7 @@ layui.use('table', function () {
             {field: 'id', title: 'ID', width: 60, align: "center", hide: true},
             {field: 'intro', title: '内容', align: "center"},
             {field: 'type', title: '类型', width: 80, align: 'center'},
-            {
-                field: 'selected', title: '选中次数', width: 100, align: 'center', sort: true
+            { field: 'selected', title: '选中次数', width: 100, align: 'center', sort: true
                 , templet: function (d) {
                     if (d.selected == null)
                         return "0";

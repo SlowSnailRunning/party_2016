@@ -10,7 +10,7 @@ layui.use(['form', 'layer', 'laydate', 'upload', 'table', 'laytpl'], function ()
     var tableIns = table.render({
         elem: '#questionList',
         url: '/question/selectQue.do',
-       /* url:'questionList.json',*/
+        /* url:'questionList.json',*/
         cellMinWidth: 95,
         page: true,
         height: "full-125",
@@ -21,50 +21,61 @@ layui.use(['form', 'layer', 'laydate', 'upload', 'table', 'laytpl'], function ()
             {type: 'checkbox', fixed: 'left', width: 50},
             {field: 'id', title: 'ID', width: 86, align: "center", hide: true},
             {title: '序号', type: 'numbers'},
-            {field: 'intro', title: '题干',  align: "center"},
+            {field: 'intro', title: '题干', align: "center"},
             {field: 'optionA', title: '选项A', width: 110, align: "center"},
             {field: 'optionB', title: '选项B', width: 110, align: "center"},
             {field: 'optionC', title: '选项C', width: 110, align: "center"},
             {field: 'optionD', title: '选项D', width: 110, align: "center"},
             {field: 'result', title: '答案', width: 80, align: 'center'},
-            {field: 'type', title: '试题类型', width: 100, align: 'center'},
-            {field: 'state', title: '是否启用', width: 86,align:'center', templet:function(d){
-                    return '<input type="checkbox" name="state" lay-filter="state" lay-skin="switch" lay-text="是|否" '+d.state+'>'
-                }},
+            {field: 'type', title: '试题类型', width: 100, align: 'center', templet: function (d) {
+                    /*1：单选，2：多选，3：判断，4：填空，5：解答*/
+                    var result = "";
+                    switch (d.type) { case 1: result = "单选";  break; case 2: result = "多选";  break;
+                        case 3: result = "判断";  break;  case 4: result = "填空";  break;
+                        case 5: result = "解答";  break; default:  result = "未知错误";
+                    }
+                    return result;
+                }
+            },
+            {
+                field: 'state', title: '是否启用', width: 86, align: 'center', templet: function (d) {
+                    return '<input type="checkbox" name="state" lay-filter="state" lay-skin="switch" lay-text="是|否" ' + d.state + '>'
+                }
+            },
         ]]
     });
 
     //是否启动
     var data2;
-    table.on('row(questionList)', function(obj){
-         data2 = obj.data;
-/*        layer.alert(JSON.stringify(data2), {
-            title: '当前行数据：'
-        });*/
+    table.on('row(questionList)', function (obj) {
+        data2 = obj.data;
+        /*        layer.alert(JSON.stringify(data2), {
+                    title: '当前行数据：'
+                });*/
     });
     form.on('switch(state)', function (data) {
         var index = layer.msg('修改中，请稍候', {icon: 16, time: false, shade: 0.8});
-        var result="";
+        var result = "";
         setTimeout(function () {
-/*            console.log(data2["id"]);
-            console.log(data2["state"]);
-            console.log(data2["state"]=="checked"?"":"checked");*/
+            /*            console.log(data2["id"]);
+                        console.log(data2["state"]);
+                        console.log(data2["state"]=="checked"?"":"checked");*/
             $.ajaxSettings.async = false;
             $.post("/question/modifyState.do", {
-                state: data2["state"]=="checked"?"":"checked",
-                id:data2["id"]
+                state: data2["state"] == "checked" ? "" : "checked",
+                id: data2["id"]
             }, function (res) {
-                result=res;
+                result = res;
             })
             layer.close(index);
             $.ajaxSettings.async = true;
             if (data.elem.checked) {
-                if(result=="true")
+                if (result == "true")
                     layer.msg("启用成功！");
                 else
                     layer.msg("启用失败！");
             } else {
-                if(result=="true")
+                if (result == "true")
                     layer.msg("禁用成功！");
                 else {
                     layer.msg("禁用失败！")
@@ -74,17 +85,16 @@ layui.use(['form', 'layer', 'laydate', 'upload', 'table', 'laytpl'], function ()
     });
 
     //搜索【此功能需要后台配合，所以暂时没有动态效果演示】
-   /* console.log($('#search option:selected').val());*/
-   /* var value=$('#search option:selected').val();*/
-     var search;
-     //默认关键字输入框隐藏
+    /* console.log($('#search option:selected').val());*/
+    /* var value=$('#search option:selected').val();*/
+    var search;
+    //默认关键字输入框隐藏
     $(".searchVal").hide();
-    form.on('select(search)', function(data){
-              search=data.value;
-        if(search!="intro") {
+    form.on('select(search)', function (data) {
+        search = data.value;
+        if (search != "intro") {
             $(".searchVal").hide();
-        }
-        else{
+        } else {
             $(".searchVal").show();
         }
         console.log(search); //得到被选中的值
@@ -93,22 +103,22 @@ layui.use(['form', 'layer', 'laydate', 'upload', 'table', 'laytpl'], function ()
 
     $(".search_btn").on("click", function () {
         //按照单选题、多选题、、、、
-        if (search!="intro") {
+        if (search != "intro") {
             table.reload("questionListTable", {
                 page: {
                     curr: 1 //重新从第 1 页开始
                 },
                 where: {
-                   /* type: search,*/  //按类型搜索
+                    /* type: search,*/  //按类型搜索
                     /*context:"",*/
 
                 },
-                url:'/question/select.do'+'?type='+search
+                url: '/question/select.do' + '?type=' + search
             })
             console.log("一");
         } else {
             //按关键字搜索
-            if ($(".searchVal").val()!=''){
+            if ($(".searchVal").val() != '') {
                 table.reload("questionListTable", {
                     page: {
                         curr: 1 //重新从第 1 页开始
@@ -117,10 +127,10 @@ layui.use(['form', 'layer', 'laydate', 'upload', 'table', 'laytpl'], function ()
                         /*type:"",*/
                         /*context:$(".searchVal").val() */  //按题干搜索
                     },
-                    url:'/question/select.do'+'?intro='+$(".searchVal").val()
+                    url: '/question/select.do' + '?intro=' + $(".searchVal").val()
                 })
                 console.log("er");
-                return ;
+                return;
             }
 
             layer.msg("请输入搜索内容");
@@ -129,15 +139,15 @@ layui.use(['form', 'layer', 'laydate', 'upload', 'table', 'laytpl'], function ()
         }
     });
     $(".addNewsList_btn").click(function () {
-        if(true){
+        if (true) {
             //tableIns为空
             addQue();
-        }else{////tableIns不为空,第一次点击没有反应，第二次直接弹出来
+        } else {////tableIns不为空,第一次点击没有反应，第二次直接弹出来
             layer.confirm('发现题库数据不为空！！', {
-                btn: ['追加导入','为我清空题库后导入'] //按钮
-            }, function(){
+                btn: ['追加导入', '为我清空题库后导入'] //按钮
+            }, function () {
                 addQue();
-            }, function(){
+            }, function () {
                 $.post("/question/clear.do", function (data) {
                     layer.msg(JSON.parse(data)['msg']);     //"清空成功!" from backend.
                 });
@@ -146,7 +156,8 @@ layui.use(['form', 'layer', 'laydate', 'upload', 'table', 'laytpl'], function ()
             });
         }
     });
-    function addQue(){
+
+    function addQue() {
         var upload = layui.upload; //得到 upload 对象
 
         //获取当前网址，如： http://localhost:8083/uimcardprj/share/meun.jsp
@@ -227,17 +238,17 @@ layui.use(['form', 'layer', 'laydate', 'upload', 'table', 'laytpl'], function ()
             return;
         }
 
-        var havaExam="";
+        var havaExam = "";
         $.ajaxSettings.async = false;
-        $.post("/exam/haveExam.do",function (res) {
-            havaExam=res;
+        $.post("/exam/haveExam.do", function (res) {
+            havaExam = res;
         })
         $.ajaxSettings.async = true;
-        if(havaExam=="true"){
+        if (havaExam == "true") {
             //有考试，不允许删除题目
-            layer.alert('考试期间，不允许删除题目！你可以禁用题目使其不在考卷中再次出现！',{icon:4});
+            layer.alert('考试期间，不允许删除题目！你可以禁用题目使其不在考卷中再次出现！', {icon: 4});
             tableIns.reload();
-        }else{
+        } else {
             var queId = [];
             for (var i in data) {
                 queId.push(data[i].id);
@@ -246,9 +257,9 @@ layui.use(['form', 'layer', 'laydate', 'upload', 'table', 'laytpl'], function ()
                 $.post("/question/delete-multiple.do", {
                     queId: queId  //将需要删除的stuNo作为参数传入
                 }, function (data) {
-                    if(data=="true"){
+                    if (data == "true") {
                         layer.msg("删除成功！")
-                    }else{
+                    } else {
                         layer.msg("删除失败！")
                     }
                     tableIns.reload();
@@ -260,16 +271,16 @@ layui.use(['form', 'layer', 'laydate', 'upload', 'table', 'laytpl'], function ()
 
     //清空所有
     $(".clearAllStu_btn").click(function () {
-        $.post("/exam/haveExam.do",function (res) {
-            if(res=="true"){
-                layer.alert('考试期间，不允许清空题库！',{icon:4});
+        $.post("/exam/haveExam.do", function (res) {
+            if (res == "true") {
+                layer.alert('考试期间，不允许清空题库！', {icon: 4});
                 tableIns.reload();
-            }else {
+            } else {
                 layer.confirm('确认清空题库吗?', {icon: 3, title: '提示信息'}, function (index) {
                     $.post("/question/clear.do", function (data) {
-                        if(data=='true'){
+                        if (data == 'true') {
                             layer.msg("清空成功!");     //"清空成功!" from backend.
-                        }else {
+                        } else {
                             layer.msg("清空失败!");
                         }
                         tableIns.reload();
