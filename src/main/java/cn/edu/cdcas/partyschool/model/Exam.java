@@ -27,9 +27,14 @@ public class Exam implements Serializable {
     private Date createTime;
 
     /**
-     * 考试状态（0:未开考，1：正在考试,2:考试结束）
+     * 考试开始时间
      */
-    private Integer state;
+    private Date examStartTime;
+
+    /**
+     * 考试结束时间
+     */
+    private Date examEndTime;
 
     /**
      * 单选题数量
@@ -93,6 +98,7 @@ public class Exam implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
+
     public Integer getId() {
         return id;
     }
@@ -125,13 +131,13 @@ public class Exam implements Serializable {
         this.createTime = createTime;
     }
 
-    public Integer getState() {
-        return state;
-    }
+    public Date getExamStartTime() { return examStartTime; }
 
-    public void setState(Integer state) {
-        this.state = state;
-    }
+    public void setExamStartTime(Date examStartTime) { this.examStartTime = examStartTime; }
+
+    public Date getExamEndTime() { return examEndTime; }
+
+    public void setExamEndTime(Date examEndTime) { this.examEndTime = examEndTime; }
 
     public Integer getRadioNum() {
         return radioNum;

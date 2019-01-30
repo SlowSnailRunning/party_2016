@@ -6,7 +6,8 @@
     <result column="exam_name" jdbcType="VARCHAR" property="examName" />
     <result column="exam_time" jdbcType="INTEGER" property="examTime" />
     <result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
-    <result column="state" jdbcType="INTEGER" property="state" />
+    <result column="exam_start_time" jdbcType="TIMESTAMP" property="examStartTime" />
+    <result column="exam_end_time" jdbcType="TIMESTAMP" property="examEndTime" />
     <result column="radio_num" jdbcType="INTEGER" property="radioNum" />
     <result column="radio_score" jdbcType="INTEGER" property="radioScore" />
     <result column="check_num" jdbcType="INTEGER" property="checkNum" />
@@ -21,20 +22,30 @@
     <result column="is_makeup" jdbcType="INTEGER" property="isMakeup" />
   </resultMap>
   <sql id="Base_Column_List">
-    party_exam.id as party_exam_id, party_exam.exam_name as party_exam_exam_name, party_exam.exam_time as party_exam_exam_time, 
-    party_exam.create_time as party_exam_create_time, party_exam.`state` as `party_exam_state`, 
-    party_exam.radio_num as party_exam_radio_num, party_exam.radio_score as party_exam_radio_score, 
-    party_exam.check_num as party_exam_check_num, party_exam.check_score as party_exam_check_score, 
-    party_exam.judge_num as party_exam_judge_num, party_exam.judge_score as party_exam_judge_score, 
-    party_exam.fill_num as party_exam_fill_num, party_exam.fill_score as party_exam_fill_score, 
-    party_exam.saq_num as party_exam_saq_num, party_exam.saq_score as party_exam_saq_score,
-    party_exam.pass_score as party_exam_pass_score, party_exam.is_makeup as party_exam_is_makeup
+    id,
+    exam_name,
+    exam_time,
+    create_time,
+    exam_start_time,
+    exam_end_time,
+    radio_num,
+    radio_score,
+    check_num,
+    check_score,
+    judge_num,
+    judge_score,
+    fill_num,
+    fill_score,
+    saq_num,
+    saq_score,
+    pass_score,
+    is_makeup
   </sql>
   <select id="queryById" parameterType="java.lang.Integer" resultMap="BaseResultMap">
     select 
     <include refid="Base_Column_List" />
-    from party_exam as party_exam
-    where party_exam.id = #{id,jdbcType=INTEGER}
+    from party_exam
+    where id = #{id,jdbcType=INTEGER}
   </select>
   <delete id="deleteById" parameterType="java.lang.Integer">
     delete from party_exam
@@ -42,13 +53,14 @@
   </delete>
   <insert id="insert" keyColumn="id" keyProperty="id" parameterType="cn.edu.cdcas.partyschool.model.Exam" useGeneratedKeys="true">
     insert into party_exam (exam_name, exam_time, create_time, 
-      `state`, radio_num, radio_score, 
+      exam_start_time, exam_end_time, radio_num, radio_score,
       check_num, check_score, judge_num, 
       judge_score, fill_num, fill_score, 
       saq_num, saq_score, pass_score, 
       is_makeup)
     values (#{examName,jdbcType=VARCHAR}, #{examTime,jdbcType=INTEGER}, #{createTime,jdbcType=TIMESTAMP}, 
-      #{state,jdbcType=INTEGER}, #{radioNum,jdbcType=INTEGER}, #{radioScore,jdbcType=INTEGER}, 
+      #{examStartTime,jdbcType=TIMESTAMP},#{examEndTime,jdbcType=TIMESTAMP},
+      #{radioNum,jdbcType=INTEGER}, #{radioScore,jdbcType=INTEGER},
       #{checkNum,jdbcType=INTEGER}, #{checkScore,jdbcType=INTEGER}, #{judgeNum,jdbcType=INTEGER}, 
       #{judgeScore,jdbcType=INTEGER}, #{fillNum,jdbcType=INTEGER}, #{fillScore,jdbcType=INTEGER}, 
       #{saqNum,jdbcType=INTEGER}, #{saqScore,jdbcType=INTEGER}, #{passScore,jdbcType=INTEGER}, 
@@ -66,9 +78,14 @@
       <if test="createTime != null">
         create_time,
       </if>
-      <if test="state != null">
-        `state`,
+
+      <if test="examStartTime != null">
+        exam_start_time,
       </if>
+      <if test="examEndTime != null">
+        exam_end_time,
+      </if>
+
       <if test="radioNum != null">
         radio_num,
       </if>
@@ -169,8 +186,11 @@
       <if test="createTime != null">
         create_time = #{createTime,jdbcType=TIMESTAMP},
       </if>
-      <if test="state != null">
-        `state` = #{state,jdbcType=INTEGER},
+      <if test="examStartTime != null">
+        exam_start_time = #{examStartTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="examEndTime != null">
+        exam_end_time = #{examEndTime,jdbcType=TIMESTAMP},
       </if>
       <if test="radioNum != null">
         radio_num = #{radioNum,jdbcType=INTEGER},
@@ -216,7 +236,8 @@
     set exam_name = #{examName,jdbcType=VARCHAR},
       exam_time = #{examTime,jdbcType=INTEGER},
       create_time = #{createTime,jdbcType=TIMESTAMP},
-      `state` = #{state,jdbcType=INTEGER},
+      exam_start_time = #{examStartTime,jdbcType=TIMESTAMP},
+      exam_end_time = #{examEndTime,jdbcType=TIMESTAMP},
       radio_num = #{radioNum,jdbcType=INTEGER},
       radio_score = #{radioScore,jdbcType=INTEGER},
       check_num = #{checkNum,jdbcType=INTEGER},
