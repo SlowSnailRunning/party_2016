@@ -46,7 +46,7 @@
         from party_exam
     </select>
 
-    <select id="queryAllExamList" resultType="BaseResultMap">
+    <select id="queryAllExamList" resultMap="BaseResultMap">
         select
         <include refid="Base_Column_List"/>
         from party_exam
