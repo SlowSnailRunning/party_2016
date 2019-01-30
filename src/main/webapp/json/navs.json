@@ -15,7 +15,7 @@
 				{
 					"title": "考试操作",
 					"icon": "&#xe600;",
-					"href": "page/student/studentList.html",
+					"href": "page/exam/examOperateList.html",
 					"spread": false
 				}
 			]
