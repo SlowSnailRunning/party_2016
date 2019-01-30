@@ -1,0 +1,55 @@
+<!DOCTYPE>
+<html>
+<head>
+    <meta http-equiv="Access-Control-Allow-Origin" content="*">
+    <meta charset="utf-8">
+    <title>考试操作</title>
+    <meta name="renderer" content="webkit">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="format-detection" content="telephone=no">
+    <link rel="stylesheet" href="../../layui/css/layui.css" media="all"/>
+    <link rel="stylesheet" href="../../css/public.css" media="all"/>
+</head>
+<body class="childrenBody">
+<form class="layui-form">
+    <blockquote class="layui-elem-quote quoteBox">
+        <form class="layui-form">
+
+            <div class="layui-inline">
+                <div class="layui-input-inline" style="width: 110px">
+                    <select class="select-retrieval-column">
+                        <option value="" selected>选择检索列</option>
+                        <option value="exam_name">考试名</option>
+                    </select>
+                </div>
+                <div class="layui-input-inline">
+                    <input type="text" class="layui-input searchVal" placeholder="请输入搜索的内容"/>
+                </div>
+                <a class="layui-btn remove_retrieval_btn" data-type="reload">清除检索</a>
+                <a class="layui-btn search_btn" data-type="reload" style="margin-left:0; margin-right: 12px;">搜索</a>
+            </div>
+            <div class="layui-inline">
+                <a class="layui-btn layui-btn-normal addNews_btn">考试加入</a>
+            </div>
+            <div class="layui-inline">
+                <a class="layui-btn layui-btn-danger layui-btn-normal delAll_btn">删除选中</a>
+            </div>
+            <div class="layui-inline">
+                <a class="layui-btn layui-btn-danger layui-btn-normal clearAllexam_btn">清空考试列表</a>
+            </div>
+        </form>
+    </blockquote>
+    <table id="examList" lay-filter="examList"></table>
+
+    <script type="text/html" id="examListBar">
+        <a class="layui-btn layui-btn-xs" lay-event="edit">编辑</a>
+        <a class="layui-btn layui-btn-xs layui-btn-danger" lay-event="del">删除</a>
+    </script>
+</form>
+<script type="text/javascript" src="../../layui/layui.js"></script>
+<script type="text/javascript" src="examOperateList.js"></script>
+</body>
+</html>
