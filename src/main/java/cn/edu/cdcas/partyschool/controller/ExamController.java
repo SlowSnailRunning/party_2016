@@ -43,6 +43,9 @@ public class ExamController {
         }
     }
 
+    /**
+     *@Describe: 查询所有考试
+     */
     @RequestMapping("/queryAllExamList")
     private Map<String,Object> queryAllExamList(@RequestParam(required = false,defaultValue = "1") int page, @RequestParam(required = false,defaultValue = "15") int pageSize){
         Map<String,Object> map = null;
