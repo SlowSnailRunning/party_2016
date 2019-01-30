@@ -41,6 +41,17 @@
     pass_score,
     is_makeup
   </sql>
+    <select id="queryAllExamRows" resultType="int">
+        select count(*)
+        from party_exam
+    </select>
+
+    <select id="queryAllExamList" resultType="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from party_exam
+        LIMIT #{start},#{pageSize}
+    </select>
   <select id="queryById" parameterType="java.lang.Integer" resultMap="BaseResultMap">
     select 
     <include refid="Base_Column_List" />

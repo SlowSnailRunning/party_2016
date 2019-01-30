@@ -6,8 +6,10 @@ import cn.edu.cdcas.partyschool.service.QuestionService;
 import org.mybatis.spring.annotation.MapperScan;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import javax.annotation.Resource;
+import java.util.Map;
 
 /**
  * @Author Snail
@@ -40,6 +42,21 @@ public class ExamController {
             return false;
         }
     }
+
+    @RequestMapping("/queryAllExamList")
+    private Map<String,Object> queryAllExamList(@RequestParam(required = false,defaultValue = "1") int page, @RequestParam(required = false,defaultValue = "15") int pageSize){
+        Map<String,Object> map = null;
+        try {
+            //page：防止错误的page参数
+            map = examService.queryAllExamList(page-1<0?0:page-1,pageSize);
+        } catch (Exception e) {
+            e.printStackTrace();
+            //到异常页面，通知管理员
+
+        }
+        return map;
+    }
+
     /**
      *@Describe: 新增一个考试
      *
