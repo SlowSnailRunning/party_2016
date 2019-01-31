@@ -3,9 +3,11 @@ package cn.edu.cdcas.partyschool.controller;
 import cn.edu.cdcas.partyschool.model.Exam;
 import cn.edu.cdcas.partyschool.service.ExamService;
 import cn.edu.cdcas.partyschool.service.QuestionService;
+import cn.edu.cdcas.partyschool.util.JSONResult;
 import org.mybatis.spring.annotation.MapperScan;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import javax.annotation.Resource;
@@ -29,17 +31,17 @@ public class ExamController {
      *@Date 2019/1/27
      */
     @RequestMapping("/haveExam")
-    private boolean haveExam(){
+    private JSONResult haveExam(){
         try {
             int rows=examService.selectState();
             if(rows==0){
-                return false;
+                return new JSONResult(0,"当前没有考试",200);
             }else {
-                return true;
+                return new JSONResult(1,"当前有考试",200);
             }
         } catch (Exception e) {
             e.printStackTrace();
-            return false;
+            return new JSONResult(3, "数据库异常！！，联系管理员", 200);
         }
     }
 
@@ -65,19 +67,19 @@ public class ExamController {
      *
      * */
     @RequestMapping("/addExam")
-    private boolean addExam(Exam exam){
+    private JSONResult addExam(Exam exam){
         try{
             int rows = examService.insertSelective(exam);
             if(rows<=0){
-                return false;
+                return new JSONResult(3, "新增失败，请联系管理员", 200);
             }
             else{
-                return true;
+                return new JSONResult(0, "新增成功啦！", 200);
             }
 
         }catch (Exception e) {
             e.printStackTrace();
-            return false;
+            return new JSONResult(3, "数据库异常！！，联系管理员", 200);
         }
 
     }
@@ -86,19 +88,19 @@ public class ExamController {
      *
      * */
     @RequestMapping("/deleteExam")
-    private boolean deleteExam(Integer id){
+    private JSONResult deleteExam(Integer id){
         try{
             int rows = examService.deleteById(id);
             if(rows<=0){
-                return false;
+                return new JSONResult(3, "删除失败，联系管理员", 200);
             }
             else{
-                return true;
+                return new JSONResult(0, "删除成功啦！", 200);
             }
 
         } catch (Exception e) {
             e.printStackTrace();
-            return false;
+            return new JSONResult(3, "数据库异常！！，联系管理员", 200);
         }
     }
 
@@ -107,41 +109,57 @@ public class ExamController {
      *
      * */
     @RequestMapping("/updateExam")
-    private boolean updateExam(Exam exam){
+    private JSONResult updateExam(Exam exam){
         try{
             int rows = examService.updateByIdSelective(exam);
             if(rows<=0){
-                return false;
+                return new JSONResult(3, "更新失败，联系管理员", 200);
             }
             else{
-                return true;
+                return new JSONResult(0, "更新成功啦！", 200);
             }
 
         } catch (Exception e) {
             e.printStackTrace();
-            return false;
+            return new JSONResult(3, "数据库异常！！，联系管理员", 200);
         }
     }
 
     /**
-     *@Describe: 查询一个考试
+     *@Describe: 查询一个考试（通过考试名字）
      *
      * */
-    @RequestMapping("/queryExam")
-    private boolean queryExam(Integer id){
-        try{
-            Exam exam = examService.queryById(id);
-            if(exam!=null){
-                return true;
-            }
-            else{
-                return false;
-            }
-
+    @RequestMapping("/queryExamByName")
+    private Map<String,Object> queryExamByName(@RequestParam(required = false,defaultValue = "1") int page, @RequestParam(required = false,defaultValue = "15") int pageSize,String examName){
+        Map<String,Object> map = null;
+        try {
+            //page：防止错误的page参数
+            map = examService.queryExamByName(page-1<0?0:page-1,pageSize,examName);
         } catch (Exception e) {
             e.printStackTrace();
-            return false;
+            //到异常页面，通知管理员
+
         }
+        return map;
+    }
+
+    /**
+     *@Describe: 清空(删除)考试表
+     */
+    @RequestMapping(value = "/clear", method = RequestMethod.POST)
+    public JSONResult clear() throws Exception {
+        examService.clear();
+        return new JSONResult(0, "清空成功!", 200);
+    }
+
+
+    /**
+     *@Describe: 批量删除
+     */
+    @RequestMapping(value = "/deleteExam-multiple", method = RequestMethod.POST)
+    public JSONResult deleteMultipleExam(@RequestParam("examId[]") int[] examId) throws Exception {
+        for (int examid : examId) examService.deleteById(examid);
+        return new JSONResult(0, "已删除所选考试!", 200);
     }
 
 

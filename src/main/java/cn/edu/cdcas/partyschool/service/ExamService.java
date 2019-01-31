@@ -7,11 +7,12 @@ import java.util.Map;
 
 public interface ExamService {
 
-    int queryAllExamRows();
+    void clear() throws Exception;
+    int queryAllExamRows() throws Exception;
     Map<String, Object> queryAllExamList(int start, int pageSize);
     int selectState() throws Exception;
     int insertSelective(Exam exam) throws Exception;
     int deleteById(Integer id) throws Exception;
     int updateByIdSelective(Exam exam) throws Exception;
-    Exam queryById(Integer id) throws Exception;
+    Map<String, Object> queryExamByName(int start,int pageSize,String examName) throws Exception;
 }

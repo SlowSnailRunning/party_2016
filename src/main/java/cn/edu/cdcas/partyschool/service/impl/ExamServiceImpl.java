@@ -20,24 +20,18 @@ public class ExamServiceImpl implements ExamService {
     @Autowired
     private ExamMapper examMapper;
 
+
+    /**
+     *@Describe: 清空(删除)考试表
+     */
+    @Override
+    public void clear() throws Exception { examMapper.clear(); }
+
     /**
      *@Describe: 查询所有考试总数
      */
     @Override
-    public int queryAllExamRows() {
-        try {
-            int rows =  examMapper.queryAllExamRows();
-            if(rows <=0){
-                return 0;
-            }
-            else{
-                return rows;
-            }
-        } catch (Exception e) {
-            e.printStackTrace();
-            return -1;
-        }
-    }
+    public int queryAllExamRows() throws Exception {return examMapper.queryAllExamRows();}
 
     /**
      *@Describe: 查询所有考试
@@ -63,46 +57,54 @@ public class ExamServiceImpl implements ExamService {
     }
 
     /**
+     *@Describe: 查询一个考试(按照考试名字进行查询)
+     */
+    @Override
+    public Map<String, Object> queryExamByName(int start,int pageSize,String examName) throws Exception {
+        Map<String,Object> map = new HashMap<>();
+        List<Exam> examsList= null;
+        try {
+            examsList = examMapper.queryExamByName(start,pageSize,examName);
+            map.put("code", 0);
+            map.put("msg", "success");
+            map.put("count", examMapper.queryExamRowsByName(examName));
+            map.put("status", 200);
+            map.put("data", examsList);
+        } catch (Exception e) {
+            e.printStackTrace();
+            map.put("code", 0);
+            map.put("msg", e.getMessage());
+            map.put("status", 500);
+        }
+        return map;
+    }
+
+    /**
      *@Describe: 查找当前时段是否存在考试
      *
      *@Author Snail
      *@Date 2019/1/27
      */
     @Override
-    public int selectState() throws Exception {
-        return examMapper.selectState();
-
-    }
+    public int selectState() throws Exception {return examMapper.selectState();}
 
     /**
      *@Describe: 新增一个考试
      */
     @Override
-    public int insertSelective(Exam exam) throws Exception {
-        return examMapper.insertSelective(exam);
-    }
+    public int insertSelective(Exam exam) throws Exception {return examMapper.insertSelective(exam); }
 
     /**
      *@Describe: 删除一个考试
      */
     @Override
-    public int deleteById(Integer id) throws Exception {
-        return examMapper.deleteById(id);
-    }
+    public int deleteById(Integer id) throws Exception { return examMapper.deleteById(id); }
 
     /**
      *@Describe: 更新一个考试
      */
     @Override
-    public int updateByIdSelective(Exam exam) throws Exception {
-        return examMapper.updateByIdSelective(exam);
-    }
+    public int updateByIdSelective(Exam exam) throws Exception { return examMapper.updateByIdSelective(exam); }
 
-    /**
-     *@Describe: 查询一个考试
-     */
-    @Override
-    public Exam queryById(Integer id) throws Exception {
-        return examMapper.queryById(id);
-    }
+
 }

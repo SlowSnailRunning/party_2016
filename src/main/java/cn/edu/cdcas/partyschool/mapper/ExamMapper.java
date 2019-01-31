@@ -9,6 +9,10 @@ public interface ExamMapper {
 
     int queryAllExamRows()throws Exception;
 
+    void clear()throws Exception;
+
+    int queryExamRowsByName(String examName)throws Exception;
+
     List<Exam> queryAllExamList(@Param(value = "start")int start, @Param(value = "pageSize") int pageSize)throws Exception;
 
     int deleteById(Integer id) throws Exception;
@@ -17,7 +21,7 @@ public interface ExamMapper {
 
     int insertSelective(Exam exam) throws Exception;
 
-    Exam queryById(Integer id) throws Exception;
+    List<Exam> queryExamByName(@Param(value = "start")int start, @Param(value = "pageSize") int pageSize,String examName) throws Exception;
 
     int updateByIdSelective(Exam exam) throws Exception;
 
