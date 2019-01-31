@@ -77,7 +77,7 @@ layui.use(['form', 'layer', 'laydate', 'upload', 'table', 'laytpl'], function ()
     $(".remove_retrieval_btn").click(function () {
         $(".searchVal").val('');
         // $(".select-retrieval-column").options[0].selected(true);
-        table.reload("examtListTable", {
+        table.reload("examListTable", {
             page: {
                 curr: 1 //重新从第 1 页开始
             },
@@ -174,7 +174,7 @@ layui.use(['form', 'layer', 'laydate', 'upload', 'table', 'laytpl'], function ()
             }
             layer.confirm('确定删除选中的考试吗？', {icon: 3, title: '提示信息'}, function (index) {
                 $.post("/exam/deleteExam-multiple.do", {
-                    stuId: examId  //将需要删除的stuNo作为参数传入
+                    examId: examId  //将需要删除的stuNo作为参数传入
                 }, function (data) {
                     layer.msg(JSON.parse(data)['msg']);     //"删除成功!" or "清空成功!" from backend.
                     tableIns.reload();

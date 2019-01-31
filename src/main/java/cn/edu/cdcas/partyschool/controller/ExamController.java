@@ -88,9 +88,9 @@ public class ExamController {
      *
      * */
     @RequestMapping("/deleteExam")
-    private JSONResult deleteExam(Integer id){
+    private JSONResult deleteExam(@RequestParam("examId") int examId){
         try{
-            int rows = examService.deleteById(id);
+            int rows = examService.deleteById(examId);
             if(rows<=0){
                 return new JSONResult(3, "删除失败，联系管理员", 200);
             }
