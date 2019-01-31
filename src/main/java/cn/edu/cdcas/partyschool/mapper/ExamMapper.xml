@@ -58,7 +58,7 @@
       select
       <include refid="Base_Column_List"/>
       from party_exam
-      LIMIT #{start,jabcType=INTEGER},#{pageSize,jdbcType=INTEGER}
+      LIMIT #{start,jdbcType=INTEGER},#{pageSize,jdbcType=INTEGER}
   </select>
 
   <select id="queryExamByName" parameterType="java.lang.String" resultMap="BaseResultMap">
@@ -66,7 +66,7 @@
     <include refid="Base_Column_List"/>
     from party_exam
     where exam_name like concat('%',#{examName,jdbcType=VARCHAR},'%')
-    LIMIT #{start,jabcType=INTEGER},#{pageSize,jdbcType=INTEGER}
+    LIMIT #{start,jdbcType=INTEGER},#{pageSize,jdbcType=INTEGER}
   </select>
   <select id="queryById" parameterType="java.lang.Integer" resultMap="BaseResultMap">
     select 
