@@ -9,7 +9,7 @@ layui.use(['form', 'layer', 'laydate', 'upload', 'table', 'laytpl'], function ()
     //考试列表
     var tableIns = table.render({
         elem: '#examList',
-        url: '/exam/queryAllExamList.do',
+        url: '/exam/queryExamList.do',
         cellMinWidth: 95,
         page: true,
         height: "full-125",
@@ -63,9 +63,10 @@ layui.use(['form', 'layer', 'laydate', 'upload', 'table', 'laytpl'], function ()
                     curr: 1 //重新从第 1 页开始
                 },
                 where: {
-                    field: field, //the name of field searched in database.
-                    value: value  //搜索的关键字
-                }
+                    /*field: field, //the name of field searched in database.
+                    value: value  //搜索的关键字*/
+                },
+                url:'/exam/queryExamList.do' + '?field=' + field + '&value=' + value
             })
         } else if (field === '') {
             layer.msg("请选择检索列");

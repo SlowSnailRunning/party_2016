@@ -54,6 +54,19 @@
      where exam_name like concat('%',#{examName,jdbcType=VARCHAR},'%')
   </select>
 
+  <select id="queryAllExamByKeyName" resultType="cn.edu.cdcas.partyschool.model.Exam" resultMap="BaseResultMap">
+        select *
+        from party_exam
+        where ${field} like concat('%', #{value}, '%')
+        limit #{start},#{pageSize}
+    </select>
+
+  <select id="queryExamNumsByField" resultType="java.lang.Integer">
+        select count(*)
+        from party_exam
+        where ${field} like concat('%', #{value}, '%')
+    </select>
+
   <select id="queryAllExamList" resultMap="BaseResultMap">
       select
       <include refid="Base_Column_List"/>

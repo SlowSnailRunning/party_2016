@@ -127,7 +127,7 @@ layui.use(['form', 'layer', 'laydate', 'upload', 'table', 'laytpl'], function ()
                         /*type:"",*/
                         /*context:$(".searchVal").val() */  //按题干搜索
                     },
-                    url: '/question/select.do' + '?intro=' + $(".searchVal").val()
+                    url: '/question/selectQue.do' + '?intro=' + $(".searchVal").val()
                 })
                 console.log("er");
                 return;

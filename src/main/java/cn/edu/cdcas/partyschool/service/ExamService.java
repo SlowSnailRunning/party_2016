@@ -10,6 +10,8 @@ public interface ExamService {
     void clear() throws Exception;
     int queryAllExamRows() throws Exception;
     Map<String, Object> queryAllExamList(int start, int pageSize);
+    Map<String,Object> queryAllExamByKeyName(int start,int pageSize,String field, String value);
+    int queryExamNumsByField(String field, String value);
     int selectState() throws Exception;
     int insertSelective(Exam exam) throws Exception;
     int deleteById(Integer id) throws Exception;

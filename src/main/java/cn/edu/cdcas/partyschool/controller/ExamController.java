@@ -46,14 +46,23 @@ public class ExamController {
     }
 
     /**
-     *@Describe: 查询所有考试
+     *@Describe: 查询考试（包括有条件和无条件查询）
      */
-    @RequestMapping("/queryAllExamList")
-    private Map<String,Object> queryAllExamList(@RequestParam(required = false,defaultValue = "1") int page, @RequestParam(required = false,defaultValue = "15") int pageSize){
+    @RequestMapping("/queryExamList")
+    private Map<String,Object> queryExamList(@RequestParam(required = false,defaultValue = "1") int page, @RequestParam(required = false,defaultValue = "15") int pageSize,
+                                             @RequestParam(value = "field", required = false, defaultValue = "") String field, @RequestParam(value = "value", required = false) String value){
+
         Map<String,Object> map = null;
         try {
-            //page：防止错误的page参数
-            map = examService.queryAllExamList(page-1<0?0:page-1,pageSize);
+            if(field.equals("")){
+                //page：防止错误的page参数
+                map = examService.queryAllExamList(page-1<0?0:page-1,pageSize);
+            }
+            else {
+                //page：防止错误的page参数
+                map = examService.queryAllExamByKeyName(page-1<0?0:page-1,pageSize,field,value);
+            }
+
         } catch (Exception e) {
             e.printStackTrace();
             //到异常页面，通知管理员
