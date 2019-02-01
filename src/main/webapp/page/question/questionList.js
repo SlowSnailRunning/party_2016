@@ -113,7 +113,7 @@ layui.use(['form', 'layer', 'laydate', 'upload', 'table', 'laytpl'], function ()
                     /*context:"",*/
 
                 },
-                url: '/question/select.do' + '?type=' + search
+                url: '/question/selectQue.do' + '?type=' + search
             })
             console.log("一");
         } else {
