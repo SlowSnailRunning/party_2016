@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>考勤列表</title>
+    <meta name="renderer" content="webkit">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="format-detection" content="telephone=no">
+    <link rel="stylesheet" href="../../layui/css/layui.css" media="all"/>
+    <link rel="stylesheet" href="../../css/public.css" media="all"/>
+    <script type="text/javascript" src="../../layui/layui.js"></script>
+</head>
+<body class="childrenBody">
+<form class="layui-form layui-row layui-col-space10">
+    <div class="layui-col-md9 layui-col-xs12">
+        <div class="layui-row layui-col-space10">
+            <div class="layui-col-md9 layui-col-xs7">
+
+                <!--the id of student in db.-->
+                <input type="text" class="layui-input layui-hide id" name="id">
+
+                <div class="layui-form-item magt3">
+                    <label class="layui-form-label">序号:</label>
+                    <div class="layui-input-block">
+                        <input type="text" class="layui-input idx" name="idx" required lay-verify="required">
+                    </div>
+                </div>
+
+
+                <div class="layui-form-item magt3">
+                    <label class="layui-form-label">年级:</label>
+                    <div class="layui-input-block">
+                        <input type="text" name="grade" class="layui-input grade" required lay-verify="required">
+                    </div>
+                </div>
+
+                <div class="layui-form-item magt3">
+                    <label class="layui-form-label">学院:</label>
+                    <div class="layui-input-block">
+                        <input type="text" name="department" class="layui-input department" required
+                               lay-verify="required">
+                    </div>
+                </div>
+
+                <div class="layui-form-item magt3">
+                    <label class="layui-form-label">专业:</label>
+                    <div class="layui-input-block">
+                        <input type="text" name="major" class="layui-input major" required lay-verify="required">
+                    </div>
+                </div>
+
+                <div class="layui-form-item magt3">
+                    <label class="layui-form-label">学生姓名:</label>
+                    <div class="layui-input-block">
+                        <input type="text" class="layui-input name" name="name" required lay-verify="required">
+                    </div>
+                </div>
+
+                <div class="layui-form-item magt3">
+                    <label class="layui-form-label ">学号:</label>
+                    <div class="layui-input-block">
+                        <input type="text" name="studentNo" class="layui-input studentNo" required
+                               lay-verify="required">
+                    </div>
+                </div>
+
+                <div class="layui-form-item magt3">
+                    <label class="layui-form-label">党校号:</label>
+                    <div class="layui-input-block">
+                        <input type="text" name="partyNumber" class="layui-input partyNumber" required
+                               lay-verify="required">
+                    </div>
+                </div>
+
+
+                <div class="layui-form-item magt3">
+                    <button class="layui-btn" lay-submit lay-filter="signAdd">提交</button>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</form>
+
+<script>
+    layui.use('form', function () {
+        var form = layui.form;
+        //监听提交
+        //signAdd为提交按钮的id
+        form.on('submit(signAdd)', function (data) {
+            // console.log(data.field);
+            // return;
+            $.post("/user/add-update.do", data.field,
+                function (data) {
+                    if (data.status === 200) {
+                        layer.msg(data['msg']);
+                        var index = parent.layer.getFrameIndex(window.name); //获取窗口索引
+                        parent.layer.close(index); // 关闭layer
+                        //使父页面重新刷新
+                        parent.location.reload();
+                    } else {
+                        layer.msg("添加失败");
+                        var index = parent.layer.getFrameIndex(window.name); //获取窗口索引
+                        parent.layer.close(index); // 关闭layer
+                    }
+                }, "json");
+            return false;
+        });
+    });
+</script>
+<script type="text/javascript" src="studentAdd.js"></script>
+</body>
+</html>

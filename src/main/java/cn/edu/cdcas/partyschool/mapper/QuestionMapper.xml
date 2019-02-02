@@ -98,6 +98,7 @@
             selected = #{selected,jdbcType=INTEGER}
         where id = #{id,jdbcType=INTEGER}
     </update>-->
+
     <select id="queryById" parameterType="java.lang.Integer" resultMap="BaseResultMap">
         select
         <include refid="Base_Column_List"/>
@@ -179,7 +180,8 @@
       <where>
           <include refid="queryQueWhere"/>
       </where>
-       LIMIT #{start},#{pageSize}
+      order by `type`
+      LIMIT #{start},#{pageSize}
     </select>
     <select id="countQue" resultType="int">
         select count(*) from party_question
@@ -200,4 +202,10 @@
         set `state`=#{state}
         where `id`=#{id}
     </update>
+    <select id="findQuestionIdMin" resultType="int">
+        SELECT id FROM party_question ORDER BY id LIMIT 1
+    </select>
+    <select id="findQuestionIdMax" resultType="int">
+        SELECT id FROM party_question ORDER BY id DESC LIMIT 1
+    </select>
 </mapper>

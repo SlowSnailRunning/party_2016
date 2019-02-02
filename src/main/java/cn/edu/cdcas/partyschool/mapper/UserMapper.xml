@@ -438,6 +438,12 @@
             `type`        = #{type,jdbcType=CHAR}
         where student_no = #{studentNo,jdbcType=INTEGER}
     </update>
+    <select id="findType" resultType="string">
+        select `type` from party_user where student_no=#{number}
+    </select>
 
-
+    <select id="isHaveExamByStudentNo" resultType="int">
+        SELECT count(*) FROM party_exam WHERE exam_start_time&lt;=CURRENT_TIMESTAMP AND exam_end_time&lt;=CURRENT_TIMESTAMP AND id=(
+        SELECT exam_id FROM party_user WHERE student_no=#{studentNo} AND (exam_state=0 OR exam_state=2) )
+    </select>
 </mapper>

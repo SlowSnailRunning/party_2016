@@ -9,6 +9,7 @@ import javax.annotation.Resource;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Random;
 
 @Service
 public class QuestionServiceImpl implements QuestionService {
@@ -106,5 +107,21 @@ public class QuestionServiceImpl implements QuestionService {
         return questionMapper.updateState(id,state);
     }
 
+    /**
+     *@Describe: 从题库中随机抽取题目id,避开禁用题目
+     *@Author Snail
+     *@Date 2019/2/2
+     */
+    @Override
+    public int[] randomQuestionIdArray() {
+        int idMin=questionMapper.findQuestionIdMin();
+        int idMax=questionMapper.findQuestionIdMax();
+        Random random=new Random();
+
+        int questionId = random.nextInt(idMax - idMin + 1);
+
+
+        return new int[0];
+    }
 
 }

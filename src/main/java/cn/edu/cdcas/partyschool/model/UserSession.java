@@ -11,7 +11,9 @@ public class UserSession implements Serializable {
 	private String name;
 	private String number;
 	private String type;
-	
+	private int[] questionIdArray;
+	private int studentExamState;
+
 	public String getName() {
 		return name;
 	}
@@ -30,5 +32,20 @@ public class UserSession implements Serializable {
 	public void setType(String type) {
 		this.type = type;
 	}
-	
+
+	public int[] getQuestionIdArray() {
+		return questionIdArray;
+	}
+
+	public void setQuestionIdArray(int[] questionIdArray) {
+		this.questionIdArray = questionIdArray;
+	}
+
+	public int getStudentExamState() {
+		return studentExamState;
+	}
+
+	public void setStudentExamState(int studentExamState) {
+		this.studentExamState = studentExamState;
+	}
 }

@@ -1,9 +1,11 @@
 package cn.edu.cdcas.partyschool.service.impl;
+import cn.edu.cdcas.partyschool.mapper.ExamMapper;
 import cn.edu.cdcas.partyschool.mapper.UserMapper;
 import cn.edu.cdcas.partyschool.model.Manger;
 import cn.edu.cdcas.partyschool.model.User;
 import cn.edu.cdcas.partyschool.service.UserService;
 import cn.edu.cdcas.partyschool.util.JSONResult;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
@@ -15,6 +17,9 @@ import java.util.Map;
 public class UserServiceImpl implements UserService {
     @Resource
     private UserMapper userMapper;
+    @Autowired
+    private ExamMapper examMapper;
+
 
     @Override
     public int deleteById(Integer id) {
@@ -145,5 +150,24 @@ public class UserServiceImpl implements UserService {
         return map;
     }
 
+    @Override
+    public String findType(String number) throws Exception {
 
+        return userMapper.findType(number);
+}
+    /**
+     *@Describe: 根据学号判断是否有自己的考试
+     *@Author Snail
+     *@Date 2019/2/1
+     */
+    @Override
+    public boolean determineExam(String number) throws Exception {
+        int rows=userMapper.isHaveExamByStudentNo(number);
+        if(rows==0){
+            //没有考试
+            return false;
+        }else {
+            return true;
+        }
+    }
 }

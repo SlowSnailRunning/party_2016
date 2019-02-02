@@ -2,6 +2,7 @@ package cn.edu.cdcas.partyschool.mapper;
 
 import cn.edu.cdcas.partyschool.model.Exam;
 import org.apache.ibatis.annotations.Param;
+import sun.rmi.runtime.Log;
 
 import java.util.List;
 
@@ -27,7 +28,7 @@ public interface ExamMapper {
 
     int updateById(Exam exam)throws Exception;
 
-    int selectState() throws Exception;
+    int isCurrentExam() throws Exception;
 
     List<Exam> queryAllExamByKeyName(@Param("start") int start , @Param("pageSize") int pageSize , @Param("field") String field , @Param("value") String value);
 

@@ -23,4 +23,6 @@ public interface QuestionService {
     void clear() throws Exception;
 
     int updateState(Integer id,String state)throws Exception;
+
+    int[] randomQuestionIdArray();
 }

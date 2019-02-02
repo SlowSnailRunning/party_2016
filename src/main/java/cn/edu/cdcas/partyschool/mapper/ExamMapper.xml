@@ -293,9 +293,7 @@
     where id = #{id,jdbcType=INTEGER}
   </update>
 
-  <select id="selectState" resultType="int">
-    select count(*)
-    from party_exam
-    where `state`=1
+  <select id="isCurrentExam" resultType="int">
+    SELECT COUNT(*) FROM party_exam WHERE exam_start_time&lt;=CURRENT_TIMESTAMP AND exam_end_time&lt;=CURRENT_TIMESTAMP
   </select>
 </mapper>

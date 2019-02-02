@@ -19,11 +19,10 @@ import org.springframework.beans.factory.annotation.Autowired;
  *
  */
 public class UniqueSession implements HttpSessionAttributeListener{
-	private static Map<String, HttpSession> map = new HashMap<>();
+	private static Map<String, HttpSession> sessionMap = new HashMap<>();
 
 	/**
 	 *@Describe: 当向session中添加数据时触发
-	 *
 	 *@Author Snail
 	 *@Date 2019/1/19
 	 */
@@ -32,14 +31,14 @@ public class UniqueSession implements HttpSessionAttributeListener{
 		String name = event.getName();
 		if (name.equals("partySys_user")) {
 			String userNumber = ((UserSession) event.getValue()).getNumber();
-			if (map.get(userNumber) != null) {
-				HttpSession session = map.get(userNumber);
+			if (sessionMap.get(userNumber) != null) {
+				HttpSession session = sessionMap.get(userNumber);
 				session.removeAttribute(userNumber);
 				session.invalidate();
 				//???？？？？能否在此处加入一些信息，带到前端页面去提示 用户被挤下线
 //				System.out.println("移除之前登录的当前账号！!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!！！！！！！！！！！！！！！！！！！！！！！！！！！！！！");
 			}
-			map.put(userNumber, event.getSession());
+			sessionMap.put(userNumber, event.getSession());
 //			System.out.println("创建当前登录的session");
 		}
 	}

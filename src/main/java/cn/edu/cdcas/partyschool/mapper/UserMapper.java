@@ -45,5 +45,16 @@ public interface UserMapper {
 
     int queryMangerCount();//查看管理员数量
 
-
+    /**
+     *@Describe: 根据账号判断是否是管理员...
+     *@Author Snail
+     *@Date 2019/2/1
+     */
+    String findType(@Param("number") String number) throws Exception;
+    /**
+     *@Describe: 根据学号查找此时他是否存在考试
+     *@Author Snail
+     *@Date 2019/2/1
+     */
+    int isHaveExamByStudentNo(@Param("studentNo")String studentNo) throws Exception;
 }

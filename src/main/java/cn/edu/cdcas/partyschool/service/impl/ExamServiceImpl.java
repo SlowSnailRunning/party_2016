@@ -116,7 +116,11 @@ public class ExamServiceImpl implements ExamService {
      *@Date 2019/1/27
      */
     @Override
-    public int selectState() throws Exception {return examMapper.selectState();}
+    public int isCurrentExam() throws Exception {
+
+        return examMapper.isCurrentExam();
+
+    }
 
     /**
      *@Describe: 新增一个考试

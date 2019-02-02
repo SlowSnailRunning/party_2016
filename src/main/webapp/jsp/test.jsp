@@ -11,7 +11,14 @@
 <%-- 	<h1>${msg }</h1> --%>
 
 	<form action="${pageContext.request.contextPath }/login.do" method="post">
-		用户名：<input type="text" name="number"value="21111111112">
+		管理员角色：<br>
+		用户名：<input type="text" name="number"value="2013010035">
+		<input type="submit" value="登录">
+	</form>
+	<br/><br/><br/><br/>
+	<form action="${pageContext.request.contextPath }/login.do" method="post">
+		考生角色：<br>
+		用户名：<input type="text" name="number"value="201617000000">
 		<input type="submit" value="登录">
 	</form>
 </body>

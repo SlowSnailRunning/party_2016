@@ -27,4 +27,8 @@ public interface QuestionMapper {
     int deleteById(Integer id) throws Exception;
 
     int updateState(@Param("id") Integer id,@Param("state") String state) throws Exception;
+
+    int findQuestionIdMin();
+
+    int findQuestionIdMax();
 }

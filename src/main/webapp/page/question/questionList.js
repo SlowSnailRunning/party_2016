@@ -198,9 +198,9 @@ layui.use(['form', 'layer', 'laydate', 'upload', 'table', 'laytpl'], function ()
     //添加和修改考生信息
     function addNews(original_data) {
         var index = layui.layer.open({
-            title: "添加学生",
+            title: "添加考题",
             type: 2,
-            content: "studentAdd.html",
+            content: "questionAdd.html",
             success: function (layero, index) {
                 var body = layui.layer.getChildFrame('body', index);
                 if (original_data) {

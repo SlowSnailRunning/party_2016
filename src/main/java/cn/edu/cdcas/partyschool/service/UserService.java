@@ -53,4 +53,7 @@ public interface UserService {
 
     Map<String, Object> dimQueryMangerByName(String name);
 
+    String findType(String number) throws Exception;
+
+    boolean determineExam(String number) throws Exception;
 }
