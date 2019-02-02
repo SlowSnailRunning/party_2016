@@ -59,6 +59,7 @@
 	</bean>
 	<!--jedis工具-->
 	<bean id="jedisSingleUtil" class="cn.edu.cdcas.partyschool.util.impl.JedisClientSingle"/>
+	<bean id="contextMap" class="java.util.HashMap"/>
 
 
 <!--	spring存储session到redis需要的bean
