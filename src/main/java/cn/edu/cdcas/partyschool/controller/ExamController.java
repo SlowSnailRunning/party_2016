@@ -45,6 +45,16 @@ public class ExamController {
         }
     }
 
+    @RequestMapping("/add-update")
+    public JSONResult addStu(Exam exam) throws Exception {
+        if (exam.getId() == null) { //if 'id' is null,insert a new student.
+            examService.insertSelective(exam);
+            return new JSONResult(0, "添加考生成功!", 200);
+        }
+        examService.updateByIdSelective(exam);
+        return new JSONResult(0, "信息修改成功!", 200);
+    }
+
     /**
      *@Describe: 查询考试（包括有条件和无条件查询）
      */
@@ -72,7 +82,7 @@ public class ExamController {
     }
 
     /**
-     *@Describe: 新增一个考试
+     *@Describe: 新增一个考试（未用到）
      *
      * */
     @RequestMapping("/addExam")
@@ -93,28 +103,7 @@ public class ExamController {
 
     }
     /**
-     *@Describe: 删除一个考试
-     *
-     * */
-    @RequestMapping(value="/deleteExam",method = RequestMethod.POST)
-    private JSONResult deleteExam(@RequestParam("examId") int examId){
-        try{
-            int rows = examService.deleteById(examId);
-            if(rows<=0){
-                return new JSONResult(3, "删除失败，联系管理员", 200);
-            }
-            else{
-                return new JSONResult(0, "删除成功啦！", 200);
-            }
-
-        } catch (Exception e) {
-            e.printStackTrace();
-            return new JSONResult(3, "数据库异常！！，联系管理员", 200);
-        }
-    }
-
-    /**
-     *@Describe: 更新一个考试
+     *@Describe: 更新一个考试（未用到）
      *
      * */
     @RequestMapping("/updateExam")
@@ -135,7 +124,29 @@ public class ExamController {
     }
 
     /**
-     *@Describe: 查询一个考试（通过考试名字）
+     *@Describe: 删除一个考试（未用到）
+     *
+     * */
+    @RequestMapping(value="/deleteExam",method = RequestMethod.POST)
+    private JSONResult deleteExam(@RequestParam("examId") int examId){
+        try{
+            int rows = examService.deleteById(examId);
+            if(rows<=0){
+                return new JSONResult(3, "删除失败，联系管理员", 200);
+            }
+            else{
+                return new JSONResult(0, "删除成功啦！", 200);
+            }
+
+        } catch (Exception e) {
+            e.printStackTrace();
+            return new JSONResult(3, "数据库异常！！，联系管理员", 200);
+        }
+    }
+
+
+    /**
+     *@Describe: 查询一个考试（通过考试名字）（未用到）
      *
      * */
     @RequestMapping("/queryExamByName")
