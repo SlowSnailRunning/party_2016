@@ -173,8 +173,11 @@
       <if test="createTime != null">
         #{createTime,jdbcType=TIMESTAMP},
       </if>
-      <if test="state != null">
-        #{state,jdbcType=INTEGER},
+      <if test="examStartTime != null">
+        #{exam_start_time,jdbcType=TIMESTAMP},
+      </if>
+      <if test="examEndTime != null">
+        #{exam_end_time,jdbcType=TIMESTAMP},
       </if>
       <if test="radioNum != null">
         #{radioNum,jdbcType=INTEGER},
