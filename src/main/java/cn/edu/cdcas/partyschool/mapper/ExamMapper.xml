@@ -55,10 +55,10 @@
   </select>
 
   <select id="queryAllExamByKeyName" resultType="cn.edu.cdcas.partyschool.model.Exam" resultMap="BaseResultMap">
-        select *
-        from party_exam
-        where ${field} like concat('%', #{value}, '%')
-        limit #{start},#{pageSize}
+      select *
+      from party_exam
+      where ${field} like concat('%', #{value}, '%')
+      limit #{start},#{pageSize}
     </select>
 
   <select id="queryExamNumsByField" resultType="java.lang.Integer">
@@ -71,15 +71,15 @@
       select
       <include refid="Base_Column_List"/>
       from party_exam
-      LIMIT #{start,jdbcType=INTEGER},#{pageSize,jdbcType=INTEGER}
+      limit #{start},#{pageSize}
   </select>
 
   <select id="queryExamByName" parameterType="java.lang.String" resultMap="BaseResultMap">
     select
     <include refid="Base_Column_List"/>
     from party_exam
-    where exam_name like concat('%',#{examName,jdbcType=VARCHAR},'%')
-    LIMIT #{start,jdbcType=INTEGER},#{pageSize,jdbcType=INTEGER}
+    where exam_name like concat('%',#{examName},'%')
+    limit #{start},#{pageSize}
   </select>
   <select id="queryById" parameterType="java.lang.Integer" resultMap="BaseResultMap">
     select 

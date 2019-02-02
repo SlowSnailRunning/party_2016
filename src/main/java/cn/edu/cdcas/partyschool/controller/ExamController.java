@@ -48,9 +48,9 @@ public class ExamController {
     /**
      *@Describe: 查询考试（包括有条件和无条件查询）
      */
-    @RequestMapping("/queryExamList")
-    private Map<String,Object> queryExamList(@RequestParam(required = false,defaultValue = "1") int page, @RequestParam(required = false,defaultValue = "15") int pageSize,
-                                             @RequestParam(value = "field", required = false, defaultValue = "") String field, @RequestParam(value = "value", required = false) String value){
+    @RequestMapping(value="/queryExamList",method = RequestMethod.GET)
+    private Map<String,Object> queryExamList(@RequestParam(required = false,defaultValue = "1") int page, @RequestParam(required = false,defaultValue = "20") int pageSize,
+                                             @RequestParam(value = "field", required = false, defaultValue = "") String field, @RequestParam(value = "value", required = false,defaultValue = "") String value){
 
         Map<String,Object> map = null;
         try {
@@ -96,7 +96,7 @@ public class ExamController {
      *@Describe: 删除一个考试
      *
      * */
-    @RequestMapping("/deleteExam")
+    @RequestMapping(value="/deleteExam",method = RequestMethod.POST)
     private JSONResult deleteExam(@RequestParam("examId") int examId){
         try{
             int rows = examService.deleteById(examId);

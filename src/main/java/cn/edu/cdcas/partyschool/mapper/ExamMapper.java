@@ -21,7 +21,7 @@ public interface ExamMapper {
 
     int insertSelective(Exam exam) throws Exception;
 
-    List<Exam> queryExamByName(@Param(value = "start")int start, @Param(value = "pageSize") int pageSize,String examName) throws Exception;
+    List<Exam> queryExamByName(@Param(value = "start")int start, @Param(value = "pageSize") int pageSize,@Param(value="examName") String examName) throws Exception;
 
     int updateByIdSelective(Exam exam) throws Exception;
 
@@ -29,7 +29,7 @@ public interface ExamMapper {
 
     int selectState() throws Exception;
 
-    List<Exam> queryAllExamByKeyName(@Param("start") int start, @Param("pageSize") int pageSize, @Param("field") String field, @Param("value") String value);
+    List<Exam> queryAllExamByKeyName(@Param("start") int start , @Param("pageSize") int pageSize , @Param("field") String field , @Param("value") String value);
 
     int queryExamNumsByField(@Param("field") String field, @Param("value") String value);
 }
