@@ -68,8 +68,6 @@ public class LoginController {
 			e.printStackTrace();
 		}
 
-
-
 		UserSession partySysUser = (UserSession) httpSession.getAttribute("partySys_user");
 		partySysUser.getName();
 
