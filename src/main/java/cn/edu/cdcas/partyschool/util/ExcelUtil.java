@@ -91,7 +91,10 @@ public class ExcelUtil {
                     HSSFCellStyle numericCellStyle = this.createHSSFCellStyle(workbook, "宋体", 12, BorderStyle.THIN, false, true);
                     HSSFCell cell = row.createCell(colNum, CellType.NUMERIC);
                     cell.setCellStyle(numericCellStyle);
-                    cell.setCellValue(Double.valueOf(row_list.get(colNum)));
+                    if (row_list.get(colNum).equals("null"))
+                        cell.setCellValue(0d);
+                    else
+                        cell.setCellValue(Double.valueOf(row_list.get(colNum)));
                 } else {
                     HSSFCell cell = row.createCell(colNum, CellType.STRING);
                     cell.setCellStyle(contentCellStyle);
