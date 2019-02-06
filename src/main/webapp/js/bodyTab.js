@@ -84,7 +84,7 @@ layui.define(["element","jquery"],function(exports){
 	Tab.prototype.render = function() {
 		//显示左侧菜单
 		var _this = this;
-		$(".navBar ul").html('<li class="layui-nav-item layui-this"><a data-url="page/main.html"><i class="layui-icon" data-icon=""></i><cite>后台首页</cite></a></li>').append(_this.navBar(dataStr)).height($(window).height()-210);
+		$(".navBar ul").html('<li class="layui-nav-item layui-this icon-font"><a data-url="page/main.html"><i class="layui-icon" data-icon=""></i><cite>后台首页</cite></a></li>').append(_this.navBar(dataStr)).height($(window).height()-210);
 		element.init();  //初始化页面元素
 		$(window).resize(function(){
 			$(".navBar").height($(window).height()-210);
@@ -142,7 +142,7 @@ layui.define(["element","jquery"],function(exports){
 				if(_this.find("i.seraph").attr("data-icon") != undefined){
 					title += '<i class="seraph '+_this.find("i.seraph").attr("data-icon")+'"></i>';
 				}else{
-					title += '<i class="layui-icon">'+_this.find("i.layui-icon").attr("data-icon")+'</i>';
+					title += '<i class="layui-icon iconfont">'+_this.find("i.layui-icon").attr("data-icon")+'</i>';
 				}
 			}
 			//已打开的窗口中不存在

@@ -1,0 +1,620 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<title>成都文理学院思想政治理论水平在线测试</title>
+    <link rel="shortcut icon" href="images/favicon.ico">
+    <meta name="renderer" content="webkit|ie-comp|ie-stand">
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge,chrome=1">
+    <link href="css/bootstrap.min.css" rel="stylesheet"
+          type="text/css"/>
+    <link href="css/theme.css" rel="stylesheet"
+          type="text/css"/>
+    <link href="css/sweetalert.css" rel="stylesheet"
+          type="text/css"/>
+    <script src="js/jquery-1.11.3.min.js"></script>
+    <script src="js/bootstrap.min.js" rel="stylesheet"
+            media="screen"></script>
+    <script src="js/sweetalert.min.js" rel="stylesheet"
+            media="screen"></script>
+    <script type="text/javascript" src="js/layer/layer.js"></script>
+    <style>
+        body {
+            -moz-user-select: none;
+            -webkit-user-select: none;
+            -ms-user-select: none;
+            -khtml-user-select: none;
+            user-select: none;
+        }
+        .cssfont1 {
+            font-size: 31px;
+            margin-top: -7px;
+            color: red;
+            font-family: 宋体;
+        }
+        .cssfont2 {
+            font-size: 12.5px
+        }
+       /* .btn{
+        	width:20px;
+        	    	
+        	
+        }*/
+    </style>
+    
+	</head>
+	<body>		
+		<div align="center" style="background-color: White">
+    <img src="images/logo.png"/>
+</div>
+<div class="row-fluid">
+    <div class="container-fluid">
+        <div class="span4 examcontent">
+            <div class="exambox">
+                <div class="examform">
+                    <ul class="unstyled">
+                        <li>
+                            <h6>
+                                <div class="cssfont2">
+                                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;共 <span
+                                        class="allquestionnumber"></span>
+                                    题 总分：<span class="orange">100</span>分
+                                    合格分数线：<span class="pass"></span>分
+                                    考试时间：<sapn class="examTime"></sapn>分钟
+                                </div>
+                            </h6>
+                        </li>
+                    </ul>
+                    
+                    <h5 class="title">
+                        单选题</h5>
+                    <ul class="unstyled inline dan">
+                      
+                                    <!--<a id="btn_1" class="btn" style="width: 20px;" type="dan1"
+                                       onclick="selectTest(this,1)">1</a>
+                              
+                                    <a id="btn_${status.index+1 }" class="btn btn-primary" style="width: 20px;"
+                                       onclick="selectTest(${status.index+1 },${qo.answerId })">2</a>
+                                       
+                                        <a id="btn_${status.index+1 }" class="btn btn-primary" style="width: 20px;"
+                                       onclick="selectTest(${status.index+1 },${qo.answerId })">3</a>-->
+                             
+                    </ul>
+                    
+                    
+                    <h5 class="title">
+                        多选题</h5>
+                    <ul class="unstyled inline duo">
+                        
+                                  <!-- <a id="btn_${status.index+1 }" class="btn " style="width: 20px;" type="duo"
+                                       onclick="selectTest(this,4)">4</a>
+                                
+                                    <a id="btn_${status.index+1 }" class="btn btn-primary" style="width: 20px;"
+                                       onclick="selectTest(${status.index+1 },${qo.answerId })">5</a>
+                                       -->
+                               
+                    </ul>
+                    <h5 class="title">
+                        判断题</h5>
+                    <ul class="unstyled inline pan">
+                        
+                                   <!-- <a id="btn_${status.index+1 }" class="btn" style="width: 20px;"
+                                       onclick="selectTest(${status.index+1 },${qo.answerId })">6</a>
+                               
+                                    <a id="btn_${status.index+1 }" class="btn btn-primary" style="width: 20px;"
+                                       onclick="selectTest(${status.index+1 },${qo.answerId })">7</a>-->
+                               
+                    </ul>
+                    
+                     <h5 class="title">
+                        填空题</h5>
+                    <ul class="unstyled inline tian">
+                        
+                                   <!-- <a id="btn_${status.index+1 }" class="btn" style="width: 20px;"
+                                       onclick="selectTest(${status.index+1 },${qo.answerId })">6</a>
+                               
+                                    <a id="btn_${status.index+1 }" class="btn btn-primary" style="width: 20px;"
+                                       onclick="selectTest(${status.index+1 },${qo.answerId })">7</a>-->
+                               
+                    </ul>
+                </div>
+            </div>
+        </div>
+        <div class="span8 examcontent">
+            <div class="exambox">
+                <div class="examform">
+                    <div class="container-fluid footcontent">
+
+                        <div class="span7">
+                            <ul class="unstyled">
+                                <div class="cssfont1"><b class="examName" >132</b></div>
+                                <li>
+                                    <h6>
+                                        编号：<span class="number">${user_in_session.idx}</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                                        姓名：<span class="name">${user_in_session.name}</span><br>
+                                        年级专业：<span class="grade">${user_in_session.grade</span>级<span class="major">${user_in_session.major}</span>
+                                    </h6>
+                                </li>
+                            </ul>
+                        </div>
+                        <div class="span3">
+                            <ul class="unstyled">
+                                <li>
+                                    <h4>
+                                        距考试结束：<span class="orange" id="time" style="color:red"></span></h4>
+                                </li>
+                            </ul>
+                        </div>
+                        <div class="span2">
+                            <a id="submitExam" class="btn btn-danger" onclick="advanceSubmit()" id="submit">交卷</a>
+                        </div>
+                    </div>
+                    <div class="paperexamcontent" id="question_396">
+
+                       
+                            <div id="question" style="display:block;margin-top: 15px"
+                                 class="media well ">
+                               
+                              
+                                    <!--<h4 class="type">单选题（每题有且只有一个选项）</h4>
+                                    <div class="media-body well " style="font-weight: bold;color: black;">
+                                        <h4 id="">1.请问下道题选择什么？</h4>
+                                    </div>
+                                    <div class="media-body well " style="color: black;">
+                                       <p>
+                                            A、${q.optionA }</p>
+                                        <p>
+                                            B、${q.optionB }</p>
+                                        <p>
+                                            C、${q.optionC }</p>
+                                        <p>
+                                            D、${q.optionD }</p>
+                                       
+                                    </div>
+                                   <div class="media-body well">
+                                        <label class=" radio inline ">
+                                           <input type="radio"
+                                                  
+                                                   name=danxuan"" value="A">A
+                                        </label>
+                                        <label class="radio inline">
+                                           <input type="radio"
+                                                  
+                                                   name="danxuan_${status.index }" value="B">B
+                                        </label>
+                                        <label class="radio inline">
+                                            <input type="radio"
+                                                  
+                                                   name="danxuan_${status.index }" value="C">C
+                                        </label>
+                                        <label class="radio inline">
+                                           <input type="radio"
+                                                   
+                                                   name="danxuan_${status.index }" value="D">D
+                                        </label>
+                                    </div>
+                                   -->
+                                   
+                                   
+                                   
+                                 
+                                   
+                                   
+                                  
+                                   <!-- <h4 class="">不定项选择（每题有一个或者多个选项）</h4>
+                                    <div class="media-body well " style="font-weight: bold;color: black;">
+                                        <h4> 请问下道题选择什么？</h4>
+                                    </div>
+                                    <div class="media-body well" style="color: black;">
+                                        <p>
+                                            A、${q.optionA }</p>
+                                        <p>
+                                            B、${q.optionB }</p>
+                                        <p>
+                                            C、${q.optionC }</p>
+                                        <p>
+                                            D、${q.optionD }</p>
+                                    </div>
+                                    <div class="media-body well">
+
+                                        <label class="checkbox inline">
+                                            <input type="checkbox"
+                                                  
+                                                   name="duoxuanA" value="A"/>A
+                                        </label>
+                                        <label class="checkbox inline">
+                                            <input type="checkbox"
+                                                   
+                                                   name="duoxuanB" value="B"/>B
+                                        </label>
+                                        <label class="checkbox inline">
+                                            <input type="checkbox"
+                                                  
+                                                   name="duoxuanC" value="C"/>C
+                                        </label>
+                                        <label class="checkbox inline">
+                                            <input type="checkbox"
+                                                   
+                                                   name="duoxuanD" value="D"/>D
+                                        </label>
+                                    </div>-->
+                                   
+                                    
+                                   <!--
+                                    <h4 class="">判断题</h4>
+                                    <div class="media-body well " style="font-weight: bold;color: black;">
+                                        //题的顺序编号
+                                        <h4> ${ status.index+1}.${q.intro}</h4>
+                                    </div>
+                                    <div class="media-body well" style="color: black;">
+                                        <label class="radio inline">
+                                            <input type="radio"
+                                                   
+                                                   name="panduan_${status.index }" value="A">对
+                                        </label>
+                                        <label class="radio inline">
+                                            <input type="radio"
+                                                  
+                                                   name="panduan_${status.index }" value="B"/>错
+                                        </label>
+                                    </div> -->
+                                   <ul>
+                                    <li class="btn-group pull-right">
+                                        <a class="btn" id="last">上一题</a>
+                                        <a class="btn btn-info" id="next">下一题</a>
+                                    </li>
+                                </ul>
+                              
+                            </div>
+                         
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<input type="hidden" id="currentTime" value="5400"/>
+<div class="row-fluid">
+    <div class="container-fluid logfooter">
+        <ul class="inline unstyled" style="background-color: white;">
+            <li><a href="http://phpems.net">成都文理学院党校</a></li>
+        </ul>
+    </div>
+</div>
+		
+		<script type="text/javascript" >
+        	
+ 
+   var data;
+   
+   window.onload=function(){
+   	   $.ajax({
+   	   	type:"get",
+   	   	dataType:"json",
+   	   	url:"json/question.json",
+      success:function(msg){ 
+      	console.log(JSON.stringify(msg)["dan"]);
+    var count =msg.count;
+    var pass=msg.pass;
+    var examTime=msg.examTime;
+    var examName=msg.examName;
+   var number =msg.number;
+   var name = msg.name;
+   var grade =msg.grade;
+   var major=msg.major;
+    //渲染考生 基本信息
+     $(".allquestionnumber").text(count);
+   $(".pass").text(pass);
+   $(".examTime").text(examTime);
+   $(".examName").text(examName);
+   $(".number").text(number);
+   $(".name").text(name);
+  $(".grade").text(grade);
+   $(".major").text(major); 
+   //获取考试题型以及题量
+   var danTotal =msg.danTotal;
+   var duoTotal =msg.duoTotal;
+   var panTotal =msg.panTotal;
+   var tianTotal =msg.tianTotal;
+    
+   if(danTotal!=0){ 	
+   	for(var i=0;i<danTotal;i++){ 	
+   		var dan="<a style='width:20px;margin-left:4px;margin-top:3px;' id='btn_"+(i+1)+"' class='btn'>"+(i+1)+"</a>";   		
+   			$(".dan").append(dan);
+   			
+   			  //"<input type='radio' name='dan_"+(parseInt(i)+1)+"'value='A'>A"+
+   	}  		     	
+   }
+   
+   if(duoTotal!=0){
+   	
+   	for(var i=0;i<duoTotal;i++){ 	
+   		var duo="<a style='width:20px;margin-left:4px;margin-top:3px;' id='btn_"+(i+1+danTotal)+"' class='btn' onclick='selectTest(this,1)'>"+(i+1+danTotal)+"</a>";   		
+   			$(".duo").append(duo);
+   	}  	  	
+   }
+    if(panTotal!=0){
+   	
+   	for(var i=0;i<panTotal;i++){ 	
+   		var pan="<a style='width:20px;margin-left:4px;margin-top:3px;' id='btn_"+(i+1+danTotal+duoTotal)+"' class='btn'  onclick='selectTest(this,1)'>"+(i+1+danTotal+duoTotal)+"</a>";   		
+   			$(".pan").append(pan);
+   	}  	 	
+   }
+    if(tianTotal!=0){
+   	
+   	for(var i=0;i<tianTotal;i++){ 	
+   		var tian="<a style='width:20px;margin-left:4px;margin-top:3px;' id='btn_"+(i+1+danTotal+duoTotal+panTotal)+"' class='btn' onclick='selectTest(this,1)'>"+(i+1+danTotal+duoTotal+panTotal)+"</a>";   		
+   			$(".tian").append(tian);
+   	}  	 	
+   }
+   
+   
+   
+   
+   
+   var dan;
+   var duo;
+ $.each(msg, function(index,item) { 	
+ //渲染单选题	
+ if(index=="dan"){
+    dan = item;
+  
+   for(var i in dan){
+  //渲染每道题画面开始
+  var questionList="<div id='dan"+(parseInt(i)+1)+"'style='display:none' class='d'><h4 class='type'>单选题（每题有且只有一个选项）</h4>"+
+                        "            <div class='media-body well' style='font-weight: bold;color: black;'>"+
+                        "                <h4 id=''>"+dan[i].idx+". "+dan[i].question+"</h4>"+
+                        "            </div>"+
+                        "            <div class='media-body well' style='color: black;'>"+
+                        "               <p>"+
+                        "                    A、"+dan[i].optionA+"</p>"+
+                        "                <p>"+
+                        "                    B、"+dan[i].optionB+"</p>"+
+                        "                <p>"+
+                        "                   C、"+dan[i].optionC+"</p>"+
+                        "                <p>"+
+                        "                    D、"+dan[i].optionD+"</p>"+                                      
+                        "            </div>"+
+                        "           <div class='media-body well'>"+
+                        "                <label class='radio inline'>"+
+                        "                  <input type='radio' name='dan_"+(parseInt(i)+1)+"'value='A'>A"+
+                        "               </label>"+
+                        "                <label class='radio inline'>"+
+                        "                  <input type='radio' name='dan_"+(parseInt(i)+1)+"' value='B'>B"+
+                        "               </label>"+
+                        "                <label class='radio inline'>"+
+                        "                  <input type='radio' name='dan_"+(parseInt(i)+1)+"' value='C'>C"+
+                        "               </label>"+
+                        "                <label class='radio inline'>"+
+                        "                  <input type='radio' name='dan_"+(parseInt(i)+1)+"' value='D'>D"+
+                        "               </label></div>";
+   $("#question").append(questionList);
+  
+  
+  
+  
+ }
+ }
+     //渲染多选题
+    
+    if(index=="duo"){
+      duo= item;
+  
+   for(var i in duo){
+  
+  var questionList="<div id='duo"+(parseInt(i)+1+danTotal)+"'style='display:none' class='d'><h4 class='type'>单选题（每题有且只有一个选项）</h4>"+
+                        "            <div class='media-body well' style='font-weight: bold;color: black;'>"+
+                        "                <h4 id=''>"+duo[i].idx+". "+duo[i].question+"</h4>"+
+                        "            </div>"+
+                        "            <div class='media-body well' style='color: black;'>"+
+                        "               <p>"+
+                        "                    A、"+duo[i].optionA+"</p>"+
+                        "                <p>"+
+                        "                    B、"+duo[i].optionB+"</p>"+
+                        "                <p>"+
+                        "                   C、"+duo[i].optionC+"</p>"+
+                        "                <p>"+
+                        "                    D、"+duo[i].optionD+"</p>"+                                      
+                        "            </div>"+
+                        "           <div class='media-body well'>"+
+                        "                <label class='checkbox inline'>"+                     
+                        "                  <input type='checkbox' name='duo_"+(parseInt(i)+1+danTotal)+"'value='A'>A "+
+                        "               </label>"+
+                        "                <label class='checkbox inline'>"+
+                        "                  <input type='checkbox' name='duo_"+(parseInt(i)+1+danTotal)+"' value='B'>B"+
+                        "               </label>"+
+                        "                <label class='checkbox inline'>"+
+                        "                  <input type='checkbox' name='duo_"+(parseInt(i)+1+danTotal)+"' value='C'>C"+
+                        "               </label>"+
+                        "                <label class='checkbox inline'>"+
+                        "                  <input type='checkbox' name='duo_"+(parseInt(i)+1+danTotal)+"' value='D'>D"+
+                        "               </label></div>";
+   $("#question").append(questionList);
+  
+ 
+  
+  
+ }
+ }
+     
+     
+     
+     
+     
+ 
+ 
+ 
+     
+     
+     
+ 
+ 
+  });
+          
+          
+        var list= document.getElementsByTagName("input");
+       // console.log(list[i].name);
+        var buttonList=$(".btn");
+        var danDiv=$(".d");   
+        console.log(buttonList);
+        	//为每个input绑定值
+        	for(var i=0;i<list.length;i++){
+        	list[i].onclick=function(){       
+        		console.log(this.checked);
+        		var index=this.name.split("_")[1];
+        		$("#btn_"+index).attr("class","btn btn-primary");
+                //针对多选按钮
+                if(this.name.split("_")[0]=="duo"){
+
+                   var current= $("input[name='"+this.name+"']:checked").val();
+                   console.log(current);
+                    if(current==undefined){
+                        $("#btn_"+index).attr("class","btn");
+                    }
+
+                }
+
+
+            }
+        }
+        	//为每个选择绑定按钮
+        	for(var i=0;i<buttonList.length-3;i++){
+        		buttonList[i].onclick=function(){
+        			var index =this.id.split("_")[1];
+        			console.log(index);
+        			$(".d").css("display","none");
+        			$(danDiv[index-1]).css("display","block");
+
+        			
+        		}
+        		
+        	}
+        	       	
+        //回显所有的单选按钮
+        //1、获取所有的单选按钮	
+        	var danList = $("input:radio");        	
+            	       	
+        	var k=0;       	       	       	
+        	for(var i in dan){
+        		//循环四次，因为每道题有四个答案
+        		for(var j=1;j<=4;j++){        			
+        		if(danList[k].value==dan[i].answer){
+        			$(danList[k]).attr("checked",true);
+        		}
+        			k=k+1;
+        		}       		       		        		
+        	}      
+        //回显所有的多选按钮
+        //1、获取所有的多选按钮		
+        var duoList = $("input:checkbox");       
+        var m=0;
+        for(var i in duo){
+        	for(var j=1;j<=4;j++){        		
+        		for(var l=0;l<duo[i].answer.split(",").length;l++){       		
+        		if(duoList[m].value==duo[i].answer.split(",")[l]){       			 
+        			$(duoList[m]).attr("checked",true);
+        		}        			
+        		}      			
+        			m=m+1;
+        	    }           	       	
+        }
+        	
+        	//代码执行到这里时，题的数据以及做题记录渲染完毕，开始对页面进行逻辑性操作
+   	    	//获取所有的input
+   	    	
+   	    	//默认第一题显示
+   	    	$("#dan1").css("display","block");
+   	    	
+   	    	var all = $("input:checked");
+   	    	
+   	    	for( var i=0;i<all.length;i++){
+   	    		console.log(all[i].name.split("_")[1]);
+   	    		if(all[i].name.split("_")[1]==(i+1));
+   	    			$("#btn_"+all[i].name.split("_")[1]).attr("class","btn btn-primary");
+   	    		
+   	    		
+   	    	}
+   	    
+   	   
+        	
+        	
+        	
+        	
+        	
+  }
+ 
+   	   	 	   	  
+  	   
+    
+  });
+  
+    var index=1;			
+			
+			
+			$("#next").click(function(){
+				
+				 var d=$(".d");
+				
+				 for(var i=0;i<d.length;i++){
+				 
+				 if($(d[i]).css("display")=="block"){
+				 	 console.log(d[i]);
+				$(".d").css("display","none");
+				
+        	   $(d[i+1]).css("display","block");
+        	   console.log(d[i]);
+        	   return ;
+				}
+        }
+    });  
+ 
+   };
+        				
+    </script>
+		
+		
+       <script type="application/javascript">
+
+           //倒计时
+           function sessionTimeout() {
+           var label = document.getElementById("currentTime");
+
+           var seconds = sessionStorage.nextTime != null ? sessionStorage.nextTime : parseInt(label.value);
+           seconds = seconds - 1;
+           sessionStorage.nextTime = seconds;
+           label.value = seconds;
+           var time = $("#time");
+           if (seconds % 60 < 10) {
+           time.html(Math.floor(seconds / 60) + ":0" + seconds % 60);
+           } else {
+           time.html(Math.floor(seconds / 60) + ":" + seconds % 60);
+           }
+           if (seconds == 0) {
+           //layer
+           /* layer.confirm('时间到！', {
+           icon:6,
+           btn: ['确定'] //按钮
+           }, function(){
+           submit();
+           }); layer非阻塞。。。。*/
+           alert("时间到！");
+           submit();
+           }
+           }
+
+
+               window.setInterval(sessionTimeout, 1000);
+
+
+       </script>
+		 
+   	   
+		
+		
+		
+		
+		
+	</body>
+</html>
+

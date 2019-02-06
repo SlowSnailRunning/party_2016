@@ -3,13 +3,13 @@
 		{
 			"title": "考试管理",
 			"icon": "&#xe617;",
-			"href": "page/student/studentList.html",
+			"href": "",
 			"spread": false,
 			"children":[
 				{
 					"title": "当前考试",
 					"icon": "&#xe605;",
-					"href": "page/student/studentList.html",
+					"href": "",
 					"spread": false
 				},
 				{

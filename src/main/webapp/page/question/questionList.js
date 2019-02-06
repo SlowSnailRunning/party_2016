@@ -89,7 +89,7 @@ layui.use(['form', 'layer', 'laydate', 'upload', 'table', 'laytpl'], function ()
     /* var value=$('#search option:selected').val();*/
     var search;
     //默认关键字输入框隐藏
-    $(".searchVal").hide();
+   $(".searchVal").hide();
     form.on('select(search)', function (data) {
         search = data.value;
         if (search != "intro") {
