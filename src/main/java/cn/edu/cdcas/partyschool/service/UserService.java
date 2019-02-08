@@ -55,5 +55,5 @@ public interface UserService {
 
     String findType(String number) throws Exception;
 
-    boolean determineExam(String number) throws Exception;
+    String determineExam(String number) throws Exception;
 }

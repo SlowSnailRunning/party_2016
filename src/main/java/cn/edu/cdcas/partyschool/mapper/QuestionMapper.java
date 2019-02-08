@@ -4,7 +4,9 @@ package cn.edu.cdcas.partyschool.mapper;
 import cn.edu.cdcas.partyschool.model.Question;
 import org.apache.ibatis.annotations.Param;
 
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 public interface QuestionMapper {
 /*    int insert(Question question);
@@ -31,4 +33,16 @@ public interface QuestionMapper {
     int findQuestionIdMin();
 
     int findQuestionIdMax();
+    /**
+     *@Describe: 查找当前考试的题目数量
+     *@Author Snail
+     *@Date 2019/2/5
+     */
+    int findAllQuestionNum() throws  Exception;
+    /**
+     *@Describe: 题库中所有有效题目id
+     *@Author Snail
+     *@Date 2019/2/5
+     */
+    HashSet<Long> selectEffectiveQueId() throws Exception;
 }

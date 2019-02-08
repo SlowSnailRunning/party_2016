@@ -1,6 +1,5 @@
 package cn.edu.cdcas.partyschool.controller;
 
-import cn.edu.cdcas.partyschool.model.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -62,6 +61,15 @@ public class TestController {
     @ResponseBody
     public Object getUser(HttpSession session) {
         return session.getAttribute("user");
+    }
+
+    @RequestMapping("/free")
+    public ModelAndView testFree(ModelAndView modelAndView){
+        modelAndView.setViewName("/template/free");
+        System.out.println("ddddddddddddddddddddddd");
+        modelAndView.addObject("name","nameeeeee");
+
+        return modelAndView;
     }
 }
 

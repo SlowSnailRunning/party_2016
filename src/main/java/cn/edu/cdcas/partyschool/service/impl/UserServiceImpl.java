@@ -161,13 +161,15 @@ public class UserServiceImpl implements UserService {
      *@Date 2019/2/1
      */
     @Override
-    public boolean determineExam(String number) throws Exception {
-        int rows=userMapper.isHaveExamByStudentNo(number);
-        if(rows==0){
-            //没有考试
-            return false;
+    public String determineExam(String number) throws Exception {
+        String exam_state=userMapper.isHaveExamByStudentNo(number);
+
+        if("0".equals(exam_state)) {
+            return "未考";
+        }else if("3".equals(exam_state)){
+            return "未补考";
         }else {
-            return true;
+            return "无考试";
         }
     }
 }

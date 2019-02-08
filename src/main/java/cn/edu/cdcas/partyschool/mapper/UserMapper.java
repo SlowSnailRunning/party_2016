@@ -56,5 +56,5 @@ public interface UserMapper {
      *@Author Snail
      *@Date 2019/2/1
      */
-    int isHaveExamByStudentNo(@Param("studentNo")String studentNo) throws Exception;
+    String isHaveExamByStudentNo(@Param("studentNo")String studentNo) throws Exception;
 }

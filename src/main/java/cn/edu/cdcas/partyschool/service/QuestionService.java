@@ -4,6 +4,7 @@ package cn.edu.cdcas.partyschool.service;
 import cn.edu.cdcas.partyschool.model.Question;
 
 import java.util.Map;
+import java.util.Set;
 
 public interface QuestionService {
 /*    int insert(Question record);
@@ -24,5 +25,5 @@ public interface QuestionService {
 
     int updateState(Integer id,String state)throws Exception;
 
-    int[] randomQuestionIdArray();
+    Set<Integer> randomQuestionIdArray() throws Exception;
 }

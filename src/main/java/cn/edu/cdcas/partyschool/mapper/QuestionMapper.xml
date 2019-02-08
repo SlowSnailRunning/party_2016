@@ -208,4 +208,11 @@
     <select id="findQuestionIdMax" resultType="int">
         SELECT id FROM party_question ORDER BY id DESC LIMIT 1
     </select>
+    <select id="findAllQuestionNum" resultType="int">
+        SELECT  radio_num+check_num+judge_num+fill_num+saq_num AS allNumbers FROM party_exam WHERE id=(
+        SELECT id FROM party_exam WHERE exam_start_time&lt;=CURRENT_TIMESTAMP AND CURRENT_TIMESTAMP&lt;=exam_end_time)
+    </select>
+    <select id="selectEffectiveQueId" resultType="string">
+        SELECT id FROM party_question WHERE `state`='checked'
+    </select>
 </mapper>

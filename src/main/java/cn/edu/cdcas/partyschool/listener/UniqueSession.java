@@ -19,7 +19,7 @@ import org.springframework.beans.factory.annotation.Autowired;
  *
  */
 public class UniqueSession implements HttpSessionAttributeListener{
-	private static Map<String, HttpSession> sessionMap = new HashMap<>();
+	public static Map<String, HttpSession> sessionMap = new HashMap<>();
 
 	/**
 	 *@Describe: 当向session中添加数据时触发
@@ -33,6 +33,7 @@ public class UniqueSession implements HttpSessionAttributeListener{
 			String userNumber = ((UserSession) event.getValue()).getNumber();
 			if (sessionMap.get(userNumber) != null) {
 				HttpSession session = sessionMap.get(userNumber);
+
 				session.removeAttribute(userNumber);
 				session.invalidate();
 				//???？？？？能否在此处加入一些信息，带到前端页面去提示 用户被挤下线

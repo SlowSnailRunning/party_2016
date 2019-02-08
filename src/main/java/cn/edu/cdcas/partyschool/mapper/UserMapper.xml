@@ -442,8 +442,11 @@
         select `type` from party_user where student_no=#{number}
     </select>
 
-    <select id="isHaveExamByStudentNo" resultType="int">
-        SELECT count(*) FROM party_exam WHERE exam_start_time&lt;=CURRENT_TIMESTAMP AND exam_end_time&lt;=CURRENT_TIMESTAMP AND id=(
-        SELECT exam_id FROM party_user WHERE student_no=#{studentNo} AND (exam_state=0 OR exam_state=2) )
+    <select id="isHaveExamByStudentNo" resultType="string">
+        SELECT `user`.exam_state FROM party_user `user`  LEFT JOIN  party_exam `exam` ON `user`.exam_id =`exam`.id
+        WHERE student_no=#{studentNo} AND
+        (exam_state=0 OR exam_state=3) AND
+        exam_start_time&lt;=CURRENT_TIMESTAMP AND
+        CURRENT_TIMESTAMP&lt;=exam_end_time
     </select>
 </mapper>
