@@ -7,10 +7,10 @@
 <body>
 
 </body>
+<script src="../js/jquery-3.3.1.js" charset="utf-8"></script>
 <script type="text/javascript">
     $(function () {
-        alert("dsfasf");
-        $.post("/login/studentInfo.do",function(res){
+        $.post("/studentInfo.do",function(res){
             console.log(res);
         });
     });

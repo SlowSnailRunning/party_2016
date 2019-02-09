@@ -60,7 +60,7 @@ public class LoginController {
 					user.setType(userType);
 
 					httpSession.setAttribute("partySys_user", user);
-					return "redirect:/exam/_studentInfo.html";
+					return "redirect:/exam/studentInfo.html";
 
 				/*if("无考试".equals(exam_state)){
 					//判断是否需要复制session
