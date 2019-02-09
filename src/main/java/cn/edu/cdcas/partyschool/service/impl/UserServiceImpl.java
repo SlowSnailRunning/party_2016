@@ -1,10 +1,13 @@
 package cn.edu.cdcas.partyschool.service.impl;
 import cn.edu.cdcas.partyschool.mapper.ExamMapper;
 import cn.edu.cdcas.partyschool.mapper.UserMapper;
+import cn.edu.cdcas.partyschool.model.Exam;
 import cn.edu.cdcas.partyschool.model.Manger;
 import cn.edu.cdcas.partyschool.model.User;
+import cn.edu.cdcas.partyschool.service.ExamService;
 import cn.edu.cdcas.partyschool.service.UserService;
 import cn.edu.cdcas.partyschool.util.JSONResult;
+import org.apache.commons.collections4.map.HashedMap;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -19,7 +22,6 @@ public class UserServiceImpl implements UserService {
     private UserMapper userMapper;
     @Autowired
     private ExamMapper examMapper;
-
 
     @Override
     public int deleteById(Integer id) {
@@ -49,11 +51,6 @@ public class UserServiceImpl implements UserService {
     @Override
     public User queryById(Integer id) {
         return userMapper.queryById(id);
-    }
-
-    @Override
-    public User queryByStuNo(String stuNo) {
-        return userMapper.queryByStuNo(stuNo);
     }
 
     @Override
@@ -123,7 +120,7 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public boolean exists(User user) {
+    public boolean exists(User user) throws Exception {
         return userMapper.queryByStuNo(user.getStudentNo()) != null;
     }
 
@@ -171,5 +168,23 @@ public class UserServiceImpl implements UserService {
         }else {
             return "无考试";
         }
+    }
+
+    @Override
+    public User queryByStuNo(String stuNo) throws Exception {
+        return userMapper.queryByStuNo(stuNo);
+    }
+
+    @Override
+    public Map<String,Object> studentExamInfo(String studentNo) throws Exception {
+        Map<String,Object> studentExamInfo=new HashedMap<>();
+
+        User user = this.queryByStuNo(studentNo);
+        studentExamInfo.put("user",user);
+
+        Exam exam = examMapper.findExamById(String.valueOf(user.getExamId()));
+        studentExamInfo.put("exam",exam);
+
+        return studentExamInfo;
     }
 }

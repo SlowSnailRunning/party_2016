@@ -2,15 +2,15 @@
 <html lang="en" xmlns="http://www.w3.org/1999/html">
 <head>
     <meta charset="UTF-8">
-    <title>学生信息确认</title>
+    <title>信息确认</title>
 </head>
 <body>
-<button onclick="go()">到考试同意界面</button>
+<button onclick="go()">考试</button>
 </body>
 <script src="../js/jquery-3.3.1.js" charset="utf-8"></script>
 <script type="text/javascript">
     $(function () {
-        $.post("/studentInfo.do",function(res){
+        $.post("/studentExamInfo.do",function(res){
             console.log(res);
         });
     });

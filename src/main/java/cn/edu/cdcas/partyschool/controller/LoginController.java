@@ -2,10 +2,11 @@ package cn.edu.cdcas.partyschool.controller;
 
 import javax.servlet.http.HttpSession;
 
-import cn.edu.cdcas.partyschool.listener.UniqueSession;
+import cn.edu.cdcas.partyschool.model.User;
+import cn.edu.cdcas.partyschool.service.ExamService;
 import cn.edu.cdcas.partyschool.service.QuestionService;
 import cn.edu.cdcas.partyschool.service.UserService;
-import org.apache.commons.collections4.bag.SynchronizedSortedBag;
+import org.apache.commons.collections4.map.HashedMap;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -14,7 +15,6 @@ import cn.edu.cdcas.partyschool.model.UserSession;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
-import java.util.HashSet;
 import java.util.Map;
 
 
@@ -29,6 +29,7 @@ public class LoginController {
 	private UserService userServiceImpl;
 	@Autowired
 	private QuestionService questionServiceImpl;
+
 
 	@RequestMapping( "/login")
 	public String login(String number, HttpSession httpSession, RedirectAttributes redirectAttributes) {
@@ -60,7 +61,7 @@ public class LoginController {
 					user.setType(userType);
 
 					httpSession.setAttribute("partySys_user", user);
-					return "redirect:/exam/studentInfo.html";
+					return "redirect:/exam/studentExamInfo.html";
 
 				/*if("无考试".equals(exam_state)){
 					//判断是否需要复制session
@@ -108,11 +109,18 @@ public class LoginController {
 		return "redirect:/jsp/index.jsp";
 //		return "index";
 	}
-	@RequestMapping("/studentInfo")
+	@RequestMapping("/studentExamInfo")
 	@ResponseBody
-	public UserSession studentInfo(HttpSession httpSession){
-		UserSession sysUser = (UserSession) httpSession.getAttribute("partySys_user");
-		return sysUser;
+	public Map<String, Object> studentExamInfo(HttpSession httpSession){
+
+		String  studentNo= ((UserSession) httpSession.getAttribute("partySys_user")).getNumber();
+		Map<String,Object> studentExamInfo=null;
+		try {
+			studentExamInfo = userServiceImpl.studentExamInfo(studentNo);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return studentExamInfo;
 	}
 
 

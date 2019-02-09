@@ -34,5 +34,6 @@ public interface ExamMapper {
 
     int queryExamNumsByField(@Param("field") String field, @Param("value") String value);
 
+    Exam findExamById(String id) throws Exception;
 
 }

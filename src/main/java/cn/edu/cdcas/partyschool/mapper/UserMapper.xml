@@ -97,11 +97,7 @@
         from party_user
         where type = 'student'
     </select>
-    <select id="queryByStuNo" resultType="cn.edu.cdcas.partyschool.model.User">
-        select *
-        from party_user
-        where student_no = #{stuNo,jdbcType=CHAR}
-    </select>
+
     <select id="queryAllByPaging" resultType="cn.edu.cdcas.partyschool.model.User" resultMap="BaseResultMap">
         select *
         from party_user
@@ -448,5 +444,11 @@
         (exam_state=0 OR exam_state=3) AND
         exam_start_time&lt;=CURRENT_TIMESTAMP AND
         CURRENT_TIMESTAMP&lt;=exam_end_time
+    </select>
+
+    <select id="queryByStuNo" resultMap="BaseResultMap">
+        select *
+        from party_user
+        where student_no = #{stuNo,jdbcType=CHAR}
     </select>
 </mapper>
