@@ -23,7 +23,7 @@ import java.util.Map;
  * @author Snail
  *
  */
-@Controller()
+@Controller
 public class LoginController {
 	@Autowired
 	private UserService userServiceImpl;
