@@ -18,67 +18,65 @@ import java.util.ArrayList;
 
 /**
  * PHP服务器与Java之间用户的认证...（详见流程图）
- * @author Snail
  *
+ * @author Snail
  */
 @Controller()
 public class LoginController {
-	@Autowired
-	private UserService userServiceImpl;
-	@Autowired
-	private QuestionService questionServiceImpl;
+    @Autowired
+    private UserService userServiceImpl;
+    @Autowired
+    private QuestionService questionServiceImpl;
 
-	@RequestMapping( "/login")
-	public String login(String number, HttpSession httpSession, RedirectAttributes redirectAttributes) {
-		UserSession user=new UserSession();
+    @RequestMapping("/login")
+    public String login(String number, HttpSession httpSession, RedirectAttributes redirectAttributes) {
+        UserSession user = new UserSession();
 
 
+        try {
+            String userType = userServiceImpl.findType(number);
+            if ("ROOT".equals(userType) || "manger".equals(userType)) {
+                user.setNumber(number);
+                user.setType(userType);
 
-		try {
-			String userType=userServiceImpl.findType(number);
-			if("ROOT".equals(userType)||"manger".equals(userType)){
-				user.setNumber(number);
-				user.setType(userType);
-
-				httpSession.setAttribute("partySys_user", user);
-				return "redirect:/index.html";
-			}else if("student".equals(userType)){
-				boolean allowExamOrNot=userServiceImpl.determineExam(number);
-				if(allowExamOrNot){
-					//创建session
-					user.setNumber(number);
-					user.setType("student");
-					//int[] questionIdArray=questionServiceImpl.randomQuestionIdArray();
+                httpSession.setAttribute("partySys_user", user);
+                return "redirect:/index.html";
+            } else if ("student".equals(userType)) {
+                boolean allowExamOrNot = userServiceImpl.determineExam(number);
+                if (allowExamOrNot) {
+                    //创建session
+                    user.setNumber(number);
+                    user.setType("student");
+                    //int[] questionIdArray=questionServiceImpl.randomQuestionIdArray();
 //					user.setQuestionIdArray(new int[]{});
 
-					httpSession.setAttribute("partySys_user", user);
-				}else {
-					//没有该学号的考试
-					redirectAttributes.addAttribute("msg","无法参加考试，可能是因为管理员关闭了考试");
-				}
+                    httpSession.setAttribute("partySys_user", user);
+                } else {
+                    //没有该学号的考试
+                    redirectAttributes.addAttribute("msg", "无法参加考试，可能是因为管理员关闭了考试");
+                }
 //				return "redirect:/examForStudent.html";
-			}else {
-				//提示无权限进入该系统的页面
+            } else {
+                //提示无权限进入该系统的页面
 //				redirectAttributes.addFlashAttribute("","");
-				redirectAttributes.addAttribute("msg","您目前无该系统使用权限");
-				return "redirect:/page/login/loginFail.html";
-			}
+                redirectAttributes.addAttribute("msg", "您目前无该系统使用权限");
+                return "redirect:/page/login/loginFail.html";
+            }
 
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
 
-		UserSession partySysUser = (UserSession) httpSession.getAttribute("partySys_user");
-		partySysUser.getName();
+        UserSession partySysUser = (UserSession) httpSession.getAttribute("partySys_user");
+        partySysUser.getName();
 
-		return "redirect:/jsp/index.jsp";
+        return "redirect:/jsp/index.jsp";
 //		return "index";
-	}
+    }
 
-	@RequestMapping({"/","/index"})
-	public String main()
-	{
-		System.out.println("qweqe");
-		return "index";
-	}
+    @RequestMapping({"/", "/index"})
+    public String main() {
+        System.out.println("qweqe");
+        return "index";
+    }
 }

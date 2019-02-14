@@ -1,13 +1,9 @@
 package cn.edu.cdcas.partyschool.controller;
-
-import cn.edu.cdcas.partyschool.model.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
-import org.springframework.web.servlet.ModelAndView;
-
 import javax.servlet.ServletContext;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
@@ -33,6 +29,7 @@ public class TestController {
         request.getSession().setAttribute("name", "zhangsan");
         return "set session in redis was success!!";
     }
+
     //可以做单地点登陆但必须配合拦截器才可以实现
     @RequestMapping("/addSession")
     @ResponseBody
@@ -47,14 +44,17 @@ public class TestController {
         Boolean falge = userMap.containsKey(key);
         if (falge) {
             HttpSession httpSession = (HttpSession) userMap.get(user.getAccount());
+            if (httpSession == session) {
+                return userMap;
+            }
             testUser user1 = (testUser) httpSession.getAttribute("user");
-            session.setAttribute("user",user1);
+            session.setAttribute("user", user1);
             userMap.put(user1.getAccount(), session);
             httpSession.invalidate();
-        } else {//第一次登陆了,先复制session再销毁????????发现session无法复制复制，故将session中的值set到新的session中再invalidate
+        } else {//第一次登陆了,先复制session再销毁????????发现session无法复制复制，故将session中的值set到新的session中再invalidate,可以设置再5分钟内不允许再次被抢占
             session.setAttribute("user", user);
         }
-        userMap.put(user.account, session);
+        userMap.put(user.getAccount(), session);
         return userMap;
     }
 
