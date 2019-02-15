@@ -136,6 +136,7 @@ layui.use(['form', 'layer', 'laydate', 'upload', 'table', 'laytpl'], function ()
                     body.find(".examName").val(original_data.examName);
                     body.find(".examTime").val(original_data.examTime);
                     body.find(".examStartTime").val(original_data.examStartTime);
+                    body.find(".examEndTime").val(original_data.examEndTime);
                     body.find(".radioNum").val(original_data.radioNum);
                     body.find(".radioScore").val(original_data.radioScore);
                     body.find(".checkNum").val(original_data.checkNum);

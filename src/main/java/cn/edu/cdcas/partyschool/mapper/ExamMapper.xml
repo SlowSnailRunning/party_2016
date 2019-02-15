@@ -5,9 +5,9 @@
     <id column="id" jdbcType="INTEGER" property="id" />
     <result column="exam_name" jdbcType="VARCHAR" property="examName" />
     <result column="exam_time" jdbcType="INTEGER" property="examTime" />
-    <result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
-    <result column="exam_start_time" jdbcType="TIMESTAMP" property="examStartTime" />
-    <result column="exam_end_time" jdbcType="TIMESTAMP" property="examEndTime" />
+    <result column="create_time" javaType="java.util.Date" jdbcType="TIMESTAMP" property="createTime" />
+    <result column="exam_start_time" javaType="java.util.Date"  jdbcType="TIMESTAMP" property="examStartTime" />
+    <result column="exam_end_time" javaType="java.util.Date"  jdbcType="TIMESTAMP" property="examEndTime" />
     <result column="radio_num" jdbcType="INTEGER" property="radioNum" />
     <result column="radio_score" jdbcType="INTEGER" property="radioScore" />
     <result column="check_num" jdbcType="INTEGER" property="checkNum" />
@@ -55,7 +55,7 @@
   </select>
 
   <select id="queryAllExamByKeyName" resultType="cn.edu.cdcas.partyschool.model.Exam" resultMap="BaseResultMap">
-      select *
+      select <include refid="Base_Column_List"/>
       from party_exam
       where ${field} like concat('%', #{value}, '%')
       limit #{start},#{pageSize}
