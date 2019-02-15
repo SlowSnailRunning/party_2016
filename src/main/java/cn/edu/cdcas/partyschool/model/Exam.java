@@ -1,5 +1,7 @@
 package cn.edu.cdcas.partyschool.model;
 
+import org.springframework.format.annotation.DateTimeFormat;
+
 import java.io.Serializable;
 import java.util.Date;
 
@@ -24,16 +26,19 @@ public class Exam implements Serializable {
     /**
      * 考试创建时间
      */
+    @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
     private Date createTime;
 
     /**
      * 考试开始时间
      */
+    @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
     private Date examStartTime;
 
     /**
      * 考试结束时间
      */
+    @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
     private Date examEndTime;
 
     /**
