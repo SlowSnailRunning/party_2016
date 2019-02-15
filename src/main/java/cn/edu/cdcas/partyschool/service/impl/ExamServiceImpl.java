@@ -110,13 +110,13 @@ public class ExamServiceImpl implements ExamService {
     }
 
     /**
-     *@Describe: 查找当前时段是否存在考试
+     *@Describe: 查找当前时段是否存在考试，返回考试id
      *
      *@Author Snail
      *@Date 2019/1/27
      */
     @Override
-    public int isCurrentExam() throws Exception {
+    public String isCurrentExam() throws Exception {
 
         return examMapper.isCurrentExam();
 

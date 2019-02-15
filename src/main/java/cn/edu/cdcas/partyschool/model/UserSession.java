@@ -1,6 +1,7 @@
 package cn.edu.cdcas.partyschool.model;
 
 import java.io.Serializable;
+import java.util.Set;
 
 /**
  * 用户的session
@@ -11,8 +12,9 @@ public class UserSession implements Serializable {
 	private String name;
 	private String number;
 	private String type;
-	private int[] questionIdArray;
+	private Set<Integer> questionIdArray;
 	private int studentExamState;
+
 
 	public String getName() {
 		return name;
@@ -33,11 +35,11 @@ public class UserSession implements Serializable {
 		this.type = type;
 	}
 
-	public int[] getQuestionIdArray() {
+	public Set<Integer> getQuestionIdArray() {
 		return questionIdArray;
 	}
 
-	public void setQuestionIdArray(int[] questionIdArray) {
+	public void setQuestionIdArray(Set<Integer> questionIdArray) {
 		this.questionIdArray = questionIdArray;
 	}
 

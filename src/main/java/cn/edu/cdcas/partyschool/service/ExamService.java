@@ -12,7 +12,7 @@ public interface ExamService {
     Map<String, Object> queryAllExamList(int start, int pageSize);
     Map<String,Object> queryAllExamByKeyName(int start,int pageSize,String field, String value);
     int queryExamNumsByField(String field, String value);
-    int isCurrentExam() throws Exception;
+    String isCurrentExam() throws Exception;
     int insertSelective(Exam exam) throws Exception;
     int deleteById(Integer id) throws Exception;
     int updateByIdSelective(Exam exam) throws Exception;

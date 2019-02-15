@@ -19,7 +19,6 @@ public interface UserMapper {
 
     User queryById(Integer id);
 
-    User queryByStuNo(String stuNo);
 
     List<User> queryAll();
 
@@ -56,5 +55,7 @@ public interface UserMapper {
      *@Author Snail
      *@Date 2019/2/1
      */
-    int isHaveExamByStudentNo(@Param("studentNo")String studentNo) throws Exception;
+    String isHaveExamByStudentNo(@Param("studentNo")String studentNo) throws Exception;
+
+    User queryByStuNo(String stuNo) throws Exception;
 }

@@ -33,8 +33,8 @@ public class ExamController {
     @RequestMapping("/haveExam")
     private JSONResult haveExam(){
         try {
-            int rows=examService.isCurrentExam();
-            if(rows==0){
+            String examId=examService.isCurrentExam();
+            if(examId==null){
                 return new JSONResult(0,"当前没有考试",200);
             }else {
                 return new JSONResult(1,"当前有考试",200);

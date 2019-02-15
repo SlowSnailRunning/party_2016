@@ -6,10 +6,7 @@ import cn.edu.cdcas.partyschool.service.QuestionService;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.Random;
+import java.util.*;
 
 @Service
 public class QuestionServiceImpl implements QuestionService {
@@ -113,15 +110,40 @@ public class QuestionServiceImpl implements QuestionService {
      *@Date 2019/2/2
      */
     @Override
-    public int[] randomQuestionIdArray() {
+    public Set<Integer> randomQuestionIdArray() throws Exception {
         int idMin=questionMapper.findQuestionIdMin();
         int idMax=questionMapper.findQuestionIdMax();
         Random random=new Random();
+        Set<Integer> queIdArray=new HashSet<>();
 
-        int questionId = random.nextInt(idMax - idMin + 1);
+        int allQuestionNum=questionMapper.findAllQuestionNum();
+        for(int i=0;i<allQuestionNum;i++){
+            int questionId = random.nextInt(idMax - idMin + 1);
+            //判断抽取题id是否有效
+            if(isEffective(String.valueOf(questionId))){
+                queIdArray.add(questionId);
+            }else {
+                --i;
+            }
+        }
 
 
-        return new int[0];
+        return queIdArray;
+    }
+    /**
+     *@Describe:随机得到的题目id应在有效题目数组中
+     *@Author Snail
+     *@Date 2019/2/6
+     * @param questionId
+     */
+    private boolean isEffective(String questionId) throws Exception {
+        //查找所有有效题目id
+        HashSet<Long> effectiveQueIdSet=questionMapper.selectEffectiveQueId();
+        if(effectiveQueIdSet.contains(questionId)){
+            return true;
+        }else {
+            return false;
+        }
     }
 
 }

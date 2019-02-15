@@ -20,7 +20,7 @@ public interface UserService {
 
     User queryById(Integer id);
 
-    User queryByStuNo(String stuNo);
+    User queryByStuNo(String stuNo) throws Exception;
 
     List<User> queryAll();
 
@@ -46,7 +46,7 @@ public interface UserService {
 
     JSONResult MangerAuthorityControl(HttpSession httpSession);
 
-    boolean exists(User user);
+    boolean exists(User user) throws Exception;
 
     Map<String, Object> queryMangerMap(int page, int limit);
 
@@ -55,5 +55,7 @@ public interface UserService {
 
     String findType(String number) throws Exception;
 
-    boolean determineExam(String number) throws Exception;
+    String determineExam(String number) throws Exception;
+
+    Map<String,Object> studentExamInfo(String studentNo) throws Exception;
 }

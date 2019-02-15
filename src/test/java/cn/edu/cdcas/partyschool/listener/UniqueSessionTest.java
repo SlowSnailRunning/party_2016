@@ -9,7 +9,9 @@ import redis.clients.jedis.Jedis;
 import redis.clients.jedis.JedisPool;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 import static org.junit.Assert.*;
 
@@ -45,5 +47,21 @@ public class UniqueSessionTest {
 
         jedis.close();
         jedisPool.close();
+    }
+
+    @Test
+    public void tesrsr(){
+        Set<Long> dogSet =new HashSet<>();
+            dogSet.add((long)1);
+            dogSet.add((long)2);
+            dogSet.add((long)6);
+
+            System.out.println("We have " + dogSet.size() + " white dogs!");
+
+            if(dogSet.contains((long)2)){
+                System.out.println("We have a white dog!");
+            }else{
+                System.out.println("No white dog!");
+            }
     }
 }

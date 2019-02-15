@@ -4,6 +4,8 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.servlet.ModelAndView;
+
 import javax.servlet.ServletContext;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
@@ -62,6 +64,15 @@ public class TestController {
     @ResponseBody
     public Object getUser(HttpSession session) {
         return session.getAttribute("user");
+    }
+
+    @RequestMapping("/free")
+    public ModelAndView testFree(ModelAndView modelAndView){
+        modelAndView.setViewName("/template/free");
+        System.out.println("ddddddddddddddddddddddd");
+        modelAndView.addObject("name","nameeeeee");
+
+        return modelAndView;
     }
 }
 
