@@ -59,18 +59,18 @@ public class ExamController {
      *@Describe: 查询考试（包括有条件和无条件查询）
      */
     @RequestMapping(value="/queryExamList",method = RequestMethod.GET)
-    private Map<String,Object> queryExamList(@RequestParam(required = false,defaultValue = "1") int page, @RequestParam(required = false,defaultValue = "20") int pageSize,
+    private Map<String,Object> queryExamList(@RequestParam(value="page", required = false) int page, @RequestParam(value="limit", required = false) int limit,
                                              @RequestParam(value = "field", required = false, defaultValue = "") String field, @RequestParam(value = "value", required = false,defaultValue = "") String value){
 
         Map<String,Object> map = null;
         try {
             if(field.equals("")){
                 //page：防止错误的page参数
-                map = examService.queryAllExamList(page-1<0?0:page-1,pageSize);
+                map = examService.queryAllExamList(page-1<0?0:page-1,limit);
             }
             else {
                 //page：防止错误的page参数
-                map = examService.queryAllExamByKeyName(page-1<0?0:page-1,pageSize,field,value);
+                map = examService.queryAllExamByKeyName(page-1<0?0:page-1,limit,field,value);
             }
 
         } catch (Exception e) {

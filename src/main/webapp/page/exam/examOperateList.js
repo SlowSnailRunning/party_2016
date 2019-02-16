@@ -63,10 +63,9 @@ layui.use(['form', 'layer', 'laydate', 'upload', 'table', 'laytpl'], function ()
                     curr: 1 //重新从第 1 页开始
                 },
                 where: {
-                    /*field: field, //the name of field searched in database.
+                    field: field, //the name of field searched in database.
                     value: value  //搜索的关键字*/
-                },
-                url:'/exam/queryExamList.do' + '?field=' + field + '&value=' + value
+                }
             })
         } else if (field === '') {
             layer.msg("请选择检索列");
