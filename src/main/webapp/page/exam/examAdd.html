@@ -40,7 +40,7 @@
                 <div class="layui-form-item magt3">
                     <label class="layui-form-label">考试开始时间:</label>
                     <div class="layui-input-block">
-                        <input type="text" name="examStartTime" class="layui-input examStartTime" required
+                        <input type="text" name="examStartTime" id="examStartTimeId" class="layui-input examStartTime" placeholder="yyyy-MM-dd HH:mm:ss" required
                                lay-verify="required">
                     </div>
                 </div>
@@ -48,7 +48,8 @@
                 <div class="layui-form-item magt3">
                     <label class="layui-form-label">考试结束时间:</label>
                     <div class="layui-input-block">
-                        <input type="text" name="examEndTime" class="layui-input examEndTime" required lay-verify="required">
+                        <input type="text" name="examEndTime" id="examEndTimeId" class="layui-input examEndTime" placeholder="yyyy-MM-dd HH:mm:ss" required
+                               lay-verify="required">
                     </div>
                 </div>
 
@@ -139,6 +140,21 @@
 </form>
 
 <script>
+    layui.use('laydate', function() {
+        var laydate = layui.laydate;
+
+        //日期时间选择器
+        laydate.render({
+            elem: '#examStartTimeId'
+            , type: 'datetime'
+        });
+        //日期时间选择器
+        laydate.render({
+            elem: '#examEndTimeId'
+            , type: 'datetime'
+        });
+    });
+
     layui.use('form', function () {
         var form = layui.form;
         //监听提交
