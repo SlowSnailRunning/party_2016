@@ -134,8 +134,8 @@ layui.use(['form', 'layer', 'laydate', 'upload', 'table', 'laytpl'], function ()
                     body.find(".id").val(original_data.id);
                     body.find(".examName").val(original_data.examName);
                     body.find(".examTime").val(original_data.examTime);
-                    body.find(".examStartTime").val(original_data.examStartTime);
-                    body.find(".examEndTime").val(original_data.examEndTime);
+                    body.find(".examStartTime").val(layui.util.toDateString(original_data.examStartTime, 'yyyy-MM-dd HH:mm:ss'));
+                    body.find(".examEndTime").val(layui.util.toDateString(original_data.examEndTime, 'yyyy-MM-dd HH:mm:ss'));
                     body.find(".radioNum").val(original_data.radioNum);
                     body.find(".radioScore").val(original_data.radioScore);
                     body.find(".checkNum").val(original_data.checkNum);
