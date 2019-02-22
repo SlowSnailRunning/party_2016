@@ -19,6 +19,7 @@
     <result column="saq_num" jdbcType="INTEGER" property="saqNum" />
     <result column="saq_score" jdbcType="INTEGER" property="saqScore" />
     <result column="pass_score" jdbcType="INTEGER" property="passScore" />
+    <result column="open_or_close" jdbcType="INTEGER" property="openOrClose" />
     <result column="is_makeup" jdbcType="INTEGER" property="isMakeup" />
   </resultMap>
   <sql id="Base_Column_List">
@@ -39,6 +40,7 @@
     saq_num,
     saq_score,
     pass_score,
+    open_or_close,
     is_makeup
   </sql>
   <delete id="clear">
@@ -96,15 +98,15 @@
       exam_start_time, exam_end_time, radio_num, radio_score,
       check_num, check_score, judge_num, 
       judge_score, fill_num, fill_score, 
-      saq_num, saq_score, pass_score, 
+      saq_num, saq_score, pass_score, open_or_close,
       is_makeup)
     values (#{examName,jdbcType=VARCHAR}, #{examTime,jdbcType=INTEGER}, #{createTime,jdbcType=TIMESTAMP}, 
       #{examStartTime,jdbcType=TIMESTAMP},#{examEndTime,jdbcType=TIMESTAMP},
       #{radioNum,jdbcType=INTEGER}, #{radioScore,jdbcType=INTEGER},
       #{checkNum,jdbcType=INTEGER}, #{checkScore,jdbcType=INTEGER}, #{judgeNum,jdbcType=INTEGER}, 
       #{judgeScore,jdbcType=INTEGER}, #{fillNum,jdbcType=INTEGER}, #{fillScore,jdbcType=INTEGER}, 
-      #{saqNum,jdbcType=INTEGER}, #{saqScore,jdbcType=INTEGER}, #{passScore,jdbcType=INTEGER}, 
-      #{isMakeup,jdbcType=INTEGER})
+      #{saqNum,jdbcType=INTEGER}, #{saqScore,jdbcType=INTEGER}, #{passScore,jdbcType=INTEGER},
+      #{openOrClose,jdbcType=INTEGER},#{isMakeup,jdbcType=INTEGER})
   </insert>
   <insert id="insertSelective" keyColumn="id" keyProperty="id" parameterType="cn.edu.cdcas.partyschool.model.Exam" useGeneratedKeys="true">
     insert into party_exam
@@ -159,6 +161,9 @@
       <if test="passScore != null">
         pass_score,
       </if>
+      <if test="openOrClose != null">
+        open_or_close,
+      </if>
       <if test="isMakeup != null">
         is_makeup,
       </if>
@@ -211,6 +216,9 @@
       </if>
       <if test="passScore != null">
         #{passScore,jdbcType=INTEGER},
+      </if>
+      <if test="openOrClose!= null">
+        #{openOrClose,jdbcType=INTEGER},
       </if>
       <if test="isMakeup != null">
         #{isMakeup,jdbcType=INTEGER},
@@ -268,6 +276,9 @@
       <if test="passScore != null">
         pass_score = #{passScore,jdbcType=INTEGER},
       </if>
+      <if test="openOrClose != null">
+        open_or_close = #{openOrClose,jdbcType=INTEGER},
+      </if>
       <if test="isMakeup != null">
         is_makeup = #{isMakeup,jdbcType=INTEGER},
       </if>
@@ -292,6 +303,7 @@
       saq_num = #{saqNum,jdbcType=INTEGER},
       saq_score = #{saqScore,jdbcType=INTEGER},
       pass_score = #{passScore,jdbcType=INTEGER},
+      open_or_close = #{openOrClose,jdbcType=INTEGER},
       is_makeup = #{isMakeup,jdbcType=INTEGER}
     where id = #{id,jdbcType=INTEGER}
   </update>

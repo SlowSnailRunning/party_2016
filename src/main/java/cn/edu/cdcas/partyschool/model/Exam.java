@@ -96,6 +96,13 @@ public class Exam implements Serializable {
      */
     private Integer passScore;
 
+
+    /**
+     * 开闭卷
+     */
+    private Integer openOrClose;
+
+
     /**
      * 是否允许补考
      */
@@ -231,6 +238,10 @@ public class Exam implements Serializable {
     public void setPassScore(Integer passScore) {
         this.passScore = passScore;
     }
+
+    public Integer getOpenOrClose() { return openOrClose; }
+
+    public void setOpenOrClose(Integer openOrClose) { this.openOrClose = openOrClose; }
 
     public Integer getIsMakeup() {
         return isMakeup;

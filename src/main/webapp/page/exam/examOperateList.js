@@ -24,18 +24,19 @@ layui.use(['form', 'layer', 'laydate', 'upload', 'table', 'laytpl'], function ()
             {field: 'createTime', title: '考试创建时间', width: 160, align: "center",templet : "<div>{{layui.util.toDateString(d.createTime, 'yyyy-MM-dd HH:mm:ss')}}</div>"},
             {field: 'examStartTime', title: '考试开始时间', width: 160, align: "center",templet : "<div>{{layui.util.toDateString(d.examStartTime, 'yyyy-MM-dd HH:mm:ss')}}</div>"},
             {field: 'examEndTime', title: '考试结束时间', width: 160, align: "center",templet : "<div>{{layui.util.toDateString(d.examEndTime, 'yyyy-MM-dd HH:mm:ss')}}</div>"},
-            {field: 'radioNum', title: '单选题数量', width: 86, align: 'center'},
-            {field: 'radioScore', title: '单选题分数', width: 86, align: 'center'},
-            {field: 'checkNum', title: '多选题数量', width: 86, align: 'center'},
-            {field: 'checkScore', title: '多选题分数', width: 86, align: 'center'},
-            {field: 'judgeNum', title: '判断题数量', width: 86, align: 'center'},
-            {field: 'judgeScore', title: '判断题分数', width: 86, align: 'center'},
-            {field: 'fillNum', title: '填空题数量', width: 86, align: 'center'},
-            {field: 'fillScore', title: '填空题分数', width: 86, align: 'center'},
-            {field: 'saqNum', title: '简答题数量', width: 86, align: 'center'},
-            {field: 'saqScore', title: '简答题分数', width: 86, align: 'center'},
+            {field: 'radioNum', title: '单选题数量', width: 110, align: 'center'},
+            {field: 'radioScore', title: '单选题分数', width: 110, align: 'center'},
+            {field: 'checkNum', title: '多选题数量', width: 110, align: 'center'},
+            {field: 'checkScore', title: '多选题分数', width: 110, align: 'center'},
+            {field: 'judgeNum', title: '判断题数量', width: 110, align: 'center'},
+            {field: 'judgeScore', title: '判断题分数', width: 110, align: 'center'},
+            {field: 'fillNum', title: '填空题数量', width: 110, align: 'center'},
+            {field: 'fillScore', title: '填空题分数', width: 110, align: 'center'},
+            {field: 'saqNum', title: '简答题数量', width: 110, align: 'center'},
+            {field: 'saqScore', title: '简答题分数', width: 110, align: 'center'},
             {field: 'passScore', title: '及格分数', width: 86, align: 'center'},
-            {field: 'isMakeup', title: '是否允许补考', width: 86, align: 'center'},
+            {field: 'openOrClose', title: '开闭卷(0:闭卷1:开卷)', width: 170, align: 'center'},
+            {field: 'isMakeup', title: '是否允许补考', width: 140, align: 'center'},
             {title: '操作', width: 120, templet: '#examListBar', fixed: "right", align: "center"}
         ]]
     });
@@ -145,6 +146,7 @@ layui.use(['form', 'layer', 'laydate', 'upload', 'table', 'laytpl'], function ()
                     body.find(".fillNum").val(original_data.fillNum);
                     body.find(".fillScore").val(original_data.fillScore);
                     body.find(".passScore").val(original_data.passScore);
+                    body.find(".openOrClose").val(original_data.openOrClose);
                     body.find(".isMakeup").val(original_data.isMakeup);
 
                     form.render();
