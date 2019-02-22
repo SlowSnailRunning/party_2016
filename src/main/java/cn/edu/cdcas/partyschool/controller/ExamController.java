@@ -66,11 +66,11 @@ public class ExamController {
         try {
             if(field.equals("")){
                 //page：防止错误的page参数
-                map = examService.queryAllExamList(page-1<0?0:page-1,limit);
+                map = examService.queryAllExamList((page-1<0?0:page-1) * limit,limit);
             }
             else {
                 //page：防止错误的page参数
-                map = examService.queryAllExamByKeyName(page-1<0?0:page-1,limit,field,value);
+                map = examService.queryAllExamByKeyName((page-1<0?0:page-1) * limit,limit,field,value);
             }
 
         } catch (Exception e) {
