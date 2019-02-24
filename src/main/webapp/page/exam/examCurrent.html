@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>当前考试</title>
+    <meta name="renderer" content="webkit">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="format-detection" content="telephone=no">
+    <link rel="stylesheet" href="../../layui/css/layui.css" media="all"/>
+    <link rel="stylesheet" href="../../css/public.css" media="all"/>
+    <script type="text/javascript" src="../../layui/layui.js"></script>
+</head>
+<body class="childrenBody">
+<form class="layui-form layui-row layui-col-space10">
+    <div class="layui-col-md9 layui-col-xs12">
+        <div class="layui-row layui-col-space10">
+            <div class="layui-col-md9 layui-col-xs7">
+
+                <!--the id of student in db.-->
+                <input type="text" class="layui-input layui-hide id" name="id">
+
+                <div class="layui-form-item magt3">
+                    <label class="layui-form-label">考试名:</label>
+                    <div class="layui-input-block">
+                        <input type="text" class="layui-input examName" name="examName" required lay-verify="required">
+                    </div>
+                </div>
+
+
+                <div class="layui-form-item magt3">
+                    <label class="layui-form-label">考试时长:</label>
+                    <div class="layui-input-block">
+                        <input type="text" name="examTime" class="layui-input examTime" required lay-verify="required">
+                    </div>
+                </div>
+
+                <div class="layui-form-item magt3">
+                    <label class="layui-form-label">考试状态:</label>
+                    <div class="layui-input-block">
+                        <input type="text" name="examStartTime" id="examStartTimeId" class="layui-input examStartTime" required
+                               lay-verify="required">
+                    </div>
+                </div>
+
+                <div class="layui-form-item magt3">
+                    <label class="layui-form-label">考试剩余时间:</label>
+                    <div class="layui-input-block">
+                        <input type="text" name="examEndTime" id="examEndTimeId" class="layui-input examEndTime" placeholder="yyyy-MM-dd HH:mm:ss" required
+                               lay-verify="required">
+                    </div>
+                </div>
+
+
+                <div class="layui-form-item magt3">
+                    <label class="layui-form-label">及格分数:</label>
+                    <div class="layui-input-block">
+                        <input type="text" name="passScore" class="layui-input passScore" required
+                               lay-verify="required">
+                    </div>
+                </div>
+
+                <div class="layui-form-item magt3">
+                    <label class="layui-form-label">开闭卷:</label>
+                    <div class="layui-input-block">
+                        <input type="text" name="openOrClose" class="layui-input openOrClose" required
+                               lay-verify="required">
+                    </div>
+                </div>
+
+
+            </div>
+        </div>
+
+    </div>
+</form>
+
+</body>
+</html>

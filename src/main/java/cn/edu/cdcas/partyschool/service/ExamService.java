@@ -11,6 +11,7 @@ public interface ExamService {
     int queryAllExamRows() throws Exception;
     Map<String, Object> queryAllExamList(int start, int pageSize);
     Map<String,Object> queryAllExamByKeyName(int start,int pageSize,String field, String value);
+    Map<String,Object> queryCurrentExamInformation();
     int queryExamNumsByField(String field, String value);
     String isCurrentExam() throws Exception;
     int insertSelective(Exam exam) throws Exception;

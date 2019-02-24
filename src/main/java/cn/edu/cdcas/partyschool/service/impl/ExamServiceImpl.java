@@ -82,6 +82,25 @@ public class ExamServiceImpl implements ExamService {
     }
 
     @Override
+    public Map<String, Object> queryCurrentExamInformation() {
+        Map<String,Object> map = new HashMap<>();
+        List<Exam> examsList= null;
+        try {
+            examsList = examMapper.queryCurrentExamInformation();
+            map.put("code", 0);
+            map.put("msg", "success");
+            map.put("status", 200);
+            map.put("data", examsList);
+        } catch (Exception e) {
+            e.printStackTrace();
+            map.put("code", 0);
+            map.put("msg", e.getMessage());
+            map.put("status", 500);
+        }
+        return map;
+    }
+
+    @Override
     public int queryExamNumsByField(String field, String value) {
         return examMapper.queryExamNumsByField(field,value);
     }

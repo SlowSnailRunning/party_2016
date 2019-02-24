@@ -30,6 +30,8 @@ public interface ExamMapper {
 
     String isCurrentExam() throws Exception;
 
+    List<Exam> queryCurrentExamInformation() throws Exception;
+
     List<Exam> queryAllExamByKeyName(@Param("start") int start , @Param("pageSize") int pageSize , @Param("field") String field , @Param("value") String value);
 
     int queryExamNumsByField(@Param("field") String field, @Param("value") String value);

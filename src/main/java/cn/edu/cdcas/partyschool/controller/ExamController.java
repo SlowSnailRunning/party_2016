@@ -45,6 +45,21 @@ public class ExamController {
         }
     }
 
+    /**
+     *@Describe: 查询当前考试信息(将当前时间作为查询条件)
+     */
+    @RequestMapping("/queryCurrentExamInformation")
+    private Map<String,Object> queryCurrentExamInformation(){
+        Map<String,Object> map = null;
+        try {
+            map=examService.queryCurrentExamInformation();
+        }
+        catch (Exception e) {
+            e.printStackTrace();
+        }
+        return map;
+    }
+
     @RequestMapping("/add-update")
     public JSONResult addStu(Exam exam) throws Exception {
         if (exam.getId() == null) { //if 'id' is null,insert a new student.
