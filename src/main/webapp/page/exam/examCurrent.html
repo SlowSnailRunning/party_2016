@@ -48,7 +48,7 @@
                 <div class="layui-form-item magt3">
                     <label class="layui-form-label">考试剩余时间:</label>
                     <div class="layui-input-block">
-                        <input type="text" name="examEndTime" id="examEndTimeId" class="layui-input examEndTime" placeholder="yyyy-MM-dd HH:mm:ss" required
+                        <input type="text" name="residualTime" id="residualTime" class="layui-input residualTime"  required
                                lay-verify="required">
                     </div>
                 </div>
@@ -76,6 +76,36 @@
 
     </div>
 </form>
+<script>
+    var $;
+    var element;
+    var form;
+    layui.use(['layer','element','jquery','form'],function () {
+        form =layui.form;
+        layer = layui.layer;
+        $=layui.jquery;
+        element = layui.element;
+        laydate = layui.laydate;
+        loadCurrentExam();
+    });
+    function loadCurrentExam() {
+        $.ajax({
+            type:"POST",
+            url:'/exam/queryCurrentExamInformation.do',
+            data:{value:0},
+            dataType:'json',
+            success:function (data) {
+                var examname = $('.examName');
+                examname.val(date.examName);
+                //获取新窗口对象
+                var iframeWindow = layero.find('iframe')[0].contentWindow;
+                //重新渲染
+                iframeWindow.layui.form.render();
 
+            }
+        })
+    }
+
+</script>
 </body>
 </html>
