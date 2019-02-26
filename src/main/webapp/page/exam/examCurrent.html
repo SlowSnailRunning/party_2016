@@ -96,11 +96,10 @@
             dataType:'json',
             success:function (data) {
                 var examname = $('.examName');
-                examname.val(date.examName);
-                //获取新窗口对象
-                var iframeWindow = layero.find('iframe')[0].contentWindow;
+                examname.val(data.examName);
+
                 //重新渲染
-                iframeWindow.layui.form.render();
+                form.render();
 
             }
         })
