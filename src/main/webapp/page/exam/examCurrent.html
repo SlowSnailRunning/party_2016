@@ -13,13 +13,13 @@
     <link rel="stylesheet" href="../../css/public.css" media="all"/>
     <script type="text/javascript" src="../../layui/layui.js"></script>
 </head>
-<body class="childrenBody">
+<!--<body class="childrenBody">
 <form class="layui-form layui-row layui-col-space10">
     <div class="layui-col-md9 layui-col-xs12">
         <div class="layui-row layui-col-space10">
             <div class="layui-col-md9 layui-col-xs7">
 
-                <!--the id of student in db.-->
+                &lt;!&ndash;the id of student in db.&ndash;&gt;
                 <input type="text" class="layui-input layui-hide id" name="id">
 
                 <div class="layui-form-item magt3">
@@ -75,7 +75,30 @@
         </div>
 
     </div>
-</form>
+</form>-->
+<div class=layui-field-box>
+    <table class="layui-table">
+        <colgroup>
+            <col width="150px">
+            <col width="150px">
+            <col width="150px">
+            <col width="150px">
+        </colgroup>
+        <thead>
+        <tr>
+            <th>考试名称</th>
+            <th>考试时间</th>
+            <th>合格分数</th>
+            <th>开闭卷</th>
+        </tr>
+        </thead>
+        <tbody>
+
+        </tbody>
+    </table>
+</div>
+
+
 <script>
     var $;
     var element;
@@ -86,24 +109,88 @@
         $=layui.jquery;
         element = layui.element;
         laydate = layui.laydate;
-        loadCurrentExam();
-    });
-    function loadCurrentExam() {
-        $.ajax({
-            type:"POST",
-            url:'/exam/queryCurrentExamInformation.do',
-            data:{value:0},
-            dataType:'json',
-            success:function (data) {
-                var examname = $('.examName');
-                examname.val(data.examName);
+        $(function(){
+            function loadMenu(){
+                $.ajax({
+                    type:"POST",
+                    url:'/exam/queryCurrentExamInformation.do',
+                    data:{},
+                    dataType:'json',
+                    contentType: "application/json;charset=utf-8;",
+                    success:function(res){
+                        if(res && res.code===0){
+                            var menuHtml="";
+                            var obj = eval("("+JSON.stringify(res.data)+")");
+                            /*alert(res.data.examName);*/
+                            alert("1-->"+obj[0].examName);
+                            alert("2-->"+obj.examName);
+                        /*    alert(JSON.stringify(res));
+                            alert(res.data);
 
-                //重新渲染
-                form.render();
+                            alert(JSON.parse(JSON.stringify(res.data)));
+                            alert(JSON.stringify(res.data));
+                            alert(JSONObject.fromObject(res.data));*/
+                            /*console.log(JSON.stringify(res.data));*/
+                           /* console.log(JSON.parse(res)['data']);
+                            console.log(JSON.parse(res)['data'].examName);
+                            console.log(JSON.stringify(res.data.examName));
+                            console.log(JSON.stringify(res.data['examName']));
+                            var data = JSON.stringify(res.data);*/
+                          /*  JSON.stringify(res.data,function (key, value) {
+                                menuHtml+="<div>"+value+"</div>";
+                                console.log(value);
 
-            }
+
+                            });*/
+                            menuHtml+="<div>"+obj[0].examName+"</div>"+"<div>"+obj[0].examTime+"</div>"
+                                        +"<div>"+obj[0].passScore+"</div>"+"<div>"+obj[0].openOrClose+"</div>"
+                            if(menuHtml.length>0){
+                                $("tbody").append(menuHtml);
+                            }
+                        }
+                    }
+                })
+            };
+            loadMenu();
         })
-    }
+    });
+
+
+
+
+
+
+
+    /* function loadCurrentExam() {
+         $.ajax({
+             type:"POST",
+             url:'/exam/queryCurrentExamInformation.do',
+             data:{value:0},
+             dataType:'json',
+             success:function (data) {
+                 var examname = $('.examName');
+                 examname.val(data.examName);
+
+                 //重新渲染
+                 form.render();
+
+             }
+         })
+     }*/
+/*    $(function(){
+       /!* var tabletTbody = $(".layui-table").find('tbody');
+        tabletTbody.empty();*!/
+
+        $.getJSON("/exam/queryCurrentExamInformation.do",function(json){
+            // 下面使用each进行遍历
+            $.each(json, function(i, item) {
+                var examname = $('.examName');
+                examname.val(item.examName);
+              /!*  tabletTbody.append(vTr);*!/
+            });
+        })
+    })*/
+
 
 </script>
 </body>
