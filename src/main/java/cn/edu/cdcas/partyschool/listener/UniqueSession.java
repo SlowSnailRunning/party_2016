@@ -30,12 +30,22 @@ public class UniqueSession implements HttpSessionAttributeListener{
 	public void attributeAdded(HttpSessionBindingEvent event) {
 		String name = event.getName();
 		if (name.equals("partySys_user")) {
-			String userNumber = ((UserSession) event.getValue()).getNumber();
-			if (sessionMap.get(userNumber==null?0:userNumber) != null) {
-				HttpSession session = sessionMap.get(userNumber);
+			UserSession userSessionNow=(UserSession) event.getValue();
 
-				session.removeAttribute(userNumber);
-				session.invalidate();
+			String userNumber = userSessionNow.getNumber();
+
+			HttpSession sessionInMap = sessionMap.get(userNumber==null?0:userNumber);
+			if (sessionInMap != null) {
+				//复制sessionMap中的session到现在的session
+				UserSession userSessionInMap=(UserSession) sessionInMap.getAttribute("partySys_user");
+				userSessionNow.setStudentExamState(userSessionInMap.getStudentExamState());
+				userSessionNow.setQuestionIdArray(userSessionInMap.getQuestionIdArray());
+//				userSessionNow.setNumber("session覆盖成功");
+
+				//移除之前的session
+				sessionInMap.removeAttribute(userNumber);//removeAttribute 移除session中的某项属性
+				sessionInMap.invalidate();//注销session
+
 				//???？？？？能否在此处加入一些信息，带到前端页面去提示 用户被挤下线
 //				System.out.println("移除之前登录的当前账号！!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!！！！！！！！！！！！！！！！！！！！！！！！！！！！！！");
 			}

@@ -168,7 +168,11 @@ public class UserServiceImpl implements UserService {
             return "无考试";
         }
     }
-
+    /**
+     *@Describe: 通过学号查找个人信息
+     *@Author Snail
+     *@Date 2019/3/4
+     */
     @Override
     public User queryByStuNo(String stuNo) throws Exception {
         return userMapper.queryByStuNo(stuNo);

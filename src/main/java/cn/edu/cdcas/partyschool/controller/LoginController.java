@@ -10,6 +10,7 @@ import cn.edu.cdcas.partyschool.service.QuestionService;
 import cn.edu.cdcas.partyschool.service.UserService;
 import cn.edu.cdcas.partyschool.util.JSONResult;
 import com.alibaba.fastjson.JSON;
+import com.alibaba.fastjson.JSONObject;
 import org.apache.commons.collections4.map.HashedMap;
 import org.omg.CORBA.Request;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -37,30 +38,37 @@ public class LoginController {
 	@Autowired
 	private UserService userServiceImpl;
 	@Autowired
-	private QuestionService questionServiceImpl;
-	@Autowired
 	private ExamService examServiceImpl;
-
-	@RequestMapping(value = "/login"/*,method = RequestMethod.POST*/)
+	/**
+	 *@Describe: 跨服务器之间的安全验证，基于Ajax请求
+	 *@Author Snail
+	 *@Date 2019/3/5
+	 */
+	// TODO: 2019/3/5 正式认证后，需去掉RequestParam
+	@RequestMapping(value = "/login",method = RequestMethod.POST)
 	@ResponseBody
-	public JSONResult login(@RequestParam(required = false,defaultValue = "201617000000") String token, RedirectAttributes redirectAttributes, HttpServletRequest request){
+	public JSONResult login( String token, HttpServletRequest request,HttpSession httpSession){
 		try {
 			String student_no=userServiceImpl.isLoginSuccess(token);
+			String type=null;
 			if ("-1".equals(student_no)){
 				return new JSONResult(1,"服务器验证失败，再试一次吧",200);
-			}else if(userServiceImpl.findType(student_no)==null||examServiceImpl.isCurrentExam()==null){
+			}else if((type=userServiceImpl.findType(student_no))==null||examServiceImpl.isCurrentExam()==null){
 				return new JSONResult(1,"你目前无权进入改系统",200);
 			}else{
-				redirectAttributes.addFlashAttribute("student_no",student_no);
 //				System.out.println("-----------------验证成功----------------");
+				UserSession userSession=new UserSession();
+				userSession.setType(type);
+				userSession.setNumber(student_no);
+				httpSession.setAttribute("partySys_user",userSession);
+
+
 				String scheme = request.getScheme();//http
 				String serverName = request.getServerName();//localhost
 				int serverPort = request.getServerPort();//8080
 				String contextPath = request.getContextPath();//项目名
 				String url = scheme+"://"+serverName+":"+serverPort+contextPath+"/loginSuccess.do";//http://127.0.0.1:8080/test
-
-
-				return new JSONResult(0,url,200);
+				return new JSONResult(0,"打开该链接：：：："+url,200);
 			}
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -69,56 +77,32 @@ public class LoginController {
 	}
 
 	@RequestMapping( "/loginSuccess")
-	public String loginSuccess(String number, HttpSession httpSession, RedirectAttributes redirectAttributes) {
-		//认证成功
+	public String loginSuccess(HttpSession httpSession, RedirectAttributes redirectAttributes) {
+		//认证成功，流程详见流程图2
 		try {
-			String userType=userServiceImpl.findType(number);
-			if("ROOT".equals(userType)||"manger".equals(userType)){
-				UserSession user=new UserSession();
-				user.setNumber(number);
-				user.setType(userType);
+			UserSession userSession=(UserSession)httpSession.getAttribute("partySys_user");
+			String type=userSession.getType();
+			if("student".equals(type)){
+				if(userSession.getQuestionIdArray()==null){
+					//从数据库获取exam_state，随机得到题目组
+					userSession.setStudentExamState(((User)userServiceImpl.queryByStuNo(userSession.getNumber())).getExamState());
 
-				httpSession.setAttribute("partySys_user", user);
-				return "redirect:/index.html";
-			}else if("student".equals(userType)){
-				//具体流程详见流程图2
-				HttpSession oldSession=UniqueSession.sessionMap.get(number);
-				if(oldSession!=null){
-					// TODO: 2019/3/4 实现的前提是需要session失效时，移除了sessionMap中的key
-//					((UserSession)oldSession.getAttribute("partySys_user")).getQuestionIdArray();
-					return "redirect:/jsp/test.jsp";
 				}else {
-					int studentExamState=(userServiceImpl.queryByStuNo(number)).getExamState();
-					//session为空，做为首次登录
-					UserSession user=new UserSession();
-					user.setNumber(number);
-					user.setType(userType);
-					user.setStudentExamState(studentExamState);
+					//非首次登录
 
-					httpSession.setAttribute("partySys_user",user);
-					return "redirect:/exam/studentExamInfo.html";
 				}
+				return "";
+			}else if("ROOT".equals(type)||"manger".equals(type)){
+				return "";
 			}else {
-				return "redirect:/page/404.html";
+				throw  new Exception("非法登录方式！！");
 			}
 		} catch (Exception e) {
 			e.printStackTrace();
 			return "redirect:/page/404.html";
 		}
 	}
-	@RequestMapping("/studentExamInfo")
-	@ResponseBody
-	public Map<String, Object> studentExamInfo(HttpSession httpSession){
 
-		String  studentNo= ((UserSession) httpSession.getAttribute("partySys_user")).getNumber();
-		Map<String,Object> studentExamInfo=null;
-		try {
-			studentExamInfo = userServiceImpl.studentExamInfo(studentNo);
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-		return studentExamInfo;
-	}
     @RequestMapping({"/", "/index"})
     public String main() {
         System.out.println("qweqe");
