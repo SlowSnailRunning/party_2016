@@ -126,6 +126,8 @@
                             $('.examStatus').val('正在考试...');
                             $('.examStatus').css('color','red')
                             $('.passScore').val(obj[0].passScore+"分");
+                            $('#test1').val(layui.util.toDateString(obj[0].examEndTime, 'yyyy-MM-dd HH:mm:ss'));
+
                             /*0：闭卷 ； 1：开卷*/
                             if(obj[0].openOrClose === 0){
                                 $('.openOrClose').val('闭卷');
@@ -146,7 +148,9 @@
                                     thisTimer = timer;
                                 });
                             };
-                            setCountdown(2019,3,9);
+                            alert(layui.util.toDateString(obj[0].examEndTime, 'yyyy-MM-dd HH:mm:ss'));
+
+                            setCountdown(layui.util.toDateString(obj[0].examEndTime, 'yyyy-MM-dd HH:mm:ss'));
 
                             laydate.render({
                                 elem: '#test1'
