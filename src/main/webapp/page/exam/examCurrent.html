@@ -86,10 +86,10 @@
         </colgroup>
         <thead>
         <tr>
-            <th>ID</th>
-            <th>NAME</th>
-            <th>WEIGHT</th>
-            <th>PRICE</th>
+            <th>考试名称</th>
+            <th>考试时间</th>
+            <th>合格分数</th>
+            <th>开闭卷</th>
         </tr>
         </thead>
         <tbody>
@@ -120,22 +120,30 @@
                     success:function(res){
                         if(res && res.code===0){
                             var menuHtml="";
+                            var obj = eval("("+JSON.stringify(res.data)+")");
                             /*alert(res.data.examName);*/
-                            console.log(JSON.stringify(res.data));
+                            alert("1-->"+obj[0].examName);
+                            alert("2-->"+obj.examName);
+                        /*    alert(JSON.stringify(res));
+                            alert(res.data);
+
+                            alert(JSON.parse(JSON.stringify(res.data)));
+                            alert(JSON.stringify(res.data));
+                            alert(JSONObject.fromObject(res.data));*/
+                            /*console.log(JSON.stringify(res.data));*/
                            /* console.log(JSON.parse(res)['data']);
                             console.log(JSON.parse(res)['data'].examName);
                             console.log(JSON.stringify(res.data.examName));
                             console.log(JSON.stringify(res.data['examName']));
                             var data = JSON.stringify(res.data);*/
-                            JSON.stringify(res.data,function (key, value) {
+                          /*  JSON.stringify(res.data,function (key, value) {
                                 menuHtml+="<div>"+value+"</div>";
                                 console.log(value);
 
 
-                            });
-                            /*menuHtml+="<div>"+data['examName']+"</div>"+"<div>"+data.examTime+"</div>"
-                                        +"<div>"+data.passScore+"</div>"+"<div>"+data.openOrClose+"</div>"
-*/
+                            });*/
+                            menuHtml+="<div>"+obj[0].examName+"</div>"+"<div>"+obj[0].examTime+"</div>"
+                                        +"<div>"+obj[0].passScore+"</div>"+"<div>"+obj[0].openOrClose+"</div>"
                             if(menuHtml.length>0){
                                 $("tbody").append(menuHtml);
                             }
