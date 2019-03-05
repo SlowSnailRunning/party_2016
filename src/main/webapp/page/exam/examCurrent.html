@@ -71,6 +71,15 @@
                 </div>
 
 
+                请选择要计算的日期：
+                <div class="layui-inline">
+                    <input type="text" class="layui-input" id="test1" value="">
+                </div>
+                <blockquote class="layui-elem-quote" style="margin-top: 10px;">
+                    <div id="test2"></div>
+                </blockquote>
+
+
             </div>
         </div>
 
@@ -79,15 +88,16 @@
 
 
 <script>
-    var $;
-    var element;
-    var form;
-    layui.use(['layer','element','jquery','form'],function () {
+
+    layui.use(['layer','element','jquery','form','util', 'laydate'],function () {
+        var $,element,form,util,laydate,layer;
+        util = layui.util;
+        laydate = layui.laydate;
         form =layui.form;
         layer = layui.layer;
         $=layui.jquery;
         element = layui.element;
-        laydate = layui.laydate;
+
         $(function(){
             function loadexamCurrent(){
                 $.ajax({
@@ -124,6 +134,28 @@
                                 $('.openOrClose').val("开卷");
                             }
 
+                            //倒计时
+                            var thisTimer, setCountdown = function(y, M, d, H, m, s){
+                                var endTime = new Date(y, M||0, d||1, H||0, m||0, s||0) //结束日期
+                                    ,serverTime = new Date(); //假设为当前服务器时间，这里采用的是本地时间，实际使用一般是取服务端的
+
+                                clearTimeout(thisTimer);
+                                util.countdown(endTime, serverTime, function(date, serverTime, timer){
+                                    var str = date[0] + '天' + date[1] + '时' +  date[2] + '分' + date[3] + '秒';
+                                    lay('#test2').html(str);
+                                    thisTimer = timer;
+                                });
+                            };
+                            setCountdown(2019,3,9);
+
+                            laydate.render({
+                                elem: '#test1'
+                                ,type: 'datetime'
+                                ,done: function(value, date){
+                                    setCountdown(date.year, date.month - 1, date.date, date.hours, date.minutes, date.seconds);
+                                }
+                            });
+
 
                         }
                     }
@@ -133,9 +165,9 @@
         })
     });
 
-
-
+   /* .val(layui.util.toDateString(original_data.examEndTime, 'yyyy-MM-dd HH:mm:ss'));*/
 
 </script>
+
 </body>
 </html>
