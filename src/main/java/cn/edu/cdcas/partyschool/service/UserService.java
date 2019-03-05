@@ -58,4 +58,6 @@ public interface UserService {
     String determineExam(String number) throws Exception;
 
     Map<String,Object> studentExamInfo(String studentNo) throws Exception;
+
+    String isLoginSuccess(String token) throws Exception;
 }

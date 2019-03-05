@@ -31,7 +31,7 @@ public class UniqueSession implements HttpSessionAttributeListener{
 		String name = event.getName();
 		if (name.equals("partySys_user")) {
 			String userNumber = ((UserSession) event.getValue()).getNumber();
-			if (sessionMap.get(userNumber) != null) {
+			if (sessionMap.get(userNumber==null?0:userNumber) != null) {
 				HttpSession session = sessionMap.get(userNumber);
 
 				session.removeAttribute(userNumber);

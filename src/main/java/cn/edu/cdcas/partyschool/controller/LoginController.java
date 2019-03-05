@@ -1,19 +1,27 @@
 package cn.edu.cdcas.partyschool.controller;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
+import cn.edu.cdcas.partyschool.listener.UniqueSession;
 import cn.edu.cdcas.partyschool.model.User;
 import cn.edu.cdcas.partyschool.service.ExamService;
 import cn.edu.cdcas.partyschool.service.QuestionService;
 import cn.edu.cdcas.partyschool.service.UserService;
+import cn.edu.cdcas.partyschool.util.JSONResult;
+import com.alibaba.fastjson.JSON;
 import org.apache.commons.collections4.map.HashedMap;
+import org.omg.CORBA.Request;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import cn.edu.cdcas.partyschool.model.UserSession;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
+import sun.security.timestamp.HttpTimestamper;
 
 import java.util.Map;
 
@@ -30,85 +38,73 @@ public class LoginController {
 	private UserService userServiceImpl;
 	@Autowired
 	private QuestionService questionServiceImpl;
+	@Autowired
+	private ExamService examServiceImpl;
+
+	@RequestMapping(value = "/login"/*,method = RequestMethod.POST*/)
+	@ResponseBody
+	public JSONResult login(@RequestParam(required = false,defaultValue = "201617000000") String token, RedirectAttributes redirectAttributes, HttpServletRequest request){
+		try {
+			String student_no=userServiceImpl.isLoginSuccess(token);
+			if ("-1".equals(student_no)){
+				return new JSONResult(1,"服务器验证失败，再试一次吧",200);
+			}else if(userServiceImpl.findType(student_no)==null||examServiceImpl.isCurrentExam()==null){
+				return new JSONResult(1,"你目前无权进入改系统",200);
+			}else{
+				redirectAttributes.addFlashAttribute("student_no",student_no);
+//				System.out.println("-----------------验证成功----------------");
+				String scheme = request.getScheme();//http
+				String serverName = request.getServerName();//localhost
+				int serverPort = request.getServerPort();//8080
+				String contextPath = request.getContextPath();//项目名
+				String url = scheme+"://"+serverName+":"+serverPort+contextPath+"/loginSuccess.do";//http://127.0.0.1:8080/test
 
 
-	@RequestMapping( "/login")
-	public String login(String number, HttpSession httpSession, RedirectAttributes redirectAttributes) {
-		//跳转间的认证
-		if(true){
-			//认证成功
-			UserSession user=new UserSession();
-			user.setNumber(number);
-			try {
-				String userType=userServiceImpl.findType(number);
-				if("ROOT".equals(userType)||"manger".equals(userType)){
-
-					user.setType(userType);
-
-					httpSession.setAttribute("partySys_user", user);
-					return "redirect:/index.html";
-				}else if("student".equals(userType)){
-
-					String exam_state=userServiceImpl.determineExam(number);
-					//判断是否跳转到考试同意界面，补考与初考
-					if("未考".equals(exam_state)){
-
-					}else if("未补考".equals(exam_state)){
-
-					}else {
-						//没有考试
-
-					}
-					user.setType(userType);
-
-					httpSession.setAttribute("partySys_user", user);
-					return "redirect:/exam/studentExamInfo.html";
-
-				/*if("无考试".equals(exam_state)){
-					//判断是否需要复制session
-					Map<String, HttpSession> sessionMap = UniqueSession.sessionMap;
-					for(Map.Entry<String, HttpSession> entry:sessionMap.entrySet()){
-						System.out.println(entry.getKey()+"value:::::"+entry.getValue());
-					}
-					if(sessionMap.get(number)!=null){
-						//复制session
-						user = (UserSession) sessionMap.get(number).getAttribute("partySys_user");
-					}else {
-						//创建session
-						user.setNumber(number);
-						user.setType("student");
-						HashSet<Integer> questionIdArray= (HashSet<Integer>) questionServiceImpl.randomQuestionIdArray();
-						user.setQuestionIdArray(questionIdArray);
-					}
-					httpSession.setAttribute("partySys_user", user);
-				}else {
-					//没有该学号的考试
-					redirectAttributes.addAttribute("msg","无法参加考试，可能是因为管理员关闭了考试");
-				}*/
-//				return "redirect:/examForStudent.html";
-				}else {
-					//提示无权限进入该系统的页面
-//				redirectAttributes.addFlashAttribute("","");
-					redirectAttributes.addAttribute("msg","您目前无该系统使用权限");
-					return "redirect:/page/login/loginFail.html";
-				}
-
-			} catch (Exception e) {
-				e.printStackTrace();
+				return new JSONResult(0,url,200);
 			}
-		}else {
-
+		} catch (Exception e) {
+			e.printStackTrace();
+			return new JSONResult(2,"服务器验证失败，再试一次吧",500);
 		}
+	}
 
+	@RequestMapping( "/loginSuccess")
+	public String loginSuccess(String number, HttpSession httpSession, RedirectAttributes redirectAttributes) {
+		//认证成功
+		try {
+			String userType=userServiceImpl.findType(number);
+			if("ROOT".equals(userType)||"manger".equals(userType)){
+				UserSession user=new UserSession();
+				user.setNumber(number);
+				user.setType(userType);
 
+				httpSession.setAttribute("partySys_user", user);
+				return "redirect:/index.html";
+			}else if("student".equals(userType)){
+				//具体流程详见流程图2
+				HttpSession oldSession=UniqueSession.sessionMap.get(number);
+				if(oldSession!=null){
+					// TODO: 2019/3/4 实现的前提是需要session失效时，移除了sessionMap中的key
+//					((UserSession)oldSession.getAttribute("partySys_user")).getQuestionIdArray();
+					return "redirect:/jsp/test.jsp";
+				}else {
+					int studentExamState=(userServiceImpl.queryByStuNo(number)).getExamState();
+					//session为空，做为首次登录
+					UserSession user=new UserSession();
+					user.setNumber(number);
+					user.setType(userType);
+					user.setStudentExamState(studentExamState);
 
-
-
-		UserSession partySysUser = (UserSession) httpSession.getAttribute("partySys_user");
-		partySysUser.getName();
-
-        return "redirect:/jsp/index.jsp";
-//		return "index";
+					httpSession.setAttribute("partySys_user",user);
+					return "redirect:/exam/studentExamInfo.html";
+				}
+			}else {
+				return "redirect:/page/404.html";
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+			return "redirect:/page/404.html";
+		}
 	}
 	@RequestMapping("/studentExamInfo")
 	@ResponseBody

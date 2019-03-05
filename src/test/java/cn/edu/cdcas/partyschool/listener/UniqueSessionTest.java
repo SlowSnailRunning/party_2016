@@ -33,14 +33,14 @@ public class UniqueSessionTest {
         Jedis jedis=jedisPool.getResource();
 
         UserSession userSession = new UserSession();
-        userSession.setName("name1111");
+        //userSession.setName("name1111");
         userSession.setNumber("201617");
 
         String string = JSON.toJSONString(userSession);
         jedis.set("usersession",string);
 
         UserSession session = JSON.parseObject(jedis.get("usersession"), UserSession.class);
-        System.out.println(session.getName());
+//        System.out.println(session.getName());
 
 
         System.out.println(jedis.get("test"));

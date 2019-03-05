@@ -9,19 +9,19 @@ import java.util.Set;
  *
  */
 public class UserSession implements Serializable {
-	private String name;
+	//private String name;
 	private String number;
 	private String type;
 	private Set<Integer> questionIdArray;
 	private int studentExamState;
 
 
-	public String getName() {
-		return name;
-	}
-	public void setName(String name) {
-		this.name = name;
-	}
+//	public String getName() {
+//		return name;
+//	}
+//	public void setName(String name) {
+//		this.name = name;
+//	}
 	public String getNumber() {
 		return number;
 	}

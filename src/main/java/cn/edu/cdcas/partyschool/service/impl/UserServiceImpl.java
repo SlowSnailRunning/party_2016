@@ -4,7 +4,6 @@ import cn.edu.cdcas.partyschool.mapper.UserMapper;
 import cn.edu.cdcas.partyschool.model.Exam;
 import cn.edu.cdcas.partyschool.model.Manger;
 import cn.edu.cdcas.partyschool.model.User;
-import cn.edu.cdcas.partyschool.service.ExamService;
 import cn.edu.cdcas.partyschool.service.UserService;
 import cn.edu.cdcas.partyschool.util.JSONResult;
 import org.apache.commons.collections4.map.HashedMap;
@@ -151,7 +150,7 @@ public class UserServiceImpl implements UserService {
     public String findType(String number) throws Exception {
 
         return userMapper.findType(number);
-}
+    }
     /**
      *@Describe: 根据学号判断是否有自己的考试
      *@Author Snail
@@ -174,7 +173,11 @@ public class UserServiceImpl implements UserService {
     public User queryByStuNo(String stuNo) throws Exception {
         return userMapper.queryByStuNo(stuNo);
     }
-
+    /**
+     *@Describe: 获取前台需要的个人数据
+     *@Author Snail
+     *@Date 2019/3/4
+     */
     @Override
     public Map<String,Object> studentExamInfo(String studentNo) throws Exception {
         Map<String,Object> studentExamInfo=new HashedMap<>();
@@ -187,4 +190,16 @@ public class UserServiceImpl implements UserService {
 
         return studentExamInfo;
     }
+    /**
+     *@Describe: 判断从PHP服务器过来的用户信息是否正确，返回学号，失败返回-1
+     *@Author Snail
+     *@Date 2019/3/4
+     */
+    @Override
+    public String isLoginSuccess(String token) throws Exception {
+        //判断
+
+        return token;
+    }
+
 }
