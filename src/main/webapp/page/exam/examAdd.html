@@ -13,29 +13,55 @@
     <link rel="stylesheet" href="../../css/public.css" media="all"/>
     <script type="text/javascript" src="../../layui/layui.js"></script>
 </head>
+<!--<body>
+    <div class="layui-row layui-col-space10">
+        <div class="layui-col-md6">
+            <div class="grid-demo grid-demo-bg1" style="background-color: #1AA094">1 6/12</div>
+        </div>
+        <div class="layui-col-md6 ">
+            <div class="grid-demo" style="background-color: #5eb95e">2 6/12</div>
+        </div>
+    </div>
+
+
+    <div class="layui-row layui-col-space10">
+        <div class="layui-col-md6">
+            <div class="grid-demo grid-demo-bg1" style="background-color: #1AA094">3 6/12</div>
+        </div>
+        <div class="layui-col-md6 ">
+            <div class="grid-demo" style="background-color: #5eb95e">4 6/12</div>
+        </div>
+    </div>
+
+</body>-->
 <body class="childrenBody">
 <form class="layui-form layui-row layui-col-space10">
-    <div class="layui-col-md9 layui-col-xs12">
+    <div class="layui-col-md12 layui-col-xs12">
         <div class="layui-row layui-col-space10">
-            <div class="layui-col-md9 layui-col-xs7">
+            <div class="layui-row layui-col-space10">
 
+            <div class="layui-col-md8 layui-col-xs8">
                 <!--the id of student in db.-->
                 <input type="text" class="layui-input layui-hide id" name="id">
-
                 <div class="layui-form-item magt3">
                     <label class="layui-form-label">考试名:</label>
                     <div class="layui-input-block">
                         <input type="text" class="layui-input examName" name="examName" required lay-verify="required">
                     </div>
                 </div>
-
-
-                <div class="layui-form-item magt3">
-                    <label class="layui-form-label">考试时长:</label>
-                    <div class="layui-input-block">
-                        <input type="text" name="examTime" class="layui-input examTime" required lay-verify="required">
+            </div>
+                <div class="layui-col-md3 layui-col-xs3">
+                    <div class="layui-form-item magt3">
+                        <label class="layui-form-label">考试时长:</label>
+                        <div class="layui-input-block">
+                            <input type="text" name="examTime" class="layui-input examTime" required lay-verify="required">
+                        </div>
                     </div>
                 </div>
+            </div>
+
+            <div class="layui-row layui-col-space10">
+                <div class="layui-col-md6 layui-col-xs6">
 
                 <div class="layui-form-item magt3">
                     <label class="layui-form-label">考试开始时间:</label>
@@ -44,7 +70,9 @@
                                lay-verify="required">
                     </div>
                 </div>
+                </div>
 
+                <div class="layui-col-md6 layui-col-xs6">
                 <div class="layui-form-item magt3">
                     <label class="layui-form-label">考试结束时间:</label>
                     <div class="layui-input-block">
@@ -52,14 +80,46 @@
                                lay-verify="required">
                     </div>
                 </div>
+                </div>
+            </div>
 
+            <div class="layui-row layui-col-space10">
+                <div class="layui-col-md6 layui-col-xs6">
+                    <div class="layui-form-item magt3">
+                        <label class="layui-form-label">开闭卷:</label>
+                        <div class="layui-input-block" lay-filter="selFilter">
+                            <select id="sel-openOrClose" name="openOrClose" class="layui-input openOrClose" lay-verify="required" >
+                                <option value="">请选择</option>
+                                <option value="0">闭卷</option>
+                                <option value="1">开卷</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+                <div class="layui-col-md6 layui-col-xs6">
+                    <div class="layui-form-item magt3">
+                        <label class="layui-form-label">是否允许补考:</label>
+                        <div class="layui-input-block" lay-filter="selFilter">
+                            <select id="sel-isMakeup" name="isMakeup" class="layui-input isMakeup" lay-verify="required" >
+                                <option value="">请选择</option>
+                                <option value="0">不允许</option>
+                                <option value="1">允许</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="layui-row layui-col-space10">
+                <div class="layui-col-md6 layui-col-xs6">
                 <div class="layui-form-item magt3">
                     <label class="layui-form-label">单选题数:</label>
                     <div class="layui-input-block">
                         <input type="text" class="layui-input radioNum" name="radioNum" required lay-verify="required">
                     </div>
                 </div>
-
+                </div>
+                <div class="layui-col-md6 layui-col-xs6">
                 <div class="layui-form-item magt3">
                     <label class="layui-form-label ">单选题分值:</label>
                     <div class="layui-input-block">
@@ -67,14 +127,19 @@
                                lay-verify="required">
                     </div>
                 </div>
+                </div>
+            </div>
 
+            <div class="layui-row layui-col-space10">
+            <div class="layui-col-md6 layui-col-xs6">
                 <div class="layui-form-item magt3">
                 <label class="layui-form-label">多选题数:</label>
                 <div class="layui-input-block">
                     <input type="text" class="layui-input checkNum" name="checkNum" required lay-verify="required">
                 </div>
+                </div>
             </div>
-
+            <div class="layui-col-md6 layui-col-xs6">
                 <div class="layui-form-item magt3">
                     <label class="layui-form-label ">多选题分值:</label>
                     <div class="layui-input-block">
@@ -82,14 +147,19 @@
                                lay-verify="required">
                     </div>
                 </div>
+            </div>
+            </div>
 
+            <div class="layui-row layui-col-space10">
+                <div class="layui-col-md6 layui-col-xs6">
                 <div class="layui-form-item magt3">
                     <label class="layui-form-label">判断题数:</label>
                     <div class="layui-input-block">
                         <input type="text" class="layui-input judgeNum" name="judgeNum" required lay-verify="required">
                     </div>
                 </div>
-
+                </div>
+                <div class="layui-col-md6 layui-col-xs6">
                 <div class="layui-form-item magt3">
                     <label class="layui-form-label ">判断题分值:</label>
                     <div class="layui-input-block">
@@ -97,14 +167,18 @@
                                lay-verify="required">
                     </div>
                 </div>
-
+                </div>
+            </div>
+            <div class="layui-row layui-col-space10">
+                <div class="layui-col-md6 layui-col-xs6">
                 <div class="layui-form-item magt3">
                     <label class="layui-form-label">填空题数:</label>
                     <div class="layui-input-block">
                         <input type="text" class="layui-input fillNum" name="fillNum" required lay-verify="required">
                     </div>
                 </div>
-
+                </div>
+                <div class="layui-col-md6 layui-col-xs6">
                 <div class="layui-form-item magt3">
                     <label class="layui-form-label ">填空题分值:</label>
                     <div class="layui-input-block">
@@ -112,7 +186,10 @@
                                lay-verify="required">
                     </div>
                 </div>
-
+                </div>
+            </div>
+            <div class="layui-row layui-col-space10">
+                <div class="layui-col-md6 layui-col-xs6">
                 <div class="layui-form-item magt3">
                     <label class="layui-form-label">及格分数:</label>
                     <div class="layui-input-block">
@@ -120,34 +197,17 @@
                                lay-verify="required">
                     </div>
                 </div>
-
-                <div class="layui-form-item magt3">
-                    <label class="layui-form-label">开闭卷:</label>
-                    <div class="layui-input-block" lay-filter="selFilter">
-                        <select id="sel-openOrClose" name="openOrClose" class="layui-input openOrClose" lay-verify="required" >
-                            <option value="">请选择</option>
-                            <option value="0">闭卷</option>
-                            <option value="1">开卷</option>
-                        </select>
-                    </div>
                 </div>
+            </div>
 
-                <div class="layui-form-item magt3">
-                    <label class="layui-form-label">是否允许补考:</label>
-                    <div class="layui-input-block" lay-filter="selFilter">
-                        <select id="sel-isMakeup" name="isMakeup" class="layui-input isMakeup" lay-verify="required" >
-                            <option value="">请选择</option>
-                            <option value="0">不允许</option>
-                            <option value="1">允许</option>
-                        </select>
-                    </div>
-                </div>
-
-
+            <div class="layui-row layui-col-space10">
+                <div class="layui-col-md6 layui-col-xs6">
                 <div class="layui-form-item magt3">
                     <button class="layui-btn" lay-submit lay-filter="signAdd">提交</button>
                 </div>
+                </div>
             </div>
+
         </div>
 
     </div>
