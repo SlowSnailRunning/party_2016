@@ -1,10 +1,10 @@
 package cn.edu.cdcas.partyschool.service.impl;
+
 import cn.edu.cdcas.partyschool.mapper.ExamMapper;
 import cn.edu.cdcas.partyschool.mapper.UserMapper;
 import cn.edu.cdcas.partyschool.model.Exam;
 import cn.edu.cdcas.partyschool.model.Manger;
 import cn.edu.cdcas.partyschool.model.User;
-import cn.edu.cdcas.partyschool.model.UserSession;
 import cn.edu.cdcas.partyschool.service.UserService;
 import cn.edu.cdcas.partyschool.util.JSONResult;
 import org.apache.commons.collections4.map.HashedMap;
@@ -98,19 +98,16 @@ public class UserServiceImpl implements UserService {
     public boolean isEmpty() {
         return userMapper.queryStuNums() == 0;
     }
-
     @Override
     /*需在登陆时session中设置httpSession.setAttribute("authority")*/
     public JSONResult MangerAuthorityControl(HttpSession httpSession) {
-       /* httpSession.setAttribute("authority", "ROOT");*/
-        UserSession partySys_user = (UserSession) httpSession.getAttribute("partySys_user");
-        if ("ROOT" ==partySys_user.getType()) {//是超级管理员，给管理员管理权限
+        String authority = (String) httpSession.getAttribute("authority");
+        if ("ROOT".equals(authority)) {//是超级管理员，给管理员管理权限
             return new JSONResult(0, "", 0);
         } else {
             return new JSONResult(1, "", 0);
         }
     }
-
     @Override
     public int insertManger(User user) {
         return userMapper.insert(user);
@@ -154,53 +151,57 @@ public class UserServiceImpl implements UserService {
 
         return userMapper.findType(number);
     }
+
     /**
-     *@Describe: 根据学号判断是否有自己的考试
-     *@Author Snail
-     *@Date 2019/2/1
+     * @Describe: 根据学号判断是否有自己的考试
+     * @Author Snail
+     * @Date 2019/2/1
      */
     @Override
     public String determineExam(String number) throws Exception {
-        String exam_state=userMapper.isHaveExamByStudentNo(number);
+        String exam_state = userMapper.isHaveExamByStudentNo(number);
 
-        if("0".equals(exam_state)) {
+        if ("0".equals(exam_state)) {
             return "未考";
-        }else if("3".equals(exam_state)){
+        } else if ("3".equals(exam_state)) {
             return "未补考";
-        }else {
+        } else {
             return "无考试";
         }
     }
+
     /**
-     *@Describe: 通过学号查找个人信息
-     *@Author Snail
-     *@Date 2019/3/4
+     * @Describe: 通过学号查找个人信息
+     * @Author Snail
+     * @Date 2019/3/4
      */
     @Override
     public User queryByStuNo(String stuNo) throws Exception {
         return userMapper.queryByStuNo(stuNo);
     }
+
     /**
-     *@Describe: 获取前台需要的个人数据
-     *@Author Snail
-     *@Date 2019/3/4
+     * @Describe: 获取前台需要的个人数据
+     * @Author Snail
+     * @Date 2019/3/4
      */
     @Override
-    public Map<String,Object> studentExamInfo(String studentNo) throws Exception {
-        Map<String,Object> studentExamInfo=new HashedMap<>();
+    public Map<String, Object> studentExamInfo(String studentNo) throws Exception {
+        Map<String, Object> studentExamInfo = new HashedMap<>();
 
         User user = this.queryByStuNo(studentNo);
-        studentExamInfo.put("user",user);
+        studentExamInfo.put("user", user);
 
         Exam exam = examMapper.findExamById(String.valueOf(user.getExamId()));
-        studentExamInfo.put("exam",exam);
+        studentExamInfo.put("exam", exam);
 
         return studentExamInfo;
     }
+
     /**
-     *@Describe: 判断从PHP服务器过来的用户信息是否正确，返回学号，失败返回-1
-     *@Author Snail
-     *@Date 2019/3/4
+     * @Describe: 判断从PHP服务器过来的用户信息是否正确，返回学号，失败返回-1
+     * @Author Snail
+     * @Date 2019/3/4
      */
     @Override
     public String isLoginSuccess(String token) throws Exception {
@@ -210,12 +211,12 @@ public class UserServiceImpl implements UserService {
     }
 
     /**
-     *@Describe: 根据考试随机抽取题目  1.获取到本次考试各个题目数量 2.随机得到4种题型对应的题目数量
-     *@Author Snail
-     *@Date 2019/3/5
+     * @Describe: 根据考试随机抽取题目  1.获取到本次考试各个题目数量 2.随机得到4种题型对应的题目数量
+     * @Author Snail
+     * @Date 2019/3/5
      */
     @Override
-    public Map<String, Object> randomQuestionIdArray(){
+    public Map<String, Object> randomQuestionIdArray() {
 
         return null;
     }
