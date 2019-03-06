@@ -16,7 +16,7 @@ import java.util.Set;
 import static org.junit.Assert.*;
 
 public class UniqueSessionTest {
-    @Test
+    /*@Test
     public void test(){
         JedisPool jedisPool = new JedisPool("127.0.0.1", 6379);
         Jedis jedis = jedisPool.getResource();
@@ -63,5 +63,5 @@ public class UniqueSessionTest {
             }else{
                 System.out.println("No white dog!");
             }
-    }
+    }*/
 }

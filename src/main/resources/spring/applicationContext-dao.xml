@@ -52,11 +52,24 @@
 	</bean>
 
 
+
 	<!--jedis,单机-->
 	<bean id="jedisSingle" class="redis.clients.jedis.JedisPool">
-		<constructor-arg name="host" value="${redis.host}"/>
-		<constructor-arg name="port" value="${redis.port}"/>
+		<constructor-arg index="0" ref="jedisPoolConfig"/>
+		<constructor-arg index="1" value="${redis.host}"/>
+		<constructor-arg index="2" value="${redis.port}" type="int"/>
+		<constructor-arg index="3" value="${redis.timeout}" type="int"/>
+		<constructor-arg index="4" value="${redis.pwd}"/>
+
 	</bean>
+
+	<bean id="jedisPoolConfig" class="redis.clients.jedis.JedisPoolConfig">
+		<property name="maxIdle" value="300"/> <!--最大能够保持idel状态的对象数-->
+		<property name="maxTotal" value="60000"/><!--最大分配的对象数-->
+		<property name="testOnBorrow" value="true"/><!--当调用borrow Oject方法时，是否进行有效性检查-->
+	</bean>
+
+
 	<!--jedis工具-->
 	<bean id="jedisSingleUtil" class="cn.edu.cdcas.partyschool.util.impl.JedisClientSingle"/>
 	<bean id="contextMap" class="java.util.HashMap"/>

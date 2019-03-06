@@ -138,8 +138,8 @@ public class ExamServiceImpl implements ExamService {
     public String isCurrentExam() throws Exception {
 
         return examMapper.isCurrentExam();
-
     }
+
 
     /**
      *@Describe: 新增一个考试
