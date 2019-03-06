@@ -122,18 +122,24 @@
                 </div>
 
                 <div class="layui-form-item magt3">
-                    <label class="layui-form-label">开闭卷(0：闭卷,1：开卷):</label>
-                    <div class="layui-input-block">
-                        <input type="text" name="openOrClose" class="layui-input openOrClose" required
-                               lay-verify="required">
+                    <label class="layui-form-label">开闭卷:</label>
+                    <div class="layui-input-block" lay-filter="selFilter">
+                        <select id="sel-openOrClose" name="openOrClose" class="layui-input openOrClose" lay-verify="required" >
+                            <option value="">请选择</option>
+                            <option value="0">闭卷</option>
+                            <option value="1">开卷</option>
+                        </select>
                     </div>
                 </div>
 
                 <div class="layui-form-item magt3">
                     <label class="layui-form-label">是否允许补考:</label>
-                    <div class="layui-input-block">
-                        <input type="text" name="isMakeup" class="layui-input isMakeup" required
-                               lay-verify="required">
+                    <div class="layui-input-block" lay-filter="selFilter">
+                        <select id="sel-isMakeup" name="isMakeup" class="layui-input isMakeup" lay-verify="required" >
+                            <option value="">请选择</option>
+                            <option value="0">不允许</option>
+                            <option value="1">允许</option>
+                        </select>
                     </div>
                 </div>
 
@@ -164,6 +170,8 @@
             ,format: 'yyyy-MM-dd HH:mm:ss'
         });
     });
+
+
 
     layui.use('form', function () {
         var form = layui.form;
