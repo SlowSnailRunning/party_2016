@@ -6,6 +6,7 @@ layui.use(['form','layer','layedit','laydate','upload'],function(){
         layedit = layui.layedit,
         laydate = layui.laydate,
         $ = layui.jquery;
+        $('.submit-btn-submit').css({"left":"-32px","margin-left":"50%"});
 
     //用于同步编辑器内容到textarea
     layedit.sync(editIndex);
