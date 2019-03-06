@@ -38,7 +38,6 @@ public class QuestionServiceImpl implements QuestionService {
     }
     /**
      *@Describe: 匹配题目类型，返回map
-     *
      *@Author Snail
      *@Date 2019/1/26
      */
@@ -109,7 +108,7 @@ public class QuestionServiceImpl implements QuestionService {
      *@Author Snail
      *@Date 2019/2/2
      */
-    @Override
+   /* @Override
     public Set<Integer> randomQuestionIdArray() throws Exception {
         int idMin=questionMapper.findQuestionIdMin();
         int idMax=questionMapper.findQuestionIdMax();
@@ -126,17 +125,15 @@ public class QuestionServiceImpl implements QuestionService {
                 --i;
             }
         }
-
-
         return queIdArray;
-    }
+    }*/
     /**
      *@Describe:随机得到的题目id应在有效题目数组中
      *@Author Snail
      *@Date 2019/2/6
      * @param questionId
      */
-    private boolean isEffective(String questionId) throws Exception {
+   /* private boolean isEffective(String questionId) throws Exception {
         //查找所有有效题目id
         HashSet<Long> effectiveQueIdSet=questionMapper.selectEffectiveQueId();
         if(effectiveQueIdSet.contains(questionId)){
@@ -144,6 +141,6 @@ public class QuestionServiceImpl implements QuestionService {
         }else {
             return false;
         }
-    }
+    }*/
 
 }

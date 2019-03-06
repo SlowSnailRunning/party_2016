@@ -5,12 +5,13 @@
     <title>信息确认</title>
 </head>
 <body>
+
 <button onclick="go()">考试</button>
 </body>
 <script src="../js/jquery-3.3.1.js" charset="utf-8"></script>
 <script type="text/javascript">
     $(function () {
-        $.post("/studentExamInfo.do",function(res){
+        $.post("/examinee/examAndStuInfo.do",function(res){
             console.log(res);
         });
     });

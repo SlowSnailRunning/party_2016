@@ -10,18 +10,24 @@ import javax.servlet.http.HttpSession;
 import java.util.Map;
 
 @RequestMapping("/examinee")
-public class StudentExamController {
+public class ExamineeController {
 
     @Autowired
     private UserService userServiceImpl;
-
+    /**
+     *@Describe: 考生点击开始考试/补考，获取随机到的题目id写入session
+     *@Author Snail
+     *@Date 2019/3/5
+     */
     @RequestMapping("allQuestionInfoForStu")
     @ResponseBody
     public Map<String,Object> allQuestionInfoForStu(){
+
+
         return null;
     }
 
-    @RequestMapping("/examInfo")
+    @RequestMapping("/examAndStuInfo")
     @ResponseBody
     public Map<String, Object> studentExamInfo(HttpSession httpSession){
 

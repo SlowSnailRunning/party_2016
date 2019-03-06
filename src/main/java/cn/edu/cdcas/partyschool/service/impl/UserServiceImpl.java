@@ -15,6 +15,7 @@ import javax.servlet.http.HttpSession;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+
 @Service
 public class UserServiceImpl implements UserService {
     @Resource
@@ -206,4 +207,14 @@ public class UserServiceImpl implements UserService {
         return token;
     }
 
+    /**
+     *@Describe: 根据考试随机抽取题目  1.获取到本次考试各个题目数量 2.随机得到4种题型对应的题目数量
+     *@Author Snail
+     *@Date 2019/3/5
+     */
+    @Override
+    public Map<String, Object> randomQuestionIdArray(){
+
+        return null;
+    }
 }

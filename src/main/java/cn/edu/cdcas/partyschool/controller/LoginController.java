@@ -84,16 +84,16 @@ public class LoginController {
 			String type=userSession.getType();
 			if("student".equals(type)){
 				if(userSession.getQuestionIdArray()==null){
-					//从数据库获取exam_state，随机得到题目组
+					//从数据库获取exam_state
 					userSession.setStudentExamState(((User)userServiceImpl.queryByStuNo(userSession.getNumber())).getExamState());
-
+					return "redirect:/exam/studentExamInfo.html";
 				}else {
 					//非首次登录
-
+					// TODO: 2019/3/5
 				}
 				return "";
 			}else if("ROOT".equals(type)||"manger".equals(type)){
-				return "";
+				return "redirect:/index.html";
 			}else {
 				throw  new Exception("非法登录方式！！");
 			}

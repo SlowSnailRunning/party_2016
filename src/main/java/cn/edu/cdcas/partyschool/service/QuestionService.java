@@ -25,5 +25,5 @@ public interface QuestionService {
 
     int updateState(Integer id,String state)throws Exception;
 
-    Set<Integer> randomQuestionIdArray() throws Exception;
+    /*Set<Integer> randomQuestionIdArray() throws Exception;*/
 }
