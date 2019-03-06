@@ -13,27 +13,7 @@
     <link rel="stylesheet" href="../../css/public.css" media="all"/>
     <script type="text/javascript" src="../../layui/layui.js"></script>
 </head>
-<!--<body>
-    <div class="layui-row layui-col-space10">
-        <div class="layui-col-md6">
-            <div class="grid-demo grid-demo-bg1" style="background-color: #1AA094">1 6/12</div>
-        </div>
-        <div class="layui-col-md6 ">
-            <div class="grid-demo" style="background-color: #5eb95e">2 6/12</div>
-        </div>
-    </div>
 
-
-    <div class="layui-row layui-col-space10">
-        <div class="layui-col-md6">
-            <div class="grid-demo grid-demo-bg1" style="background-color: #1AA094">3 6/12</div>
-        </div>
-        <div class="layui-col-md6 ">
-            <div class="grid-demo" style="background-color: #5eb95e">4 6/12</div>
-        </div>
-    </div>
-
-</body>-->
 <body class="childrenBody">
 <form class="layui-form layui-row layui-col-space10">
     <div class="layui-col-md12 layui-col-xs12">
@@ -52,19 +32,19 @@
             </div>
                 <div class="layui-col-md3 layui-col-xs3">
                     <div class="layui-form-item magt3">
-                        <label class="layui-form-label">考试时长:</label>
+                        <label class="layui-form-label">考试时长(分):</label>
                         <div class="layui-input-block">
-                            <input type="text" name="examTime" class="layui-input examTime" required lay-verify="required">
+                            <input type="text" name="examTime" class="layui-input examTime" required lay-verify="required" placeholder="以分为单位">
                         </div>
                     </div>
                 </div>
             </div>
 
             <div class="layui-row layui-col-space10">
-                <div class="layui-col-md6 layui-col-xs6">
+                <div class="layui-col-md6 layui-col-xs5">
 
                 <div class="layui-form-item magt3">
-                    <label class="layui-form-label">考试开始时间:</label>
+                    <label class="layui-form-label">开考时间:</label>
                     <div class="layui-input-block">
                         <input type="text" name="examStartTime" id="examStartTimeId" class="layui-input examStartTime" placeholder="yyyy-MM-dd HH:mm:ss" required
                                lay-verify="required">
@@ -72,9 +52,9 @@
                 </div>
                 </div>
 
-                <div class="layui-col-md6 layui-col-xs6">
+                <div class="layui-col-md6 layui-col-xs5">
                 <div class="layui-form-item magt3">
-                    <label class="layui-form-label">考试结束时间:</label>
+                    <label class="layui-form-label">停考时间:</label>
                     <div class="layui-input-block">
                         <input type="text" name="examEndTime" id="examEndTimeId" class="layui-input examEndTime" placeholder="yyyy-MM-dd HH:mm:ss" required
                                lay-verify="required">
@@ -98,12 +78,12 @@
                 </div>
                 <div class="layui-col-md6 layui-col-xs6">
                     <div class="layui-form-item magt3">
-                        <label class="layui-form-label">是否允许补考:</label>
+                        <label class="layui-form-label">能否补考:</label>
                         <div class="layui-input-block" lay-filter="selFilter">
                             <select id="sel-isMakeup" name="isMakeup" class="layui-input isMakeup" lay-verify="required" >
                                 <option value="">请选择</option>
-                                <option value="0">不允许</option>
-                                <option value="1">允许</option>
+                                <option value="0">不能补考</option>
+                                <option value="1">允许补考</option>
                             </select>
                         </div>
                     </div>
@@ -121,7 +101,7 @@
                 </div>
                 <div class="layui-col-md6 layui-col-xs6">
                 <div class="layui-form-item magt3">
-                    <label class="layui-form-label ">单选题分值:</label>
+                    <label class="layui-form-label ">(分/道):</label>
                     <div class="layui-input-block">
                         <input type="text" name="radioScore" class="layui-input radioScore" required
                                lay-verify="required">
@@ -141,7 +121,7 @@
             </div>
             <div class="layui-col-md6 layui-col-xs6">
                 <div class="layui-form-item magt3">
-                    <label class="layui-form-label ">多选题分值:</label>
+                    <label class="layui-form-label ">(分/道):</label>
                     <div class="layui-input-block">
                         <input type="text" name="checkScore" class="layui-input checkScore" required
                                lay-verify="required">
@@ -161,7 +141,7 @@
                 </div>
                 <div class="layui-col-md6 layui-col-xs6">
                 <div class="layui-form-item magt3">
-                    <label class="layui-form-label ">判断题分值:</label>
+                    <label class="layui-form-label ">(分/道):</label>
                     <div class="layui-input-block">
                         <input type="text" name="judgeScore" class="layui-input judgeScore" required
                                lay-verify="required">
@@ -180,7 +160,7 @@
                 </div>
                 <div class="layui-col-md6 layui-col-xs6">
                 <div class="layui-form-item magt3">
-                    <label class="layui-form-label ">填空题分值:</label>
+                    <label class="layui-form-label ">(分/道):</label>
                     <div class="layui-input-block">
                         <input type="text" name="fillScore" class="layui-input fillScore" required
                                lay-verify="required">
@@ -214,6 +194,7 @@
 </form>
 
 <script>
+
     layui.use('laydate', function() {
         var laydate = layui.laydate;
 
