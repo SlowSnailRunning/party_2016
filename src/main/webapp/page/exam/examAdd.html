@@ -20,7 +20,7 @@
         <div class="layui-row layui-col-space10">
             <div class="layui-row layui-col-space10">
 
-            <div class="layui-col-md8 layui-col-xs8">
+            <div class="layui-col-md6 layui-col-xs8">
                 <!--the id of student in db.-->
                 <input type="text" class="layui-input layui-hide id" name="id">
                 <div class="layui-form-item magt3">
@@ -30,7 +30,7 @@
                     </div>
                 </div>
             </div>
-                <div class="layui-col-md3 layui-col-xs3">
+                <div class="layui-col-md6 layui-col-xs3">
                     <div class="layui-form-item magt3">
                         <label class="layui-form-label">考试时长(分):</label>
                         <div class="layui-input-block">
@@ -42,6 +42,25 @@
 
             <div class="layui-row layui-col-space10">
                 <div class="layui-col-md6 layui-col-xs5">
+                    <div class="layui-form-item magt3">
+                        <label class="layui-form-label">开考-停考:</label>
+                        <div class="layui-input-inline">
+                            <input type="text" name="examTimeRange" class="layui-input examTimeRange" id="examTimeRangeId" placeholder=" - ">
+                        </div>
+                    </div>
+                </div>
+
+                <div class="layui-col-md6 layui-col-xs6">
+                    <div class="layui-form-item magt3">
+                        <label class="layui-form-label">及格分数:</label>
+                        <div class="layui-input-block">
+                            <input type="text" name="passScore" class="layui-input passScore" required
+                                   lay-verify="required">
+                        </div>
+                    </div>
+                </div>
+
+               <!-- <div class="layui-col-md6 layui-col-xs5">
 
                 <div class="layui-form-item magt3">
                     <label class="layui-form-label">开考时间:</label>
@@ -50,9 +69,9 @@
                                lay-verify="required">
                     </div>
                 </div>
-                </div>
+                </div>-->
 
-                <div class="layui-col-md6 layui-col-xs5">
+               <!-- <div class="layui-col-md6 layui-col-xs5">
                 <div class="layui-form-item magt3">
                     <label class="layui-form-label">停考时间:</label>
                     <div class="layui-input-block">
@@ -60,7 +79,7 @@
                                lay-verify="required">
                     </div>
                 </div>
-                </div>
+                </div>-->
             </div>
 
             <div class="layui-row layui-col-space10">
@@ -168,17 +187,6 @@
                 </div>
                 </div>
             </div>
-            <div class="layui-row layui-col-space10">
-                <div class="layui-col-md6 layui-col-xs6">
-                <div class="layui-form-item magt3">
-                    <label class="layui-form-label">及格分数:</label>
-                    <div class="layui-input-block">
-                        <input type="text" name="passScore" class="layui-input passScore" required
-                               lay-verify="required">
-                    </div>
-                </div>
-                </div>
-            </div>
 
             <div class="layui-row layui-col-space10">
                 <div class="layui-col-md12 layui-col-xs12">
@@ -199,7 +207,7 @@
     layui.use('laydate', function() {
         var laydate = layui.laydate;
 
-        //日期时间选择器
+       /* //日期时间选择器
         laydate.render({
             elem: '#examStartTimeId'
             , type: 'datetime'
@@ -210,6 +218,13 @@
             elem: '#examEndTimeId'
             , type: 'datetime'
             ,format: 'yyyy-MM-dd HH:mm:ss'
+        });*/
+
+        //日期时间范围
+        laydate.render({
+            elem: '#examTimeRangeId'
+            ,type: 'datetime'
+            ,range: true
         });
     });
 
