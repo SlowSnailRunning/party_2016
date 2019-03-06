@@ -4,6 +4,7 @@ import cn.edu.cdcas.partyschool.mapper.UserMapper;
 import cn.edu.cdcas.partyschool.model.Exam;
 import cn.edu.cdcas.partyschool.model.Manger;
 import cn.edu.cdcas.partyschool.model.User;
+import cn.edu.cdcas.partyschool.model.UserSession;
 import cn.edu.cdcas.partyschool.service.UserService;
 import cn.edu.cdcas.partyschool.util.JSONResult;
 import org.apache.commons.collections4.map.HashedMap;
@@ -101,8 +102,9 @@ public class UserServiceImpl implements UserService {
     @Override
     /*需在登陆时session中设置httpSession.setAttribute("authority")*/
     public JSONResult MangerAuthorityControl(HttpSession httpSession) {
-        httpSession.setAttribute("authority", "ROOT");
-        if ("ROOT" == httpSession.getAttribute("authority")) {//是超级管理员，给管理员管理权限
+       /* httpSession.setAttribute("authority", "ROOT");*/
+        UserSession partySys_user = (UserSession) httpSession.getAttribute("partySys_user");
+        if ("ROOT" ==partySys_user.getType()) {//是超级管理员，给管理员管理权限
             return new JSONResult(0, "", 0);
         } else {
             return new JSONResult(1, "", 0);

@@ -18,9 +18,9 @@ layui.use(['form', 'layer', 'jquery'], function () {
                     $("input[type='text']").val("");
                 });
             } else if (data.code == 1) {
-                layer.msg(data.msg, {time: 400});
+                layer.msg(data.msg, {time: 2000});
             } else {
-                layer.msg(data.msg, {time: 400});
+                layer.msg(data.msg, {time: 2000});
             }
         });
         return false;
