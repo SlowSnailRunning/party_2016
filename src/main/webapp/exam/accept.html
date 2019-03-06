@@ -1,0 +1,191 @@
+<!DOCTYPE>
+<html>
+<head>
+    <meta name="renderer" content="webkit|ie-comp|ie-stand">
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge,chrome=1">
+    <title>成都文理学院思想政治理论水平在线测试</title>
+    <link rel="shortcut icon" href="/images/favicon.ico">
+    <link href="/exam/css/bootstrap.min.css" rel="stylesheet"
+          type="text/css"/>
+    <link href="/exam/css/theme.css" rel="stylesheet"
+          type="text/css"/>
+    <script type="text/javascript" src="../layui/layui.js"></script>
+</head>
+<body>
+<div align="center" style="background-color: white;">
+    <img src="images/logo.png"/>
+</div>
+<div style="font-size:31px;color:red;font-family:宋体;text-align:center;margin-top:10px;margin-bottom:-8px;">
+    <b>${user_in_session.examName}</b></div>
+<div class="row-fluid">
+    <div class="container-fluid">
+        <div class="span12 examcontent">
+            <div class="exambox">
+                <div class="examform">
+                    <div class="container-fluid footcontent">
+                        <fieldset>
+                            <legend><font color="red" size="5">考生个人信息</font>&nbsp&nbsp<a href=""
+                                                                                         style="cursor:pointer; position:static; margin-right: 10px;font-size: 18px;">退出登录</a>
+                            </legend>
+                            <div class="row-fluid">
+                                <div class="span6">
+                                    <b>学号：</b><span id="studentNo"></span> ${user_in_session.studentNo}
+                                </div>
+                                <div class="span6">
+                                    <b>性别：</b> <span id="sex"></span> ${user_in_session.sex}
+                                </div>
+                            </div>
+                            <div class="row-fluid">
+                                <div class="span6">
+                                    <b>姓名：</b> <span id="name"></span>
+                                </div>
+                                <div class="span6">
+                                    <b>班级：</b> <span id="clazz"></span>${user_in_session.clazz}
+                                </div>
+                            </div>
+                            <div class="row-fluid">
+                                <div class="span6">
+                                    <b>年级：</b><span id="grade"></span>${user_in_session.grade}
+                                </div>
+                                <div class="span6">
+                                    <b>专业：</b><span id="major"></span>${user_in_session.major}
+                                </div>
+                            </div>
+                            <!--    <div class="row-fluid">
+                                    <div class="span6">
+
+                                        <b>登陆时间：</b>&lt;!&ndash;<fmt:formatDate value="${user_in_session.lastLoginTime}"
+                                                                    pattern="yyyy-MM-dd HH:mm:ss"/>&ndash;&gt;
+                                    </div>
+                                    <div class="span6">
+                                        <b>登陆IP：</b> ${user_in_session.lastLoginIp}
+                                    </div>
+                                </div>-->
+                            <div class="row-fluid">
+                                <div class="span6">
+                                    <b>是否毕业：</b><span id="graduated"></span>${user_in_session.graduated}
+                                </div>
+                                <div class="span6">
+                                    <b>优秀学员：</b><span id="excellent">1231</span>${user_in_session.excellent}
+                                </div>
+                            </div>
+                            <div class="row-fluid">
+                                <!-- <div class="span12">
+                                     <b>备注：</b>${user_in_session.excellent}
+                                 </div>-->
+                            </div>
+                        </fieldset>
+
+                        <br/>
+                        <fieldset>
+                            <legend><font color="red" size="5">考生个人成绩</font></legend>
+                            <div class="row-fluid">
+                                <div class="span12">
+                                    <b>初考考试：</b>
+                                </div>
+                            </div>
+                            <div class="row-fluid">
+                                <div class="span12">
+
+                                </div>
+                            </div>
+                        </fieldset>
+                        <br/>
+
+                        <fieldset>
+                            <legend><font color="red" size="5">考试须知</font></legend>
+                            <div class="row-fluid">
+                                <div class="span12">
+                                    <b>1.考试时间：${EXAMTIME_IN_SESSION}分钟。<br/>
+                                        2.考试题型：单选题（${questionNum.danxuanScore}分*${questionNum.danxuanNum}题）、多选题（${questionNum.duoxuanScore}分*${questionNum.duoxuanNum}题）、判断题
+                                        （${questionNum.panduanScore}分*${questionNum.panduanNum}题），及格线（${user_in_session.pass}分）。<br/>3.中途退出考试的作为放弃考试处理。考试完成后确认交卷成功后，即可看到考试成绩。<br/>4.提前交卷未成功
+                                        的，请等待考试时间结束，系统自动交卷，并不要连续点击交卷按钮。<br/>以上事项有不清楚的地方和网上考试期间登录有问题，
+                                        请与监考老师联系。</b><br/> <br/>
+                                </div>
+                            </div>
+                            <form action="<%=contextPath%>/exam" method="post">
+                                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                                <div class="row-fluid">
+                                    <div class="span12">
+
+                                        <input id="CheckBox" type="checkbox" name="agree" value="1"/> 已阅读考试须知，同意遵守各项条款
+
+                                    </div>
+                                </div>
+                                <br/> <br/>
+                                <div class="row-fluid">
+                                    <div class="span6">
+                                        <Button id="examButtion" disabled="disabled" type="submit" class="btn">参加考试
+                                        </Button>
+                                    </div>
+                                    <c:if test="${user_in_session.againe == 0}">
+                                        <div class="span6">
+                                            <Button id="makeUpButtion" disabled="disabled" type="submit" class="btn">
+                                                参加补考
+                                            </Button>
+                                        </div>
+                                    </c:if>
+                                </div>
+                            </form>
+                        </fieldset>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<input id="examState" type="hidden" value="${user_in_session.examState }"/>
+<input id="makeUpState" type="hidden" value="${user_in_session.makeUpState }"/>
+<script type="text/javascript">
+    layui.use(['jquery'], function () {
+        var $ = layui.$ //重点处
+            , layer = layui.layer;
+        $(function () {
+            $.ajax({
+                url: "/examinee/examAndStuInfo.do",
+                type: 'post',
+                async: false,
+                dataType: "json",
+                data: {},
+                timeout: 3000,
+                success: function (data) {
+                    $("span").each(function () {
+                        var id = $(this).attr("id");
+                        $(this).text(data.user.id);
+                    });
+                    console.log(data);
+                },
+                error: function (msg) {
+                }
+            });
+        });
+
+
+    });
+    /*    $(function () {
+            $("#CheckBox").change(function () {
+                if (this.checked) {
+                    enableButtion();
+                } else {
+                    disableButtion();
+                }
+            });
+            var enableButtion = function () {
+                var examState = $("#examState").val();
+                var makeUpState = $("#makeUpState").val();
+                if (examState == 0) {
+                    $("#examButtion").removeAttr('disabled');
+                } else if (examState == 3 && makeUpState == 0) {
+                    $("#makeUpButtion").removeAttr('disabled');
+                }
+            };
+
+            var disableButtion = function () {
+                $("#examButtion").attr('disabled', "true");
+                $("#makeUpState").attr('disabled', "true");
+            }
+        });*/
+</script>
+</body>
+</html>

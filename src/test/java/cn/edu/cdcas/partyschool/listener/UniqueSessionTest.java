@@ -18,7 +18,7 @@ import static org.junit.Assert.*;
 public class UniqueSessionTest {
     /*@Test
     public void test(){
-        JedisPool jedisPool = new JedisPool("127.0.0.1", 6379);
+        JedisPool jedisPool = new JedisPool("148.70.23.121", 6379);
         Jedis jedis = jedisPool.getResource();
         jedis.set("test","testvalue1");
         System.out.println(jedis.get("test"));

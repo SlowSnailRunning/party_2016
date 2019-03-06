@@ -192,7 +192,7 @@ public class UserController {
         }
     }
 
-    @RequestMapping("/MangerAuthority")
+    @RequestMapping("MangerAuthority")
     public JSONResult MangerAuthorityControl(HttpSession httpSession) {
         return userService.MangerAuthorityControl(httpSession);
     }

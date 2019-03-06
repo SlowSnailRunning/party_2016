@@ -3,12 +3,14 @@ package cn.edu.cdcas.partyschool.controller;
 import cn.edu.cdcas.partyschool.model.UserSession;
 import cn.edu.cdcas.partyschool.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.servlet.http.HttpSession;
 import java.util.Map;
 
+@Controller
 @RequestMapping("/examinee")
 public class ExamineeController {
 
@@ -39,5 +41,11 @@ public class ExamineeController {
             e.printStackTrace();
         }
         return studentExamInfo;
+    }
+    @RequestMapping("/test")
+    @ResponseBody
+    public String test()
+    {
+        return "asdfasf";
     }
 }
