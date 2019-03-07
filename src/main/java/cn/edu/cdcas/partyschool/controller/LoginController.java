@@ -87,7 +87,7 @@ public class LoginController {
 				if(userSession.getQuestionIdArray()==null){
 					//从数据库获取exam_state
 					userSession.setStudentExamState(((User)userServiceImpl.queryByStuNo(userSession.getNumber())).getExamState());
-					return "redirect:/exam/studentExamInfo.html";
+					return "redirect:/exam/accept.html";
 				}else {
 					//非首次登录
 					// TODO: 2019/3/5

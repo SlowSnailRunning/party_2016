@@ -38,11 +38,11 @@ public interface QuestionMapper {
      *@Author Snail
      *@Date 2019/2/5
      */
-    int findAllQuestionNum() throws  Exception;
+//    int findAllQuestionNum() throws  Exception;
     /**
      *@Describe: 题库中所有有效题目id
      *@Author Snail
      *@Date 2019/2/5
      */
-    HashSet<Long> selectEffectiveQueId() throws Exception;
+//    HashSet<Long> selectEffectiveQueId() throws Exception;
 }

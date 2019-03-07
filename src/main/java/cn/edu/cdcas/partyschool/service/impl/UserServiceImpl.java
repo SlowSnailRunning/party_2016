@@ -7,12 +7,13 @@ import cn.edu.cdcas.partyschool.model.User;
 import cn.edu.cdcas.partyschool.service.UserService;
 import cn.edu.cdcas.partyschool.util.JSONResult;
 import cn.edu.cdcas.partyschool.util.impl.JedisClientSingle;
+import com.alibaba.fastjson.JSON;
+import com.alibaba.fastjson.JSONObject;
 import org.apache.commons.collections4.map.HashedMap;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
-import javax.servlet.ServletContext;
 import javax.servlet.http.HttpSession;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -27,8 +28,6 @@ public class UserServiceImpl implements UserService {
     private ExamMapper examMapper;
     @Autowired
     private JedisClientSingle jedisClient;
-    @Autowired
-    private ServletContext servletContext;
 
 
     @Override
@@ -219,23 +218,46 @@ public class UserServiceImpl implements UserService {
      *@Describe: 根据考试随机抽取题目  1.获取到本次考试各个题目数量 2.随机得到4种题型对应的题目数量
      *@Author Snail
      *@Date 2019/3/5
+     * @param httpSession
      */
     @Override
-    public List<Map<String, Object>> requiredQuestionAndOther() throws Exception {
+    public List<Map<String, Object>> requiredQuestionAndOther(HttpSession httpSession) throws Exception {
         //获取本次考试各种题型数量
+        String examQueNum;
         if(jedisClient.hexists("partySys2016","examQueNum")){
-            String examQueNum = jedisClient.hget("partySys2016", "examQueNum");
+            examQueNum= jedisClient.hget("partySys2016", "examQueNum");
         }else {
-            Exam exam = examMapper.queryCurrentExamInformation().get(0);
-            int radioNum=exam.getRadioNum();
-            int checkNum=exam.getCheckNum();
-            int judgeNum=exam.getJudgeNum();
-            Integer fillNum = exam.getFillNum();
-            String examQueNum =radioNum+","+checkNum+","+judgeNum+","+fillNum;
+            Exam exam;
+            if(jedisClient.hexists("partySys2016","nowExam")){
+                exam=JSON.parseObject(jedisClient.hget("partySys2016","nowExam"),Exam.class);
+            }else {
+                exam = examMapper.queryCurrentExamInformation().get(0);
+                jedisClient.hset("partySys2016","nowExam",JSON.toJSONString(exam));
+            }
+
+            examQueNum =exam.getRadioNum()+","+exam.getCheckNum()+","+exam.getJudgeNum()+","+exam.getFillNum();
             jedisClient.hset("partySys2016","examQueNum",examQueNum);
         }
-        //随机获取各种类型题目id
 
+        //随机获取各种类型题目id
+        String[] split = examQueNum.split(",");
+        for (int i = 0; i < 4; i++) {
+            List<Integer> queIds = userMapper.findQueIds(i+1, Integer.parseInt(split[i]));
+            switch (i){
+                case 0:
+                    httpSession.setAttribute("dan",JSON.toJSONString(queIds));
+                    break;
+                case 1:
+                    httpSession.setAttribute("duo",JSON.toJSONString(queIds));
+                    break;
+                case 2:
+                    httpSession.setAttribute("pan",JSON.toJSONString(queIds));
+                    break;
+                case 3:
+                    httpSession.setAttribute("tian",JSON.toJSONString(queIds));
+                    break;
+            }
+        }
 
 
         List<Map<String,Object>> requiredQuestionAndOther=new ArrayList<>();
@@ -245,9 +267,9 @@ public class UserServiceImpl implements UserService {
         //设置该系统在redis中产生的partySys2016的ttl
         //设置过期时间为总考试时间+30*60   s
         if(jedisClient.ttl("partySys2016").longValue()==new Long((long)-1)){
-            Exam nowExam=(Exam)servletContext.getAttribute("exam");
             //计算相差的秒
-            int second= (int) ((nowExam.getExamEndTime().getTime()-nowExam.getExamStartTime().getTime())/1000);
+            JSONObject jsonObject=JSON.parseObject(jedisClient.hget("partySys2016","nowExam"));
+            int  second= (int) ((jsonObject.getLongValue("examEndTime")-jsonObject.getLongValue("examStartTime"))/1000);
             jedisClient.expire("partySys2016",second);
         }
         return requiredQuestionAndOther;

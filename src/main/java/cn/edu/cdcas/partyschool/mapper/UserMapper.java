@@ -4,7 +4,9 @@ import cn.edu.cdcas.partyschool.model.Manger;
 import cn.edu.cdcas.partyschool.model.User;
 import org.apache.ibatis.annotations.Param;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 public interface UserMapper {
     int deleteById(Integer id);
@@ -58,4 +60,13 @@ public interface UserMapper {
     String isHaveExamByStudentNo(@Param("studentNo")String studentNo) throws Exception;
 
     User queryByStuNo(String stuNo) throws Exception;
+
+    /**
+     *@Describe: 更具传入的题目类型，需要的题目数，获取题目id
+     *@Author Snail
+     *@Date 2019/2/1
+     * @param type
+     * @param num
+     */
+    List<Integer> findQueIds(@Param("type") int type, @Param("num") int num) throws Exception;
 }

@@ -451,4 +451,8 @@
         from party_user
         where student_no = #{stuNo,jdbcType=CHAR}
     </select>
+
+    <select id="findQueIds" resultType="java.lang.Integer">
+        SELECT id FROM party_question WHERE state='checked' AND type=#{type} ORDER BY RAND() LIMIT #{num}
+    </select>
 </mapper>

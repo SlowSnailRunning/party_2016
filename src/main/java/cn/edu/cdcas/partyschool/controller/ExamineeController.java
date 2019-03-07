@@ -37,7 +37,7 @@ public class ExamineeController {
             int nowExamState=userServiceImpl.changeExamState(examState);
             sys_user.setStudentExamState(nowExamState);
 
-            requiredQuestions=userServiceImpl.requiredQuestionAndOther();
+            requiredQuestions=userServiceImpl.requiredQuestionAndOther(httpSession);
 
             return requiredQuestions;
         } catch (Exception e) {
