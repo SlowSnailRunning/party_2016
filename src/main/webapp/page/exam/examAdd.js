@@ -9,37 +9,21 @@ layui.use(['form','layer','layedit','laydate','upload'],function(){
         $('.submit-btn-submit').css({"left":"-32px","margin-left":"50%"});
         $('.examTimeRange').css("width",$('.passScore').css('width'));
 
-        /*//日期时间选择器
-        laydate.render({
-            elem: '#examStartTimeId'
-            , type: 'datetime'
-            ,format: 'yyyy-MM-dd HH:mm:ss'
-        });
-        //日期时间选择器
-        laydate.render({
-            elem: '#examEndTimeId'
-            , type: 'datetime'
-            ,format: 'yyyy-MM-dd HH:mm:ss'
-        });*/
-
         //日期时间范围
         laydate.render({
             elem: '#examTimeRangeId'
             ,type: 'datetime'
             ,range: true
             ,done: function(value, date, endDate){
-                console.log(value); //得到日期生成的值，如：2017-08-18
+              /*  console.log(value); //得到日期生成的值，如：2017-08-18
                 console.log(date); //得到日期时间对象：{year: 2017, month: 8, date: 18, hours: 0, minutes: 0, seconds: 0}
-                console.log(endDate); //得结束的日期时间对象，开启范围选择（range: true）才会返回。对象成员同上。
+                console.log(endDate); //得结束的日期时间对象，开启范围选择（range: true）才会返回。对象成员同上。*/
                 var str=new String();
                 var arr=new Array();
-                str=$('.examTimeRange').val();
 
                 //可以用字符或字符串分割
-                arr=str.split(' - ');
+                arr=value.split(' - ');
 
-                /* $('.examStartTime').val(arr[0]);
-                 $('.examEndTime').val(arr[1]);*/
                 var laydate = layui.laydate;
                 //日期时间选择器
                 laydate.render({
@@ -57,8 +41,7 @@ layui.use(['form','layer','layedit','laydate','upload'],function(){
                 });
                 console.log($('.examStartTime').val());
                 console.log($('.examEndTime').val());
-
-                alert($('.examEndTime').val());
+            /*    alert($('.examEndTime').val());*/
 
             }
         });
