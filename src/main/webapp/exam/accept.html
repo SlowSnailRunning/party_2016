@@ -6,13 +6,15 @@
     <meta http-equiv="X-UA-Compatible" content="IE=Edge,chrome=1">
     <title>成都文理学院思想政治理论水平在线测试</title>
     <link rel="shortcut icon" href="/images/favicon.ico">
-    <link href="/exam/css/bootstrap.min.css" rel="stylesheet"
+    <link href="css/bootstrap.min.css" rel="stylesheet"
           type="text/css"/>
-    <link href="/exam/css/theme.css" rel="stylesheet"
+    <link href="css/theme.css" rel="stylesheet"
           type="text/css"/>
-    <script type="text/javascript" src="../layui/layui.js"></script>
+    <script src="https://unpkg.com/vue@2.6.8/dist/vue.js"></script>
+    <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
 </head>
 <body>
+<div id="app">
 <div align="center" style="background-color: white;">
     <img src="images/logo.png"/>
 </div>
@@ -30,26 +32,26 @@
                             </legend>
                             <div class="row-fluid">
                                 <div class="span6">
-                                    <b>学号：</b><span id="studentNo"></span> ${user_in_session.studentNo}
+                                    <b>学号：</b><span id="studentNo">{{studentInfo.studentNo}}</span>
                                 </div>
                                 <div class="span6">
-                                    <b>性别：</b> <span id="sex"></span> ${user_in_session.sex}
-                                </div>
-                            </div>
-                            <div class="row-fluid">
-                                <div class="span6">
-                                    <b>姓名：</b> <span id="name"></span>
-                                </div>
-                                <div class="span6">
-                                    <b>班级：</b> <span id="clazz"></span>${user_in_session.clazz}
+                                    <b>性别：</b> <span id="sex">{{studentInfo.sex}}</span>
                                 </div>
                             </div>
                             <div class="row-fluid">
                                 <div class="span6">
-                                    <b>年级：</b><span id="grade"></span>${user_in_session.grade}
+                                    <b>姓名：</b> <span id="name">{{studentInfo.name}}</span>
                                 </div>
                                 <div class="span6">
-                                    <b>专业：</b><span id="major"></span>${user_in_session.major}
+                                    <b>班级：</b> <span id="clazz">{{studentInfo.clazz}}</span>
+                                </div>
+                            </div>
+                            <div class="row-fluid">
+                                <div class="span6">
+                                    <b>年级：</b><span id="grade">{{studentInfo.grade}}</span>
+                                </div>
+                                <div class="span6">
+                                    <b>专业：</b><span id="major">{{studentInfo.major}}</span>
                                 </div>
                             </div>
                             <!--    <div class="row-fluid">
@@ -64,10 +66,10 @@
                                 </div>-->
                             <div class="row-fluid">
                                 <div class="span6">
-                                    <b>是否毕业：</b><span id="graduated"></span>${user_in_session.graduated}
+                                    <b>是否毕业：</b><span id="graduated">{{studentInfo.graduated}}</span>
                                 </div>
                                 <div class="span6">
-                                    <b>优秀学员：</b><span id="excellent">1231</span>${user_in_session.excellent}
+                                    <b>优秀学员：</b><span id="excellent">{{studentInfo.excellent}}</span>
                                 </div>
                             </div>
                             <div class="row-fluid">
@@ -82,7 +84,7 @@
                             <legend><font color="red" size="5">考生个人成绩</font></legend>
                             <div class="row-fluid">
                                 <div class="span12">
-                                    <b>初考考试：</b>
+                                    <b>初考考试：{{studentInfo.examScore}}</b>
                                 </div>
                             </div>
                             <div class="row-fluid">
@@ -119,13 +121,13 @@
                                         <Button id="examButtion" disabled="disabled" type="submit" class="btn">参加考试
                                         </Button>
                                     </div>
-                                  <!--  <c:if test="${user_in_session.againe == 0}">
+
                                         <div class="span6">
                                             <Button id="makeUpButtion" disabled="disabled" type="submit" class="btn">
                                                 参加补考
                                             </Button>
                                         </div>
-                                    </c:if>-->
+
                                 </div>
                             </form>
                         </fieldset>
@@ -135,55 +137,34 @@
         </div>
     </div>
 </div>
-<input id="examState" type="hidden" value="${user_in_session.examState }"/>
-<input id="makeUpState" type="hidden" value="${user_in_session.makeUpState }"/>
-<script type="text/javascript">
-    layui.use(['jquery'], function () {
-        var $ = layui.$ //重点处
-            , layer = layui.layer;
-        $(function () {
-            $.ajax({
-                url: "/examinee/examAndStuInfo.do132",
-                type: 'post',
-                async: false,
-                dataType: "json",
-                data: {},
-                timeout: 3000,
-                success: function (data) {
-                    $("span").each(function () {
-                        var id = $(this).attr("id");
-                        $(this).text(data.user.id);
-                    });
-                    console.log(data);
-                },
-                error: function (msg) {
-                }
-            });
-        });
-    });
-    /*    $(function () {
-            $("#CheckBox").change(function () {
-                if (this.checked) {
-                    enableButtion();
-                } else {
-                    disableButtion();
-                }
-            });
-            var enableButtion = function () {
-                var examState = $("#examState").val();
-                var makeUpState = $("#makeUpState").val();
-                if (examState == 0) {
-                    $("#examButtion").removeAttr('disabled');
-                } else if (examState == 3 && makeUpState == 0) {
-                    $("#makeUpButtion").removeAttr('disabled');
-                }
-            };
 
-            var disableButtion = function () {
-                $("#examButtion").attr('disabled', "true");
-                $("#makeUpState").attr('disabled', "true");
+<input id="examState" type="hidden" :value="studentInfo.makeUpState"/>
+<input id="makeUpState" type="hidden" value="${user_in_session.makeUpState }"/>
+</div>
+<script type="text/javascript">
+    Vue.prototype.$axios=axios;
+    const vm = new Vue({
+        el:"#app",
+        data:{
+            studentInfo:[]
+        },
+        created() {
+            this.getStudentInfo()
+        },
+        methods: {
+            getStudentInfo(){
+                axios.get("http://localhost:3000/examinee/examAndStuInfo.do")
+                    .then(res=>{
+                        this.studentInfo=res.data.user
+                        console.log(this.studentInfo)
+                    })
+                    .catch(error=>{
+                        console.log(error)
+                    })
             }
-        });*/
+        },
+    })
 </script>
+
 </body>
 </html>
