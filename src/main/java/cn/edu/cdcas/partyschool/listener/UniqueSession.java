@@ -29,6 +29,7 @@ public class UniqueSession implements HttpSessionAttributeListener{
 	@Override
 	public void attributeAdded(HttpSessionBindingEvent event) {
 		String name = event.getName();
+        // TODO: 2019/3/7 名称更换了
 		if (name.equals("partySys_user")) {
 			UserSession userSessionNow=(UserSession) event.getValue();
 

@@ -455,4 +455,7 @@
     <select id="findQueIds" resultType="java.lang.Integer">
         SELECT id FROM party_question WHERE state='checked' AND type=#{type} ORDER BY RAND() LIMIT #{num}
     </select>
+    <update id="updateExamStateByStuNo" >
+      UPDATE party_user SET exam_state=#{exam_state} WHERE student_no=#{student_no}
+    </update>
 </mapper>

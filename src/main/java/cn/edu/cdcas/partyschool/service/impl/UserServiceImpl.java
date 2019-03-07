@@ -35,10 +35,10 @@ public class UserServiceImpl implements UserService {
         return userMapper.deleteById(id);
     }
 
-    @Override
-    public int deleteByStuNo(String stuNo) {
-        return userMapper.deleteByStuNo(stuNo);
-    }
+//    @Override
+//    public int deleteByStuNo(String stuNo) {
+//        return userMapper.deleteByStuNo(stuNo);
+//    }
 
     @Override
     public void clear() {
@@ -80,15 +80,15 @@ public class UserServiceImpl implements UserService {
         return userMapper.updateByIdSelective(user);
     }
 
-    @Override
-    public int updateByStuNoSelective(User user) {
-        return userMapper.updateByStuNoSelective(user);
-    }
-
-    @Override
-    public int updateByStuNo(User user) {
-        return userMapper.updateByStuNo(user);
-    }
+//    @Override
+//    public int updateByStuNoSelective(User user) {
+//        return userMapper.updateByStuNoSelective(user);
+//    }
+//
+//    @Override
+//    public int updateByStuNo(User user) {
+//        return userMapper.updateByStuNo(user);
+//    }
 
     @Override
     public int queryStuNums() {
@@ -116,20 +116,20 @@ public class UserServiceImpl implements UserService {
         }
     }
 
-    @Override
-    public int insertManger(User user) {
-        return userMapper.insert(user);
-    }
+//    @Override
+//    public int insertManger(User user) {
+//        return userMapper.insert(user);
+//    }
 
     @Override
     public boolean existsManager(User user) {
         return userMapper.queryManagerNums(user) > 0;
     }
 
-    @Override
-    public boolean exists(User user) throws Exception {
-        return userMapper.queryByStuNo(user.getStudentNo()) != null;
-    }
+//    @Override
+//    public boolean exists(User user) throws Exception {
+//        return userMapper.queryByStuNo(user.getStudentNo()) != null;
+//    }
 
     @Override
     public Map<String, Object> queryMangerMap(int page, int limit) {
@@ -164,18 +164,18 @@ public class UserServiceImpl implements UserService {
      *@Author Snail
      *@Date 2019/2/1
      */
-    @Override
-    public String determineExam(String number) throws Exception {
-        String exam_state = userMapper.isHaveExamByStudentNo(number);
-
-        if("0".equals(exam_state)) {
-            return "未考";
-        }else if("3".equals(exam_state)){
-            return "未补考";
-        }else {
-            return "无考试";
-        }
-    }
+//    @Override
+//    public String determineExam(String number) throws Exception {
+//        String exam_state = userMapper.isHaveExamByStudentNo(number);
+//
+//        if("0".equals(exam_state)) {
+//            return "未考";
+//        }else if("3".equals(exam_state)){
+//            return "未补考";
+//        }else {
+//            return "无考试";
+//        }
+//    }
     /**
      *@Describe: 通过学号查找个人信息
      *@Author Snail
@@ -276,16 +276,17 @@ public class UserServiceImpl implements UserService {
     }
 
     /**
-     *@Describe: 根据当前ExamState判断本次开始考试的状态变化
+     *@Describe: 根据当前ExamState判断本次开始考试的状态变化,存入到数据库
      *@Author Snail
      *@Date 2019/3/6
      */
     @Override
-    public int changeExamState(int examState) throws Exception {
+    public int changeExamState(String studentNo, int examState) throws Exception {
 
         if(examState==0||examState==3){
             examState=examState+1;
         }
+        userMapper.updateExamStateByStuNo(studentNo,examState);
         return examState;
     }
 

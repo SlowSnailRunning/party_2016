@@ -10,7 +10,7 @@ import java.util.Map;
 public interface UserService {
     int deleteById(Integer id);
 
-    int deleteByStuNo(String stuNo);
+//    int deleteByStuNo(String stuNo);
 
     void clear();
 
@@ -30,9 +30,9 @@ public interface UserService {
 
     int updateByIdSelective(User user);
 
-    int updateByStuNoSelective(User user);
+//    int updateByStuNoSelective(User user);
 
-    int updateByStuNo(User user);
+//    int updateByStuNo(User user);
 
     int queryStuNums();
 
@@ -40,13 +40,13 @@ public interface UserService {
 
     boolean isEmpty();    //judge whether the numbers of student is empty.
 
-    int insertManger(User user);
+//    int insertManger(User user);
 
     boolean existsManager(User user);
 
     JSONResult MangerAuthorityControl(HttpSession httpSession);
 
-    boolean exists(User user) throws Exception;
+//    boolean exists(User user) throws Exception;
 
     Map<String, Object> queryMangerMap(int page, int limit);
 
@@ -55,7 +55,7 @@ public interface UserService {
 
     String findType(String number) throws Exception;
 
-    String determineExam(String number) throws Exception;
+  //  String determineExam(String number) throws Exception;
 
     Map<String,Object> studentExamInfo(String studentNo) throws Exception;
 
@@ -63,5 +63,5 @@ public interface UserService {
 
     List<Map<String, Object>> requiredQuestionAndOther(HttpSession httpSession) throws Exception;
 
-    int changeExamState(int examState) throws  Exception;
+    int changeExamState(String studentNo, int examState) throws Exception;
 }

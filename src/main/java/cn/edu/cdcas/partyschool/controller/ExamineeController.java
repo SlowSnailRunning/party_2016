@@ -34,7 +34,7 @@ public class ExamineeController {
             //更新exam_state
             UserSession sys_user = (UserSession) httpSession.getAttribute("partySys_user");
             int examState=sys_user.getStudentExamState();
-            int nowExamState=userServiceImpl.changeExamState(examState);
+            int nowExamState=userServiceImpl.changeExamState((String) httpSession.getAttribute("studentNo"),examState);
             sys_user.setStudentExamState(nowExamState);
 
             requiredQuestions=userServiceImpl.requiredQuestionAndOther(httpSession);

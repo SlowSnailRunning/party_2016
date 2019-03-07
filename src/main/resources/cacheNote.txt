@@ -9,7 +9,8 @@ session:
  httpSession.setAttribute("duo"
  .
  .
-
+httpSession.setAttribute("authority", type);
+httpSession.setAttribute("studentNo",student_no);
 
 
 

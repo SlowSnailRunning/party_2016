@@ -58,9 +58,10 @@ public class LoginController {
 			}else{
 //				System.out.println("-----------------验证成功----------------");
 				UserSession userSession=new UserSession();
-				userSession.setType(type);
+//				userSession.setType(type);
 				httpSession.setAttribute("authority", type);
-				userSession.setNumber(student_no);
+				httpSession.setAttribute("studentNo",student_no);
+//				userSession.setNumber(student_no);
 				httpSession.setAttribute("partySys_user",userSession);
 
 
