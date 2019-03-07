@@ -8,7 +8,11 @@ layui.use(['form','layer','layedit','laydate','upload'],function(){
         $ = layui.jquery;
         $('.submit-btn-submit').css({"left":"-32px","margin-left":"50%"});
         $('.examTimeRange').css("width",$('.passScore').css('width'));
-
+        $('.label-zongfen').css("font-size","17px");
+        $('.label-fen').css("font-size","17px");
+        $('.examAllScore').css({"color":"blue","font-size":"19px"});
+        $('.examAllScore').text("100");
+       /* alert($('.examAllScore').text());*/
         //日期时间范围
         laydate.render({
             elem: '#examTimeRangeId'
@@ -54,33 +58,7 @@ layui.use(['form','layer','layedit','laydate','upload'],function(){
             // console.log(data.field);
             // return;
             //signAdd为提交按钮的id
-           /* var str=new String();
-            var arr=new Array();
-            str=$('.examTimeRange').val();
 
-            //可以用字符或字符串分割
-            arr=str.split(' - ');
-           /!* $('.examStartTime').val(arr[0]);
-            $('.examEndTime').val(arr[1]);*!/
-
-            var laydate = layui.laydate;
-
-            //日期时间选择器
-            laydate.render({
-                elem: '#examStartTimeId'
-                , type: 'datetime'
-                ,format: 'yyyy-MM-dd HH:mm:ss'
-                ,value:arr[0]
-            });
-            //日期时间选择器
-            laydate.render({
-                elem: '#examEndTimeId'
-                , type: 'datetime'
-                ,format: 'yyyy-MM-dd HH:mm:ss'
-                ,value:arr[1]
-            });
-            alert($('.examEndTime').val());
-*/
             $.post("/exam/add-update.do", data.field,
                 function (data) {
                     if (data.status === 200) {
