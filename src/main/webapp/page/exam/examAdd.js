@@ -13,8 +13,7 @@ layui.use(['form','layer','layedit','laydate','upload'],function(){
         $('.examAllScore').css({"color":"blue","font-size":"19px"});
         $('.examAllScore').text("100");
 
-    /*计算总分函数*/
-    function sum() {
+    $(".radioNum").keyup(function(){
         var radioNum = parseInt($('.radioNum').val());
         var radioScore = parseInt($('.radioScore').val());
         var radio=0;
@@ -31,31 +30,318 @@ layui.use(['form','layer','layedit','laydate','upload'],function(){
         var fillScore = parseInt($('.fillScore').val());
         var fill = 0;
 
-        if(radioNum!==''&&radioScore!==''){
+        if(radioNum!=''&&radioScore!=''){
             radio = radioNum * radioScore;
-        }
-        if(checkNum!==''&&checkScore!==''){
+        }else{radioNum=0;radioScore=0;}
+
+        if(checkNum!=''&&checkScore!=''){
             check = checkNum * checkScore;
-        }
-        if(judgeNum!==''&&judgeScore!==''){
+        }else{checkNum=0;checkScore=0;}
+
+        if(judgeNum!=''&&judgeScore!=''){
             judge = judgeNum * judgeScore;
+        }else{judgeNum=0;judgeScore=0;}
+
+        if(fillNum!=''&&fillScore!=''){
+            fill = fillNum * fillScore;
+        }else{fillNum=0;fillScore=0;}
+
+        var allScore = 0;
+
+        if(radio!=''&&check!=''&&judge!=''&&fill!=''){
+            allScore =  radio + check + judge + fill;
         }
-        if(fillNum!==''&&fillScore!==''){
-            fill = fillNum * radioScore;
-        }
-        var allScore = radio + check + judge + fill;
         $('.examAllScore').text(allScore);
         return false;
+    });
+    $(".radioScore").keyup(function(){
+        var radioNum = parseInt($('.radioNum').val());
+        var radioScore = parseInt($('.radioScore').val());
+        var radio=0;
 
-    }
-    $('.radioNum').keyup(sum());
-    $('.radioScore').keyup(sum());
-    $('.checkNum').keyup(sum());
-    $('.checkScore').keyup(sum());
-    $('.judgeNum').keyup(sum());
-    $('.judgeScore').keyup(sum());
-    $('.fillNum').keyup(sum());
-    $('.fillScore').keyup(sum());
+        var checkNum = parseInt($('.checkNum').val());
+        var checkScore = parseInt($('.checkScore').val());
+        var check = 0;
+
+        var judgeNum = parseInt($('.judgeNum').val());
+        var judgeScore = parseInt($('.judgeScore').val());
+        var judge = 0;
+
+        var fillNum = parseInt($('.fillNum').val());
+        var fillScore = parseInt($('.fillScore').val());
+        var fill = 0;
+
+        if(radioNum!=''&&radioScore!=''){
+            radio = radioNum * radioScore;
+        }else{radioNum=0;radioScore=0;}
+
+        if(checkNum!=''&&checkScore!=''){
+            check = checkNum * checkScore;
+        }else{checkNum=0;checkScore=0;}
+
+        if(judgeNum!=''&&judgeScore!=''){
+            judge = judgeNum * judgeScore;
+        }else{judgeNum=0;judgeScore=0;}
+
+        if(fillNum!=''&&fillScore!=''){
+            fill = fillNum * fillScore;
+        }else{fillNum=0;fillScore=0;}
+
+        var allScore = 0;
+
+        if(radio!=''&&check!=''&&judge!=''&&fill!=''){
+            allScore =  radio + check + judge + fill;
+        }
+        $('.examAllScore').text(allScore);
+        return false;
+    });
+    $(".checkNum").keyup(function(){
+        var radioNum = parseInt($('.radioNum').val());
+        var radioScore = parseInt($('.radioScore').val());
+        var radio=0;
+
+        var checkNum = parseInt($('.checkNum').val());
+        var checkScore = parseInt($('.checkScore').val());
+        var check = 0;
+
+        var judgeNum = parseInt($('.judgeNum').val());
+        var judgeScore = parseInt($('.judgeScore').val());
+        var judge = 0;
+
+        var fillNum = parseInt($('.fillNum').val());
+        var fillScore = parseInt($('.fillScore').val());
+        var fill = 0;
+
+        if(radioNum!=''&&radioScore!=''){
+            radio = radioNum * radioScore;
+        }else{radioNum=0;radioScore=0;}
+
+        if(checkNum!=''&&checkScore!=''){
+            check = checkNum * checkScore;
+        }else{checkNum=0;checkScore=0;}
+
+        if(judgeNum!=''&&judgeScore!=''){
+            judge = judgeNum * judgeScore;
+        }else{judgeNum=0;judgeScore=0;}
+
+        if(fillNum!=''&&fillScore!=''){
+            fill = fillNum * fillScore;
+        }else{fillNum=0;fillScore=0;}
+
+        var allScore = 0;
+
+        if(radio!=''&&check!=''&&judge!=''&&fill!=''){
+            allScore =  radio + check + judge + fill;
+        }
+        $('.examAllScore').text(allScore);
+        return false;
+    });
+    $(".checkScore").keyup(function(){
+        var radioNum = parseInt($('.radioNum').val());
+        var radioScore = parseInt($('.radioScore').val());
+        var radio=0;
+
+        var checkNum = parseInt($('.checkNum').val());
+        var checkScore = parseInt($('.checkScore').val());
+        var check = 0;
+
+        var judgeNum = parseInt($('.judgeNum').val());
+        var judgeScore = parseInt($('.judgeScore').val());
+        var judge = 0;
+
+        var fillNum = parseInt($('.fillNum').val());
+        var fillScore = parseInt($('.fillScore').val());
+        var fill = 0;
+
+        if(radioNum!=''&&radioScore!=''){
+            radio = radioNum * radioScore;
+        }else{radioNum=0;radioScore=0;}
+
+        if(checkNum!=''&&checkScore!=''){
+            check = checkNum * checkScore;
+        }else{checkNum=0;checkScore=0;}
+
+        if(judgeNum!=''&&judgeScore!=''){
+            judge = judgeNum * judgeScore;
+        }else{judgeNum=0;judgeScore=0;}
+
+        if(fillNum!=''&&fillScore!=''){
+            fill = fillNum * fillScore;
+        }else{fillNum=0;fillScore=0;}
+
+        var allScore = 0;
+
+        if(radio!=''&&check!=''&&judge!=''&&fill!=''){
+            allScore =  radio + check + judge + fill;
+        }
+        $('.examAllScore').text(allScore);
+        return false;
+    });
+    $(".judgeNum").keyup(function(){
+        var radioNum = parseInt($('.radioNum').val());
+        var radioScore = parseInt($('.radioScore').val());
+        var radio=0;
+
+        var checkNum = parseInt($('.checkNum').val());
+        var checkScore = parseInt($('.checkScore').val());
+        var check = 0;
+
+        var judgeNum = parseInt($('.judgeNum').val());
+        var judgeScore = parseInt($('.judgeScore').val());
+        var judge = 0;
+
+        var fillNum = parseInt($('.fillNum').val());
+        var fillScore = parseInt($('.fillScore').val());
+        var fill = 0;
+
+        if(radioNum!=''&&radioScore!=''){
+            radio = radioNum * radioScore;
+        }else{radioNum=0;radioScore=0;}
+
+        if(checkNum!=''&&checkScore!=''){
+            check = checkNum * checkScore;
+        }else{checkNum=0;checkScore=0;}
+
+        if(judgeNum!=''&&judgeScore!=''){
+            judge = judgeNum * judgeScore;
+        }else{judgeNum=0;judgeScore=0;}
+
+        if(fillNum!=''&&fillScore!=''){
+            fill = fillNum * fillScore;
+        }else{fillNum=0;fillScore=0;}
+
+        var allScore = 0;
+
+        if(radio!=''&&check!=''&&judge!=''&&fill!=''){
+            allScore =  radio + check + judge + fill;
+        }
+        $('.examAllScore').text(allScore);
+        return false;
+    });
+    $(".judgeScore").keyup(function(){
+        var radioNum = parseInt($('.radioNum').val());
+        var radioScore = parseInt($('.radioScore').val());
+        var radio=0;
+
+        var checkNum = parseInt($('.checkNum').val());
+        var checkScore = parseInt($('.checkScore').val());
+        var check = 0;
+
+        var judgeNum = parseInt($('.judgeNum').val());
+        var judgeScore = parseInt($('.judgeScore').val());
+        var judge = 0;
+
+        var fillNum = parseInt($('.fillNum').val());
+        var fillScore = parseInt($('.fillScore').val());
+        var fill = 0;
+
+        if(radioNum!=''&&radioScore!=''){
+            radio = radioNum * radioScore;
+        }else{radioNum=0;radioScore=0;}
+
+        if(checkNum!=''&&checkScore!=''){
+            check = checkNum * checkScore;
+        }else{checkNum=0;checkScore=0;}
+
+        if(judgeNum!=''&&judgeScore!=''){
+            judge = judgeNum * judgeScore;
+        }else{judgeNum=0;judgeScore=0;}
+
+        if(fillNum!=''&&fillScore!=''){
+            fill = fillNum * fillScore;
+        }else{fillNum=0;fillScore=0;}
+
+        var allScore = 0;
+
+        if(radio!=''&&check!=''&&judge!=''&&fill!=''){
+            allScore =  radio + check + judge + fill;
+        }
+        $('.examAllScore').text(allScore);
+        return false;
+    });
+    $(".fillScore").keyup(function(){
+        var radioNum = parseInt($('.radioNum').val());
+        var radioScore = parseInt($('.radioScore').val());
+        var radio=0;
+
+        var checkNum = parseInt($('.checkNum').val());
+        var checkScore = parseInt($('.checkScore').val());
+        var check = 0;
+
+        var judgeNum = parseInt($('.judgeNum').val());
+        var judgeScore = parseInt($('.judgeScore').val());
+        var judge = 0;
+
+        var fillNum = parseInt($('.fillNum').val());
+        var fillScore = parseInt($('.fillScore').val());
+        var fill = 0;
+
+        if(radioNum!=''&&radioScore!=''){
+            radio = radioNum * radioScore;
+        }else{radioNum=0;radioScore=0;}
+
+        if(checkNum!=''&&checkScore!=''){
+            check = checkNum * checkScore;
+        }else{checkNum=0;checkScore=0;}
+
+        if(judgeNum!=''&&judgeScore!=''){
+            judge = judgeNum * judgeScore;
+        }else{judgeNum=0;judgeScore=0;}
+
+        if(fillNum!=''&&fillScore!=''){
+            fill = fillNum * fillScore;
+        }else{fillNum=0;fillScore=0;}
+
+        var allScore = 0;
+
+        if(radio!=''&&check!=''&&judge!=''&&fill!=''){
+            allScore =  radio + check + judge + fill;
+        }
+        $('.examAllScore').text(allScore);
+        return false;
+    });
+    $(".fillNum").keyup(function(){
+        var radioNum = parseInt($('.radioNum').val());
+        var radioScore = parseInt($('.radioScore').val());
+        var radio=0;
+
+        var checkNum = parseInt($('.checkNum').val());
+        var checkScore = parseInt($('.checkScore').val());
+        var check = 0;
+
+        var judgeNum = parseInt($('.judgeNum').val());
+        var judgeScore = parseInt($('.judgeScore').val());
+        var judge = 0;
+
+        var fillNum = parseInt($('.fillNum').val());
+        var fillScore = parseInt($('.fillScore').val());
+        var fill = 0;
+
+        if(radioNum!=''&&radioScore!=''){
+            radio = radioNum * radioScore;
+        }else{radioNum=0;radioScore=0;}
+
+        if(checkNum!=''&&checkScore!=''){
+            check = checkNum * checkScore;
+        }else{checkNum=0;checkScore=0;}
+
+        if(judgeNum!=''&&judgeScore!=''){
+            judge = judgeNum * judgeScore;
+        }else{judgeNum=0;judgeScore=0;}
+
+        if(fillNum!=''&&fillScore!=''){
+            fill = fillNum * fillScore;
+        }else{fillNum=0;fillScore=0;}
+
+        var allScore = 0;
+
+        if(radio!=''&&check!=''&&judge!=''&&fill!=''){
+            allScore =  radio + check + judge + fill;
+        }
+        $('.examAllScore').text(allScore);
+        return false;
+    });
+
 
 
 
