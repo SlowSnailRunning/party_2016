@@ -140,7 +140,6 @@ public class ExamServiceImpl implements ExamService {
         return examMapper.isCurrentExam();
     }
 
-
     /**
      *@Describe: 新增一个考试
      */

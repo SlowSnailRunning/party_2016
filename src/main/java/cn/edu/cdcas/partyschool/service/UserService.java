@@ -61,5 +61,7 @@ public interface UserService {
 
     String isLoginSuccess(String token) throws Exception;
 
-    Map<String, Object> randomQuestionIdArray();
+    List<Map<String, Object>> requiredQuestionAndOther() throws Exception;
+
+    int changeExamState(int examState) throws  Exception;
 }

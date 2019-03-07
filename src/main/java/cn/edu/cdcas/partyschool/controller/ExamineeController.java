@@ -2,12 +2,17 @@ package cn.edu.cdcas.partyschool.controller;
 
 import cn.edu.cdcas.partyschool.model.UserSession;
 import cn.edu.cdcas.partyschool.service.UserService;
+import cn.edu.cdcas.partyschool.util.JSONResult;
+import com.alibaba.fastjson.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.servlet.http.HttpSession;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 @Controller
@@ -21,12 +26,24 @@ public class ExamineeController {
      *@Author Snail
      *@Date 2019/3/5
      */
-    @RequestMapping("allQuestionInfoForStu")
+    @RequestMapping("/allQuestionInfoForStu")
     @ResponseBody
-    public Map<String,Object> allQuestionInfoForStu(){
+    public List<Map<String,Object>> allQuestionInfoForStu(HttpSession httpSession){
+        List<Map<String,Object>> requiredQuestions=new ArrayList<>();
+        try {
+            //更新exam_state
+            UserSession sys_user = (UserSession) httpSession.getAttribute("partySys_user");
+            int examState=sys_user.getStudentExamState();
+            int nowExamState=userServiceImpl.changeExamState(examState);
+            sys_user.setStudentExamState(nowExamState);
 
+            requiredQuestions=userServiceImpl.requiredQuestionAndOther();
 
-        return null;
+            return requiredQuestions;
+        } catch (Exception e) {
+            e.printStackTrace();
+            return requiredQuestions;
+        }
     }
 
     @RequestMapping("/examAndStuInfo")

@@ -289,9 +289,10 @@
    	   $.ajax({
    	   	type:"get",
    	   	dataType:"json",
-   	   	url:"json/question.json",
-      success:function(msg){ 
-      	console.log(JSON.stringify(msg)["dan"]);
+   	   	url:"/examinee/allQuestionInfoForStu.do",
+      success:function(result){
+          var msg=result;
+      	console.log(msg);
     var count =msg.count;
     var pass=msg.pass;
     var examTime=msg.examTime;
