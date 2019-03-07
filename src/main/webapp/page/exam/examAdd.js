@@ -12,7 +12,55 @@ layui.use(['form','layer','layedit','laydate','upload'],function(){
         $('.label-fen').css("font-size","17px");
         $('.examAllScore').css({"color":"blue","font-size":"19px"});
         $('.examAllScore').text("100");
-       /* alert($('.examAllScore').text());*/
+
+    /*计算总分函数*/
+    function sum() {
+        var radioNum = parseInt($('.radioNum').val());
+        var radioScore = parseInt($('.radioScore').val());
+        var radio=0;
+
+        var checkNum = parseInt($('.checkNum').val());
+        var checkScore = parseInt($('.checkScore').val());
+        var check = 0;
+
+        var judgeNum = parseInt($('.judgeNum').val());
+        var judgeScore = parseInt($('.judgeScore').val());
+        var judge = 0;
+
+        var fillNum = parseInt($('.fillNum').val());
+        var fillScore = parseInt($('.fillScore').val());
+        var fill = 0;
+
+        if(radioNum!==''&&radioScore!==''){
+            radio = radioNum * radioScore;
+        }
+        if(checkNum!==''&&checkScore!==''){
+            check = checkNum * checkScore;
+        }
+        if(judgeNum!==''&&judgeScore!==''){
+            judge = judgeNum * judgeScore;
+        }
+        if(fillNum!==''&&fillScore!==''){
+            fill = fillNum * radioScore;
+        }
+        var allScore = radio + check + judge + fill;
+        $('.examAllScore').text(allScore);
+        return false;
+
+    }
+    $('.radioNum').keyup(sum());
+    $('.radioScore').keyup(sum());
+    $('.checkNum').keyup(sum());
+    $('.checkScore').keyup(sum());
+    $('.judgeNum').keyup(sum());
+    $('.judgeScore').keyup(sum());
+    $('.fillNum').keyup(sum());
+    $('.fillScore').keyup(sum());
+
+
+
+
+    /* alert($('.examAllScore').text());*/
         //日期时间范围
         laydate.render({
             elem: '#examTimeRangeId'
@@ -166,4 +214,7 @@ layui.use(['form','layer','layedit','laydate','upload'],function(){
     });
 
 })
+
+
+
 
