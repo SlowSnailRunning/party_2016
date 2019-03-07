@@ -9,6 +9,88 @@ layui.use(['form','layer','layedit','laydate','upload'],function(){
         $('.submit-btn-submit').css({"left":"-32px","margin-left":"50%"});
         $('.examTimeRange').css("width",$('.passScore').css('width'));
 
+
+    layui.use('laydate', function() {
+        var laydate = layui.laydate;
+
+        /*//日期时间选择器
+        laydate.render({
+            elem: '#examStartTimeId'
+            , type: 'datetime'
+            ,format: 'yyyy-MM-dd HH:mm:ss'
+        });
+        //日期时间选择器
+        laydate.render({
+            elem: '#examEndTimeId'
+            , type: 'datetime'
+            ,format: 'yyyy-MM-dd HH:mm:ss'
+        });*/
+
+        //日期时间范围
+        laydate.render({
+            elem: '#examTimeRangeId'
+            ,type: 'datetime'
+            ,range: true
+        });
+    });
+
+
+
+    layui.use('form', function () {
+        var form = layui.form;
+
+
+        //监听提交
+        form.on('submit(signAdd)', function (data) {
+            // console.log(data.field);
+            // return;
+            //signAdd为提交按钮的id
+            var str=new String();
+            var arr=new Array();
+            str=$('.examTimeRange').val();
+
+            //可以用字符或字符串分割
+            arr=str.split(' - ');
+           /* $('.examStartTime').val(arr[0]);
+            $('.examEndTime').val(arr[1]);*/
+
+            var laydate = layui.laydate;
+
+            //日期时间选择器
+            laydate.render({
+                elem: '#examStartTimeId'
+                , type: 'datetime'
+                ,format: 'yyyy-MM-dd HH:mm:ss'
+                ,value:arr[0]
+            });
+            //日期时间选择器
+            laydate.render({
+                elem: '#examEndTimeId'
+                , type: 'datetime'
+                ,format: 'yyyy-MM-dd HH:mm:ss'
+                ,value:arr[1]
+            });
+            alert($('.examEndTime').val());
+
+            $.post("/exam/add-update.do", data.field,
+                function (data) {
+                    if (data.status === 200) {
+                        layer.msg(data['msg']);
+                        var index = parent.layer.getFrameIndex(window.name); //获取窗口索引
+                        parent.layer.close(index); // 关闭layer
+                        //使父页面重新刷新
+                        parent.location.reload();
+                    } else {
+                        layer.msg("添加失败");
+                        var index = parent.layer.getFrameIndex(window.name); //获取窗口索引
+                        parent.layer.close(index); // 关闭layer
+                    }
+                }, "json");
+            return false;
+        });
+    });
+
+
     //用于同步编辑器内容到textarea
     layedit.sync(editIndex);
 
@@ -97,3 +179,4 @@ layui.use(['form','layer','layedit','laydate','upload'],function(){
     });
 
 })
+
