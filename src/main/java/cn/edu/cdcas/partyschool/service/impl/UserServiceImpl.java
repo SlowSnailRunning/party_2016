@@ -211,7 +211,8 @@ public class UserServiceImpl implements UserService {
     @Override
     public String isLoginSuccess(String token,String ip) throws Exception {
         //判断
-        String MD5 = DigestUtils.md5DigestAsHex((ip + token).getBytes());
+      /*  String MD5 = DigestUtils.md5DigestAsHex((ip + token).getBytes());*/
+        String MD5= DigestUtils.md5DigestAsHex((ip+token).getBytes());
         String redisMD5 = jedisClient.hget("party", token);
         if (MD5.equals(redisMD5)) {
             return token;

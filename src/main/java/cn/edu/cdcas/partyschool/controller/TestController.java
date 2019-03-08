@@ -5,6 +5,7 @@ import cn.edu.cdcas.partyschool.util.impl.JedisClientSingle;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.util.DigestUtils;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
@@ -100,12 +101,9 @@ public class TestController {
 
     @RequestMapping("/ip")
     @ResponseBody
-    public String ip(HttpServletResponse response, HttpServletRequest httpServletRequest) {
-        try {
-          return   jedisClient.hget("party", "md5");
-        } catch (Exception e) {
-            return "fasdf";
-        }
+    public String ip(HttpServletRequest request) {
+        String MD5 = DigestUtils.md5DigestAsHex("172.16.252.11201617025210".getBytes());
+        return MD5;
     }
 }
 

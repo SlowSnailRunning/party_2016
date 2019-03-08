@@ -47,7 +47,6 @@ public class LoginController {
 	 *@Author Snail
 	 *@Date 2019/3/5
 	 */
-
 	@RequestMapping(value = "/login",method = RequestMethod.GET)
 	@ResponseBody
 	public void login(String token, HttpServletRequest request, HttpSession httpSession, HttpServletResponse response){
