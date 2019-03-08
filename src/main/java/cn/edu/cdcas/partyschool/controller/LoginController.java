@@ -57,12 +57,14 @@ public class LoginController {
 				return new JSONResult(1,"你目前无权进入改系统",200);
 			}else{
 //				System.out.println("-----------------验证成功----------------");
-				UserSession userSession=new UserSession();
-//				userSession.setType(type);
-				httpSession.setAttribute("authority", type);
+
 				httpSession.setAttribute("studentNo",student_no);
+				httpSession.setAttribute("type", type);
+
+//				UserSession userSession=new UserSession();
+//				userSession.setType(type);
 //				userSession.setNumber(student_no);
-				httpSession.setAttribute("partySys_user",userSession);
+//				httpSession.setAttribute("partySys_user",userSession);
 
 
 				String scheme = request.getScheme();//http
@@ -84,7 +86,7 @@ public class LoginController {
 		try {
 //			UserSession userSession=(UserSession)httpSession.getAttribute("partySys_user");
 
-			String type= (String) httpSession.getAttribute("authority");
+			String type= (String) httpSession.getAttribute("type");
 			if("student".equals(type)){
 				if(httpSession.getAttribute("dan")==null){
 					//从数据库获取exam_state

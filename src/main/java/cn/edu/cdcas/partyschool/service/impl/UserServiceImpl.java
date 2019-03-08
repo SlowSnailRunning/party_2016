@@ -216,18 +216,23 @@ public class UserServiceImpl implements UserService {
 
     /**
      *@Describe: 根据考试随机抽取题目  1.获取到本次考试各个题目数量 2.随机得到4种题型对应的题目数量
+     * map
+     *      "pass":60,
+     * 	    "examTime":90,
+     * 	    "danTotal":3,
+     * 	    "duo:" 题目对象list
      *@Author Snail
      *@Date 2019/3/5
      * @param httpSession
      */
     @Override
-    public List<Map<String, Object>> requiredQuestionAndOther(HttpSession httpSession) throws Exception {
+    public Map<String, Object> requiredQuestionAndOther(HttpSession httpSession) throws Exception {
         //获取本次考试各种题型数量
         String examQueNum;
+        Exam exam = null;
         if(jedisClient.hexists("partySys2016","examQueNum")){
             examQueNum= jedisClient.hget("partySys2016", "examQueNum");
         }else {
-            Exam exam;
             if(jedisClient.hexists("partySys2016","nowExam")){
                 exam=JSON.parseObject(jedisClient.hget("partySys2016","nowExam"),Exam.class);
             }else {
@@ -259,10 +264,18 @@ public class UserServiceImpl implements UserService {
             }
         }
         //题目放入到map
+        
 
 
-        List<Map<String,Object>> requiredQuestionAndOther=new ArrayList<>();
-//        questions.put("open_or_close",exam.getOpenOrClose());
+        Map<String,Object> requiredQuestionAndOther=new HashMap<>();
+
+        requiredQuestionAndOther.put("msg","success");
+        requiredQuestionAndOther.put("status","200");
+        requiredQuestionAndOther.put("examName",exam.getExamName());
+        requiredQuestionAndOther.put("status","200");
+        requiredQuestionAndOther.put("status","200");
+        requiredQuestionAndOther.put("status","200");
+        
 //        map.put("is_makeup",exam.getIsMakeup());
 
         //设置该系统在redis中产生的partySys2016的ttl

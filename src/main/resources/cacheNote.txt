@@ -8,9 +8,9 @@ set_new_redisdb("party",array("md5"=>$md5),50);
 session:
  httpSession.setAttribute("dan"
  httpSession.setAttribute("duo"
- .
- .
-httpSession.setAttribute("authority", type);
+                         pan
+                         tian
+httpSession.setAttribute("type", type);
 httpSession.setAttribute("studentNo",student_no);
 
 

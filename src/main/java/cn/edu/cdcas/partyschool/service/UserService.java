@@ -61,7 +61,7 @@ public interface UserService {
 
     String isLoginSuccess(String token) throws Exception;
 
-    List<Map<String, Object>> requiredQuestionAndOther(HttpSession httpSession) throws Exception;
+    Map<String, Object> requiredQuestionAndOther(HttpSession httpSession) throws Exception;
 
     int changeExamState(String studentNo, int examState) throws Exception;
 }
