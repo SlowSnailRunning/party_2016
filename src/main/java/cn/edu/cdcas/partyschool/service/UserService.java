@@ -59,7 +59,7 @@ public interface UserService {
 
     Map<String,Object> studentExamInfo(String studentNo) throws Exception;
 
-    String isLoginSuccess(String token) throws Exception;
+    String isLoginSuccess(String token ,String ip) throws Exception;
 
     Map<String, Object> requiredQuestionAndOther(HttpSession httpSession) throws Exception;
 

@@ -1,6 +1,7 @@
 package cn.edu.cdcas.partyschool.controller;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import cn.edu.cdcas.partyschool.listener.UniqueSession;
@@ -11,6 +12,7 @@ import cn.edu.cdcas.partyschool.service.UserService;
 import cn.edu.cdcas.partyschool.util.JSONResult;
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
+import com.sun.deploy.net.HttpResponse;
 import org.apache.commons.collections4.map.HashedMap;
 import org.omg.CORBA.Request;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -24,6 +26,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import sun.security.timestamp.HttpTimestamper;
 
+import java.io.IOException;
 import java.util.Map;
 
 
@@ -44,39 +47,37 @@ public class LoginController {
 	 *@Author Snail
 	 *@Date 2019/3/5
 	 */
-	// TODO: 2019/3/5 正式认证后，需去掉RequestParam
-	@RequestMapping(value = "/login",method = RequestMethod.POST)
+
+	@RequestMapping(value = "/login",method = RequestMethod.GET)
 	@ResponseBody
-	public JSONResult login( String token, HttpServletRequest request,HttpSession httpSession){
+	public void login(String token, HttpServletRequest request, HttpSession httpSession, HttpServletResponse response){
+		int flag = 0;
 		try {
-			String student_no=userServiceImpl.isLoginSuccess(token);
+			String student_no=userServiceImpl.isLoginSuccess(token,request.getRemoteAddr());
 			String type=null;
 			if ("-1".equals(student_no)){
-				return new JSONResult(1,"服务器验证失败，再试一次吧",200);
+				flag = 1;
+				/*return new JSONResult(1,"服务器验证失败，再试一次吧",200);*/
 			}else if((type=userServiceImpl.findType(student_no))==null||examServiceImpl.isCurrentExam()==null){
-				return new JSONResult(1,"你目前无权进入改系统",200);
+				flag = 2;
+			/*	return new JSONResult(1,"你目前无权进入改系统",200);*/
 			}else{
+				flag = 0;
 //				System.out.println("-----------------验证成功----------------");
-
 				httpSession.setAttribute("studentNo",student_no);
 				httpSession.setAttribute("type", type);
-
-//				UserSession userSession=new UserSession();
-//				userSession.setType(type);
-//				userSession.setNumber(student_no);
-//				httpSession.setAttribute("partySys_user",userSession);
-
-
 				String scheme = request.getScheme();//http
 				String serverName = request.getServerName();//localhost
 				int serverPort = request.getServerPort();//8080
 				String contextPath = request.getContextPath();//项目名
 				String url = scheme+"://"+serverName+":"+serverPort+contextPath+"/loginSuccess.do";//http://127.0.0.1:8080/test
-				return new JSONResult(0,"打开该链接：：：："+url,200);
+			/*	return new JSONResult(0,"打开该链接：：：："+url,200);*/
 			}
+			String renderStr = "jsonCallBackTest" + "(" + flag + ")";
+			response.getWriter().write(renderStr);
 		} catch (Exception e) {
 			e.printStackTrace();
-			return new JSONResult(2,"服务器验证失败，再试一次吧",500);
+			/*return new JSONResult(2,"服务器验证失败，再试一次吧",500);*/
 		}
 	}
 

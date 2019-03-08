@@ -12,6 +12,7 @@ import com.alibaba.fastjson.JSONObject;
 import org.apache.commons.collections4.map.HashedMap;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.util.DigestUtils;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpSession;
@@ -208,10 +209,15 @@ public class UserServiceImpl implements UserService {
      *@Date 2019/3/4
      */
     @Override
-    public String isLoginSuccess(String token) throws Exception {
+    public String isLoginSuccess(String token,String ip) throws Exception {
         //判断
-
-        return token;
+        String MD5 = DigestUtils.md5DigestAsHex((ip + token).getBytes());
+        String redisMD5 = jedisClient.hget("party", token);
+        if (MD5.equals(redisMD5)) {
+            return token;
+        } else {
+            return "-1";
+        }
     }
 
     /**
