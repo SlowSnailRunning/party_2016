@@ -2,7 +2,8 @@ redis:
 jedisClient.hset("partySys2016","examQueNum",examQueNum):当前考试各种题型数量
 jedisClient.hset("partySys2016","nowExam",JSON.toJSONString(exam));当前考试对象
 
-
+验证redis：
+set_new_redisdb("party",array("md5"=>$md5),50);
 
 session:
  httpSession.setAttribute("dan"

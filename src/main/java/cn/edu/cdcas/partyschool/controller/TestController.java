@@ -1,4 +1,7 @@
 package cn.edu.cdcas.partyschool.controller;
+
+import cn.edu.cdcas.partyschool.util.JedisClient;
+import cn.edu.cdcas.partyschool.util.impl.JedisClientSingle;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -8,7 +11,10 @@ import org.springframework.web.servlet.ModelAndView;
 
 import javax.servlet.ServletContext;
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
+import javax.xml.ws.Response;
+import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -17,6 +23,8 @@ import java.util.Map;
 public class TestController {
     @Autowired
     private ServletContext servletContext;
+    @Autowired
+    private JedisClientSingle jedisClient;
 
     @RequestMapping("/SpringMVC")
     @ResponseBody
@@ -67,12 +75,37 @@ public class TestController {
     }
 
     @RequestMapping("/free")
-    public ModelAndView testFree(ModelAndView modelAndView){
+    public ModelAndView testFree(ModelAndView modelAndView) {
         modelAndView.setViewName("/template/free");
         System.out.println("ddddddddddddddddddddddd");
-        modelAndView.addObject("name","nameeeeee");
+        modelAndView.addObject("name", "nameeeeee");
 
         return modelAndView;
+    }
+
+    @RequestMapping("/test")
+    @ResponseBody
+    public void test(HttpServletResponse response, HttpServletRequest httpServletRequest) {
+        /*  String a=httpServletRequest.getRemoteAddr();*/
+        int b=0;
+        String renderStr = "jsonCallBackTest" + "(" + b + ")";
+        response.setContentType("text/plain;charset=UTF-8");
+        try {
+            response.getWriter().write(renderStr);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        /* return "jsonCallBackTest"+"("+renderStr+")";*/
+    }
+
+    @RequestMapping("/ip")
+    @ResponseBody
+    public String ip(HttpServletResponse response, HttpServletRequest httpServletRequest) {
+        try {
+          return   jedisClient.hget("party", "md5");
+        } catch (Exception e) {
+            return "fasdf";
+        }
     }
 }
 
