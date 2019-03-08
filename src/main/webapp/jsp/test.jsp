@@ -10,15 +10,15 @@
 <body>
 <%-- 	<h1>${msg }</h1> --%>
 
-	<form action="${pageContext.request.contextPath }/login.do" method="post">
+	<form action="${pageContext.request.contextPath }/login.do" method="get">
 		管理员角色：<br>
-		用户名：<input type="text" name="token"value="2013010035">
+		用户名：<input type="text" name="token"value="201617025210">
 		<input type="submit" value="登录">
 	</form>
 	<br/><br/><br/><br/>
-	<form action="${pageContext.request.contextPath }/login.do" method="post">
+	<form action="${pageContext.request.contextPath }/login.do" method="get">
 		考生角色：<br>
-		用户名：<input type="text" name="token"value="201617000000">
+		用户名：<input type="text" name="token"value="201617025222">
 		<input type="submit" value="登录">
 	</form>
 </body>

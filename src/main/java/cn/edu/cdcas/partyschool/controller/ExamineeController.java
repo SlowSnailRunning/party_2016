@@ -32,11 +32,11 @@ public class ExamineeController {
         Map<String,Object> requiredQuestions=new HashMap<>();
         try {
             //更新exam_state
-            UserSession sys_user = (UserSession) httpSession.getAttribute("partySys_user");
-            int examState=sys_user.getStudentExamState();
+            int examState= (int) httpSession.getAttribute("examState");
             int nowExamState=userServiceImpl.changeExamState((String) httpSession.getAttribute("studentNo"),examState);
-            sys_user.setStudentExamState(nowExamState);
+            httpSession.setAttribute("examState",nowExamState);
 
+            //封装需要的数据
             requiredQuestions=userServiceImpl.requiredQuestionAndOther(httpSession);
 
             return requiredQuestions;

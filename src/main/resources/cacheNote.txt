@@ -12,6 +12,7 @@ session:
                          tian
 httpSession.setAttribute("type", type);
 httpSession.setAttribute("studentNo",student_no);
+httpSession.setAttribute("examState",);
 
 
 
