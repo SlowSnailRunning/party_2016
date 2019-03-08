@@ -82,12 +82,14 @@ public class LoginController {
 	public String loginSuccess(HttpSession httpSession, RedirectAttributes redirectAttributes) {
 		//认证成功，流程详见流程图2
 		try {
-			UserSession userSession=(UserSession)httpSession.getAttribute("partySys_user");
-			String type=userSession.getType();
+//			UserSession userSession=(UserSession)httpSession.getAttribute("partySys_user");
+
+			String type= (String) httpSession.getAttribute("authority");
 			if("student".equals(type)){
-				if(userSession.getQuestionIdArray()==null){
+				if(httpSession.getAttribute("dan")==null){
 					//从数据库获取exam_state
-					userSession.setStudentExamState(((User)userServiceImpl.queryByStuNo(userSession.getNumber())).getExamState());
+					httpSession.setAttribute("examState",userServiceImpl.queryByStuNo((String) httpSession.getAttribute("studentNo")).getExamState());
+//					httpSession.setAttribute(((User)userServiceImpl.queryByStuNo(userSession.getNumber())).getExamState());
 					return "redirect:/exam/accept.html";
 				}else {
 					//非首次登录

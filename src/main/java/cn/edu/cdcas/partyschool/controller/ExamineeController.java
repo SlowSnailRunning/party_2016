@@ -22,7 +22,7 @@ public class ExamineeController {
     @Autowired
     private UserService userServiceImpl;
     /**
-     *@Describe: 考生点击开始考试/补考，获取随机到的题目id写入session
+     *@Describe: 考生点击开始考试/补考到考试页面，获取随机到的题目id写入session
      *@Author Snail
      *@Date 2019/3/5
      */

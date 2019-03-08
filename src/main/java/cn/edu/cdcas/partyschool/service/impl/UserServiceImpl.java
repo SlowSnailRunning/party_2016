@@ -239,7 +239,7 @@ public class UserServiceImpl implements UserService {
             jedisClient.hset("partySys2016","examQueNum",examQueNum);
         }
 
-        //随机获取各种类型题目id
+        //随机获取各种类型题目id，写入到session
         String[] split = examQueNum.split(",");
         for (int i = 0; i < 4; i++) {
             List<Integer> queIds = userMapper.findQueIds(i+1, Integer.parseInt(split[i]));
@@ -258,6 +258,7 @@ public class UserServiceImpl implements UserService {
                     break;
             }
         }
+        //题目放入到map
 
 
         List<Map<String,Object>> requiredQuestionAndOther=new ArrayList<>();
@@ -285,8 +286,8 @@ public class UserServiceImpl implements UserService {
 
         if(examState==0||examState==3){
             examState=examState+1;
+            userMapper.updateExamStateByStuNo(studentNo,examState);
         }
-        userMapper.updateExamStateByStuNo(studentNo,examState);
         return examState;
     }
 
