@@ -28,8 +28,8 @@ public class ExamineeController {
      */
     @RequestMapping("/allQuestionInfoForStu")
     @ResponseBody
-    public List<Map<String,Object>> allQuestionInfoForStu(HttpSession httpSession){
-        List<Map<String,Object>> requiredQuestions=new ArrayList<>();
+    public Map<String,Object> allQuestionInfoForStu(HttpSession httpSession){
+        Map<String,Object> requiredQuestions=new HashMap<>();
         try {
             //更新exam_state
             UserSession sys_user = (UserSession) httpSession.getAttribute("partySys_user");
