@@ -6,7 +6,7 @@ jedisClient.hset("partySys2016","nowExam",JSON.toJSONString(exam));当前考试�
 set_new_redisdb("party",array("md5"=>$md5),50);
 
 session:
- httpSession.setAttribute("dan"
+ httpSession.setAttribute("dan",[1,14]
  httpSession.setAttribute("duo"
                          pan
                          tian

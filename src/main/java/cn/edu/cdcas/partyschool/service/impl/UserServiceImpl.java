@@ -1,8 +1,10 @@
 package cn.edu.cdcas.partyschool.service.impl;
 import cn.edu.cdcas.partyschool.mapper.ExamMapper;
+import cn.edu.cdcas.partyschool.mapper.QuestionMapper;
 import cn.edu.cdcas.partyschool.mapper.UserMapper;
 import cn.edu.cdcas.partyschool.model.Exam;
 import cn.edu.cdcas.partyschool.model.Manger;
+import cn.edu.cdcas.partyschool.model.Question;
 import cn.edu.cdcas.partyschool.model.User;
 import cn.edu.cdcas.partyschool.service.UserService;
 import cn.edu.cdcas.partyschool.util.JSONResult;
@@ -29,6 +31,8 @@ public class UserServiceImpl implements UserService {
     private ExamMapper examMapper;
     @Autowired
     private JedisClientSingle jedisClient;
+    @Autowired
+    private QuestionMapper questionMapper;
 
 
     @Override
@@ -226,7 +230,6 @@ public class UserServiceImpl implements UserService {
      * map
      *      "pass":60,
      * 	    "examTime":90,
-     * 	    "danTotal":3,
      * 	    "duo:" 题目对象list
      *@Author Snail
      *@Date 2019/3/5
@@ -250,40 +253,48 @@ public class UserServiceImpl implements UserService {
             examQueNum =exam.getRadioNum()+","+exam.getCheckNum()+","+exam.getJudgeNum()+","+exam.getFillNum();
             jedisClient.hset("partySys2016","examQueNum",examQueNum);
         }
-
-        //随机获取各种类型题目id，写入到session
+        //随机获取各种类型题目id，写入到session,再通过题目id读取数据写入到redis
         String[] split = examQueNum.split(",");
+        Map<String,Object> requiredQuestionAndOther=new HashMap<>();
         for (int i = 0; i < 4; i++) {
             List<Integer> queIds = userMapper.findQueIds(i+1, Integer.parseInt(split[i]));
             switch (i){
                 case 0:
                     httpSession.setAttribute("dan",JSON.toJSONString(queIds));
+                    requiredQuestionAndOther.put("dan", selectQuestionList(queIds));
                     break;
                 case 1:
                     httpSession.setAttribute("duo",JSON.toJSONString(queIds));
+                    requiredQuestionAndOther.put("duo",selectQuestionList(queIds));
                     break;
                 case 2:
                     httpSession.setAttribute("pan",JSON.toJSONString(queIds));
+                    requiredQuestionAndOther.put("pan",selectQuestionList(queIds));
                     break;
                 case 3:
                     httpSession.setAttribute("tian",JSON.toJSONString(queIds));
+                    requiredQuestionAndOther.put("tian",selectQuestionList(queIds));
                     break;
             }
+            //通过题目id获取题目，加入redis
+
         }
         //题目放入到map
-        
-
-
-        Map<String,Object> requiredQuestionAndOther=new HashMap<>();
-
         requiredQuestionAndOther.put("msg","success");
         requiredQuestionAndOther.put("status","200");
         requiredQuestionAndOther.put("examName",exam.getExamName());
-        requiredQuestionAndOther.put("status","200");
-        requiredQuestionAndOther.put("status","200");
-        requiredQuestionAndOther.put("status","200");
-        
-//        map.put("is_makeup",exam.getIsMakeup());
+        requiredQuestionAndOther.put("number",httpSession.getAttribute("studentNo"));
+        User examinee = queryByStuNo((String) httpSession.getAttribute("studentNo"));
+        requiredQuestionAndOther.put("name",examinee.getName());
+        requiredQuestionAndOther.put("grade",examinee.getGrade());
+        requiredQuestionAndOther.put("major",examinee.getDepartment());
+//        requiredQuestionAndOther.put("count",examinee.getGrade());?????????
+        requiredQuestionAndOther.put("pass",exam.getPassScore());
+        requiredQuestionAndOther.put("examTime",exam.getExamTime());
+        requiredQuestionAndOther.put("danTotal",split[0]);
+        requiredQuestionAndOther.put("duoTotal",split[1]);
+        requiredQuestionAndOther.put("panTotal",split[2]);
+        requiredQuestionAndOther.put("tianTotal",split[3]);
 
         //设置该系统在redis中产生的partySys2016的ttl
         //设置过期时间为总考试时间+30*60   s
@@ -294,6 +305,25 @@ public class UserServiceImpl implements UserService {
             jedisClient.expire("partySys2016",second);
         }
         return requiredQuestionAndOther;
+    }
+    /**
+     *@Describe: 根据传入的题目id list，返回对应题目的list 对象，并放入缓存
+     *@Author Snail
+     *@Date 2019/3/6
+     */
+    private List<Question> selectQuestionList(List<Integer> queIds){
+        List<Question> questionList=new ArrayList<>();
+        Question question=null;
+        for (int j = 0; j < queIds.size(); j++) {
+            if(jedisClient.hexists("partySys2016", String.valueOf(queIds.get(j)))){
+                question=JSON.parseObject(jedisClient.hget("partySys2016", String.valueOf(queIds.get(j))), Question.class);
+            }else {
+                question= questionMapper.queryById(queIds.get(j));
+                jedisClient.hset("partySys2016",String.valueOf(queIds.get(j)),JSON.toJSONString(question));
+            }
+            questionList.add(question);
+        }
+        return questionList;
     }
 
     /**
