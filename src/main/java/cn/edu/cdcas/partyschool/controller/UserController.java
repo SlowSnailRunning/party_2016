@@ -5,10 +5,7 @@ import cn.edu.cdcas.partyschool.service.UserService;
 import cn.edu.cdcas.partyschool.util.ExcelUtil;
 import cn.edu.cdcas.partyschool.util.JSONResult;
 import cn.edu.cdcas.partyschool.util.JSONTableResult;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.annotation.Resource;
@@ -31,6 +28,7 @@ import java.util.Map;
  */
 
 @RestController
+
 @RequestMapping("/user")
 public class UserController {
 
@@ -111,8 +109,10 @@ public class UserController {
      * @param limit
      * @return
      */
+    @CrossOrigin
     @RequestMapping(value = "/all", method = RequestMethod.GET)
-    public JSONTableResult showAllStuInfo(@RequestParam(value = "page", required = false) int page, @RequestParam(value = "limit", required = false) int limit
+
+    public JSONTableResult showAllStuInfo(HttpServletResponse response,@RequestParam(value = "page", required = false) int page, @RequestParam(value = "limit", required = false) int limit
             , @RequestParam(value = "field", required = false, defaultValue = "") String field, @RequestParam(value = "value", required = false) String value) {
 //        Map<String, Object> map = new HashMap<>();
         List<User> data;
@@ -124,7 +124,7 @@ public class UserController {
             count = userService.queryStuNumsByField(field, value);
             data = this.userService.queryAllByPagingAndKey((page - 1) * limit, limit, field, value);
         }
-
+           //response.addHeader("Access-Control-Allow-Origin","*");
         return new JSONTableResult(0, "success", count, 200, data);
 //        map.put("code", 0);
 //        map.put("msg", "success");
