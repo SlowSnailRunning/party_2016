@@ -55,20 +55,18 @@ public class LoginController {
 			String student_no=token;//userServiceImpl.isLoginSuccess(token,request.getRemoteAddr());
 			String type=null;
 			if ("-1".equals(student_no)){
-				flag = 1;
-			}else if((type=userServiceImpl.findType(student_no))==null||examServiceImpl.isCurrentExam()==null){
-				flag = 2;
+				flag = 1;//系统跳转失败
+			}else if((type=userServiceImpl.findType(student_no))==null){
+				flag = 2;//无权进入改系统
 			}else{
-				flag = 0;
 //				System.out.println("-----------------验证成功----------------");
-				httpSession.setAttribute("studentNo",student_no);
-				httpSession.setAttribute("type", type);
-//				String scheme = request.getScheme();//http
-//				String serverName = request.getServerName();//localhost
-//				int serverPort = request.getServerPort();//8080
-//				String contextPath = request.getContextPath();//项目名
-				//String url = scheme+"://"+serverName+":"+serverPort+contextPath+"/loginSuccess.do";//http://127.0.0.1:8080/test
-			/*	return new JSONResult(0,"打开该链接：：：："+url,200);*/
+				if(examServiceImpl.isCurrentExam()==null){
+					flag=3;//未有该生考试
+				}else {
+					flag = 0;
+					httpSession.setAttribute("studentNo",student_no);
+					httpSession.setAttribute("type", type);
+				}
 			}
 			String renderStr = "jsonCallBackTest" + "(" + flag + ")";
 			response.getWriter().write(renderStr);

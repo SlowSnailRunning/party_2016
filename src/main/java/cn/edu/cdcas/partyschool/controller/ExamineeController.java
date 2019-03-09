@@ -46,8 +46,7 @@ public class ExamineeController {
 
     @RequestMapping("/examAndStuInfo")
     @ResponseBody
-    public String studentExamInfo(HttpSession httpSession){
-
+    public  Map<String, Object> studentExamInfo(HttpSession httpSession){
 //         ((UserSession) httpSession.getAttribute("partySys_user")).getNumber();
         String  studentNo= (String) httpSession.getAttribute("studentNo");
         Map<String,Object> studentExamInfo=null;
@@ -56,7 +55,7 @@ public class ExamineeController {
         } catch (Exception e) {
             e.printStackTrace();
         }
-        return JSON.toJSONString(studentExamInfo);
+        return studentExamInfo;
     }
     /////////////////////////////////////del????
     @RequestMapping("/test")
@@ -65,4 +64,5 @@ public class ExamineeController {
     {
         return "asdfasf";
     }
+    //@RequestMapping("/")
 }

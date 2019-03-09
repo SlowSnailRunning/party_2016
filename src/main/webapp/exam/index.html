@@ -1,22 +1,24 @@
-<!DOCTYPE>
+
+<!DOCTYPE html>
 <html>
 <head>
     <meta name="renderer" content="webkit|ie-comp|ie-stand">
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=Edge,chrome=1">
     <title>成都文理学院思想政治理论水平在线测试</title>
-    <link rel="shortcut icon" href="/images/favicon.ico">
+    <link rel="shortcut icon" href="images/favicon.ico">
     <link href="css/bootstrap.min.css" rel="stylesheet"
           type="text/css"/>
     <link href="css/theme.css" rel="stylesheet"
           type="text/css"/>
-    <script src="https://unpkg.com/vue@2.6.8/dist/vue.js"></script>
-    <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+    <script src="js/jquery-1.11.3.min.js"></script>
+    <script src="js/bootstrap.min.js" rel="stylesheet"
+            media="screen"></script>
 </head>
 <body>
-<div id="app">
 <div align="center" style="background-color: white;">
     <img src="images/logo.png"/>
+
 </div>
 <div style="font-size:31px;color:red;font-family:宋体;text-align:center;margin-top:10px;margin-bottom:-8px;">
     <b>${user_in_session.examName}</b></div>
@@ -27,55 +29,55 @@
                 <div class="examform">
                     <div class="container-fluid footcontent">
                         <fieldset>
-                            <legend><font color="red" size="5">考生个人信息</font>&nbsp&nbsp<a href=""
+                            <legend><font color="red" size="5">考生个人信息</font>&nbsp&nbsp<a href="<%=contextPath%>/logout"
                                                                                          style="cursor:pointer; position:static; margin-right: 10px;font-size: 18px;">退出登录</a>
                             </legend>
                             <div class="row-fluid">
                                 <div class="span6">
-                                    <b>学号：</b><span id="studentNo">{{studentInfo.studentNo}}</span>
+                                    <b>学号：</b>${user_in_session.studentNo}
                                 </div>
                                 <div class="span6">
-                                    <b>性别：</b> <span id="sex">{{studentInfo.sex}}</span>
+                                    <b>性别：</b> ${user_in_session.sex}
                                 </div>
                             </div>
                             <div class="row-fluid">
                                 <div class="span6">
-                                    <b>姓名：</b> <span id="name">{{studentInfo.name}}</span>
+                                    <b>姓名：</b> ${user_in_session.name}
                                 </div>
                                 <div class="span6">
-                                    <b>班级：</b> <span id="clazz">{{studentInfo.clazz}}</span>
+                                    <b>班级：</b>${user_in_session.clazz}
                                 </div>
                             </div>
                             <div class="row-fluid">
                                 <div class="span6">
-                                    <b>年级：</b><span id="grade">{{studentInfo.grade}}</span>
+                                    <b>年级：</b>${user_in_session.grade}
                                 </div>
                                 <div class="span6">
-                                    <b>专业：</b><span id="major">{{studentInfo.major}}</span>
+                                    <b>专业：</b>${user_in_session.major}
                                 </div>
                             </div>
-                            <!--    <div class="row-fluid">
-                                    <div class="span6">
+                            <div class="row-fluid">
+                                <div class="span6">
 
-                                        <b>登陆时间：</b>&lt;!&ndash;<fmt:formatDate value="${user_in_session.lastLoginTime}"
-                                                                    pattern="yyyy-MM-dd HH:mm:ss"/>&ndash;&gt;
-                                    </div>
-                                    <div class="span6">
-                                        <b>登陆IP：</b> ${user_in_session.lastLoginIp}
-                                    </div>
-                                </div>-->
-                            <div class="row-fluid">
-                                <div class="span6">
-                                    <b>是否毕业：</b><span id="graduated">{{studentInfo.graduated}}</span>
+                                    <b>登陆时间：</b><fmt:formatDate value="${user_in_session.lastLoginTime}"
+                                                                pattern="yyyy-MM-dd HH:mm:ss"/>
                                 </div>
                                 <div class="span6">
-                                    <b>优秀学员：</b><span id="excellent">{{studentInfo.excellent}}</span>
+                                    <b>登陆IP：</b> ${user_in_session.lastLoginIp}
                                 </div>
                             </div>
                             <div class="row-fluid">
-                                <!-- <div class="span12">
-                                     <b>备注：</b>${user_in_session.excellent}
-                                 </div>-->
+                                <div class="span6">
+                                    <b>是否毕业：</b>${user_in_session.graduated}
+                                </div>
+                                <div class="span6">
+                                    <b>优秀学员：</b>${user_in_session.excellent}
+                                </div>
+                            </div>
+                            <div class="row-fluid">
+                                <div class="span12">
+                                    <b>备注：</b>${user_in_session.excellent}
+                                </div>
                             </div>
                         </fieldset>
 
@@ -84,12 +86,36 @@
                             <legend><font color="red" size="5">考生个人成绩</font></legend>
                             <div class="row-fluid">
                                 <div class="span12">
-                                    <b>初考考试：{{studentInfo.examScore}}</b>
+                                    <b>初考考试：</b>
+                                    <c:if test="${user_in_session.examState==0}">
+                                        <font color="red">初试考试暂未进行，暂时还没有初试成绩</font>
+                                    </c:if>
+                                    <c:if test="${user_in_session.examState==1}">
+                                        初试考试正在进行
+                                    </c:if>
+                                    <c:if test="${user_in_session.examState==2}">
+                                        初试考试合格,成绩：${user_in_session.examScore }分
+                                    </c:if>
+                                    <c:if test="${user_in_session.examState==3}">
+                                        <font color="red">初试考试未通过，成绩：${user_in_session.examScore }分</font>
+                                    </c:if>
                                 </div>
                             </div>
                             <div class="row-fluid">
                                 <div class="span12">
-
+                                    <b>补考考试：</b>
+                                    <c:if test="${user_in_session.makeUpState==0}">
+                                        <font color="red">补考考试暂未进行，暂时还没有补考成绩</font>
+                                    </c:if>
+                                    <c:if test="${user_in_session.makeUpState==1}">
+                                        补考考试正在进行
+                                    </c:if>
+                                    <c:if test="${user_in_session.makeUpState==2}">
+                                        补考考试合格，成绩：${user_in_session.makeUpScore }分
+                                    </c:if>
+                                    <c:if test="${user_in_session.makeUpState==3}">
+                                        <font color="red">补考考试未通过，成绩：${user_in_session.makeUpScore }分</font>
+                                    </c:if>
                                 </div>
                             </div>
                         </fieldset>
@@ -121,13 +147,13 @@
                                         <Button id="examButtion" disabled="disabled" type="submit" class="btn">参加考试
                                         </Button>
                                     </div>
-
+                                    <c:if test="${user_in_session.againe == 0}">
                                         <div class="span6">
                                             <Button id="makeUpButtion" disabled="disabled" type="submit" class="btn">
                                                 参加补考
                                             </Button>
                                         </div>
-
+                                    </c:if>
                                 </div>
                             </form>
                         </fieldset>
@@ -138,52 +164,46 @@
     </div>
 </div>
 
-<input id="examState" type="hidden" :value="studentInfo.makeUpState"/>
+<input id="examState" type="hidden" value="${user_in_session.examState }"/>
 <input id="makeUpState" type="hidden" value="${user_in_session.makeUpState }"/>
-</div>
 <script type="text/javascript">
-    Vue.prototype.$axios=axios;
-    const vm = new Vue({
-        el:"#app",
-        data:{
-            studentInfo:[]
-        },
-        created() {
-            this.getStudentInfo()
-        },
-        methods: {
-            getStudentInfo(){
-                axios.get("/examinee/examAndStuInfo.do")
-                    .then(res=>{
-                        // console.log(res);
-                        // console.log(res['user']);
-                        // console.log(res['user']);
-                        this.studentInfo=res.data.user;
-                        console.log(this.studentInfo);
-                    })
-                    .catch(error=>{
-                        console.log(error);
-                    })
+
+    $(function () {
+        $("#CheckBox").change(function () {
+            if (this.checked) {
+                enableButtion();
+            } else {
+                disableButtion();
             }
-        },
+        });
+
+// 			$("#examButtion").click(function(){
+// 				console.debug($("#CheckBox").checked);
+// 				if($("#CheckBox").is(":checked")){
+        <%-- 					location.href = "<%=contextPath%>/exam?agree=1"; --%>
+// 				}
+// 			});
+// 			$("#makeUpButtion").click(function(){
+// 				if($("#CheckBox").checked){
+        <%-- 					location.href = "<%=contextPath%>/exam?agree=1"; --%>
+// 				}
+// 			});
     });
- /*   $.ajaxSetup( {
 
-//设置ajax请求结束后的执行动作
-        complete :
-            function(XMLHttpRequest, textStatus) {
-// 通过XMLHttpRequest取得响应头，sessionstatus
-                var sessionstatus = XMLHttpRequest.getResponseHeader("sessionstatus");
-                if (sessionstatus == "TIMEOUT") {
-                    var win = window;
-                    while (win != win.top){
-                        win = win.top;
-                    }
-                    win.location.href= XMLHttpRequest.getResponseHeader("CONTEXTPATH");
-                }
-            }
-    });*/
+    var enableButtion = function () {
+        var examState = $("#examState").val();
+        var makeUpState = $("#makeUpState").val();
+        if (examState == 0) {
+            $("#examButtion").removeAttr('disabled');
+        } else if (examState == 3 && makeUpState == 0) {
+            $("#makeUpButtion").removeAttr('disabled');
+        }
+    };
+
+    var disableButtion = function () {
+        $("#examButtion").attr('disabled', "true");
+        $("#makeUpState").attr('disabled', "true");
+    }
 </script>
-
 </body>
 </html>
