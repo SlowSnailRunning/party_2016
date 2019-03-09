@@ -8,6 +8,9 @@ layui.use(['bodyTab', 'form', 'element', 'layer', 'jquery'], function () {
     var form = layui.form,
         element = layui.element;
     $ = layui.$;
+    $("#edit_pasw").click(function () {
+        layer.msg("请到统一身份认证系统修改密码！！！",{time:2000});
+    });
     $("#signOut").click(function () {
         $.post("user/logout.do", {}, function (data) {
             window.location.href = data.replace(/"/g, "");
@@ -45,7 +48,6 @@ layui.use(['bodyTab', 'form', 'element', 'layer', 'jquery'], function () {
             }
         })
     }
-
     //页面加载时判断左侧菜单是否显示
     //通过顶部菜单获取左侧菜单
     $(".topLevelMenus li,.mobileTopLevelMenus dd").click(function () {
@@ -103,7 +105,6 @@ layui.use(['bodyTab', 'form', 'element', 'layer', 'jquery'], function () {
             layer.msg("缓存清除成功！");
         }, 1000);
     })
-
     //刷新后还原打开的窗口
     if (cacheStr == "true") {
         if (window.sessionStorage.getItem("menu") != null) {
@@ -188,3 +189,12 @@ Array.prototype.remove = function (dx) {
     }
     this.length -= 1
 }
+$(function () {
+    $.post("/user/MangerAuthority.do", {}, function (data) {
+        var data = JSON.parse(data);
+        if (data.code == 1) {//无权限
+            dataStr.remove(3);//删除
+        }
+        tab.render(); //重新渲染左侧菜单
+    });
+});

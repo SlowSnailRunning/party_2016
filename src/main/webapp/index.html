@@ -36,15 +36,6 @@
 			-webkit-font-smoothing: antialiased;
 			-moz-osx-font-smoothing: grayscale;
 		}
-
-
-
-
-
-
-
-
-
 	</style>
 </head>
 <body class="main_body">
@@ -53,27 +44,17 @@
 	
 		<div class="layui-header header">
 			<div class="layui-main mag0" style="text-align:center;">
-				<a href="#" class="logo">layui</a>
+				<a href="#" class="logo">党务</a>
 				<span style="color: #fff;font-size: 18px;">成都文理学院党务考试后台管理系统</span>
 				<!-- 显示/隐藏菜单 -->
 				<a href="javascript:;" class="seraph hideMenu icon-caidan"></a>
 			    <!-- 顶部右侧菜单 -->
 			    <ul class="layui-nav top_menu">
 					<li class="layui-nav-item" pc>
-						<a href="javascript:;" class="clearCache"><i class="layui-icon" data-icon="&#xe640;">&#xe640;</i><cite>清除缓存</cite><span class="layui-badge-dot"></span></a>
+						<a href="javascript:;" id="edit_pasw" ><i class="layui-icon" data-icon="&#xe640;">&#xe640;</i><cite>修改密码</cite></a>
 					</li>
-					<!--<li class="layui-nav-item lockcms" pc>
-						<a href="javascript:;"><i class="seraph icon-lock"></i><cite>锁屏</cite></a>
-					</li>-->
 					<li class="layui-nav-item" id="userInfo">
-						<a href="javascript:;"><img src="images/header.jpg" class="layui-nav-img userAvatar" width="35" height="35"><cite class="adminName">管理员</cite></a>
-						<dl class="layui-nav-child">
-							<dd><a href="javascript:;" data-url="page/user/userInfo.html"><i class="seraph icon-ziliao" data-icon="icon-ziliao"></i><cite>个人资料</cite></a></dd>
-							<dd><a href="javascript:;" data-url="page/user/changePwd.html"><i class="seraph icon-xiugai" data-icon="icon-xiugai"></i><cite>修改密码</cite></a></dd>
-							<dd><a href="javascript:;" class="showNotice"><i class="layui-icon">&#xe645;</i><cite>系统公告</cite><span class="layui-badge-dot"></span></a></dd>
-
-							<dd><a href="javascript:;" class="signOut" id="signOut"><i class="seraph icon-tuichu"></i><cite>退出</cite></a></dd>
-						</dl>
+						<a href="javascript:;" class="signOut" id="signOut"><i class="seraph icon-tuichu"></i><cite>退出</cite></a>
 					</li>
 				</ul>
 			</div>
@@ -81,16 +62,11 @@
 		<!-- 左侧导航 -->
 		<div class="layui-side layui-bg-black">
 			<div class="user-photo">
-				<a class="img" title="我的头像" ><img src="images/header.jpg" class="userAvatar"></a>
-				<p>你好！<span class="userName">管理员</span>, 欢迎登录</p>
+				<a class="img" title="我的头像" ><img src="images/favicon.ico" class="userAvatar"></a>
+				<p>你好！<span class="userName" id="userName"></span>, 欢迎登录</p>
 			</div>
 			<!-- 搜索 -->
 			<div class="layui-form component">
-				<select name="search" id="search" lay-search lay-filter="searchPage">
-					<option value="">搜索页面或功能</option>
-					<option value="1">layer</option>
-					<option value="2">form</option>
-				</select>
 				<i class="layui-icon">&#xe615;</i>
 			</div>
 			<div class="navBar layui-side-scroll" id="navBar">
@@ -105,7 +81,7 @@
 		<div class="layui-body layui-form">
 			<div class="layui-tab mag0" lay-filter="bodyTab" id="top_tabs_box">
 				<ul class="layui-tab-title top_tab" id="top_tabs">
-					<li class="layui-this" lay-id=""><i class="layui-icon">&#xe68e;</i> <cite>后台首页</cite></li>
+					<li class="layui-this" lay-id=""><i class="layui-icon">&#xe68e;</i> <cite>后111台首页</cite></li>
 				</ul>
 				<ul class="layui-nav closeBox">
 				  <li class="layui-nav-item">
