@@ -13,6 +13,10 @@ session:
 httpSession.setAttribute("type", type);
 httpSession.setAttribute("studentNo",student_no);
 httpSession.setAttribute("examState",);
+《跳转配置》
+//php服务器的配置去cn.edu.cdcas.partyschool.interceptor.ValidateSession修改
+private static final String[] IGNORE_URI = {"/login.do"};
+private static final String php_Address="http://172.20.253.19/core/default.php?from=iframe";
 
 
 

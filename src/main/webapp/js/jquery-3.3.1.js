@@ -2606,9 +2606,11 @@ $.ajaxSetup({
             var url = XMLHttpRequest.getResponseHeader("CONTEXTPATH");
             var flag = XMLHttpRequest.getResponseHeader("FLAG");
             if (flag != "" && flag == "-1") {
-                console.log(url);
+              /*  console.log(url);*/
                  window.location.href = url;
             }
-            console.log(flag);
+           /* console.log(flag);
+
+            console.log("1231");*/
         }
 });

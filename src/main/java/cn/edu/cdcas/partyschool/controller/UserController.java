@@ -28,7 +28,6 @@ import java.util.Map;
  */
 
 @RestController
-
 @RequestMapping("/user")
 public class UserController {
 
@@ -112,7 +111,7 @@ public class UserController {
     @CrossOrigin
     @RequestMapping(value = "/all", method = RequestMethod.GET)
 
-    public JSONTableResult showAllStuInfo(HttpServletResponse response,@RequestParam(value = "page", required = false) int page, @RequestParam(value = "limit", required = false) int limit
+    public JSONTableResult showAllStuInfo(HttpServletResponse response, @RequestParam(value = "page", required = false) int page, @RequestParam(value = "limit", required = false) int limit
             , @RequestParam(value = "field", required = false, defaultValue = "") String field, @RequestParam(value = "value", required = false) String value) {
 //        Map<String, Object> map = new HashMap<>();
         List<User> data;
@@ -124,7 +123,7 @@ public class UserController {
             count = userService.queryStuNumsByField(field, value);
             data = this.userService.queryAllByPagingAndKey((page - 1) * limit, limit, field, value);
         }
-           //response.addHeader("Access-Control-Allow-Origin","*");
+        //response.addHeader("Access-Control-Allow-Origin","*");
         return new JSONTableResult(0, "success", count, 200, data);
 //        map.put("code", 0);
 //        map.put("msg", "success");
@@ -207,5 +206,9 @@ public class UserController {
         return userService.dimQueryMangerByName(name);
     }
 
-
+    @RequestMapping("/logout")
+    public String logout(HttpSession httpSession) {
+        httpSession.invalidate();
+        return (String) httpSession.getServletContext().getAttribute("php_login");
+    }
 }
