@@ -64,4 +64,5 @@ public class ExamineeController {
     {
         return "asdfasf";
     }
+    //@RequestMapping("/")
 }
