@@ -240,6 +240,7 @@ public class UserServiceImpl implements UserService {
         Exam exam = null;
         if(jedisClient.hexists("partySys2016","examQueNum")){
             examQueNum= jedisClient.hget("partySys2016", "examQueNum");
+            exam=JSON.parseObject(jedisClient.hget("partySys2016","nowExam"),Exam.class);
         }else {
             if(jedisClient.hexists("partySys2016","nowExam")){
                 exam=JSON.parseObject(jedisClient.hget("partySys2016","nowExam"),Exam.class);
