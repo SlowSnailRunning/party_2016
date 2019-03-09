@@ -1,7 +1,9 @@
 package cn.edu.cdcas.partyschool.listener;
 
+/*
 import cn.edu.cdcas.partyschool.model.UserSession;
 import cn.edu.cdcas.partyschool.util.impl.JedisClientSingle;
+*/
 import com.alibaba.fastjson.JSON;
 import org.junit.Test;
 import org.springframework.context.support.ClassPathXmlApplicationContext;

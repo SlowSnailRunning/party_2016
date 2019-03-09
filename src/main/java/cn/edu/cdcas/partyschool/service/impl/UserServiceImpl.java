@@ -109,7 +109,6 @@ public class UserServiceImpl implements UserService {
     public boolean isEmpty() {
         return userMapper.queryStuNums() == 0;
     }
-
     @Override
     /*需在登陆时session中设置httpSession.setAttribute("authority")*/
     public JSONResult MangerAuthorityControl(HttpSession httpSession) {

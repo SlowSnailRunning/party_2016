@@ -153,9 +153,8 @@
         },
         methods: {
             getStudentInfo(){
-                axios.get("/examinee/examAndStuInfo.do")
+                axios.get("http://localhost:3000/examinee/examAndStuInfo.do")
                     .then(res=>{
-                        console.log(res);
                         this.studentInfo=res.data.user
                         console.log(this.studentInfo)
                     })
@@ -165,8 +164,7 @@
             }
         },
     });
- /*   $.ajaxSetup( {
-
+    $.ajaxSetup( {
 //设置ajax请求结束后的执行动作
         complete :
             function(XMLHttpRequest, textStatus) {
@@ -180,7 +178,7 @@
                     win.location.href= XMLHttpRequest.getResponseHeader("CONTEXTPATH");
                 }
             }
-    });*/
+    });
 </script>
 
 </body>

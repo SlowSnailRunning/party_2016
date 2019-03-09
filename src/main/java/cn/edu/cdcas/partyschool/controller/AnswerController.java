@@ -17,7 +17,6 @@ import java.util.Map;
 @RestController
 @RequestMapping("/answer")
 public class AnswerController {
-
     @Resource
     private AnswerService answerService;
 

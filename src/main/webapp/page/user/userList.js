@@ -11,7 +11,7 @@ layui.use(['form', 'layer', 'table', 'laytpl'], function () {
         cellMinWidth: 95,
         page: true,
         height: "full-120",
-        limits: [ 15, 20, 30, 50],
+        limits: [15, 20, 30, 50],
         limit: 15,
         id: "userListTable",
         cols: [[
@@ -19,12 +19,14 @@ layui.use(['form', 'layer', 'table', 'laytpl'], function () {
             {field: 'id', align: "center", hide: true},
             {field: 'studentNo', title: '账号', align: "center"},
             {field: 'name', title: '姓名', align: "center"},
-            {field: 'type', title: '类型', align: "center", templet:function (d) {
-                if(d.type=="ROOT")
-                    return "超级管理员";
-                else
-                    return "管理员";
-                }},
+            {
+                field: 'type', title: '类型', align: "center", templet: function (d) {
+                    if (d.type == "ROOT")
+                        return "超级管理员";
+                    else
+                        return "管理员";
+                }
+            },
             {title: '操作', templet: '#userListBar', align: "center"}
         ]]
     });
@@ -35,8 +37,8 @@ layui.use(['form', 'layer', 'table', 'laytpl'], function () {
             table.reload('userListTable', {
                 url: '/user/dimQueryMangerByName.do',
                 method: 'get',
-                page: {  curr: 1 }, //重新从第 1 页开始
-                where: { name: name  }//传入日期参数
+                page: {curr: 1}, //重新从第 1 页开始
+                where: {name: name}//传入日期参数
             });
         }
     };
@@ -49,6 +51,7 @@ layui.use(['form', 'layer', 'table', 'laytpl'], function () {
         }
         active[type] ? active[type].call(this) : '';
     });
+
     //添加用户
     function addUser(edit) {
         var index = layui.layer.open({
@@ -75,18 +78,25 @@ layui.use(['form', 'layer', 'table', 'laytpl'], function () {
         var layEvent = obj.event,
             data = obj.data;
         if (layEvent === 'del') { //删除
-            layer.confirm('确定删除此用户？', {icon: 3, title: '提示信息'}, function (index) {
-                $.post("/user/delete-individual.do", {
-                    stuId: data.id  //将需要删除的newsId作为参数传入
-                }, function (data) {
-                    if (data.code != 0) {
-                        layer.close(index);
-                        tableIns.reload();
-                    } else {
-                        layer.msg("删除失败！！", {time: 400});
-                    }
-                })
-            });
+            if (data.type == "ROOT") {
+                layer.msg("超级管理员不可删除！！！", {time: 1500});
+            } else {
+
+                layer.confirm('确定删除此用户？', {icon: 3, title: '提示信息'}, function (index) {
+                    $.post("/user/delete-individual.do", {
+                        stuId: data.id  //将需要删除的newsId作为参数传入
+                    }, function (data) {
+                        if (data.code != 0) {
+
+                            layer.close(index);
+                            tableIns.reload();
+                        } else {
+                            layer.msg("删除失败！！", {time: 400});
+                        }
+                    })
+                });
+            }
+
         }
     });
 
