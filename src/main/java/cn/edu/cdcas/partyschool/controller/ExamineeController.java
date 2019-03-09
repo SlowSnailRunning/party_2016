@@ -45,7 +45,6 @@ public class ExamineeController {
     @RequestMapping("/examAndStuInfo")
     @ResponseBody
     public  Map<String, Object> studentExamInfo(HttpSession httpSession){
-
 //         ((UserSession) httpSession.getAttribute("partySys_user")).getNumber();
         String  studentNo= (String) httpSession.getAttribute("studentNo");
         Map<String,Object> studentExamInfo=null;
