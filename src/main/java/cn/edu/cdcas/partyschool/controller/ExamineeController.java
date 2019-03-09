@@ -1,18 +1,14 @@
 package cn.edu.cdcas.partyschool.controller;
 
-import cn.edu.cdcas.partyschool.model.UserSession;
 import cn.edu.cdcas.partyschool.service.UserService;
-import cn.edu.cdcas.partyschool.util.JSONResult;
-import com.alibaba.fastjson.JSONObject;
+import com.alibaba.fastjson.JSON;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.servlet.http.HttpSession;
-import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 @Controller
@@ -48,17 +44,19 @@ public class ExamineeController {
 
     @RequestMapping("/examAndStuInfo")
     @ResponseBody
-    public Map<String, Object> studentExamInfo(HttpSession httpSession){
+    public String studentExamInfo(HttpSession httpSession){
 
-        String  studentNo= ((UserSession) httpSession.getAttribute("partySys_user")).getNumber();
+//         ((UserSession) httpSession.getAttribute("partySys_user")).getNumber();
+        String  studentNo= (String) httpSession.getAttribute("studentNo");
         Map<String,Object> studentExamInfo=null;
         try {
             studentExamInfo = userServiceImpl.studentExamInfo(studentNo);
         } catch (Exception e) {
             e.printStackTrace();
         }
-        return studentExamInfo;
+        return JSON.toJSONString(studentExamInfo);
     }
+    /////////////////////////////////////del????
     @RequestMapping("/test")
     @ResponseBody
     public String test()
