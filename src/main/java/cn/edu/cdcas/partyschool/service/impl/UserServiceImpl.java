@@ -284,6 +284,7 @@ public class UserServiceImpl implements UserService {
         //题目放入到map
         requiredQuestionAndOther.put("msg","success");
         requiredQuestionAndOther.put("status","200");
+        requiredQuestionAndOther.put("examStartTime",JSON.parseObject(jedisClient.hget("partySys2016","nowExam")).getString("examStartTime"));
         requiredQuestionAndOther.put("examName",exam.getExamName());
         requiredQuestionAndOther.put("number",httpSession.getAttribute("studentNo"));
         User examinee = queryByStuNo((String) httpSession.getAttribute("studentNo"));

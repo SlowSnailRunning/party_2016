@@ -153,7 +153,7 @@ function addTab(_this) {
 }
 
 //捐赠弹窗
-function donation() {
+/*function donation() {
     layer.tab({
         area: ['260px', '367px'],
         tab: [{
@@ -164,7 +164,7 @@ function donation() {
             content: "<div style='padding:30px;overflow:hidden;background:#d2d0d0;'><img src='images/alipay.jpg'></div>"
         }]
     })
-}
+}*/
 
 //图片管理弹窗
 function showImg() {

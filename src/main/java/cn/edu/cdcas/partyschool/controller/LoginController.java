@@ -103,7 +103,7 @@ public class LoginController {
 			return "redirect:/page/404.html";
 		}
 	}
-
+////////            del????????????????????
     @RequestMapping({"/", "/index"})
     public String main() {
         System.out.println("qweqe");
