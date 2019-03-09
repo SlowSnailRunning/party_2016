@@ -13,7 +13,9 @@
     <link rel="stylesheet" href="../../css/public.css" media="all"/>
     <script type="text/javascript" src="../../layui/layui.js"></script>
 </head>
-<body class="childrenBody">
+<body class="childrenBody" id="time">
+
+
 <form class="layui-form layui-row layui-col-space10">
     <div class="layui-col-md9 layui-col-xs12">
         <div class="layui-row layui-col-space10">
@@ -44,7 +46,6 @@
                                lay-verify="required">
                     </div>
                 </div>
-
                 <div class="layui-form-item magt3">
                     <label class="layui-form-label">考试剩余时间:</label>
                     <div class="layui-input-block">
@@ -61,7 +62,6 @@
                                lay-verify="required">
                     </div>
                 </div>
-
                 <div class="layui-form-item magt3">
                     <label class="layui-form-label">开闭卷:</label>
                     <div class="layui-input-block">
@@ -69,12 +69,13 @@
                                lay-verify="required">
                     </div>
                 </div>
-
-
+                <br>
+                在线人数:<span id="peopel">430</span><br>
                 请选择要计算的日期：
                 <div class="layui-inline">
                     <input type="text" class="layui-input" id="test1" value="">
                 </div>
+
                 <blockquote class="layui-elem-quote" style="margin-top: 10px;">
                     <div id="test2"></div>
                 </blockquote>
@@ -85,10 +86,7 @@
 
     </div>
 </form>
-
-
 <script>
-
     layui.use(['layer','element','jquery','form','util', 'laydate'],function () {
         var $,element,form,util,laydate,layer;
         util = layui.util;
@@ -97,7 +95,6 @@
         layer = layui.layer;
         $=layui.jquery;
         element = layui.element;
-
         $(function(){
             function loadexamCurrent(){
                 $.ajax({
@@ -111,7 +108,7 @@
                             var menuHtml="";
                             var obj = eval("("+JSON.stringify(res.data)+")");
                             /*alert(res.data.examName);*/
-                            alert("1-->"+obj[0].examName);
+                          /*  alert("1-->"+obj[0].examName);*/
                         /*    alert("2-->"+obj.examName);*/
                         /*    alert(JSON.stringify(res));
                             console.log(JSON.parse(res)['data'].examName);
@@ -148,7 +145,7 @@
                                     thisTimer = timer;
                                 });
                             };
-                            alert(layui.util.toDateString(obj[0].examEndTime, 'yyyy-MM-dd HH:mm:ss'));
+                         /*   alert(layui.util.toDateString(obj[0].examEndTime, 'yyyy-MM-dd HH:mm:ss'));*/
 
                             setCountdown(layui.util.toDateString(obj[0].examEndTime, 'yyyy-MM-dd HH:mm:ss'));
 
@@ -159,8 +156,15 @@
                                     setCountdown(date.year, date.month - 1, date.date, date.hours, date.minutes, date.seconds);
                                 }
                             });
-
-
+                          var setInt=setInterval(function () {
+                                $.ajax({
+                                    url : "/exam/studentSize.do",
+                                    type : "get",
+                                    success : function(data){
+                                       $("#peopel").text(data);
+                                    }
+                                });
+                            },2000);
                         }
                     }
                 })

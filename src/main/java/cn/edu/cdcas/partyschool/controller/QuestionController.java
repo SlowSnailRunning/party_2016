@@ -18,7 +18,6 @@ import java.util.Map;
 @RestController
 @RequestMapping("/question")
 public class QuestionController {
-
     @Resource
     private QuestionService questionService;
     @RequestMapping("/upload")
