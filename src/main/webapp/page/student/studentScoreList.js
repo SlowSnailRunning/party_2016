@@ -15,7 +15,6 @@ layui.use(['form', 'layer', 'table'], function () {
         limits: [10, 15, 20, 25],
         id: "studentScoreListTable",
         cols: [[
-            {title: '操作', width: 160, templet: '#studentScoreListBar', align: "center"},
             {field: 'id', title: 'ID', width: 86, align: "center", hide: true},
             {field: 'idx', title: '序号', width: 86, align: "center"},
             {field: 'name', title: '姓名', width: 100, align: "center"},
@@ -25,8 +24,9 @@ layui.use(['form', 'layer', 'table'], function () {
             {field: 'partyNumber', title: '党校号', width: 86, align: 'center'},
             {field: 'examStateStr', title: '考试状态', width: 86, align: 'center'},
             {field: 'major', title: '专业', width: 160, align: "center"},
-            {field: 'department', title: '学院', width: 100, align: "center"},
-            {field: 'grade', title: '年级', width: 86, align: "center"}
+            {field: 'department', title: '学院', width: 110, align: "center"},
+            {field: 'grade', title: '年级', width: 86, align: "center"},
+            {title: '操作', width: 160, templet: '#studentScoreListBar', fixed: "right", align: "center"}
         ]]
     });
 
