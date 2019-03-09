@@ -64,4 +64,6 @@ public interface UserService {
     Map<String, Object> requiredQuestionAndOther(HttpSession httpSession) throws Exception;
 
     int changeExamState(String studentNo, int examState) throws Exception;
+
+    boolean saveAnswer(int id, String answer, String studentNo,String isMakeUp) throws Exception;
 }

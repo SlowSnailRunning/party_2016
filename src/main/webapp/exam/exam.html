@@ -74,10 +74,10 @@
                                        onclick="selectTest(this,1)">1</a>
                               
                                     <a id="btn_${status.index+1 }" class="btn btn-primary" style="width: 20px;"
-                                       onclick="selectTest(${status.index+1 },${qo.answerId })">2</a>
+                                       onclick="selectTest(${status.index+1 },${qo.resultId })">2</a>
                                        
                                         <a id="btn_${status.index+1 }" class="btn btn-primary" style="width: 20px;"
-                                       onclick="selectTest(${status.index+1 },${qo.answerId })">3</a>-->
+                                       onclick="selectTest(${status.index+1 },${qo.resultId })">3</a>-->
                              
                     </ul>
                     
@@ -90,7 +90,7 @@
                                        onclick="selectTest(this,4)">4</a>
                                 
                                     <a id="btn_${status.index+1 }" class="btn btn-primary" style="width: 20px;"
-                                       onclick="selectTest(${status.index+1 },${qo.answerId })">5</a>
+                                       onclick="selectTest(${status.index+1 },${qo.resultId })">5</a>
                                        -->
                     </ul>
                     <h5 class="title">
@@ -98,10 +98,10 @@
                     <ul class="unstyled inline pan">
                         
                                    <!-- <a id="btn_${status.index+1 }" class="btn" style="width: 20px;"
-                                       onclick="selectTest(${status.index+1 },${qo.answerId })">6</a>
+                                       onclick="selectTest(${status.index+1 },${qo.resultId })">6</a>
                                
                                     <a id="btn_${status.index+1 }" class="btn btn-primary" style="width: 20px;"
-                                       onclick="selectTest(${status.index+1 },${qo.answerId })">7</a>-->
+                                       onclick="selectTest(${status.index+1 },${qo.resultId })">7</a>-->
                                
                     </ul>
                     
@@ -110,10 +110,10 @@
                     <ul class="unstyled inline tian">
                         
                                    <!-- <a id="btn_${status.index+1 }" class="btn" style="width: 20px;"
-                                       onclick="selectTest(${status.index+1 },${qo.answerId })">6</a>
+                                       onclick="selectTest(${status.index+1 },${qo.resultId })">6</a>
                                
                                     <a id="btn_${status.index+1 }" class="btn btn-primary" style="width: 20px;"
-                                       onclick="selectTest(${status.index+1 },${qo.answerId })">7</a>-->
+                                       onclick="selectTest(${status.index+1 },${qo.resultId })">7</a>-->
                                
                     </ul>
                 </div>
@@ -319,7 +319,7 @@
     
    if(danTotal!=0){ 	
    	for(var i=0;i<danTotal;i++){ 	
-   		var dan="<a style='width:20px;margin-left:4px;margin-top:3px;' id='btn_"+(i+1)+"' class='btn'>"+(i+1)+"</a>";   		
+   		var dan="<a style='width:20px;margin-left:4px;margin-top:3px;' id='btn_"+(i+1)+"' class='btn'>"+(i+1)+"</a>";
    			$(".dan").append(dan);
    			
    			  //"<input type='radio' name='dan_"+(parseInt(i)+1)+"'value='A'>A"+
@@ -329,14 +329,14 @@
    if(duoTotal!=0){
    	
    	for(var i=0;i<duoTotal;i++){ 	
-   		var duo="<a style='width:20px;margin-left:4px;margin-top:3px;' id='btn_"+(i+1+danTotal)+"' class='btn' onclick='selectTest(this,1)'>"+(i+1+danTotal)+"</a>";   		
+   		var duo="<a style='width:20px;margin-left:4px;margin-top:3px;' id='btn_"+(i+1+danTotal)+"' class='btn' onclick='selectTest(this,1)'>"+(i+1+danTotal)+"</a>";
    			$(".duo").append(duo);
    	}  	  	
    }
     if(panTotal!=0){
    	
    	for(var i=0;i<panTotal;i++){ 	
-   		var pan="<a style='width:20px;margin-left:4px;margin-top:3px;' id='btn_"+(i+1+danTotal+duoTotal)+"' class='btn'  onclick='selectTest(this,1)'>"+(i+1+danTotal+duoTotal)+"</a>";   		
+   		var pan="<a style='width:20px;margin-left:4px;margin-top:3px;' id='btn_"+(i+1+danTotal+duoTotal)+"' class='btn'  onclick='selectTest(this,1)'>"+(i+1+danTotal+duoTotal)+"</a>";
    			$(".pan").append(pan);
    	}  	 	
    }
@@ -494,7 +494,7 @@
         	for(var i in dan){
         		//循环四次，因为每道题有四个答案
         		for(var j=1;j<=4;j++){        			
-        		if(danList[k].value==dan[i].answer){
+        		if(danList[k].value==dan[i].result){
         			$(danList[k]).attr("checked",true);
         		}
         			k=k+1;
@@ -506,8 +506,8 @@
         var m=0;
         for(var i in duo){
         	for(var j=1;j<=4;j++){        		
-        		for(var l=0;l<duo[i].answer.split(",").length;l++){       		
-        		if(duoList[m].value==duo[i].answer.split(",")[l]){       			 
+        		for(var l=0;l<duo[i].result.split(",").length;l++){
+        		if(duoList[m].value==duo[i].result.split(",")[l]){       			 
         			$(duoList[m]).attr("checked",true);
         		}        			
         		}      			

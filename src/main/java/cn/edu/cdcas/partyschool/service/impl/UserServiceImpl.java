@@ -2,10 +2,7 @@ package cn.edu.cdcas.partyschool.service.impl;
 import cn.edu.cdcas.partyschool.mapper.ExamMapper;
 import cn.edu.cdcas.partyschool.mapper.QuestionMapper;
 import cn.edu.cdcas.partyschool.mapper.UserMapper;
-import cn.edu.cdcas.partyschool.model.Exam;
-import cn.edu.cdcas.partyschool.model.Manger;
-import cn.edu.cdcas.partyschool.model.Question;
-import cn.edu.cdcas.partyschool.model.User;
+import cn.edu.cdcas.partyschool.model.*;
 import cn.edu.cdcas.partyschool.service.UserService;
 import cn.edu.cdcas.partyschool.util.JSONResult;
 import cn.edu.cdcas.partyschool.util.impl.JedisClientSingle;
@@ -200,7 +197,13 @@ public class UserServiceImpl implements UserService {
         User user = this.queryByStuNo(studentNo);
         studentExamInfo.put("user",user);
 
-        Exam exam = examMapper.findExamById(String.valueOf(user.getExamId()));
+        Exam exam =null;
+        if(jedisClient.hexists("partySys2016","nowExam")){
+            exam=JSON.parseObject(jedisClient.hget("partySys2016","nowExam"),Exam.class);
+        }else {
+            exam = examMapper.queryCurrentExamInformation().get(0);
+            jedisClient.hset("partySys2016","nowExam",JSON.toJSONString(exam));
+        }
         studentExamInfo.put("exam",exam);
 
         return studentExamInfo;
@@ -287,13 +290,13 @@ public class UserServiceImpl implements UserService {
         requiredQuestionAndOther.put("name",examinee.getName());
         requiredQuestionAndOther.put("grade",examinee.getGrade());
         requiredQuestionAndOther.put("major",examinee.getDepartment());
-//        requiredQuestionAndOther.put("count",examinee.getGrade());?????????
+        requiredQuestionAndOther.put("countQue",Integer.parseInt(split[0])+Integer.parseInt(split[1])+Integer.parseInt(split[2])+Integer.parseInt(split[3]));
         requiredQuestionAndOther.put("pass",exam.getPassScore());
         requiredQuestionAndOther.put("examTime",exam.getExamTime());
-        requiredQuestionAndOther.put("danTotal",split[0]);
-        requiredQuestionAndOther.put("duoTotal",split[1]);
-        requiredQuestionAndOther.put("panTotal",split[2]);
-        requiredQuestionAndOther.put("tianTotal",split[3]);
+        requiredQuestionAndOther.put("danTotal",Integer.parseInt(split[0]));
+        requiredQuestionAndOther.put("duoTotal",Integer.parseInt(split[1]));
+        requiredQuestionAndOther.put("panTotal",Integer.parseInt(split[2]));
+        requiredQuestionAndOther.put("tianTotal",Integer.parseInt(split[3]));
 
         //设置该系统在redis中产生的partySys2016的ttl
         //设置过期时间为总考试时间+30*60   s
@@ -338,6 +341,36 @@ public class UserServiceImpl implements UserService {
             userMapper.updateExamStateByStuNo(studentNo,examState);
         }
         return examState;
+    }
+
+    @Override
+    public boolean saveAnswer(int id, String answer, String studentNo,String isMakeUp) throws Exception {
+        Answer answerObject=new Answer();
+
+        answerObject.setStudentNo( studentNo);
+        answerObject.setExamId(JSON.parseObject(jedisClient.hget("partySys2016","nowExam"),Exam.class).getId());
+        answerObject.setQuestionId(id);
+        answerObject.setIsMakeUp("1".equals(isMakeUp)?"0":"1");
+        Integer idInAnswer = userMapper.findIdToUpdateInsert(answerObject);
+        if(idInAnswer==null){
+            //insert
+            answerObject.setAnswer(answer);
+            getScore(id,answer);
+            userMapper.insertToAnswer(answerObject);
+        }else {
+            //update
+
+        }
+        return true;
+    }
+    /**
+     *@Describe: 判断该题目得分情况
+     *@Author Snail
+     *@Date 2019/3/9
+     */
+    public int getScore(int id,String answer){
+        JSON.parseObject(jedisClient.hget("partySys2016",String.valueOf(id)));
+        return 0;
     }
 
 }

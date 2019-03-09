@@ -41,6 +41,8 @@ public class Answer implements Serializable {
     private Integer questionType;
 
     private Question question;
+    //是否补考
+    private String isMakeUp;
 
     /**
      * 正确答案
@@ -48,6 +50,14 @@ public class Answer implements Serializable {
     private String result;
 
     private static final long serialVersionUID = 1L;
+
+    public String getIsMakeUp() {
+        return isMakeUp;
+    }
+    public void setIsMakeUp(String isMakeUp) {
+        this.isMakeUp = isMakeUp;
+    }
+
 
     public Integer getId() {
         return id;

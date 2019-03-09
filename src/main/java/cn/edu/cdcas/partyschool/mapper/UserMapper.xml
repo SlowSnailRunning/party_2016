@@ -53,29 +53,23 @@
         where student_no = #{studentNo,jdbcType=CHAR}
           and (type = 'ROOT' or type = 'manger')
     </select>
-
-
     <select id="queryById" parameterType="java.lang.Integer" resultMap="BaseResultMap">
         select
         <include refid="Base_Column_List"/>
         from party_user
         where id = #{id,jdbcType=INTEGER}
     </select>
-
     <select id="queryMangerCount" resultType="java.lang.Integer">
         select count(*)
         from party_user
         where type = 'ROOT'
            or type = 'manger'
     </select>
-
     <select id="queryStuNums" resultType="java.lang.Integer">
         select count(*)
         from party_user
         where type = 'student'
     </select>
-
-
     <select id="dimQueryMangerByName" resultType="cn.edu.cdcas.partyschool.model.Manger"
             parameterType="java.lang.String">
         select id,student_no studentNo,`name`,sex,`type`
@@ -83,21 +77,17 @@
         where (type = 'ROOT' or type = 'manger')
           and name like '%${name}%'
     </select>
-
-
     <select id="queryMangerList" resultType="cn.edu.cdcas.partyschool.model.Manger" parameterType="java.lang.Integer">
         select id,student_no studentNo,`name`,sex,`type`
         from party_user
         where (type = 'ROOT' or type = 'manger')
         limit #{page},#{limit}
     </select>
-
     <select id="queryAll" resultType="cn.edu.cdcas.partyschool.model.User" resultMap="BaseResultMap">
         select *
         from party_user
         where type = 'student'
     </select>
-
     <select id="queryAllByPaging" resultType="cn.edu.cdcas.partyschool.model.User" resultMap="BaseResultMap">
         select *
         from party_user
@@ -343,7 +333,6 @@
         </set>
         where id = #{id,jdbcType=INTEGER}
     </update>
-
     <update id="updateByStuNoSelective" parameterType="cn.edu.cdcas.partyschool.model.User">
         update party_user
         <set>
@@ -437,7 +426,6 @@
     <select id="findType" resultType="string">
         select `type` from party_user where student_no=#{number}
     </select>
-
     <select id="isHaveExamByStudentNo" resultType="string">
         SELECT `user`.exam_state FROM party_user `user`  LEFT JOIN  party_exam `exam` ON `user`.exam_id =`exam`.id
         WHERE student_no=#{studentNo} AND
@@ -445,17 +433,22 @@
         exam_start_time&lt;=CURRENT_TIMESTAMP AND
         CURRENT_TIMESTAMP&lt;=exam_end_time
     </select>
-
     <select id="queryByStuNo" resultMap="BaseResultMap">
         select *
         from party_user
         where student_no = #{stuNo,jdbcType=CHAR}
     </select>
-
     <select id="findQueIds" resultType="java.lang.Integer">
         SELECT id FROM party_question WHERE state='checked' AND type=#{type} ORDER BY RAND() LIMIT #{num}
     </select>
     <update id="updateExamStateByStuNo" >
       UPDATE party_user SET exam_state=#{exam_state} WHERE student_no=#{student_no}
     </update>
+    <select id="findIdToUpdateInsert" parameterType="cn.edu.cdcas.partyschool.model.Answer" resultType="java.lang.Integer">
+        SELECT id FROM party_answer WHERE student_no=#{studentNo} AND exam_id=#{examId} AND question_id=#{questionId} AND is_make_up=#{isMakeUp}
+    </select>
+    <insert id="inserteToAnswer" parameterType="cn.edu.cdcas.partyschool.model.Answer">
+        INSERT INTO party_answer(student_no,exam_id,question_id,answer,score,question_type,is_make_up,result)
+        VALUES(#{studentNo},#{examId},#{questionId},#{answer},#{score},#{questionType},#{isMakeUp},#{result})
+    </insert>
 </mapper>

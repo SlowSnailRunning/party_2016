@@ -1,6 +1,9 @@
 package cn.edu.cdcas.partyschool.controller;
 
+import cn.edu.cdcas.partyschool.model.Answer;
 import cn.edu.cdcas.partyschool.service.UserService;
+import cn.edu.cdcas.partyschool.util.JSONResult;
+import cn.edu.cdcas.partyschool.util.JedisClient;
 import com.alibaba.fastjson.JSON;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -31,7 +34,7 @@ public class ExamineeController {
             int examState= (int) httpSession.getAttribute("examState");
             int nowExamState=userServiceImpl.changeExamState((String) httpSession.getAttribute("studentNo"),examState);
             httpSession.setAttribute("examState",nowExamState);
-
+            //更新考试开始时间
             //封装需要的数据
             requiredQuestions=userServiceImpl.requiredQuestionAndOther(httpSession);
 
@@ -64,5 +67,20 @@ public class ExamineeController {
     {
         return "asdfasf";
     }
-    //@RequestMapping("/")
+    /**
+     *@Describe: 根据题目id判断是更新还是插入
+     *@Author Snail
+     *@Date 2019/3/9
+     */
+    @RequestMapping("/updateByQueId")
+    public JSONResult updateByQueId(int id,String answer,HttpSession httpSession){
+
+        try {
+            boolean b =userServiceImpl.saveAnswer(id, answer,(String)httpSession.getAttribute("studentNo"),(String)httpSession.getAttribute("examState"));
+            return new JSONResult();
+        } catch (Exception e) {
+            e.printStackTrace();
+            return new JSONResult();
+        }
+    }
 }

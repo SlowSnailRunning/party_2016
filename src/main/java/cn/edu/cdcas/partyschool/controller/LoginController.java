@@ -52,7 +52,7 @@ public class LoginController {
 	public void login(String token, HttpServletRequest request, HttpSession httpSession, HttpServletResponse response){
 		int flag = 0;
 		try {
-			String student_no=token;/*userServiceImpl.isLoginSuccess(token,request.getRemoteAddr());*/
+			String student_no=/*token;*/userServiceImpl.isLoginSuccess(token,request.getRemoteAddr());
 			String type=null;
 			if ("-1".equals(student_no)){
 				flag = 1;//系统跳转失败
@@ -60,7 +60,7 @@ public class LoginController {
 				flag = 2;//无权进入改系统
 			}else{
 //				System.out.println("-----------------验证成功----------------");
-				if(examServiceImpl.isCurrentExam()==null){
+				if(examServiceImpl.isCurrentExam()==null&&"student".equals(type)){
 					flag=3;//未有该生考试
 				}else {
 					flag = 0;

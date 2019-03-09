@@ -66,7 +66,4 @@
 	<listener>
 		<listener-class>cn.edu.cdcas.partyschool.listener.UniqueSession</listener-class>
 	</listener>
-
-
-
 </web-app>
