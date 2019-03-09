@@ -189,12 +189,3 @@ Array.prototype.remove = function (dx) {
     }
     this.length -= 1
 }
-$(function () {
-    $.post("/user/MangerAuthority.do", {}, function (data) {
-        var data = JSON.parse(data);
-        if (data.code == 1) {//无权限
-            dataStr.remove(3);//删除
-        }
-        tab.render(); //重新渲染左侧菜单
-    });
-});

@@ -21,9 +21,27 @@ layui.use(['form', 'layer', 'laydate', 'upload', 'table', 'laytpl'], function ()
             {field: 'id', title: 'ID', width: 86, align: "center", hide: true},
             {field: 'examName', title: '考试名称', width: 160, align: "center"},
             {field: 'examTime', title: '考试时长(分)', width: 120, align: "center"},
-            {field: 'createTime', title: '考试创建时间', width: 180, align: "center",templet : "<div>{{layui.util.toDateString(d.createTime, 'yyyy-MM-dd HH:mm:ss')}}</div>"},
-            {field: 'examStartTime', title: '开考时间', width: 180, align: "center",templet : "<div>{{layui.util.toDateString(d.examStartTime, 'yyyy-MM-dd HH:mm:ss')}}</div>"},
-            {field: 'examEndTime', title: '停考时间', width: 180, align: "center",templet : "<div>{{layui.util.toDateString(d.examEndTime, 'yyyy-MM-dd HH:mm:ss')}}</div>"},
+            {
+                field: 'createTime',
+                title: '考试创建时间',
+                width: 180,
+                align: "center",
+                templet: "<div>{{layui.util.toDateString(d.createTime, 'yyyy-MM-dd HH:mm:ss')}}</div>"
+            },
+            {
+                field: 'examStartTime',
+                title: '开考时间',
+                width: 180,
+                align: "center",
+                templet: "<div>{{layui.util.toDateString(d.examStartTime, 'yyyy-MM-dd HH:mm:ss')}}</div>"
+            },
+            {
+                field: 'examEndTime',
+                title: '停考时间',
+                width: 180,
+                align: "center",
+                templet: "<div>{{layui.util.toDateString(d.examEndTime, 'yyyy-MM-dd HH:mm:ss')}}</div>"
+            },
             {field: 'radioNum', title: '单选题数量', width: 110, align: 'center'},
             {field: 'radioScore', title: '(分/道)', width: 90, align: 'center'},
             {field: 'checkNum', title: '多选题数量', width: 110, align: 'center'},
@@ -35,8 +53,23 @@ layui.use(['form', 'layer', 'laydate', 'upload', 'table', 'laytpl'], function ()
             {field: 'saqNum', title: '简答题数量', width: 110, align: 'center'},
             {field: 'saqScore', title: '(分/道)', width: 90, align: 'center'},
             {field: 'passScore', title: '及格分数', width: 86, align: 'center'},
-            {field: 'openOrClose', title: '开闭卷(0:闭 1:开)', width: 180, align: 'center'},
-            {field: 'isMakeup', title: '能否补考(0:能 1:不能)', width: 180, align: 'center'},
+            {
+                field: 'openOrClose', title: '开闭卷', width: 180, align: 'center', templet: function (data) {
+                    if (data.openOrClose == 0)
+                        return "闭卷";
+                    else
+                        return "开卷";
+                }
+            },
+            {
+                field: 'isMakeup', title: '是否允许补考', width: 180, align: 'center', templet: function (data) {
+                    if (data.isMakeup == 0)
+                        return "是";
+                    else
+                        return "否";
+
+                }
+            },
             {title: '操作', width: 120, templet: '#examListBar', fixed: "right", align: "center"}
         ]]
     });
@@ -89,35 +122,35 @@ layui.use(['form', 'layer', 'laydate', 'upload', 'table', 'laytpl'], function ()
     });
 
     //本模块暂时不需要这个上传功能
-/*    $(".addNewsList_btn").click(function () {
-        var upload = layui.upload; //得到 upload 对象
+    /*    $(".addNewsList_btn").click(function () {
+            var upload = layui.upload; //得到 upload 对象
 
-        //获取当前网址，如： http://localhost:8083/uimcardprj/share/meun.jsp
-        //var curWwwPath = window.document.location.href;
+            //获取当前网址，如： http://localhost:8083/uimcardprj/share/meun.jsp
+            //var curWwwPath = window.document.location.href;
 
-        //var pos = curWwwPath.indexOf(pathName);
-        //获取主机地址，如： http://localhost:8083
-        // var localhostPaht = curWwwPath.substring(0, pos);
-        //获取主机地址之后的目录，如： uimcardprj/share/meun.jsp
-        var pathName = window.document.location.pathname;
-        //获取带"/"的项目名，如：/uimcardprj
-        var projectName = pathName.substring(0, pathName.substr(1).indexOf("/page") + 1);
+            //var pos = curWwwPath.indexOf(pathName);
+            //获取主机地址，如： http://localhost:8083
+            // var localhostPaht = curWwwPath.substring(0, pos);
+            //获取主机地址之后的目录，如： uimcardprj/share/meun.jsp
+            var pathName = window.document.location.pathname;
+            //获取带"/"的项目名，如：/uimcardprj
+            var projectName = pathName.substring(0, pathName.substr(1).indexOf("/page") + 1);
 
-        //创建一个上传组件
-        upload.render({
-            elem: '#uploadDiv'
-            , url: projectName + '/user/upload.do'
-            , accept: 'file'
-            , exts: 'xls|xlsx'
-            , done: function (res, index, upload) { //上传后的回调
-                layer.msg(res['msg']); //show the message from the backend.
-                if (res['code'] === 0)
-                    tableIns.reload();  //if import succeeded,reload this table.
-            }
-            , error: function () {
-            }
-        })
-    });*/  //
+            //创建一个上传组件
+            upload.render({
+                elem: '#uploadDiv'
+                , url: projectName + '/user/upload.do'
+                , accept: 'file'
+                , exts: 'xls|xlsx'
+                , done: function (res, index, upload) { //上传后的回调
+                    layer.msg(res['msg']); //show the message from the backend.
+                    if (res['code'] === 0)
+                        tableIns.reload();  //if import succeeded,reload this table.
+                }
+                , error: function () {
+                }
+            })
+        });*/  //
 
     $(".addNews_btn").click(function () {
         addNews();
@@ -137,7 +170,7 @@ layui.use(['form', 'layer', 'laydate', 'upload', 'table', 'laytpl'], function ()
                     body.find(".examTime").val(original_data.examTime);
                     body.find(".examStartTime").val(layui.util.toDateString(original_data.examStartTime, 'yyyy-MM-dd HH:mm:ss'));
                     body.find(".examEndTime").val(layui.util.toDateString(original_data.examEndTime, 'yyyy-MM-dd HH:mm:ss'));
-                    body.find(".examTimeRange").val(layui.util.toDateString(original_data.examStartTime, 'yyyy-MM-dd HH:mm:ss')+" - "+layui.util.toDateString(original_data.examEndTime, 'yyyy-MM-dd HH:mm:ss'));
+                    body.find(".examTimeRange").val(layui.util.toDateString(original_data.examStartTime, 'yyyy-MM-dd HH:mm:ss') + " - " + layui.util.toDateString(original_data.examEndTime, 'yyyy-MM-dd HH:mm:ss'));
                     body.find(".radioNum").val(original_data.radioNum);
                     body.find(".radioScore").val(original_data.radioScore);
                     body.find(".checkNum").val(original_data.checkNum);

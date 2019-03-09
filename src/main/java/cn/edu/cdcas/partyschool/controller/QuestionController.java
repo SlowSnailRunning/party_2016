@@ -21,7 +21,6 @@ public class QuestionController {
 
     @Resource
     private QuestionService questionService;
-
     @RequestMapping("/upload")
     public JSONResult upload(@RequestParam("file") MultipartFile file) {
         ExcelUtil excelUtil = new ExcelUtil();
