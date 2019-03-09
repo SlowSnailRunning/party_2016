@@ -76,7 +76,7 @@ public class ExamineeController {
     public JSONResult updateByQueId(int id,String answer,HttpSession httpSession){
 
         try {
-            boolean b =userServiceImpl.saveAnswer(id, answer,(String)httpSession.getAttribute("studentNo"),(String)httpSession.getAttribute("examState"));
+            boolean b =userServiceImpl.saveAnswer(id, answer,String.valueOf(httpSession.getAttribute("studentNo")),String.valueOf(httpSession.getAttribute("examState")));
             return new JSONResult();
         } catch (Exception e) {
             e.printStackTrace();

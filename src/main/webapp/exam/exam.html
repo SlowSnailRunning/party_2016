@@ -12,7 +12,7 @@
           type="text/css"/>
     <link href="css/sweetalert.css" rel="stylesheet"
           type="text/css"/>
-    <script src="js/jquery-1.11.3.min.js"></script>
+    <script src="js/jquery-1.8.3.min.js"></script>
     <script src="js/bootstrap.min.js" rel="stylesheet"
             media="screen"></script>
     <script src="js/sweetalert.min.js" rel="stylesheet"
@@ -290,7 +290,7 @@
    	   $.ajax({
    	   	type:"get",
    	   	dataType:"json",
-   	   	url:"json/question.json",
+   	   	url:"/examinee/allQuestionInfoForStu.do",
       success:function(result){
           var msg=result;
       	console.log(msg);

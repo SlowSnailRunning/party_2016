@@ -91,8 +91,8 @@ public class LoginController {
 				}else {
 					//非首次登录
 					// TODO: 2019/3/5
+					return "";
 				}
-				return "";
 			}else if("ROOT".equals(type)||"manger".equals(type)){
 				return "redirect:/index.html";
 			}else {

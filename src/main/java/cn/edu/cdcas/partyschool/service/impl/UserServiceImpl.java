@@ -356,7 +356,10 @@ public class UserServiceImpl implements UserService {
         if(idInAnswer==null){
             //insert
             answerObject.setAnswer(answer);
-            getScore(id,answer);
+            answerObject.setScore(getScore(id, answer));
+            answerObject.setQuestionType(Integer.valueOf(JSON.parseObject(jedisClient.hget("partySys2016", String.valueOf(id))).getString("type")));
+            answerObject.setResult(JSON.parseObject(jedisClient.hget("partySys2016", String.valueOf(id))).getString("result"));
+
             userMapper.insertToAnswer(answerObject);
         }else {
             //update
@@ -370,8 +373,28 @@ public class UserServiceImpl implements UserService {
      *@Date 2019/3/9
      */
     public int getScore(int id,String answer){
-        JSON.parseObject(jedisClient.hget("partySys2016",String.valueOf(id)));
+        JSONObject theIdQue = JSON.parseObject(jedisClient.hget("partySys2016", String.valueOf(id)));
+        JSONObject nowExam = JSON.parseObject(jedisClient.hget("partySys2016", "nowExam"));
+        String result=theIdQue.getString("result");
+        if(answer.equals(result)){
+            //答案正确
+            String temp = null;
+            switch (theIdQue.getString("type")){
+                case "1":
+                    temp=nowExam.getString("radioScore");
+                    break;
+                case "2":
+                    temp=nowExam.getString("checkScore");
+                    break;
+                case "3":
+                    temp=nowExam.getString("judgeScore");
+                    break;
+                case "4":
+                    temp=nowExam.getString("fillScore");
+                    break;
+            }
+            return Integer.parseInt(temp);
+        }
         return 0;
     }
-
 }

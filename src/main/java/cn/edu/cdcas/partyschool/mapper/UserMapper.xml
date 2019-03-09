@@ -447,7 +447,7 @@
     <select id="findIdToUpdateInsert" parameterType="cn.edu.cdcas.partyschool.model.Answer" resultType="java.lang.Integer">
         SELECT id FROM party_answer WHERE student_no=#{studentNo} AND exam_id=#{examId} AND question_id=#{questionId} AND is_make_up=#{isMakeUp}
     </select>
-    <insert id="inserteToAnswer" parameterType="cn.edu.cdcas.partyschool.model.Answer">
+    <insert id="insertToAnswer" parameterType="cn.edu.cdcas.partyschool.model.Answer">
         INSERT INTO party_answer(student_no,exam_id,question_id,answer,score,question_type,is_make_up,result)
         VALUES(#{studentNo},#{examId},#{questionId},#{answer},#{score},#{questionType},#{isMakeUp},#{result})
     </insert>
