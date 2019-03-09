@@ -156,8 +156,10 @@
                 axios.get("/examinee/examAndStuInfo.do")
                     .then(res=>{
                         console.log(res);
-                        this.studentInfo=res.data.user
-                        console.log(this.studentInfo)
+                        console.log(res['user']);
+                        console.log(res['user']);
+                        this.studentInfo=res.data.user;
+                        console.log(this.studentInfo);
                     })
                     .catch(error=>{
                         console.log(error);
