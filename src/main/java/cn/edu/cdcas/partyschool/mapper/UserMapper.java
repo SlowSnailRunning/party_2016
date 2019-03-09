@@ -67,5 +67,5 @@ public interface UserMapper {
      */
     List<Integer> findQueIds(@Param("type") int type, @Param("num") int num) throws Exception;
 
-    Integer updateExamStateByStuNo(@Param("student_no")String student_no,@Param("exam_tate")int exam_state) throws Exception;
+    Integer updateExamStateByStuNo(@Param("student_no")String student_no,@Param("exam_state")int exam_state) throws Exception;
 }

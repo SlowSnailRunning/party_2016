@@ -12,49 +12,84 @@ layui.use(['form','layer','layedit','laydate','upload'],function(){
         $('.label-fen').css("font-size","17px");
         $('.examAllScore').css({"color":"blue","font-size":"19px"});
 
+        /*根据所选时间段计算出该时间段的分差值*/
+        function TimeDifference(startTime,endTime)
+        {
+            //定义两个变量time1,time2分别保存开始和结束时间
+            var startTime=startTime;
+            var endTime=endTime;
+            //判断开始时间是否大于结束日期
+            if(startTime>endTime)
+            {
+                alert("开始时间不能大于结束时间！");
+                return false;
+            }
+            //截取字符串，得到日期部分"2009-12-02",用split把字符串分隔成数组
+            var begin1=startTime.substr(0,10).split("-");
+            var end1=endTime.substr(0,10).split("-");
+            //将拆分的数组重新组合，并实例成化新的日期对象
+            var date1=new Date(begin1[1] + - + begin1[2] + - + begin1[0]);
+            var date2=new Date(end1[1] + - + end1[2] + - + end1[0]);
+            //得到两个日期之间的差值m，以分钟为单位
+            //Math.abs(date2-date1)计算出以毫秒为单位的差值
+            //Math.abs(date2-date1)/1000得到以秒为单位的差值
+            //Math.abs(date2-date1)/1000/60得到以分钟为单位的差值
+            var m=parseInt(Math.abs(date2-date1)/1000/60);
+            //小时数和分钟数相加得到总的分钟数
+            //startTime.substr(11,2)截取字符串得到时间的小时数
+            //parseInt(startTime.substr(11,2))*60把小时数转化成为分钟
+            var min1=parseInt(startTime.substr(11,2))*60+parseInt(startTime.substr(14,2));
+            var min2=parseInt(endTime.substr(11,2))*60+parseInt(endTime.substr(14,2));
+            //两个分钟数相减得到时间部分的差值，以分钟为单位
+            var n=min2-min1;
+            //将日期和时间两个部分计算出来的差值相加，即得到两个时间相减后的分钟数
+            var minutes=m+n;
+            return minutes;
+        }
         /*计算总分通过各个文本框中值的求和计算*/
         function sum(){
-            var radioNum = parseInt($('.radioNum').val());
-            var radioScore = parseInt($('.radioScore').val());
-            var radio=0;
+        var radioNum = parseInt($('.radioNum').val());
+        var radioScore = parseInt($('.radioScore').val());
+        var radio=0;
 
-            var checkNum = parseInt($('.checkNum').val());
-            var checkScore = parseInt($('.checkScore').val());
-            var check = 0;
+        var checkNum = parseInt($('.checkNum').val());
+        var checkScore = parseInt($('.checkScore').val());
+        var check = 0;
 
-            var judgeNum = parseInt($('.judgeNum').val());
-            var judgeScore = parseInt($('.judgeScore').val());
-            var judge = 0;
+        var judgeNum = parseInt($('.judgeNum').val());
+        var judgeScore = parseInt($('.judgeScore').val());
+        var judge = 0;
 
-            var fillNum = parseInt($('.fillNum').val());
-            var fillScore = parseInt($('.fillScore').val());
-            var fill = 0;
+        var fillNum = parseInt($('.fillNum').val());
+        var fillScore = parseInt($('.fillScore').val());
+        var fill = 0;
 
-            if((radioNum!=''&&radioScore!='')&&(!(isNaN(radioNum)||isNaN(radioScore)))){
-                radio = radioNum * radioScore;
-            }else{radioNum=0;radioScore=0;}
+        if((radioNum!=''&&radioScore!='')&&(!(isNaN(radioNum)||isNaN(radioScore)))){
+            radio = radioNum * radioScore;
+        }else{radioNum=0;radioScore=0;}
 
-            if((checkNum!=''&&checkScore!='')&&(!(isNaN(checkNum)||isNaN(checkScore)))){
-                check = checkNum * checkScore;
-            }else{checkNum=0;checkScore=0;}
+        if((checkNum!=''&&checkScore!='')&&(!(isNaN(checkNum)||isNaN(checkScore)))){
+            check = checkNum * checkScore;
+        }else{checkNum=0;checkScore=0;}
 
-            if((judgeNum!=''&&judgeScore!='')&&(!(isNaN(judgeNum)||isNaN(judgeScore)))){
-                judge = judgeNum * judgeScore;
-            }else{judgeNum=0;judgeScore=0;}
+        if((judgeNum!=''&&judgeScore!='')&&(!(isNaN(judgeNum)||isNaN(judgeScore)))){
+            judge = judgeNum * judgeScore;
+        }else{judgeNum=0;judgeScore=0;}
 
-            if((fillNum!=''&&fillScore!='')&&(!(isNaN(fillNum)||isNaN(fillScore)))){
-                fill = fillNum * fillScore;
-            }else{fillNum=0;fillScore=0;}
-            var allScore = 0;
-            if(radio!==''&&check!==''&&judge!==''&&fill!==''){
-                allScore =  radio + check + judge + fill;
-                console.log("填0进入此if");
-            }
-            $('.examAllScore').text(allScore);
-            return allScore;
+        if((fillNum!=''&&fillScore!='')&&(!(isNaN(fillNum)||isNaN(fillScore)))){
+            fill = fillNum * fillScore;
+        }else{fillNum=0;fillScore=0;}
+        var allScore = 0;
+        if(radio!==''&&check!==''&&judge!==''&&fill!==''){
+            allScore =  radio + check + judge + fill;
+            console.log("填0进入此if");
         }
-        $('.examAllScore').text(sum());
+        $('.examAllScore').text(allScore);
+        return allScore;
+    }
 
+        /*初始化总分标签的数据（同步）*/
+        $('.examAllScore').text(sum());
 
 
         /*为需要参与计算总分的文本框设置键盘按键监听事件*/
@@ -66,9 +101,6 @@ layui.use(['form','layer','layedit','laydate','upload'],function(){
         $(".judgeScore").keyup(sum);
         $(".fillScore").keyup(sum);
         $(".fillNum").keyup(sum);
-
-
-
 
 
     /* alert($('.examAllScore').text());*/
@@ -105,6 +137,7 @@ layui.use(['form','layer','layedit','laydate','upload'],function(){
                 console.log($('.examStartTime').val());
                 console.log($('.examEndTime').val());
             /*    alert($('.examEndTime').val());*/
+               $('.examTime').val(TimeDifference(arr[0],arr[1]));
 
             }
         });

@@ -38,7 +38,9 @@ public class ExamineeController {
             return requiredQuestions;
         } catch (Exception e) {
             e.printStackTrace();
+            requiredQuestions.put("status",500);
             return requiredQuestions;
+
         }
     }
 
