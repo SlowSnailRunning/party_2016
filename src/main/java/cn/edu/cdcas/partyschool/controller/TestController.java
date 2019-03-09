@@ -26,7 +26,6 @@ public class TestController {
     private ServletContext servletContext;
     @Autowired
     private JedisClientSingle jedisClient;
-
     @RequestMapping("/SpringMVC")
     @ResponseBody
     public String SpringMVC(Model model) {
@@ -101,9 +100,8 @@ public class TestController {
 
     @RequestMapping("/ip")
     @ResponseBody
-    public String ip(HttpServletRequest request) {
-        String MD5 = DigestUtils.md5DigestAsHex("172.16.252.11201617025210".getBytes());
-        return MD5;
+    public String   ip( HttpServletResponse response) {
+     return "test";
     }
 }
 
