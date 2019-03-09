@@ -12,6 +12,7 @@
           type="text/css"/>
     <script src="https://unpkg.com/vue@2.6.8/dist/vue.js"></script>
     <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+    <script src="js/jquery-1.11.3.min.js"></script>
 </head>
 <body>
 <div id="app">
@@ -141,32 +142,43 @@
 <input id="examState" type="hidden" :value="studentInfo.makeUpState"/>
 <input id="makeUpState" type="hidden" value="${user_in_session.makeUpState }"/>
 </div>
-<script type="text/javascript">
-    Vue.prototype.$axios=axios;
-    const vm = new Vue({
-        el:"#app",
-        data:{
-            studentInfo:[]
-        },
-        created() {
-            this.getStudentInfo()
-        },
-        methods: {
-            getStudentInfo(){
-                axios.get("/examinee/examAndStuInfo.do")
-                    .then(res=>{
-                        // console.log(res);
-                        // console.log(res['user']);
-                        // console.log(res['user']);
-                        this.studentInfo=res.data.user;
-                        console.log(this.studentInfo);
-                    })
-                    .catch(error=>{
-                        console.log(error);
-                    })
-            }
-        },
+<script type="text/javascript" >
+    $.ajax({
+        type: "GET",
+        url: "/examinee/examAndStuInfo.do",
+        async:false,
+        dataType: "json",
+        success: function (res) {
+            console.log(res)
+        }
     });
+
+    Vue.prototype.$axios=axios;
+    // const vm = new Vue({
+    //     el:"#app",
+    //     data:{
+    //         studentInfo:[]
+    //     },
+    //     created() {
+    //         //this.getStudentInfo()
+    //     },
+    //     methods: {
+    //         getStudentInfo(){
+    //             axios.get("/examinee/examAndStuInfo.do")
+    //                 .then(res=>{
+    //                     // console.log(res);
+    //                     // console.log(res['user']);
+    //                     // console.log(res['user']);
+    //                     this.studentInfo=res.data.user;
+    //                    // this.studentIn
+    //                     console.log(this.studentInfo);
+    //                 })
+    //                 .catch(error=>{
+    //                     console.log(error);
+    //                 })
+    //         }
+    //     },
+    // });
  /*   $.ajaxSetup( {
 
 //设置ajax请求结束后的执行动作
