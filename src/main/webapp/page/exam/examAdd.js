@@ -11,10 +11,9 @@ layui.use(['form','layer','layedit','laydate','upload'],function(){
         $('.label-zongfen').css("font-size","17px");
         $('.label-fen').css("font-size","17px");
         $('.examAllScore').css({"color":"blue","font-size":"19px"});
-        $('.examAllScore').text("100");
 
-        /*不知为何，这里原想吧下面的function单独提出来再引用，但是未果*/
-        $(".radioNum").keyup(function(){
+        /*计算总分通过各个文本框中值的求和计算*/
+        function sum(){
             var radioNum = parseInt($('.radioNum').val());
             var radioScore = parseInt($('.radioScore').val());
             var radio=0;
@@ -31,345 +30,42 @@ layui.use(['form','layer','layedit','laydate','upload'],function(){
             var fillScore = parseInt($('.fillScore').val());
             var fill = 0;
 
-            if(radioNum!=''&&radioScore!=''){
+            if((radioNum!=''&&radioScore!='')&&(!(isNaN(radioNum)||isNaN(radioScore)))){
                 radio = radioNum * radioScore;
             }else{radioNum=0;radioScore=0;}
 
-            if(checkNum!=''&&checkScore!=''){
+            if((checkNum!=''&&checkScore!='')&&(!(isNaN(checkNum)||isNaN(checkScore)))){
                 check = checkNum * checkScore;
             }else{checkNum=0;checkScore=0;}
 
-            if(judgeNum!=''&&judgeScore!=''){
+            if((judgeNum!=''&&judgeScore!='')&&(!(isNaN(judgeNum)||isNaN(judgeScore)))){
                 judge = judgeNum * judgeScore;
             }else{judgeNum=0;judgeScore=0;}
 
-            if(fillNum!=''&&fillScore!=''){
+            if((fillNum!=''&&fillScore!='')&&(!(isNaN(fillNum)||isNaN(fillScore)))){
                 fill = fillNum * fillScore;
             }else{fillNum=0;fillScore=0;}
             var allScore = 0;
             if(radio!==''&&check!==''&&judge!==''&&fill!==''){
                 allScore =  radio + check + judge + fill;
-
                 console.log("填0进入此if");
             }
-            /*console.log("单"+radio);
-            console.log("多"+check);
-            console.log("判"+judge);
-            console.log("填"+fill);*/
             $('.examAllScore').text(allScore);
-            return false;
-        });
-        $(".radioScore").keyup(function(){
-            var radioNum = parseInt($('.radioNum').val());
-            var radioScore = parseInt($('.radioScore').val());
-            var radio=0;
+            return allScore;
+        }
+        $('.examAllScore').text(sum());
 
-            var checkNum = parseInt($('.checkNum').val());
-            var checkScore = parseInt($('.checkScore').val());
-            var check = 0;
 
-            var judgeNum = parseInt($('.judgeNum').val());
-            var judgeScore = parseInt($('.judgeScore').val());
-            var judge = 0;
 
-            var fillNum = parseInt($('.fillNum').val());
-            var fillScore = parseInt($('.fillScore').val());
-            var fill = 0;
-
-            if(radioNum!=''&&radioScore!=''){
-                radio = radioNum * radioScore;
-            }else{radioNum=0;radioScore=0;}
-
-            if(checkNum!=''&&checkScore!=''){
-                check = checkNum * checkScore;
-            }else{checkNum=0;checkScore=0;}
-
-            if(judgeNum!=''&&judgeScore!=''){
-                judge = judgeNum * judgeScore;
-            }else{judgeNum=0;judgeScore=0;}
-
-            if(fillNum!=''&&fillScore!=''){
-                fill = fillNum * fillScore;
-            }else{fillNum=0;fillScore=0;}
-            var allScore = 0;
-            if(radio!==''&&check!==''&&judge!==''&&fill!==''){
-                allScore =  radio + check + judge + fill;
-
-                console.log("填0进入此if");
-            }
-            /*console.log("单"+radio);
-            console.log("多"+check);
-            console.log("判"+judge);
-            console.log("填"+fill);*/
-            $('.examAllScore').text(allScore);
-            return false;
-        });
-        $(".checkNum").keyup(function(){
-            var radioNum = parseInt($('.radioNum').val());
-            var radioScore = parseInt($('.radioScore').val());
-            var radio=0;
-
-            var checkNum = parseInt($('.checkNum').val());
-            var checkScore = parseInt($('.checkScore').val());
-            var check = 0;
-
-            var judgeNum = parseInt($('.judgeNum').val());
-            var judgeScore = parseInt($('.judgeScore').val());
-            var judge = 0;
-
-            var fillNum = parseInt($('.fillNum').val());
-            var fillScore = parseInt($('.fillScore').val());
-            var fill = 0;
-
-            if(radioNum!=''&&radioScore!=''){
-                radio = radioNum * radioScore;
-            }else{radioNum=0;radioScore=0;}
-
-            if(checkNum!=''&&checkScore!=''){
-                check = checkNum * checkScore;
-            }else{checkNum=0;checkScore=0;}
-
-            if(judgeNum!=''&&judgeScore!=''){
-                judge = judgeNum * judgeScore;
-            }else{judgeNum=0;judgeScore=0;}
-
-            if(fillNum!=''&&fillScore!=''){
-                fill = fillNum * fillScore;
-            }else{fillNum=0;fillScore=0;}
-
-            var allScore = 0;
-
-            if(radio!=''&&check!=''&&judge!=''&&fill!=''){
-                allScore =  radio + check + judge + fill;
-            }
-            $('.examAllScore').text(allScore);
-            return false;
-        });
-        $(".checkScore").keyup(function(){
-            var radioNum = parseInt($('.radioNum').val());
-            var radioScore = parseInt($('.radioScore').val());
-            var radio=0;
-
-            var checkNum = parseInt($('.checkNum').val());
-            var checkScore = parseInt($('.checkScore').val());
-            var check = 0;
-
-            var judgeNum = parseInt($('.judgeNum').val());
-            var judgeScore = parseInt($('.judgeScore').val());
-            var judge = 0;
-
-            var fillNum = parseInt($('.fillNum').val());
-            var fillScore = parseInt($('.fillScore').val());
-            var fill = 0;
-
-            if(radioNum!=''&&radioScore!=''){
-                radio = radioNum * radioScore;
-            }else{radioNum=0;radioScore=0;}
-
-            if(checkNum!=''&&checkScore!=''){
-                check = checkNum * checkScore;
-            }else{checkNum=0;checkScore=0;}
-
-            if(judgeNum!=''&&judgeScore!=''){
-                judge = judgeNum * judgeScore;
-            }else{judgeNum=0;judgeScore=0;}
-
-            if(fillNum!=''&&fillScore!=''){
-                fill = fillNum * fillScore;
-            }else{fillNum=0;fillScore=0;}
-            var allScore = 0;
-            if(radio!==''&&check!==''&&judge!==''&&fill!==''){
-                allScore =  radio + check + judge + fill;
-
-                console.log("填0进入此if");
-            }
-            /*console.log("单"+radio);
-            console.log("多"+check);
-            console.log("判"+judge);
-            console.log("填"+fill);*/
-            $('.examAllScore').text(allScore);
-            return false;
-        });
-        $(".judgeNum").keyup(function(){
-            var radioNum = parseInt($('.radioNum').val());
-            var radioScore = parseInt($('.radioScore').val());
-            var radio=0;
-
-            var checkNum = parseInt($('.checkNum').val());
-            var checkScore = parseInt($('.checkScore').val());
-            var check = 0;
-
-            var judgeNum = parseInt($('.judgeNum').val());
-            var judgeScore = parseInt($('.judgeScore').val());
-            var judge = 0;
-
-            var fillNum = parseInt($('.fillNum').val());
-            var fillScore = parseInt($('.fillScore').val());
-            var fill = 0;
-
-            if(radioNum!=''&&radioScore!=''){
-                radio = radioNum * radioScore;
-            }else{radioNum=0;radioScore=0;}
-
-            if(checkNum!=''&&checkScore!=''){
-                check = checkNum * checkScore;
-            }else{checkNum=0;checkScore=0;}
-
-            if(judgeNum!=''&&judgeScore!=''){
-                judge = judgeNum * judgeScore;
-            }else{judgeNum=0;judgeScore=0;}
-
-            if(fillNum!=''&&fillScore!=''){
-                fill = fillNum * fillScore;
-            }else{fillNum=0;fillScore=0;}
-            var allScore = 0;
-            if(radio!==''&&check!==''&&judge!==''&&fill!==''){
-                allScore =  radio + check + judge + fill;
-
-                console.log("填0进入此if");
-            }
-            /*console.log("单"+radio);
-            console.log("多"+check);
-            console.log("判"+judge);
-            console.log("填"+fill);*/
-            $('.examAllScore').text(allScore);
-            return false;
-        });
-        $(".judgeScore").keyup(function(){
-            var radioNum = parseInt($('.radioNum').val());
-            var radioScore = parseInt($('.radioScore').val());
-            var radio=0;
-
-            var checkNum = parseInt($('.checkNum').val());
-            var checkScore = parseInt($('.checkScore').val());
-            var check = 0;
-
-            var judgeNum = parseInt($('.judgeNum').val());
-            var judgeScore = parseInt($('.judgeScore').val());
-            var judge = 0;
-
-            var fillNum = parseInt($('.fillNum').val());
-            var fillScore = parseInt($('.fillScore').val());
-            var fill = 0;
-
-            if(radioNum!=''&&radioScore!=''){
-                radio = radioNum * radioScore;
-            }else{radioNum=0;radioScore=0;}
-
-            if(checkNum!=''&&checkScore!=''){
-                check = checkNum * checkScore;
-            }else{checkNum=0;checkScore=0;}
-
-            if(judgeNum!=''&&judgeScore!=''){
-                judge = judgeNum * judgeScore;
-            }else{judgeNum=0;judgeScore=0;}
-
-            if(fillNum!=''&&fillScore!=''){
-                fill = fillNum * fillScore;
-            }else{fillNum=0;fillScore=0;}
-            var allScore = 0;
-            if(radio!==''&&check!==''&&judge!==''&&fill!==''){
-                allScore =  radio + check + judge + fill;
-
-                console.log("填0进入此if");
-            }
-            /*console.log("单"+radio);
-            console.log("多"+check);
-            console.log("判"+judge);
-            console.log("填"+fill);*/
-            $('.examAllScore').text(allScore);
-            return false;
-        });
-        $(".fillScore").keyup(function(){
-            var radioNum = parseInt($('.radioNum').val());
-            var radioScore = parseInt($('.radioScore').val());
-            var radio=0;
-
-            var checkNum = parseInt($('.checkNum').val());
-            var checkScore = parseInt($('.checkScore').val());
-            var check = 0;
-
-            var judgeNum = parseInt($('.judgeNum').val());
-            var judgeScore = parseInt($('.judgeScore').val());
-            var judge = 0;
-
-            var fillNum = parseInt($('.fillNum').val());
-            var fillScore = parseInt($('.fillScore').val());
-            var fill = 0;
-
-            if(radioNum!=''&&radioScore!=''){
-                radio = radioNum * radioScore;
-            }else{radioNum=0;radioScore=0;}
-
-            if(checkNum!=''&&checkScore!=''){
-                check = checkNum * checkScore;
-            }else{checkNum=0;checkScore=0;}
-
-            if(judgeNum!=''&&judgeScore!=''){
-                judge = judgeNum * judgeScore;
-            }else{judgeNum=0;judgeScore=0;}
-
-            if(fillNum!=''&&fillScore!=''){
-                fill = fillNum * fillScore;
-            }else{fillNum=0;fillScore=0;}
-            var allScore = 0;
-            if(radio!==''&&check!==''&&judge!==''&&fill!==''){
-                allScore =  radio + check + judge + fill;
-
-                console.log("填0进入此if");
-            }
-            /*console.log("单"+radio);
-            console.log("多"+check);
-            console.log("判"+judge);
-            console.log("填"+fill);*/
-            $('.examAllScore').text(allScore);
-            return false;
-        });
-        $(".fillNum").keyup(function(){
-            var radioNum = parseInt($('.radioNum').val());
-            var radioScore = parseInt($('.radioScore').val());
-            var radio=0;
-
-            var checkNum = parseInt($('.checkNum').val());
-            var checkScore = parseInt($('.checkScore').val());
-            var check = 0;
-
-            var judgeNum = parseInt($('.judgeNum').val());
-            var judgeScore = parseInt($('.judgeScore').val());
-            var judge = 0;
-
-            var fillNum = parseInt($('.fillNum').val());
-            var fillScore = parseInt($('.fillScore').val());
-            var fill = 0;
-
-            if(radioNum!=''&&radioScore!=''){
-                radio = radioNum * radioScore;
-            }else{radioNum=0;radioScore=0;}
-
-            if(checkNum!=''&&checkScore!=''){
-                check = checkNum * checkScore;
-            }else{checkNum=0;checkScore=0;}
-
-            if(judgeNum!=''&&judgeScore!=''){
-                judge = judgeNum * judgeScore;
-            }else{judgeNum=0;judgeScore=0;}
-
-            if(fillNum!=''&&fillScore!=''){
-                fill = fillNum * fillScore;
-            }else{fillNum=0;fillScore=0;}
-            var allScore = 0;
-            if(radio!==''&&check!==''&&judge!==''&&fill!==''){
-                allScore =  radio + check + judge + fill;
-
-                console.log("填0进入此if");
-            }
-            /*console.log("单"+radio);
-            console.log("多"+check);
-            console.log("判"+judge);
-            console.log("填"+fill);*/
-            $('.examAllScore').text(allScore);
-            return false;
-        });
+        /*为需要参与计算总分的文本框设置键盘按键监听事件*/
+        $(".radioNum").keyup(sum);
+        $(".radioScore").keyup(sum);
+        $(".checkNum").keyup(sum);
+        $(".checkScore").keyup(sum);
+        $(".judgeNum").keyup(sum);
+        $(".judgeScore").keyup(sum);
+        $(".fillScore").keyup(sum);
+        $(".fillNum").keyup(sum);
 
 
 
