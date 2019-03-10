@@ -1,7 +1,7 @@
 layui.use(['form', 'layer', 'laydate', 'upload', 'table', 'laytpl'], function () {
     var form = layui.form,
         layer = parent.layer === undefined ? layui.layer : top.layer,
-        $ = layui.jquery,
+        $=layui.jquery,
         laydate = layui.laydate,
         laytpl = layui.laytpl,
         table = layui.table;
@@ -161,6 +161,7 @@ layui.use(['form', 'layer', 'laydate', 'upload', 'table', 'laytpl'], function ()
         var index = layui.layer.open({
             title: "添加考试",
             type: 2,
+            area: ['500px', '800px'],
             content: "examAdd.html",
             success: function (layero, index) {
                 var body = layui.layer.getChildFrame('body', index);
