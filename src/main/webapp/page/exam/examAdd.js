@@ -82,14 +82,17 @@ layui.use(['form','layer','layedit','laydate','upload'],function(){
         var allScore = 0;
         if(radio!==''&&check!==''&&judge!==''&&fill!==''){
             allScore =  radio + check + judge + fill;
+            console.log(radio+","+check+","+judge+","+fill+",");
+            console.log(allScore);
             console.log("填0进入此if");
         }
-        $('.examAllScore').text(allScore);
+        $('.examAllScore').text(allScore+"");
+        console.log(allScore);
         return allScore;
     }
 
         /*初始化总分标签的数据（同步）*/
-        $('.examAllScore').text(sum());
+        $('.examAllScore').text(sum()+"");
 
 
         /*为需要参与计算总分的文本框设置键盘按键监听事件*/
