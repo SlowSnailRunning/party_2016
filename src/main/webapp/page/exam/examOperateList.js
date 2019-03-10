@@ -161,7 +161,7 @@ layui.use(['form', 'layer', 'laydate', 'upload', 'table', 'laytpl'], function ()
         var index = layui.layer.open({
             title: "添加考试",
             type: 2,
-            area: ['auto', '560px'],
+            area: ['100%', '100%'],
             fixed: false,
             content: "examAdd.html",
             success: function (layero, index) {
