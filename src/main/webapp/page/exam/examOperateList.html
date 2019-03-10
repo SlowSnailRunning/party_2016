@@ -43,22 +43,9 @@
         </form>
     </blockquote>
     <table id="examList" lay-filter="examList"></table>
-<!--
-    <script type="text/html" id="select-openOrClose">
-        <select class="openOrClose" lay-verify="required" >
-            <option value="0">闭卷</option>
-            <option value="1">开卷</option>
-        </select>
-    </script>
-
-    <script type="text/html" id="select-isMakeup">
-        <select class="isMakeup" lay-verify="required" >
-            <option value="0">不允许</option>
-            <option value="1">允许</option>
-        </select>
-    </script>-->
 
     <script type="text/html" id="examListBar">
+        <input type="checkbox" name="openOrCloseExam" lay-skin="switch" lay-text="开启|关闭">
         <a class="layui-btn layui-btn-xs" lay-event="edit">编辑</a>
         <a class="layui-btn layui-btn-xs layui-btn-danger" lay-event="del">删除</a>
     </script>
