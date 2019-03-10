@@ -32,7 +32,7 @@ layui.use(['form', 'layer', 'table', 'laytpl'], function () {
     });
     var active = {
         reload: function () {
-            var name = $(".searchVal").val(); //传入搜索的日期值
+            var name = $(".searchVal").val();
             //执行重载
             table.reload('userListTable', {
                 url: '/user/dimQueryMangerByName.do',
@@ -54,7 +54,27 @@ layui.use(['form', 'layer', 'table', 'laytpl'], function () {
 
     //添加用户
     function addUser(edit) {
-        var index = layui.layer.open({
+        layui.layer.open({
+            type: 2,
+            anim: 2,
+            isOutAnim: false,
+            title: ['添加用户', 'font-size:14px;'],
+            id: 'news_add',
+            area: ['540px', '318px'],
+            fixed: false, //不固定
+            maxmin: false,
+            shade: 0.4,//不显示遮罩
+            content:"./userAdd.html",
+            end:function () {
+                table.reload('userListTable', {
+                    url: '/user/allManger.do',
+                    method: 'get',
+                    page: {curr: 1}, //重新从第 1 页开始
+                });
+            }
+        });
+
+   /*     var index = layui.layer.open({
             title: "添加用户",
             type: 2,
             content: "userAdd.html",
@@ -66,7 +86,7 @@ layui.use(['form', 'layer', 'table', 'laytpl'], function () {
         //改变窗口大小时，重置弹窗的宽高，防止超出可视区域（如F12调出debug的操作）
         $(window).on("resize", function () {
             layui.layer.full(window.sessionStorage.getItem("index"));
-        })
+        })*/
     }
 
     $(".addNews_btn").click(function () {
