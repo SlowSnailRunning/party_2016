@@ -70,7 +70,7 @@ layui.use(['form', 'layer', 'laydate', 'upload', 'table', 'laytpl'], function ()
 
                 }
             },
-            {title: '操作', width: 120, templet: '#examListBar', fixed: "right", align: "center"}
+            {title: '操作', width: 180, templet: '#examListBar', fixed: "right", align: "center"}
         ]]
     });
 
