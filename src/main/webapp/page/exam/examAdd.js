@@ -5,7 +5,7 @@ layui.use(['form','layer','layedit','laydate','upload'],function(){
         upload = layui.upload,
         layedit = layui.layedit,
         laydate = layui.laydate,
-        $=layui.jquery;
+        $ = query;
         $('.submit-btn-submit').css({"left":"-32px","margin-left":"50%"});
         $('.examTimeRange').css("width",$('.passScore').css('width'));
         $('.label-zongfen').css("font-size","17px");
@@ -82,17 +82,14 @@ layui.use(['form','layer','layedit','laydate','upload'],function(){
         var allScore = 0;
         if(radio!==''&&check!==''&&judge!==''&&fill!==''){
             allScore =  radio + check + judge + fill;
-            console.log(radio+","+check+","+judge+","+fill+",");
-            console.log(allScore);
             console.log("填0进入此if");
         }
-        $('.examAllScore').text(allScore+"");
-        console.log(allScore);
+        $('.examAllScore').text(allScore);
         return allScore;
     }
 
         /*初始化总分标签的数据（同步）*/
-        $('.examAllScore').text(sum()+"");
+        $('.examAllScore').text(sum());
 
 
         /*为需要参与计算总分的文本框设置键盘按键监听事件*/

@@ -19,7 +19,7 @@ function getLangDate(){
     var second = dateObj.getSeconds(); //当前系统时间的秒钟值
     var timeValue = "" +((hour >= 12) ? (hour >= 18) ? "晚上" : "下午" : "上午" ); //当前时间属于上午、晚上还是下午
     newDate = dateFilter(year)+"年"+dateFilter(month)+"月"+dateFilter(date)+"日 "+" "+dateFilter(hour)+":"+dateFilter(minute)+":"+dateFilter(second);
-    document.getElementById("nowTime").innerHTML = "亲爱的驊驊龔頾，"+timeValue+"好！ 欢迎使用layuiCMS 2.0模版。当前时间为： "+newDate+"　"+week;
+    document.getElementById("nowTime").innerHTML = "亲爱的用戶，"+timeValue+"好！ 欢迎使用本系統。当前时间为： "+newDate+"　"+week;
     setTimeout("getLangDate()",1000);
 }
 
@@ -40,7 +40,7 @@ layui.use(['form','element','layer','jquery'],function(){
         parent.addTab($(this));
     })
     //系统基本参数
-    if(window.sessionStorage.getItem("systemParameter")){
+/*    if(window.sessionStorage.getItem("systemParameter")){
         var systemParameter = JSON.parse(window.sessionStorage.getItem("systemParameter"));
         fillParameter(systemParameter);
     }else{
@@ -52,9 +52,9 @@ layui.use(['form','element','layer','jquery'],function(){
                 fillParameter(data);
             }
         })
-    }
+    }*/
     //填充数据方法
-    function fillParameter(data){
+/*    function fillParameter(data){
         //判断字段数据是否存在
         function nullData(data){
             if(data == '' || data == "undefined"){
@@ -70,10 +70,10 @@ layui.use(['form','element','layer','jquery'],function(){
         $(".dataBase").text(nullData(data.dataBase));    //数据库版本
         $(".maxUpload").text(nullData(data.maxUpload));    //最大上传限制
         $(".userRights").text(nullData(data.userRights));//当前用户权限
-    }
+    }*/
 
     //最新文章列表
-    $.get("../json/newsList.json",function(data){
+  /*  $.get("../json/newsList.json",function(data){
         var hotNewsHtml = '';
         for(var i=0;i<5;i++){
             hotNewsHtml += '<tr>'
@@ -84,11 +84,11 @@ layui.use(['form','element','layer','jquery'],function(){
         $(".hot_news").html(hotNewsHtml);
         $(".userAll span").text(data.length);
     })
-
+*/
     //用户数量
-    $.get("../json/userList.json",function(data){
+   /* $.get("../json/userList.json",function(data){
         $(".userAll span").text(data.count);
-    })
+    })*/
 
     //外部图标
   /*  $.get(iconUrl,function(data){

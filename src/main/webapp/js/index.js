@@ -8,6 +8,13 @@ layui.use(['bodyTab', 'form', 'element', 'layer', 'jquery'], function () {
     var form = layui.form,
         element = layui.element;
     $ = layui.$;
+    $(function () {
+        $.getJSON('/user/getFiled.do', function (data) {
+            $("#userName").text(data);
+        });
+    });
+
+
     $("#edit_pasw").click(function () {
         layer.msg("请到统一身份认证系统修改密码！！！",{time:2000});
     });
@@ -151,7 +158,6 @@ layui.use(['bodyTab', 'form', 'element', 'layer', 'jquery'], function () {
 function addTab(_this) {
     tab.tabAdd(_this);
 }
-
 //捐赠弹窗
 /*function donation() {
     layer.tab({
@@ -165,8 +171,8 @@ function addTab(_this) {
         }]
     })
 }*/
-
 //图片管理弹窗
+/*
 function showImg() {
     $.getJSON('json/images.json', function (json) {
         var res = json;
@@ -176,8 +182,10 @@ function showImg() {
         });
     });
 }
+*/
 
 //删除数组中的元素，用作超级管理员权限的控制
+/*
 Array.prototype.remove = function (dx) {
     if (isNaN(dx) || dx > this.length) {
         return false;
@@ -188,4 +196,4 @@ Array.prototype.remove = function (dx) {
         }
     }
     this.length -= 1
-}
+}*/

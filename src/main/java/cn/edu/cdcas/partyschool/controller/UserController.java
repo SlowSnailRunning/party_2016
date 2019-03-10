@@ -206,9 +206,16 @@ public class UserController {
         return userService.dimQueryMangerByName(name);
     }
 
-    @RequestMapping("/logout")
+    @RequestMapping(value = "/logout",method =RequestMethod.POST)
     public String logout(HttpSession httpSession) {
         httpSession.invalidate();
         return (String) httpSession.getServletContext().getAttribute("php_login");
+    }
+
+    @RequestMapping(value = "/getFiled",method =RequestMethod.GET)
+    public String getFiled(HttpSession httpSession) throws Exception {
+        String stu_no=httpSession.getAttribute("studentNo").toString();
+        User user = userService.queryByStuNo(stu_no);
+        return user.getName();
     }
 }
