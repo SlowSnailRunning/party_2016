@@ -17,5 +17,6 @@ public interface ExamService {
     int insertSelective(Exam exam) throws Exception;
     int deleteById(Integer id) throws Exception;
     int updateByIdSelective(Exam exam) throws Exception;
+    int queryAppointTimeQuantum(Exam exam) throws Exception;
     Map<String, Object> queryExamByName(int start,int pageSize,String examName) throws Exception;
 }

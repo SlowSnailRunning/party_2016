@@ -317,6 +317,11 @@
     FROM party_exam WHERE exam_start_time&lt;=CURRENT_TIMESTAMP AND CURRENT_TIMESTAMP&lt;=exam_end_time
   </select>
 
+  <select id="queryAppointTimeQuantum" parameterType="cn.edu.cdcas.partyschool.model.Exam" resultType="int">
+    SELECT (*)
+    FROM party_exam WHERE exam_start_time > #{examEndTime,jdbcType=TIMESTAMP} OR #{examStartTime,jdbcType=TIMESTAMP} > exam_end_time
+  </select>
+
   <select id="findExamById" resultMap="BaseResultMap">
     select * from party_exam where id=#{id}
   </select>

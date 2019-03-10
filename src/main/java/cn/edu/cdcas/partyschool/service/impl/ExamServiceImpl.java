@@ -158,5 +158,8 @@ public class ExamServiceImpl implements ExamService {
     @Override
     public int updateByIdSelective(Exam exam) throws Exception { return examMapper.updateByIdSelective(exam); }
 
+    @Override
+    public int queryAppointTimeQuantum(Exam exam) throws Exception { return examMapper.queryAppointTimeQuantum(exam); }
+
 
 }

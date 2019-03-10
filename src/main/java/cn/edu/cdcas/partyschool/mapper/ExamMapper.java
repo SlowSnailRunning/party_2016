@@ -32,6 +32,9 @@ public interface ExamMapper {
 
     List<Exam> queryCurrentExamInformation() throws Exception;
 
+    //查询指定时间段内是否有另一个考试（此版本考试系统一个时间段内仅仅允许存在一个考试）
+    int queryAppointTimeQuantum(Exam exam) throws Exception;
+
     List<Exam> queryAllExamByKeyName(@Param("start") int start , @Param("pageSize") int pageSize , @Param("field") String field , @Param("value") String value);
 
     int queryExamNumsByField(@Param("field") String field, @Param("value") String value);

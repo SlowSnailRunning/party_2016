@@ -61,6 +61,9 @@ public class ExamController {
         return map;
     }
 
+    /**
+     * @Describe: 新增或更新一个考试
+     */
     @RequestMapping("/add-update")
     public JSONResult addStu(Exam exam) throws Exception {
         if (exam.getId() == null) { //if 'id' is null,insert a new student.
@@ -70,6 +73,19 @@ public class ExamController {
         examService.updateByIdSelective(exam);
         return new JSONResult(0, "信息修改成功!", 200);
     }
+
+    /**
+     * @Describe: 查询指定时间段内是否有其他考试（此版本系统同一时间段内只能有一个考试）
+     */
+    @RequestMapping("/queryAppointTimeQuantum")
+    public int queryAppointTimeQuantum(Exam exam) throws  Exception{
+        if(exam.getExamStartTime()!=null && exam.getExamEndTime()!=null){
+            int result = examService.queryAppointTimeQuantum(exam);
+            return result;
+        }
+        return -1;
+    }
+
 
     /**
      * @Describe: 查询考试（包括有条件和无条件查询）
