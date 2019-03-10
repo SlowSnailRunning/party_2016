@@ -64,9 +64,9 @@ layui.use(['form', 'layer', 'laydate', 'upload', 'table', 'laytpl'], function ()
             {
                 field: 'isMakeup', title: '是否允许补考', width: 180, align: 'center', templet: function (data) {
                     if (data.isMakeup == 0)
-                        return "是";
-                    else
                         return "否";
+                    else
+                        return "是";
 
                 }
             },
@@ -161,7 +161,7 @@ layui.use(['form', 'layer', 'laydate', 'upload', 'table', 'laytpl'], function ()
         var index = layui.layer.open({
             title: "添加考试",
             type: 2,
-            area: ['500px', '800px'],
+            area: ['500px', '700px'],
             content: "examAdd.html",
             success: function (layero, index) {
                 var body = layui.layer.getChildFrame('body', index);
