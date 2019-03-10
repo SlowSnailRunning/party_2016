@@ -89,8 +89,10 @@ layui.use(['form','layer','layedit','laydate','upload'],function(){
         return allScore;
     }
 
-        /*初始化总分标签的数据（同步）*/
-        $('.examAllScore').text(sum());
+        /*初始化总分标签的数据（同步）引入jQuery-3.1后以下办法不能初始化文本框，改用定时器处理*/
+    /* $('.examAllScore').text(sum());*/
+        window.setTimeout(sum,500);
+
 
 
         /*为需要参与计算总分的文本框设置键盘按键监听事件*/
