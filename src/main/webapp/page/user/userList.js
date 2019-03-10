@@ -26,6 +26,10 @@ layui.use(['form', 'layer', 'table', 'laytpl'], function () {
                     else
                         return "管理员";
                 }
+
+
+
+
             },
             {title: '操作', templet: '#userListBar', align: "center"}
         ]]
