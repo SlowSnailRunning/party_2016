@@ -7,6 +7,7 @@ layui.use(['form','layer','layedit','laydate','upload'],function(){
         laydate = layui.laydate,
         $ = layui.jquery;
         $('.submit-btn-submit').css({"left":"-32px","margin-left":"50%"});
+        console.log($('.passScore').css('width'));
         $('.examTimeRange').css("width",$('.passScore').css('width'));
         $('.label-zongfen').css("font-size","17px");
         $('.label-fen').css("font-size","17px");
