@@ -368,7 +368,7 @@ public class UserServiceImpl implements UserService {
             }
             //查找对应在answer表中，存放的学生数据
             String answer=userMapper.findAnswer(studentNo,"1".equals(isMakeUp)?"0":"1",question.getId(),examId);
-            question.setResult(answer);
+            question.setResult(answer==null?"":answer);
             questionList.add(question);
         }
         return questionList;
@@ -464,6 +464,23 @@ public class UserServiceImpl implements UserService {
        boolean b=examMapper.isOverTime(studentNo,exam.getExamTime())==0?true:false;
        return b;
     }
+    /**
+     *@Describe: 根据当前ExamState判断本次考试结束应该存入的时间
+     *@Author Snail
+     *@Date 2019/3/11
+     */
+    @Override
+    public boolean changeExamEnd(String studentNo, int examState) throws Exception {
+        if(examState==1){
+            userMapper.updateExamStartEnd(studentNo);
+           return true;
+        }else if(examState==4){
+            userMapper.updateMakeUpEnd(studentNo);
+            return true;
+        }
+        return false;
+    }
+
 
 
     ///--------------------can delete

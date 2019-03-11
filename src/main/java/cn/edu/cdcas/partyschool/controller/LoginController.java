@@ -96,6 +96,8 @@ public class LoginController {
 
 					if(userServiceImpl.isOvertime((String)httpSession.getAttribute("studentNo"))){
 						//超时
+						//统计answer表中，该考生初/补考数据，写入到user表
+//						userServiceImpl.writeScoreForAnswer((String)httpSession.getAttribute("studentNo"));
 						return "redirect:/exam/score.html";
 					}else {
 						//未超时

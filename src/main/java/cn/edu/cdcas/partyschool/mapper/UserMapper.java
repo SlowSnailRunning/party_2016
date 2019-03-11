@@ -82,6 +82,13 @@ public interface UserMapper {
      *@Date 2019/3/9
      */
     Integer insertToAnswer(Answer answer)throws Exception;
-
+    /**
+     *@Describe: 查找答案
+     *@Author Snail
+     *@Date 2019/3/11
+     */
     String findAnswer(@Param("student_no")String studentNo, @Param("is_make_up") String s,@Param("question_id") Integer id,@Param("exam_id") Integer examId);
+
+    Integer updateExamStartEnd(@Param("student_no")String studentNo);
+    Integer updateMakeUpEnd(@Param("student_no")String studentNo);
 }

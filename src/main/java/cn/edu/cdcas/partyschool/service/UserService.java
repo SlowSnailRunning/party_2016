@@ -69,5 +69,8 @@ public interface UserService {
 
     boolean isOvertime(String studentNo) throws Exception;
 
+    boolean changeExamEnd(String studentNo, int examState) throws Exception;
+
     boolean testTran() throws Exception;
+
 }

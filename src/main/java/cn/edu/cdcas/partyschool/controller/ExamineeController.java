@@ -86,4 +86,20 @@ public class ExamineeController {
             return new JSONResult();
         }
     }
+
+    /**
+     *@Describe: 交卷,按情况更新考试结束时间,考试总分的结算在错题查看页面进行
+     *@Author Snail
+     *@Date 2019/3/11
+     */
+    @RequestMapping("/updateEndTime")
+    @ResponseBody
+    public boolean updateEndTime(HttpSession httpSession){
+        try {
+            return userServiceImpl.changeExamEnd((String) httpSession.getAttribute("studentNo"),Integer.parseInt((String) httpSession.getAttribute("examState")));
+        } catch (Exception e) {
+            e.printStackTrace();
+            return false;
+        }
+    }
 }
