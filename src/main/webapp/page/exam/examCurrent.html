@@ -13,6 +13,7 @@
     <link rel="stylesheet" href="../../css/public.css" media="all"/>
     <script type="text/javascript" src="../../layui/layui.js"></script>
     <script type="text/javascript" src="../../js/jquery-3.3.1.js"></script>
+    <script type="text/javascript" src="../../js/jquery-3.3.1.min.js"></script>
 </head>
 <body class="childrenBody" id="time">
 
@@ -50,7 +51,7 @@
                 <div class="layui-form-item magt3">
                     <label class="layui-form-label">考试剩余时间:</label>
                     <div class="layui-input-block">
-                        <div id="remainTime" style="font-size:18px;font-weight:600;color:#FF5722;line-height: 36px"></div>
+                        <div id="remainTime" ></div>
                     </div>
                 </div>
 
@@ -99,6 +100,7 @@
                             var menuHtml="";
                             var obj = eval("("+JSON.stringify(res.data)+")");
 
+                            $('#remainTime').css({"font-size":"18px","font-weight":"600","color":"#FF5722","line-height":"40px"});
                             $('.examName').val(obj[0].examName);
                             $('.examTime').val(obj[0].examTime+"分钟");
 
@@ -191,8 +193,6 @@
    /* .val(layui.util.toDateString(original_data.examEndTime, 'yyyy-MM-dd HH:mm:ss'));*/
 
 </script>
-
-<script type="text/javascript" src="http://apps.bdimg.com/libs/jquery/1.9.1/jquery.min.js"></script>
 
 
 </body>
