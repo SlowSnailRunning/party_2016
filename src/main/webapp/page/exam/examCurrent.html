@@ -108,15 +108,6 @@
                         if(res && res.code===0){
                             var menuHtml="";
                             var obj = eval("("+JSON.stringify(res.data)+")");
-                            /*alert(res.data.examName);*/
-                          /*  alert("1-->"+obj[0].examName);*/
-                        /*    alert("2-->"+obj.examName);*/
-                        /*    alert(JSON.stringify(res));
-                            console.log(JSON.parse(res)['data'].examName);
-                            console.log(JSON.stringify(res.data.examName));
-                            console.log(JSON.stringify(res.data['examName']));
-                            var data = JSON.stringify(res.data);*/
-
 
                             $('.examName').val(obj[0].examName);
                             $('.examTime').val(obj[0].examTime+"分钟");
@@ -157,20 +148,22 @@
                                     setCountdown(date.year, date.month - 1, date.date, date.hours, date.minutes, date.seconds);
                                 }
                             });
-                          var setInt=setInterval(function () {
-                                $.ajax({
-                                    url : "/exam/studentSize.do",
-                                    type : "get",
-                                    success : function(data){
-                                       $("#peopel").text(data);
-                                    }
-                                });
-                            },2000);
+
                         }
                     }
                 })
             };
             loadexamCurrent();
+
+            var setInt=setInterval(function () {
+                $.ajax({
+                    url : "/exam/studentSize.do",
+                    type : "get",
+                    success : function(data){
+                        $("#peopel").text(data);
+                    }
+                });
+            },2000);
         })
     });
 
