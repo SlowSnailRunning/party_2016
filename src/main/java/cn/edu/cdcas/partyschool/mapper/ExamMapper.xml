@@ -318,7 +318,7 @@
   </select>
 
   <select id="queryAppointTimeQuantum" parameterType="cn.edu.cdcas.partyschool.model.Exam" resultType="int">
-    SELECT (*)
+    SELECT COUNT(*)
     FROM party_exam WHERE exam_start_time > #{examEndTime,jdbcType=TIMESTAMP} OR #{examStartTime,jdbcType=TIMESTAMP} > exam_end_time
   </select>
 

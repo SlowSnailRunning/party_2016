@@ -140,7 +140,23 @@ layui.use(['form','layer','layedit','laydate','upload'],function(){
                 console.log($('.examStartTime').val());
                 console.log($('.examEndTime').val());
             /*    alert($('.examEndTime').val());*/
-               $('.examTime').val(TimeDifference(arr[0],arr[1]));
+                //验证此时加入的时间段是否与数据库中各个考试的时间段冲突，冲突则禁止加入！
+                $.ajax({
+                    url : "/exam/queryAppointTimeQuantum.do",
+                    type : "post",
+                    data:{examStartTime:arr[0],examEndTime:arr[1]},
+                    success : function(data){
+                       if(data===0) {
+
+                           $('.examTime').val(TimeDifference(arr[0],arr[1]));
+                       }
+                       else {
+                           $('.examTime').val("");
+                           layer.alert("此时间段与数据库中某个时间段冲突！请重新选择");
+                       }
+                    }
+                });
+
 
             }
         });

@@ -81,6 +81,7 @@ public class ExamController {
     public int queryAppointTimeQuantum(Exam exam) throws  Exception{
         if(exam.getExamStartTime()!=null && exam.getExamEndTime()!=null){
             int result = examService.queryAppointTimeQuantum(exam);
+            //result = 0(加入考试时间段与数据库没有冲突) result > 0 ：冲突
             return result;
         }
         return -1;
