@@ -50,8 +50,7 @@
                 <div class="layui-form-item magt3">
                     <label class="layui-form-label">考试剩余时间:</label>
                     <div class="layui-input-block">
-                        <input type="text" name="residualTime" id="residualTime" class="layui-input residualTime layui-disabled" disabled required
-                               lay-verify="required">
+                        <div id="remainTime" style="font-size:18px;font-weight:600;color:#FF5722;text-align:center;line-height: 50px"></div>
                     </div>
                 </div>
 
@@ -72,15 +71,6 @@
                 </div>
                 <br>
                 在线人数:<span id="peopel">430</span><br>
-                请选择要计算的日期：
-                <div class="layui-inline">
-                    <input type="text" class="layui-input" id="test1" value="">
-                </div>
-
-                <blockquote class="layui-elem-quote" style="margin-top: 10px;">
-                    <div id="test2"></div>
-                </blockquote>
-
 
             </div>
         </div>
@@ -131,40 +121,54 @@
                             var TimebeforeAndafter=new Array(examEndTime.split(" "));
                             var Timebefore = new Array(TimebeforeAndafter[0].split("-"));
                             var Timeafter =new Array(TimebeforeAndafter[1].split(":"));
-
                             var y =parseInt(Timebefore[0]);
                             var M =parseInt(Timebefore[1]-1);
                             var d =parseInt(Timebefore[2]);
                             var H =parseInt(Timeafter[0]);
                             var m =parseInt(Timeafter[1]);
                             var s =parseInt(Timeafter[2]);*/
-
                             /*setCountdown(y,M,d,H,m,s);*/
 
-
-                            //倒计时
-                            var thisTimer, setCountdown = function(y, M, d, H, m, s){
-                                var endTime = new Date(y, M||0, d||1, H||0, m||0, s||0) //结束日期
-                                    ,serverTime = new Date(); //假设为当前服务器时间，这里采用的是本地时间，实际使用一般是取服务端的
-
-                                clearTimeout(thisTimer);
-                                util.countdown(endTime, serverTime, function(date, serverTime, timer){
-                                    var str = date[0] + '天' + date[1] + '时' +  date[2] + '分' + date[3] + '秒';
-                                    lay('#test2').html(str);
-                                    thisTimer = timer;
-                                });
-                            };
                          /*   alert(layui.util.toDateString(obj[0].examEndTime, 'yyyy-MM-dd HH:mm:ss'));*/
 
-                            setCountdown(layui.util.toDateString(obj[0].examEndTime, 'yyyy-MM-dd HH:mm:ss'));
 
-                            laydate.render({
-                                elem: '#test1'
-                                ,type: 'datetime'
-                                ,done: function(value, date){
-                                    setCountdown(date.year, date.month - 1, date.date, date.hours, date.minutes, date.seconds);
-                                }
+                            /*-----------倒计时----------------*/
+                            var SysSecond;
+                            var InterValObj;
+
+                            $(document).ready(function() {
+                                SysSecond = parseInt((obj[0].examEndTime - new Date())/1000); //这里获取倒计时的起始时间
+                                InterValObj = window.setInterval(SetRemainTime, 1000); //间隔函数，1秒执行
                             });
+
+                            //将时间减去1秒，计算天、时、分、秒
+                            function SetRemainTime() {
+                                if (SysSecond > 0) {
+                                    SysSecond = SysSecond - 1;
+                                    var second = Math.floor(SysSecond % 60);            // 计算秒
+                                    var minite = Math.floor((SysSecond / 60) % 60);      //计算分
+                                    var hour = Math.floor((SysSecond / 3600) % 24);      //计算小时
+                                    var day = Math.floor((SysSecond / 3600) / 24);       //计算天
+
+                                    var hourDiv = "<span id='hourSpan'>"+ hour + "小时"+"</span>";
+                                    var dayDiv = "<span id='daySpan'>"+ day + "天"+"</span>";
+
+                                    $("#remainTime").html(dayDiv + hourDiv + minite + "分" + second + "秒");
+
+                                    if(hour === 0) {//当不足1小时时隐藏小时
+                                        $('#hourSpan').css('display','none');
+                                    }
+                                    if(day === 0) {//当不足1天时隐藏天
+                                        $('#daySpan').css('display','none');
+                                    }
+
+                                } else {//剩余时间小于或等于0的时候，就停止间隔函数
+                                    window.clearInterval(InterValObj);
+                                    //这里可以添加倒计时时间为0后需要执行的事件
+                                    layer.alert("考试时间到！");
+                                }
+                            }
+
 
                         }
                     }
@@ -187,6 +191,9 @@
    /* .val(layui.util.toDateString(original_data.examEndTime, 'yyyy-MM-dd HH:mm:ss'));*/
 
 </script>
+
+<script type="text/javascript" src="http://apps.bdimg.com/libs/jquery/1.9.1/jquery.min.js"></script>
+
 
 </body>
 </html>
