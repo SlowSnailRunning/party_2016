@@ -5,6 +5,7 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import cn.edu.cdcas.partyschool.listener.UniqueSession;
+import cn.edu.cdcas.partyschool.model.Exam;
 import cn.edu.cdcas.partyschool.model.User;
 import cn.edu.cdcas.partyschool.service.ExamService;
 import cn.edu.cdcas.partyschool.service.QuestionService;
@@ -59,6 +60,7 @@ public class LoginController {
 			}else if((type=userServiceImpl.findType(student_no))==null){
 				flag = 2;//无权进入改系统
 			}else{
+				// TODO: 2019/3/11 拦截考试状态为未过的人
 //				System.out.println("-----------------验证成功----------------");
 				if(examServiceImpl.isCurrentExam()==null&&"student".equals(type)){
 					flag=3;//未有该生考试
@@ -83,7 +85,7 @@ public class LoginController {
 
 			String type= (String) httpSession.getAttribute("type");
 			if("student".equals(type)){
-				if(httpSession.getAttribute("dan")==null){
+				if(httpSession.getAttribute("dan")==null||httpSession.getAttribute("duo")==null){
 					//从数据库获取exam_state
 					httpSession.setAttribute("examState",userServiceImpl.queryByStuNo((String) httpSession.getAttribute("studentNo")).getExamState());
 //					httpSession.setAttribute(((User)userServiceImpl.queryByStuNo(userSession.getNumber())).getExamState());
@@ -91,7 +93,15 @@ public class LoginController {
 				}else {
 					//非首次登录
 					// TODO: 2019/3/5
-					return "";
+
+					if(userServiceImpl.isOvertime((String)httpSession.getAttribute("studentNo"))){
+						//超时
+						return "redirect:/exam/score.html";
+					}else {
+						//未超时
+						userServiceImpl.requiredQuestionAndOther(httpSession);
+						return "redirect:/exam/exam.html";
+					}
 				}
 			}else if("ROOT".equals(type)||"manger".equals(type)){
 				return "redirect:/index.html";

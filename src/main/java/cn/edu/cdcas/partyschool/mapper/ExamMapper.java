@@ -41,4 +41,8 @@ public interface ExamMapper {
 
     Exam findExamById(String id) throws Exception;
 
+    //查询考试是否超时
+    Integer isOverTime(@Param("student_no")String student_no,@Param("exam_time")Integer exam_time) throws Exception;
+
+
 }

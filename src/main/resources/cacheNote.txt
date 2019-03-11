@@ -1,23 +1,24 @@
 redis:
-jedisClient.hset("partySys2016","examQueNum",examQueNum):当前考试各种题型数量
-jedisClient.hset("partySys2016","nowExam",JSON.toJSONString(exam));当前考试对象
-jedisClient.hset("partySys2016",题目id,题目对象的字符串)
+    jedisClient.hset("partySys2016","examQueNum",examQueNum):当前考试各种题型数量
+    jedisClient.hset("partySys2016","nowExam",JSON.toJSONString(exam));当前考试对象
+    jedisClient.hset("partySys2016",题目id,题目对象的字符串)
 
-验证redis：
-set_new_redisdb("party",array("md5"=>$md5),50);
+    验证redis：
+    set_new_redisdb("party",array("md5"=>$md5),50);
 
 session:
- httpSession.setAttribute("dan",[1,14]
- httpSession.setAttribute("duo"
-                         pan
-                         tian
-httpSession.setAttribute("type", type);
-httpSession.setAttribute("studentNo",student_no);
-httpSession.setAttribute("examState",);
+     httpSession.setAttribute("dan",[1,14]
+     httpSession.setAttribute("duo"
+                             pan
+                             tian
+    httpSession.setAttribute("type", type);
+    httpSession.setAttribute("studentNo",student_no);
+    httpSession.setAttribute("examState",);
+
 《跳转配置》
-//php服务器的配置去cn.edu.cdcas.partyschool.interceptor.ValidateSession修改
-private static final String[] IGNORE_URI = {"/login.do"};
-private static final String php_Address="http://172.20.253.19/core/default.php?from=iframe";
+    //php服务器的配置去cn.edu.cdcas.partyschool.interceptor.ValidateSession修改
+    private static final String[] IGNORE_URI = {"/login.do"};
+    private static final String php_Address="http://172.20.253.19/core/default.php?from=iframe";
 
 
 

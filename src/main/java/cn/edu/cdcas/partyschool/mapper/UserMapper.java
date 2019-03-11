@@ -62,23 +62,26 @@ public interface UserMapper {
     User queryByStuNo(String stuNo) throws Exception;
 
     /**
-     *@Describe: 更具传入的题目类型，需要的题目数，获取题目id
+     *@Describe: 根据传入的题目类型，需要的题目数，获取题目id
      *@Author Snail
      *@Date 2019/3/7
      */
     List<Integer> findQueIds(@Param("type") int type, @Param("num") int num) throws Exception;
 
-    Integer updateExamStateByStuNo(@Param("student_no")String student_no,@Param("exam_state")int exam_state) throws Exception;
+    Integer updateExamStateExamByStuNo(@Param("student_no")String student_no,@Param("exam_state")int exam_state) throws Exception;
+    Integer updateExamStateMakeupByStuNo(@Param("student_no")String student_no,@Param("exam_state")int exam_state) throws Exception;
     /**
-     *@Describe: 查找答案表中是否存在该题目的记录
+     *@Describe: 查找答案表中是否存在该考生插入的所有题目
      *@Author Snail
-     *@Date 2019/3/9
+     *@Date 2019/3/11
      */
-    Integer findIdToUpdateInsert(Answer answer) throws Exception;
+    Integer findIsInsertToAnswer(@Param("student_no")String student_no,@Param("is_make_up")String is_make_up) throws Exception;
     /**
      *@Describe: 插入答案表
      *@Author Snail
      *@Date 2019/3/9
      */
     Integer insertToAnswer(Answer answer)throws Exception;
+
+    String findAnswer(@Param("student_no")String studentNo, @Param("is_make_up") String s,@Param("question_id") Integer id,@Param("exam_id") Integer examId);
 }

@@ -8,17 +8,18 @@ import cn.edu.cdcas.partyschool.util.JSONResult;
 import cn.edu.cdcas.partyschool.util.impl.JedisClientSingle;
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
+import com.alibaba.fastjson.TypeReference;
+import javafx.scene.AmbientLight;
 import org.apache.commons.collections4.map.HashedMap;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.DigestUtils;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpSession;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.beans.Transient;
+import java.util.*;
 
 @Service
 public class UserServiceImpl implements UserService {
@@ -241,6 +242,7 @@ public class UserServiceImpl implements UserService {
         //获取本次考试各种题型数量
         String examQueNum;
         Exam exam = null;
+        String studentNo=(String) httpSession.getAttribute("studentNo");
         if(jedisClient.hexists("partySys2016","examQueNum")){
             examQueNum= jedisClient.hget("partySys2016", "examQueNum");
             exam=JSON.parseObject(jedisClient.hget("partySys2016","nowExam"),Exam.class);
@@ -257,37 +259,63 @@ public class UserServiceImpl implements UserService {
         }
         //随机获取各种类型题目id，写入到session,再通过题目id读取数据写入到redis
         String[] split = examQueNum.split(",");
-        Map<String,Object> requiredQuestionAndOther=new HashMap<>();
+        Map<String,Object> requiredQuestionAndOther=new LinkedHashMap<>();
+        //判断这次获取到的题目id是否需要写入到answer表
+        boolean isInsert=userMapper.findIsInsertToAnswer(studentNo,("1".equals(String.valueOf( httpSession.getAttribute("examState")))?"0":"1"))==0?true:false;
+
         for (int i = 0; i < 4; i++) {
-            List<Integer> queIds = userMapper.findQueIds(i+1, Integer.parseInt(split[i]));
+            //先从session中取题号，如果没有，去数据库随机获取
+            List<Integer> queIds = null;
             switch (i){
                 case 0:
-                    httpSession.setAttribute("dan",JSON.toJSONString(queIds));
-                    requiredQuestionAndOther.put("dan", selectQuestionList(queIds));
+                    if(httpSession.getAttribute("dan")==null){
+                        queIds = userMapper.findQueIds(i+1, Integer.parseInt(split[i]));
+                        httpSession.setAttribute("dan",JSON.toJSONString(queIds));
+                    }else {
+                        queIds=JSON.parseObject((String) httpSession.getAttribute("dan"),new TypeReference<List<Integer>>(){});
+                    }
+
+                    requiredQuestionAndOther.put("dan", selectQuestionList(queIds,"dan", studentNo,exam.getId(), String.valueOf( httpSession.getAttribute("examState")),isInsert));
                     break;
                 case 1:
-                    httpSession.setAttribute("duo",JSON.toJSONString(queIds));
-                    requiredQuestionAndOther.put("duo",selectQuestionList(queIds));
+                    if(httpSession.getAttribute("duo")==null){
+                        queIds = userMapper.findQueIds(i+1, Integer.parseInt(split[i]));
+                        httpSession.setAttribute("duo",JSON.toJSONString(queIds));
+                    }else {
+                        queIds=JSON.parseObject((String) httpSession.getAttribute("duo"),new TypeReference<List<Integer>>(){});
+                    }
+
+                    requiredQuestionAndOther.put("duo",selectQuestionList(queIds,"duo", studentNo,exam.getId(), String.valueOf( httpSession.getAttribute("examState")),isInsert));
                     break;
                 case 2:
-                    httpSession.setAttribute("pan",JSON.toJSONString(queIds));
-                    requiredQuestionAndOther.put("pan",selectQuestionList(queIds));
+                    if(httpSession.getAttribute("pan")==null){
+                        queIds = userMapper.findQueIds(i+1, Integer.parseInt(split[i]));
+                        httpSession.setAttribute("pan",JSON.toJSONString(queIds));
+                    }else {
+                        queIds=JSON.parseObject((String) httpSession.getAttribute("pan"),new TypeReference<List<Integer>>(){});
+                    }
+
+                    requiredQuestionAndOther.put("pan",selectQuestionList(queIds,"pan", studentNo,exam.getId(), String.valueOf( httpSession.getAttribute("examState")),isInsert));
                     break;
                 case 3:
-                    httpSession.setAttribute("tian",JSON.toJSONString(queIds));
-                    requiredQuestionAndOther.put("tian",selectQuestionList(queIds));
+                    if(httpSession.getAttribute("tian")==null){
+                        queIds = userMapper.findQueIds(i+1, Integer.parseInt(split[i]));
+                        httpSession.setAttribute("tian",JSON.toJSONString(queIds));
+                    }else {
+                        queIds=JSON.parseObject((String) httpSession.getAttribute("tian"),new TypeReference<List<Integer>>(){});
+                    }
+
+                    requiredQuestionAndOther.put("tian",selectQuestionList(queIds,"tian", studentNo,exam.getId(), String.valueOf( httpSession.getAttribute("examState")),isInsert));
                     break;
             }
-            //通过题目id获取题目，加入redis
-
         }
         //题目放入到map
         requiredQuestionAndOther.put("msg","success");
         requiredQuestionAndOther.put("status","200");
         requiredQuestionAndOther.put("examStartTime",JSON.parseObject(jedisClient.hget("partySys2016","nowExam")).getString("examStartTime"));
         requiredQuestionAndOther.put("examName",exam.getExamName());
-        requiredQuestionAndOther.put("number",httpSession.getAttribute("studentNo"));
-        User examinee = queryByStuNo((String) httpSession.getAttribute("studentNo"));
+        requiredQuestionAndOther.put("number",studentNo);
+        User examinee = queryByStuNo(studentNo);
         requiredQuestionAndOther.put("name",examinee.getName());
         requiredQuestionAndOther.put("grade",examinee.getGrade());
         requiredQuestionAndOther.put("major",examinee.getDepartment());
@@ -310,20 +338,37 @@ public class UserServiceImpl implements UserService {
         return requiredQuestionAndOther;
     }
     /**
-     *@Describe: 根据传入的题目id list，返回对应题目的list 对象，并放入缓存
+     *@Describe: 根据传入的题目id list，返回对应题目的list 对象，并放入缓存；初始化该生抽取到的题目到answer表中，在事务中update
      *@Author Snail
      *@Date 2019/3/6
      */
-    private List<Question> selectQuestionList(List<Integer> queIds){
+    private List<Question> selectQuestionList(List<Integer> queIds,String type,String studentNo,Integer examId,String isMakeUp,boolean isInsert) throws Exception {
         List<Question> questionList=new ArrayList<>();
         Question question=null;
         for (int j = 0; j < queIds.size(); j++) {
+
             if(jedisClient.hexists("partySys2016", String.valueOf(queIds.get(j)))){
                 question=JSON.parseObject(jedisClient.hget("partySys2016", String.valueOf(queIds.get(j))), Question.class);
             }else {
                 question= questionMapper.queryById(queIds.get(j));
                 jedisClient.hset("partySys2016",String.valueOf(queIds.get(j)),JSON.toJSONString(question));
             }
+            //把取到的题目，通过学号和isMakeUp字段判断是否需要insert到answer表中
+            // TODO: 2019/3/11 能否加入批处理，批处理insert，提高效率
+            if(isInsert){
+                Answer answer=new Answer();
+                answer.setStudentNo(studentNo);
+                answer.setExamId(examId);
+                answer.setQuestionId(question.getId());
+                answer.setQuestionType(question.getType());
+                answer.setIsMakeUp("1".equals(isMakeUp)?"0":"1");
+                answer.setResult(question.getResult());
+
+                userMapper.insertToAnswer(answer);
+            }
+            //查找对应在answer表中，存放的学生数据
+            String answer=userMapper.findAnswer(studentNo,"1".equals(isMakeUp)?"0":"1",question.getId(),examId);
+            question.setResult(answer);
             questionList.add(question);
         }
         return questionList;
@@ -336,17 +381,20 @@ public class UserServiceImpl implements UserService {
      */
     @Override
     public int changeExamState(String studentNo, int examState) throws Exception {
-
-        if(examState==0||examState==3){
+        if(examState==0){
             examState=examState+1;
-            userMapper.updateExamStateByStuNo(studentNo,examState);
+            userMapper.updateExamStateExamByStuNo(studentNo,examState);
+        }else if(examState==3){
+            examState=examState+1;
+            userMapper.updateExamStateMakeupByStuNo(studentNo,examState);
         }
+
         return examState;
     }
 
     @Override
     public boolean saveAnswer(int id, String answer, String studentNo,String isMakeUp) throws Exception {
-        Answer answerObject=new Answer();
+       /* Answer answerObject=new Answer();
 
         answerObject.setStudentNo( studentNo);
         answerObject.setExamId(JSON.parseObject(jedisClient.hget("partySys2016","nowExam"),Exam.class).getId());
@@ -364,7 +412,8 @@ public class UserServiceImpl implements UserService {
         }else {
             //update
 
-        }
+        }*/
+//       userMapper.
         return true;
     }
     /**
@@ -372,7 +421,7 @@ public class UserServiceImpl implements UserService {
      *@Author Snail
      *@Date 2019/3/9
      */
-    public int getScore(int id,String answer){
+    private int getScore(int id,String answer){
         JSONObject theIdQue = JSON.parseObject(jedisClient.hget("partySys2016", String.valueOf(id)));
         JSONObject nowExam = JSON.parseObject(jedisClient.hget("partySys2016", "nowExam"));
         String result=theIdQue.getString("result");
@@ -396,5 +445,35 @@ public class UserServiceImpl implements UserService {
             return Integer.parseInt(temp);
         }
         return 0;
+    }
+    /**
+     *@Describe: 判断考试是true否false超时
+     *@Author Snail
+     *@Date 2019/3/11
+     */
+    @Override
+    public boolean isOvertime(String studentNo) throws Exception{
+
+        Exam exam =null;
+        if(jedisClient.hexists("partySys2016","nowExam")){
+            exam=JSON.parseObject(jedisClient.hget("partySys2016","nowExam"),Exam.class);
+        }else {
+            exam = examMapper.queryCurrentExamInformation().get(0);
+            jedisClient.hset("partySys2016","nowExam",JSON.toJSONString(exam));
+        }
+       boolean b=examMapper.isOverTime(studentNo,exam.getExamTime())==0?true:false;
+       return b;
+    }
+
+
+    ///--------------------can delete
+    @Override
+    @Transactional(rollbackFor = Exception.class)
+    public boolean testTran() throws  Exception{
+      /*  userMapper.updateExamStateByStuNo("201617025222",3);
+        userMapper.updateExamStateByStuNo("201616020407",3);*/
+
+       // throw new RuntimeException("pao yi ge yi chang ");
+        return true;
     }
 }

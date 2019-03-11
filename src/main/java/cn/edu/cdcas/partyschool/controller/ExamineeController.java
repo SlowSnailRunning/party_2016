@@ -7,6 +7,7 @@ import cn.edu.cdcas.partyschool.util.JedisClient;
 import com.alibaba.fastjson.JSON;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
@@ -27,6 +28,7 @@ public class ExamineeController {
      */
     @RequestMapping("/allQuestionInfoForStu")
     @ResponseBody
+    @Transactional(rollbackFor =Exception.class )
     public Map<String,Object> allQuestionInfoForStu(HttpSession httpSession){
         Map<String,Object> requiredQuestions=new HashMap<>();
         try {
@@ -34,7 +36,7 @@ public class ExamineeController {
             int examState= (int) httpSession.getAttribute("examState");
             int nowExamState=userServiceImpl.changeExamState((String) httpSession.getAttribute("studentNo"),examState);
             httpSession.setAttribute("examState",nowExamState);
-            //更新考试开始时间
+
             //封装需要的数据
             requiredQuestions=userServiceImpl.requiredQuestionAndOther(httpSession);
 
@@ -67,8 +69,9 @@ public class ExamineeController {
     {
         return "asdfasf";
     }
+
     /**
-     *@Describe: 根据题目id判断是更新还是插入
+     *@Describe: update数据，注意isMakeUp字段
      *@Author Snail
      *@Date 2019/3/9
      */

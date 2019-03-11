@@ -66,4 +66,8 @@ public interface UserService {
     int changeExamState(String studentNo, int examState) throws Exception;
 
     boolean saveAnswer(int id, String answer, String studentNo,String isMakeUp) throws Exception;
+
+    boolean isOvertime(String studentNo) throws Exception;
+
+    boolean testTran() throws Exception;
 }

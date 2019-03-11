@@ -45,6 +45,7 @@ public class UniqueSession implements HttpSessionAttributeListener {
                 //移除之前的session
                 sessionInMap.removeAttribute(studentNo);//removeAttribute
                 sessionInMap.invalidate();//注销session
+                sessionMap.remove(studentNo);
 
             }
             sessionMap.put(studentNo, event.getSession());

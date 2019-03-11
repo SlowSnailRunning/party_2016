@@ -1,5 +1,6 @@
 package cn.edu.cdcas.partyschool.controller;
 
+import cn.edu.cdcas.partyschool.service.UserService;
 import cn.edu.cdcas.partyschool.util.JedisClient;
 import cn.edu.cdcas.partyschool.util.impl.JedisClientSingle;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -26,6 +27,26 @@ public class TestController {
     private ServletContext servletContext;
     @Autowired
     private JedisClientSingle jedisClient;
+    @Autowired
+    private UserService userServiceI;
+
+    @RequestMapping("/tran")
+    public String user(){
+        try {
+            userServiceI.testTran();
+        } catch (Exception e) {
+            e.printStackTrace();
+            new Exception("shou dong yi chang ");
+        }
+
+        return "success";
+    }
+
+
+
+
+
+
     @RequestMapping("/SpringMVC")
     @ResponseBody
     public String SpringMVC(Model model) {
