@@ -88,12 +88,9 @@ layui.use(['form','layer','layedit','laydate','upload'],function(){
         $('.examAllScore').text(allScore);
         return allScore;
     }
-
         /*引入jQuery-3.1后以下办法不能初始化（在谷歌浏览器）文本框，改用定时器处理*/
     /* $('.examAllScore').text(sum());*/
         window.setTimeout(sum,500);
-
-
         /*为需要参与计算总分的文本框设置键盘按键监听事件*/
         $(".radioNum").keyup(sum);
         $(".radioScore").keyup(sum);

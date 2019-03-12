@@ -32,6 +32,10 @@ public class UserServiceImpl implements UserService {
     @Autowired
     private QuestionMapper questionMapper;
 
+    @Override
+    public Double getStuScores(String studentNo, String isMakeUp, Integer examId) {
+        return userMapper.getStuScores(studentNo,isMakeUp,examId);
+    }
 
     @Override
     public int deleteById(Integer id) {

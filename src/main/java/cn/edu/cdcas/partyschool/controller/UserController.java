@@ -40,6 +40,10 @@ public class UserController {
      * @param file
      * @return
      */
+    @RequestMapping("/getStuScores")
+    public Double getStuScores(String studentNo, String isMakeUp, Integer examId) {
+        return userService.getStuScores(studentNo,isMakeUp,examId);
+    }
     @RequestMapping("/upload")
     public JSONResult upload(@RequestParam("file") MultipartFile file) {
         if (!userService.isEmpty()) {
