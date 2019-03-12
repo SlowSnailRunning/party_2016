@@ -1,0 +1,129 @@
+{
+  "msg": "success",
+  "countQue": 6,
+  "tianTotal": 2,
+  "pass": 5,
+  "examName": "test666",
+  "danTotal": 1,
+  "duoTotal": 2,
+  "panTotal":3,
+  "dan": [
+    {
+      "correct": 0,
+      "id": 2,
+      "intro": "党组织讨论决定问题，必须执行( )的原则。",
+      "optionA": "下级组织必须坚决执行上级组织的决定",
+      "optionB": "少数服从多数",
+      "optionC": "全党各个组织和全体党员服从党的全国代表大会和中央委员会",
+      "optionD": "下级组织服从上级组织",
+      "result": "B",
+      "selected": 0,
+      "state": "checked",
+      "type": 1
+    }
+  ],
+  "duo": [
+    {
+      "correct": 0,
+      "id": 9,
+      "intro": "多选 2对习近平中国特色社会主义思想解读错误的是( )。",
+      "optionA": "是对毛泽东思想、邓小平理论、“三个代表”重要思想、科学发展观的继承和发展",
+      "optionB": "是马克思主义中国化最新成果",
+      "optionC": "是党和国家实践经验和集体智慧的结晶",
+      "optionD": "是中国特色社会主义理论体系的重要组成部分",
+      "result": "BCD",
+      "selected": 0,
+      "state": "checked",
+      "type": 2
+    },
+    {
+      "correct": 0,
+      "id": 10,
+      "intro": "多选 3 对习近平中国特色社会主义思想解读错误的是( )。",
+      "optionA": "是对毛泽东思想、邓小平理论、“三个代表”重要思想、科学发展观的继承和发展",
+      "optionB": "是马克思主义中国化最新成果",
+      "optionC": "是党和国家实践经验和集体智慧的结晶",
+      "optionD": "是中国特色社会主义理论体系的重要组成部分",
+      "result": "CD",
+      "selected": 0,
+      "state": "checked",
+      "type": 2
+    }
+  ],
+  "pan": [
+    {
+      "correct": 0,
+      "id": 12,
+      "intro": "判断 2预备党员的预备期为( )。党组织对预备党员应当认真教育和考察。",
+      "optionA": "正确",
+      "optionB": "错误",
+      "optionC": "",
+      "optionD": "",
+      "result": "A",
+      "selected": 0,
+      "state": "checked",
+      "type": 3
+    },
+    {
+      "correct": 0,
+      "id": 6,
+      "intro": "判断 预备党员的预备期为( )。党组织对预备党员应当认真教育和考察。",
+      "optionA": "正确",
+      "optionB": "错误",
+      "optionC": "",
+      "optionD": "",
+      "result": "A",
+      "selected": 0,
+      "state": "checked",
+      "type": 3
+    },
+    {
+      "correct": 0,
+      "id": 15,
+      "intro": "判断 5预备党员的预备期为( )。党组织对预备党员应当认真教育和考察。",
+      "optionA": "正确",
+      "optionB": "错误",
+      "optionC": "",
+      "optionD": "",
+      "result": "A",
+      "selected": 0,
+      "state": "checked",
+      "type": 3
+    }
+  ],
+  "number": "201617025222",
+  "tian": [
+    {
+      "correct": 0,
+      "id": 18,
+      "intro": "填空 4 党员的{}党{}龄，从{}算起。",
+      "optionA": "",
+      "optionB": "",
+      "optionC": "",
+      "optionD": "",
+      "result": "{空一答案}{空二答案}",
+      "selected": 0,
+      "state": "checked",
+      "type": 4
+    },
+    {
+      "correct": 0,
+      "id": 17,
+      "intro": "填空 3 党员的{}党{}龄，从{}算起。",
+      "optionA": "",
+      "optionB": "",
+      "optionC": "",
+      "optionD": "",
+      "result": "{空一答案}{空二答案}{空三答案}",
+      "selected": 0,
+      "state": "checked",
+      "type": 4
+    }
+  ],
+  "major": "信息技术学院",
+  "grade": "2016级",
+  "name": "蒲发全",
+  
+  "examTime": 90,
+  "status": "200"
+}
