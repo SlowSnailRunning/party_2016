@@ -45,7 +45,6 @@ public class ExamineeController {
             e.printStackTrace();
             requiredQuestions.put("status",500);
             return requiredQuestions;
-
         }
     }
 
@@ -102,4 +101,5 @@ public class ExamineeController {
             return false;
         }
     }
+
 }
