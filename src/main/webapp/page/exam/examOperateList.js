@@ -70,7 +70,7 @@ layui.use(['form', 'layer', 'laydate', 'upload', 'table', 'laytpl'], function ()
 
                 }
             },
-            {title: '操作', width: 180, templet: '#examListBar', fixed: "right", align: "center"}
+            {title: '操作', width: 210, templet: '#examListBar', fixed: "right", align: "center"}
         ]]
     });
 
@@ -254,8 +254,8 @@ layui.use(['form', 'layer', 'laydate', 'upload', 'table', 'laytpl'], function ()
 
                 })
             });
-        } else if (layEvent === 'look') { //预览
-            layer.alert("此功能需要前台展示，实际开发中传入对应的必要参数进行文章内容页面访问")
+        } else if (layEvent === 'openOrCloseExam') { //预览
+            layer.alert("此功能需要前台展示，实际开发中传入对应的必要参数进行文章内容页面访问openOrCloseExam")
         }
     });
 

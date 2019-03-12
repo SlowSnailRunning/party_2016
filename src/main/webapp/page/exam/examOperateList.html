@@ -45,7 +45,9 @@
     <table id="examList" lay-filter="examList"></table>
 
     <script type="text/html" id="examListBar">
+        <a class="layui-btn layui-btn-xs layui-btn-danger" lay-event="openOrCloseExam" style="border-radius: 12px !important;background-color:#FFFFFF !important;">
         <input type="checkbox" name="openOrCloseExam" lay-skin="switch" lay-text="开启|关闭">
+        </a>
         <a class="layui-btn layui-btn-xs" lay-event="edit">编辑</a>
         <a class="layui-btn layui-btn-xs layui-btn-danger" lay-event="del">删除</a>
     </script>
