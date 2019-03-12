@@ -12,7 +12,7 @@
           type="text/css"/>
     <link href="css/sweetalert.css" rel="stylesheet"
           type="text/css"/>
-    <script src="js/jquery-1.8.3.min.js"></script>
+    <script src="js/jquery-3.3.1.js"></script>
     <script src="js/bootstrap.min.js" rel="stylesheet"
             media="screen"></script>
     <script src="js/sweetalert.min.js" rel="stylesheet"
@@ -279,9 +279,7 @@
             <li><a href="#">成都文理学院党校</a></li>
         </ul>
     </div>
-</div>
-		
-		<script type="text/javascript" >
+</div><script type="text/javascript" >
         	
  
    var data;
@@ -290,7 +288,7 @@
    	   $.ajax({
    	   	type:"get",
    	   	dataType:"json",
-   	   	url:"/examinee/allQuestionInfoForStu.do",
+   	   	url:"json/question2.json",
       success:function(result){
           var msg=result;
       	console.log(msg);
@@ -354,6 +352,8 @@
    
    var dan;
    var duo;
+   var pan;
+   var tian;
  $.each(msg, function(index,item) { 	
  //渲染单选题	
  if(index=="dan"){
@@ -363,7 +363,7 @@
   //渲染每道题画面开始
   var questionList="<div id='dan"+(parseInt(i)+1)+"'style='display:none' class='d'><h4 class='type'>单选题（每题有且只有一个选项）</h4>"+
                         "            <div class='media-body well' style='font-weight: bold;color: black;'>"+
-                        "                <h4 id=''>"+dan[i].idx+". "+dan[i].question+"</h4>"+
+                        "                <h4 id=''>"+(parseInt(i)+1)+". "+dan[i].intro+"</h4>"+
                         "            </div>"+
                         "            <div class='media-body well' style='color: black;'>"+
                         "               <p>"+
@@ -398,9 +398,9 @@
   
    for(var i in duo){
   
-  var questionList="<div id='duo"+(parseInt(i)+1+danTotal)+"'style='display:none' class='d'><h4 class='type'>单选题（每题有且只有一个选项）</h4>"+
+  var questionList="<div id='duo"+(parseInt(i)+1+danTotal)+"'style='display:none' class='d'><h4 class='type'>不定项选择（每题有一个或者多个选项）</h4>"+
                         "            <div class='media-body well' style='font-weight: bold;color: black;'>"+
-                        "                <h4 id=''>"+duo[i].idx+". "+duo[i].question+"</h4>"+
+                        "                <h4 id=''>"+(parseInt(i)+1+danTotal)+". "+duo[i].intro+"</h4>"+
                         "            </div>"+
                         "            <div class='media-body well' style='color: black;'>"+
                         "               <p>"+
@@ -426,28 +426,71 @@
                         "                  <input type='checkbox' name='duo_"+(parseInt(i)+1+danTotal)+"' value='D'>D"+
                         "               </label></div>";
    $("#question").append(questionList);
-  
- 
-  
-  
+
  }
  }
-     
-     
-     
-     
-     
- 
- 
- 
-     
-     
-     
- 
- 
-  });
-          
-          
+
+
+ if(index=="pan"){
+      pan= item;
+  
+   for(var i in pan){
+  
+  var questionList="<div id='pan"+(parseInt(i)+1+danTotal+duoTotal)+"'style='display:none' class='d'><h4 class='type'>判断题</h4>"+
+                        "            <div class='media-body well' style='font-weight: bold;color: black;'>"+
+                        "                <h4 id=''>"+(parseInt(i)+1+danTotal+duoTotal)+". "+pan[i].intro+"</h4>"+
+                        "            </div>"+
+                        "            <div class='media-body well' style='color: black;'>"+
+                        "               <p>"+
+                        "                    A、"+pan[i].optionA+"</p>"+
+                        "                <p>"+
+                        "                    B、"+pan[i].optionB+"</p>"+
+                        "                <p>"+
+                        // "                   C、"+duo[i].optionC+"</p>"+
+                        // "                <p>"+
+                        // "                    D、"+duo[i].optionD+"</p>"+                                      
+                        "            </div>"+
+                        "           <div class='media-body well'>"+
+                        "                <label class='radio inline'>"+                     
+                        "                  <input type='radio' name='pan_"+(parseInt(i)+1+danTotal+duoTotal)+"'value='A'>A "+
+                        "               </label>"+
+                        "                <label class='radio inline'>"+
+                        "                  <input type='radio' name='pan_"+(parseInt(i)+1+danTotal+duoTotal)+"' value='B'>B"+
+                        "               </label>";
+                        // "                <label class='radio inline'>"+
+                        // "                  <input type='radio' name='pan_"+(parseInt(i)+1+danTotal+duoTotal)+"' value='C'>C"+
+                        // "               </label>"+
+                        // "                <label class='radio inline'>"+
+                        // "                  <input type='radio' name='pan_"+(parseInt(i)+1+danTotal+duoTotal)+"' value='D'>D"+
+                        // "               </label></div>";
+   $("#question").append(questionList);
+
+ }
+ }
+
+//渲染填空题
+if(index=="tian"){
+      tian= item;
+   for(var i in tian){
+  var questionList="<div id='tian"+(parseInt(i)+1+danTotal+duoTotal+panTotal)+"'style='display:none' class='d t'><h4 class='type'>填空题</h4>"+
+                        "            <div class='media-body well' style='font-weight: bold;color: black;'>"+
+                        "                <h4 id=''>"+(parseInt(i)+1+danTotal+duoTotal+panTotal)+". "+tian[i].intro+"</h4>"+
+                        "            </div>"+                    
+                       
+                           "</div>";
+                                   
+   $("#question").append(questionList);
+
+ }
+ }
+
+
+
+
+
+
+
+  });                  
         var list= document.getElementsByTagName("input");
        // console.log(list[i].name);
         var buttonList=$(".btn");
@@ -461,7 +504,6 @@
         		$("#btn_"+index).attr("class","btn btn-primary");
                 //针对多选按钮
                 if(this.name.split("_")[0]=="duo"){
-
                    var current= $("input[name='"+this.name+"']:checked").val();
                    console.log(current);
                     if(current==undefined){
@@ -505,24 +547,47 @@
         var duoList = $("input:checkbox");       
         var m=0;
         for(var i in duo){
-        	for(var j=1;j<=4;j++){        		
-        		for(var l=0;l<duo[i].result.split(",").length;l++){
-        		if(duoList[m].value==duo[i].result.split(",")[l]){       			 
+        	for(var j=1;j<=4;j++){  
+                      		
+        		for(var l=0;l<duo[i].result.length;l++){
+        		if(duoList[m].value==duo[i].result.charAt(l)){       			 
         			$(duoList[m]).attr("checked",true);
         		}        			
         		}      			
         			m=m+1;
         	    }           	       	
         }
-        	
+        	//回显所有的填空题
+            var tianList =$(".t");
+           
+            for(var i in tian){
+               // console.log(tianList[i].id)
+                var str=tian[i].result
+                var regex=/\{(.+?)}/g;
+             var arr =str.match(regex);
+              var newArr =[];
+              var text='';
+      for(j=0;j<arr.length;j++){
+         var n = arr[j].substring(1,arr[j].length-1);
+       text+="<input type='text' name='tian"+ (danTotal+duoTotal+panTotal+parseInt(i)+1)+"' value="+n+ ">";
+       
+ 
+          newArr.push(n);
+      }
+    //   console.log(i);
+      $('#'+tianList[i].id).append(text)
+      console.log(newArr)
+
+            }
+
+
+
         	//代码执行到这里时，题的数据以及做题记录渲染完毕，开始对页面进行逻辑性操作
    	    	//获取所有的input
    	    	
    	    	//默认第一题显示
-   	    	$("#dan1").css("display","block");
-   	    	
-   	    	var all = $("input:checked");
-   	    	
+   	    	$("#dan1").css("display","block");  	    	
+   	    	var all = $("input:checked");  	    	
    	    	for( var i=0;i<all.length;i++){
    	    		console.log(all[i].name.split("_")[1]);
    	    		if(all[i].name.split("_")[1]==(i+1));
@@ -546,7 +611,7 @@
   
     var index=1;			
 			
-			
+			//下一题
 			$("#next").click(function(){
 				
 				 var d=$(".d");
@@ -554,6 +619,8 @@
 				 for(var i=0;i<d.length;i++){
 				 
 				 if($(d[i]).css("display")=="block"){
+                     //如果已经是最后一道题的话，点击则无效
+                     if(i==d.length-1){return ;}
 				 	 console.log(d[i]);
 				$(".d").css("display","none");
 				
@@ -563,6 +630,25 @@
 				}
         }
     });  
+    //上一题
+    $("#last").click(function(){
+				
+                var d=$(".d");
+               
+                for(var i=0;i<d.length;i++){
+                
+                if($(d[i]).css("display")=="block"){
+                    //如果已经是第一道题的话，点击则无效
+                     if(i==0) {return };
+                     console.log(d[i]);
+               $(".d").css("display","none");
+               
+              $(d[i-1]).css("display","block");
+              console.log(d[i]);
+             
+               }
+       }
+   });  
  
    };
         				
@@ -598,9 +684,7 @@
            }
            }
 
-
                window.setInterval(sessionTimeout, 1000);
-
 
        </script>
 		 

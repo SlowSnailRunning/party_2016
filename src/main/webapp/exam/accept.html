@@ -12,7 +12,7 @@
           type="text/css"/>
     <script src="https://unpkg.com/vue@2.6.8/dist/vue.js"></script>
     <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
-    <script src="js/jquery-1.11.3.min.js"></script>
+    <script src="js/jquery-1.8.3.min.js"></script>
 </head>
 <body>
 <div id="app">
@@ -20,7 +20,7 @@
     <img src="images/logo.png"/>
 </div>
 <div style="font-size:31px;color:red;font-family:宋体;text-align:center;margin-top:10px;margin-bottom:-8px;">
-    <b>${user_in_session.examName}</b></div>
+    <b>{{examInfo.examName}}</b></div>
 <div class="row-fluid">
     <div class="container-fluid">
         <div class="span12 examcontent">
@@ -100,9 +100,9 @@
                             <legend><font color="red" size="5">考试须知</font></legend>
                             <div class="row-fluid">
                                 <div class="span12">
-                                    <b>1.考试时间：${EXAMTIME_IN_SESSION}分钟。<br/>
-                                        2.考试题型：单选题（${questionNum.danxuanScore}分*${questionNum.danxuanNum}题）、多选题（${questionNum.duoxuanScore}分*${questionNum.duoxuanNum}题）、判断题
-                                        （${questionNum.panduanScore}分*${questionNum.panduanNum}题），及格线（${user_in_session.pass}分）。<br/>3.中途退出考试的作为放弃考试处理。考试完成后确认交卷成功后，即可看到考试成绩。<br/>4.提前交卷未成功
+                                    <b>1.考试时间：{{examInfo.examTime}}分钟。<br/>
+                                        2.考试题型：单选题（{{examInfo.radioScore}}分*{{examInfo.radioNum}}题）、多选题（{{examInfo.saqScore}}分*{{examInfo.saqNum}}题）、判断题
+                                        （{{examInfo.jugdeScore}}分*{{examInfo.jugdeNum}}题）、填空题（{{examInfo.fillScore}}分*{{examInfo.fillNum}}题）及格线（{{examInfo.passScore}}分）。<br/>3.中途退出考试的作为放弃考试处理。考试完成后确认交卷成功后，即可看到考试成绩。<br/>4.提前交卷未成功
                                         的，请等待考试时间结束，系统自动交卷，并不要连续点击交卷按钮。<br/>以上事项有不清楚的地方和网上考试期间登录有问题，
                                         请与监考老师联系。</b><br/> <br/>
                                 </div>
@@ -142,60 +142,42 @@
 <input id="examState" type="hidden" :value="studentInfo.makeUpState"/>
 <input id="makeUpState" type="hidden" value="${user_in_session.makeUpState }"/>
 </div>
-<script type="text/javascript" >
-    $.ajax({
+<script type="text/javascript">
+ $.ajax({
         type: "GET",
-        url: "json/question.json",
-        async:false,
+        url: "json/accept.json",
+        async: false,
         dataType: "json",
         success: function (res) {
-            window.res=res;
-
+            window.user=res.user;
+            window.exam=res.exam
         }
     });
-    console.log(res)
+    console.log(user);
+    console.log(exam)
     Vue.prototype.$axios=axios;
-    // const vm = new Vue({
-    //     el:"#app",
-    //     data:{
-    //         studentInfo:[]
-    //     },
-    //     created() {
-    //         //this.getStudentInfo()
-    //     },
-    //     methods: {
-    //         getStudentInfo(){
-    //             axios.get("/examinee/examAndStuInfo.do")
-    //                 .then(res=>{
-    //                     // console.log(res);
-    //                     // console.log(res['user']);
-    //                     // console.log(res['user']);
-    //                     this.studentInfo=res.data.user;
-    //                    // this.studentIn
-    //                     console.log(this.studentInfo);
-    //                 })
-    //                 .catch(error=>{
-    //                     console.log(error);
-    //                 })
-    //         }
-    //     },
-    // });
- /*   $.ajaxSetup( {
-
-//设置ajax请求结束后的执行动作
-        complete :
-            function(XMLHttpRequest, textStatus) {
-// 通过XMLHttpRequest取得响应头，sessionstatus
-                var sessionstatus = XMLHttpRequest.getResponseHeader("sessionstatus");
-                if (sessionstatus == "TIMEOUT") {
-                    var win = window;
-                    while (win != win.top){
-                        win = win.top;
-                    }
-                    win.location.href= XMLHttpRequest.getResponseHeader("CONTEXTPATH");
-                }
+    const vm = new Vue({
+        el:"#app",
+        data:{
+            studentInfo:user,
+            examInfo:exam
+        },
+        created() {
+           // this.getStudentInfo()
+        },
+        methods: {
+            getStudentInfo(){
+                axios.get("http://localhost:3000/examinee/examAndStuInfo.do")
+                    .then(res=>{
+                        this.studentInfo=res.data.user
+                        console.log(this.studentInfo)
+                    })
+                    .catch(error=>{
+                        console.log(error)
+                    })
             }
-    });*/
+        },
+    })
 </script>
 
 </body>
