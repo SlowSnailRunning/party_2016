@@ -94,7 +94,6 @@ layui.use(['form','layer','layedit','laydate','upload'],function(){
         window.setTimeout(sum,500);
 
 
-
         /*为需要参与计算总分的文本框设置键盘按键监听事件*/
         $(".radioNum").keyup(sum);
         $(".radioScore").keyup(sum);
@@ -148,28 +147,22 @@ layui.use(['form','layer','layedit','laydate','upload'],function(){
                     dataType: "text",
                     success : function(data){
                        if(parseInt(data)===0) {
-
                            $('.examTime').val(TimeDifference(arr[0],arr[1]));
-                           console.log("0000000000000000!!!");
                        }
                        else if(parseInt(data)>0){
                            $('.examTime').val("");
                            layer.alert("此时间段与数据库中某个时间段冲突！请重新选择");
-                           console.log("1111111111111111!!!");
                        }
                        else if(parseInt(data)===-1){
                            $('.examTime').val("");
                            layer.alert("时间段为空！请重新选择");
-                           console.log("-1-1-1-1-1-1-1-1-1-1!!!");
                        }
                     },
                     fail:function(data){
                         layer.alert("失败");
-                        console.log(data+"  "+"失败!!!");
                     },
                     error: function (data) {
                         layer.alert("系统错误");
-                        console.log(data+"  "+"系统错误!!!");
                     }
 
                 });
