@@ -145,16 +145,33 @@ layui.use(['form','layer','layedit','laydate','upload'],function(){
                     url : "/exam/queryAppointTimeQuantum.do",
                     type : "post",
                     data:{examStartTime:arr[0],examEndTime:arr[1]},
+                    dataType: "text",
                     success : function(data){
-                       if(data===0) {
+                       if(parseInt(data)===0) {
 
                            $('.examTime').val(TimeDifference(arr[0],arr[1]));
+                           console.log("0000000000000000!!!");
                        }
-                       else {
+                       else if(parseInt(data)>0){
                            $('.examTime').val("");
                            layer.alert("此时间段与数据库中某个时间段冲突！请重新选择");
+                           console.log("1111111111111111!!!");
                        }
+                       else if(parseInt(data)===-1){
+                           $('.examTime').val("");
+                           layer.alert("时间段为空！请重新选择");
+                           console.log("-1-1-1-1-1-1-1-1-1-1!!!");
+                       }
+                    },
+                    fail:function(data){
+                        layer.alert("失败");
+                        console.log(data+"  "+"失败!!!");
+                    },
+                    error: function (data) {
+                        layer.alert("系统错误");
+                        console.log(data+"  "+"系统错误!!!");
                     }
+
                 });
 
 
