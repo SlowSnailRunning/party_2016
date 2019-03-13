@@ -121,36 +121,8 @@ layui.use(['form', 'layer', 'laydate', 'upload', 'table', 'laytpl'], function ()
         })
     });
 
-    //本模块暂时不需要这个上传功能
-    /*    $(".addNewsList_btn").click(function () {
-            var upload = layui.upload; //得到 upload 对象
+    //本模块暂时不需要上传功能(省去)
 
-            //获取当前网址，如： http://localhost:8083/uimcardprj/share/meun.jsp
-            //var curWwwPath = window.document.location.href;
-
-            //var pos = curWwwPath.indexOf(pathName);
-            //获取主机地址，如： http://localhost:8083
-            // var localhostPaht = curWwwPath.substring(0, pos);
-            //获取主机地址之后的目录，如： uimcardprj/share/meun.jsp
-            var pathName = window.document.location.pathname;
-            //获取带"/"的项目名，如：/uimcardprj
-            var projectName = pathName.substring(0, pathName.substr(1).indexOf("/page") + 1);
-
-            //创建一个上传组件
-            upload.render({
-                elem: '#uploadDiv'
-                , url: projectName + '/user/upload.do'
-                , accept: 'file'
-                , exts: 'xls|xlsx'
-                , done: function (res, index, upload) { //上传后的回调
-                    layer.msg(res['msg']); //show the message from the backend.
-                    if (res['code'] === 0)
-                        tableIns.reload();  //if import succeeded,reload this table.
-                }
-                , error: function () {
-                }
-            })
-        });*/  //
 
     $(".addNews_btn").click(function () {
         addNews();
@@ -260,13 +232,9 @@ layui.use(['form', 'layer', 'laydate', 'upload', 'table', 'laytpl'], function ()
             if(check === "false"){
                 $("#openOrCloseExam").attr("check","true");
 
-               /* console.log("id: "+data.id);
-                console.log("examTime: "+data.examTime);
-                console.log("examStartTime: "+data.examStartTime);
-                console.log("examEndTime: "+data.examEndTime);*/
                 var examStart = layui.util.toDateString(((new Date()).getTime()), 'yyyy-MM-dd HH:mm:ss');
                 var examEnd = layui.util.toDateString((((new Date()).getTime()) + (data.examTime * 60 *1000)), 'yyyy-MM-dd HH:mm:ss');
-                console.log(examStart +  " -----"  +   examEnd);
+               /* console.log(examStart +  " -----"  +   examEnd);*/
 
 
                 //验证此时加入的时间段是否与数据库中各个考试的时间段冲突，冲突则禁止加入！
@@ -277,8 +245,6 @@ layui.use(['form', 'layer', 'laydate', 'upload', 'table', 'laytpl'], function ()
                     dataType: "text",
                     success : function(data2){
                         if(parseInt(data2)===0) {
-                            layer.msg("成功！");
-                            console.log(data.id  + " 类型："+ typeof (data.id));
                             $.ajax({
                                 url: "/exam/updateTimeRangeById.do",
                                 type: "post",
@@ -286,26 +252,28 @@ layui.use(['form', 'layer', 'laydate', 'upload', 'table', 'laytpl'], function ()
                                 dataType: "text",
                                 success: function (data) {
                                     if (data.status === 200) {
-                                        layer.msg("开启成功！考试5分钟后开启");
-                                     /*   var index = parent.layer.getFrameIndex(window.name); //获取窗口索引
-                                        parent.layer.close(index); // 关闭layer
-                                        //使父页面重新刷新
-                                        parent.location.reload();*/
+                                        layer.alert("开启成功！考试5分钟后开启",{icon: 6});
+
+                                       /* table.reload("examListTable", {
+                                            page: {
+                                                curr: 1 //重新从第 1 页开始
+                                            }
+                                        });*/
+
                                     } else if(data.status === 500){
-                                        layer.msg("开启失败！");
-                                       /* var index = parent.layer.getFrameIndex(window.name); //获取窗口索引
-                                        parent.layer.close(index); // 关闭layer*/
+                                        layer.msg("开启失败！",{icon: 5});
+
                                     }
                                 }
                             });
                         }
                         else if(parseInt(data2)>0){
 
-                            layer.msg("此时间段与数据库中某个时间段冲突！请重新选择");
+                            layer.alert("此时间段与数据库中某个时间段冲突！请重新选择",{icon: 5});
                         }
                         else if(parseInt(data2)===-1){
 
-                            layer.msg("时间段为空！请重新选择");
+                            layer.alert("时间段为空！请重新选择",{icon: 5});
                         }
                     },
                     fail:function(data2){
