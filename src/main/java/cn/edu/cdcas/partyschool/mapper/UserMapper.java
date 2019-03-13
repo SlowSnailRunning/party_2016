@@ -91,4 +91,5 @@ public interface UserMapper {
 
     Integer updateExamStartEnd(@Param("student_no")String studentNo);
     Integer updateMakeUpEnd(@Param("student_no")String studentNo);
+    Double getStuScores(@Param("student_no")String studentNo,@Param("is_make_up")String isMakeUp,@Param("exam_id") Integer examId);
 }

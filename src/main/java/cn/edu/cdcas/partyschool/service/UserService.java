@@ -2,6 +2,7 @@ package cn.edu.cdcas.partyschool.service;
 
 import cn.edu.cdcas.partyschool.model.User;
 import cn.edu.cdcas.partyschool.util.JSONResult;
+import org.apache.ibatis.annotations.Param;
 
 import javax.servlet.http.HttpSession;
 import java.util.List;
@@ -72,5 +73,5 @@ public interface UserService {
     boolean changeExamEnd(String studentNo, int examState) throws Exception;
 
     boolean testTran() throws Exception;
-
+    Double getStuScores(String studentNo, String isMakeUp,  Integer examId);
 }
