@@ -32,7 +32,6 @@ public class ExamineeController {
             int examState= (int) httpSession.getAttribute("examState");
             int nowExamState=userServiceImpl.changeExamState((String) httpSession.getAttribute("studentNo"),examState);
             httpSession.setAttribute("examState",nowExamState);
-
             //封装需要的数据
             requiredQuestions=userServiceImpl.requiredQuestionAndOther(httpSession);
 

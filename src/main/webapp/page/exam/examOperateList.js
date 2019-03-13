@@ -254,8 +254,25 @@ layui.use(['form', 'layer', 'laydate', 'upload', 'table', 'laytpl'], function ()
 
                 })
             });
-        } else if (layEvent === 'openOrCloseExam') { //预览
-            layer.alert("此功能需要前台展示，实际开发中传入对应的必要参数进行文章内容页面访问openOrCloseExam")
+        } else if (layEvent === 'openOrCloseExam') { //开启考试
+
+            var check = $("#openOrCloseExam").attr("check");
+            if(check === "false"){
+                $("#openOrCloseExam").attr("check","true");
+                check="true";
+                console.log("id: "+data.id);
+                console.log("examTime: "+data.examTime);
+                console.log("examStartTime: "+data.examStartTime);
+                console.log("examEndTime: "+data.examEndTime);
+            }
+            if(check === "true"){
+                $("#openOrCloseExam").attr("check","false");
+                check="false";
+            }
+
+
+
+
         }
     });
 
