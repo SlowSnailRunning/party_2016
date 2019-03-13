@@ -41,7 +41,7 @@ public class UserController {
      * @return
      */
     @RequestMapping("/getStuScores")
-    public Double getStuScores(String studentNo, String isMakeUp, Integer examId) {
+    public Float getStuScores(String studentNo, String isMakeUp, Integer examId) {
         return userService.getStuScores(studentNo,isMakeUp,examId);
     }
     @RequestMapping("/upload")

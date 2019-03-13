@@ -33,7 +33,7 @@ public class UserServiceImpl implements UserService {
     private QuestionMapper questionMapper;
 
     @Override
-    public Double getStuScores(String studentNo, String isMakeUp, Integer examId) {
+    public Float getStuScores(String studentNo, String isMakeUp, Integer examId) {
         return userMapper.getStuScores(studentNo,isMakeUp,examId);
     }
 
@@ -469,24 +469,57 @@ public class UserServiceImpl implements UserService {
        return b;
     }
     /**
-     *@Describe: 根据当前ExamState判断本次考试结束应该存入的时间
+     *@Describe: 根据当前ExamState判断本次考试结束应该存入的时间/分数/exam_state
      *@Author Snail
-     *@Date 2019/3/11
+     *@Date 2019/3/12
      */
     @Override
     public boolean changeExamEnd(String studentNo, int examState) throws Exception {
+        Exam nowExam = JSON.parseObject(jedisClient.hget("partySys2016", "nowExam"),Exam.class);
         if(examState==1){
-            userMapper.updateExamStartEnd(studentNo);
-           return true;
+            Float stuScore = userMapper.getStuScores(studentNo, "0", nowExam.getId());
+            userMapper.updateExamStartEnd(studentNo,stuScore,nowExam.getPassScore());
+            return true;
         }else if(examState==4){
-            userMapper.updateMakeUpEnd(studentNo);
+            Float stuScore = userMapper.getStuScores(studentNo, "1", nowExam.getId());
+            userMapper.updateMakeUpEnd(studentNo,stuScore,nowExam.getPassScore());
             return true;
         }
         return false;
     }
+    /**
+     *@Describe: 考试总分的结算,exam_sate状态的更新
+     *@Author Snail
+     *@Date 2019/3/12
+     */
+    @Override
+    public void  updateScoreAndExamState(String studentNo, String isMakeUp)throws Exception{
+        /*Exam nowExam = JSON.parseObject(jedisClient.hget("partySys2016", "nowExam"),Exam.class);
+        Float stuScore = userMapper.getStuScores(studentNo, isMakeUp, nowExam.getId());
 
+        if ("0".equals(isMakeUp)){
 
+        }
 
+        nowExam.getPassScore();*/
+
+    }
+    /**
+     *@Describe: 读取考生分数，返回是否有补考按钮
+     *@Author Snail
+     *@Date 2019/3/13
+     */
+    @Override
+    public Map<String, Object> getScoreAndIsMakeUpMap(String studentNo) throws Exception {
+        User user = userMapper.queryByStuNo(studentNo);
+        Map<String,Object> scoreInfo=new LinkedHashMap<>();
+        scoreInfo.put("code",0);
+        scoreInfo.put("examScore",user.getExamScore());
+        scoreInfo.put("makeUpScore",user.getMakeUpScore());
+        scoreInfo.put("makeUpBtn",JSON.parseObject(jedisClient.hget("partySys2016","nowExam"),Exam.class).getIsMakeup());
+        scoreInfo.put("errorQue",questionMapper.selectErrorQue(studentNo));
+        return scoreInfo;
+    }
     ///--------------------can delete
     @Override
     @Transactional(rollbackFor = Exception.class)

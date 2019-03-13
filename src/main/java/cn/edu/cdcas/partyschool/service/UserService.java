@@ -72,6 +72,10 @@ public interface UserService {
 
     boolean changeExamEnd(String studentNo, int examState) throws Exception;
 
+    void  updateScoreAndExamState(String studentNo, String isMakeUp)throws Exception;
+
     boolean testTran() throws Exception;
-    Double getStuScores(String studentNo, String isMakeUp,  Integer examId);
+    Float getStuScores(String studentNo, String isMakeUp,  Integer examId);
+
+    Map<String, Object> getScoreAndIsMakeUpMap(String studentNo) throws Exception;
 }

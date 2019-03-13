@@ -465,9 +465,9 @@
     </select>
 
     <update id="updateExamStartEnd">
-        update party_user set exam_end=CURRENT_TIMESTAMP when student_no=#{student_no}
+         update party_user set exam_end=CURRENT_TIMESTAMP,exam_score=#{score},exam_state=(IF (exam_score>=#{pass_score},'2','3')) WHERE student_no=#{student_no}
     </update>
     <update id="updateMakeUpEnd">
-        update party_user set make_up_end=CURRENT_TIMESTAMP when student_no=#{student_no}
+         update party_user set exam_end=CURRENT_TIMESTAMP,make_up_score=#{score},exam_state=(IF (make_up_score>=#{pass_score},'5','6')) WHERE student_no=#{student_no}
     </update>
 </mapper>

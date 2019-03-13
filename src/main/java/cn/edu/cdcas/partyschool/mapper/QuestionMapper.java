@@ -34,6 +34,12 @@ public interface QuestionMapper {
 
     int findQuestionIdMax();
     /**
+     *@Describe: 连接answer，questioin获取错题集合
+     *@Author Snail
+     *@Date 2019/2/5
+     */
+    List selectErrorQue(@Param("student_no") String studentNo);
+    /**
      *@Describe: 查找当前考试的题目数量
      *@Author Snail
      *@Date 2019/2/5

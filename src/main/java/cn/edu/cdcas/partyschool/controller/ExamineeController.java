@@ -1,13 +1,9 @@
 package cn.edu.cdcas.partyschool.controller;
 
-import cn.edu.cdcas.partyschool.model.Answer;
 import cn.edu.cdcas.partyschool.service.UserService;
 import cn.edu.cdcas.partyschool.util.JSONResult;
-import cn.edu.cdcas.partyschool.util.JedisClient;
-import com.alibaba.fastjson.JSON;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
@@ -28,7 +24,7 @@ public class ExamineeController {
      */
     @RequestMapping("/allQuestionInfoForStu")
     @ResponseBody
-    @Transactional(rollbackFor =Exception.class )
+    /*@Transactional(rollbackFor =Exception.class )*/
     public Map<String,Object> allQuestionInfoForStu(HttpSession httpSession){
         Map<String,Object> requiredQuestions=new HashMap<>();
         try {
@@ -85,9 +81,8 @@ public class ExamineeController {
             return new JSONResult();
         }
     }
-
     /**
-     *@Describe: 交卷,按情况更新考试结束时间,考试总分的结算在错题查看页面进行
+     *@Describe: 交卷,按情况更新考试结束时间,考试总分的结算,exam_sate状态的更新,删除session中的题号
      *@Author Snail
      *@Date 2019/3/11
      */
@@ -95,10 +90,34 @@ public class ExamineeController {
     @ResponseBody
     public boolean updateEndTime(HttpSession httpSession){
         try {
-            return userServiceImpl.changeExamEnd((String) httpSession.getAttribute("studentNo"),Integer.parseInt((String) httpSession.getAttribute("examState")));
+            userServiceImpl.changeExamEnd((String) httpSession.getAttribute("studentNo"),Integer.parseInt((String) httpSession.getAttribute("examState")));
+//            userServiceImpl.updateScoreAndExamState((String)httpSession.getAttribute("studentNo"),"1".equals((String)httpSession.getAttribute("examState"))?"0":"1");
+            httpSession.removeAttribute("dan");
+            httpSession.removeAttribute("duo");
+            httpSession.removeAttribute("pan");
+            httpSession.removeAttribute("tian");
+            return true;
         } catch (Exception e) {
             e.printStackTrace();
             return false;
+        }
+    }
+    /**
+     *@Describe: 分数获取页面
+     *@Author Snail
+     *@Date 2019/3/13
+     */
+    @RequestMapping("/getScore")
+    @ResponseBody
+    public Map<String, Object> getScoreAndIsMakeUp(HttpSession httpSession){
+        Map<String,Object> scoreInfo=null;
+        try {
+            scoreInfo=userServiceImpl.getScoreAndIsMakeUpMap((String)httpSession.getAttribute("studentNo"));
+            return scoreInfo;
+        } catch (Exception e) {
+            e.printStackTrace();
+            scoreInfo.put("code",-1);
+            return scoreInfo;
         }
     }
 

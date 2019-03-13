@@ -94,7 +94,7 @@ public class Exam implements Serializable {
     /**
      * 及格分数
      */
-    private Integer passScore;
+    private Float passScore;
 
 
     /**
@@ -231,11 +231,11 @@ public class Exam implements Serializable {
         this.saqScore = saqScore;
     }
 
-    public Integer getPassScore() {
+    public Float getPassScore() {
         return passScore;
     }
 
-    public void setPassScore(Integer passScore) {
+    public void setPassScore(Float passScore) {
         this.passScore = passScore;
     }
 

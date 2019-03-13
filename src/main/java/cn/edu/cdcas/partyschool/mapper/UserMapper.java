@@ -88,8 +88,13 @@ public interface UserMapper {
      *@Date 2019/3/11
      */
     String findAnswer(@Param("student_no")String studentNo, @Param("is_make_up") String s,@Param("question_id") Integer id,@Param("exam_id") Integer examId);
+    /**
+     *@Describe: 更新初考成绩和结束时间
+     *@Author Snail
+     *@Date 2019/3/13
+     */
+    Integer updateExamStartEnd(@Param("student_no")String studentNo,@Param("score")Float score,@Param("pass_score")Float pass_score);
+    Integer updateMakeUpEnd(@Param("student_no")String studentNo,@Param("score")Float score,@Param("pass_score")Float pass_score);
 
-    Integer updateExamStartEnd(@Param("student_no")String studentNo);
-    Integer updateMakeUpEnd(@Param("student_no")String studentNo);
-    Double getStuScores(@Param("student_no")String studentNo,@Param("is_make_up")String isMakeUp,@Param("exam_id") Integer examId);
+    Float getStuScores(@Param("student_no")String studentNo,@Param("is_make_up")String isMakeUp,@Param("exam_id") Integer examId);
 }
