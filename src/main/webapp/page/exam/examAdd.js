@@ -25,7 +25,7 @@ layui.use(['form','layer','layedit','laydate','upload'],function(){
             //判断开始时间是否大于结束日期
             if(startTime>endTime)
             {
-                alert("开始时间不能大于结束时间！");
+                layui.alert("开始时间不能大于结束时间！",{icon: 5});
                 return false;
             }
             //截取字符串，得到日期部分"2009-12-02",用split把字符串分隔成数组
@@ -152,18 +152,18 @@ layui.use(['form','layer','layedit','laydate','upload'],function(){
                        }
                        else if(parseInt(data)>0){
                            $('.examTime').val("");
-                           layer.alert("此时间段与数据库中某个时间段冲突！请重新选择");
+                           layer.alert("此时间段与数据库中某个时间段冲突！请重新选择",{icon: 5});
                        }
                        else if(parseInt(data)===-1){
                            $('.examTime').val("");
-                           layer.alert("时间段为空！请重新选择");
+                           layer.alert("时间段为空！请重新选择",{icon: 5});
                        }
                     },
                     fail:function(data){
-                        layer.alert("失败");
+                        layer.msg("失败");
                     },
                     error: function (data) {
-                        layer.alert("系统错误");
+                        layer.msg("系统错误");
                     }
 
                 });
