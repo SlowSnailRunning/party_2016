@@ -285,26 +285,11 @@
     </set>
     where id = #{id,jdbcType=INTEGER}
   </update>
-  <update id="updateById" parameterType="cn.edu.cdcas.partyschool.model.Exam">
+  <update id="updateTimeRangeById" parameterType="cn.edu.cdcas.partyschool.model.Exam">
     update party_exam
-    set exam_name = #{examName,jdbcType=VARCHAR},
-      exam_time = #{examTime,jdbcType=INTEGER},
-      create_time = #{createTime,jdbcType=TIMESTAMP},
+    set
       exam_start_time = #{examStartTime,jdbcType=TIMESTAMP},
-      exam_end_time = #{examEndTime,jdbcType=TIMESTAMP},
-      radio_num = #{radioNum,jdbcType=INTEGER},
-      radio_score = #{radioScore,jdbcType=INTEGER},
-      check_num = #{checkNum,jdbcType=INTEGER},
-      check_score = #{checkScore,jdbcType=INTEGER},
-      judge_num = #{judgeNum,jdbcType=INTEGER},
-      judge_score = #{judgeScore,jdbcType=INTEGER},
-      fill_num = #{fillNum,jdbcType=INTEGER},
-      fill_score = #{fillScore,jdbcType=INTEGER},
-      saq_num = #{saqNum,jdbcType=INTEGER},
-      saq_score = #{saqScore,jdbcType=INTEGER},
-      pass_score = #{passScore,jdbcType=INTEGER},
-      open_or_close = #{openOrClose,jdbcType=INTEGER},
-      is_makeup = #{isMakeup,jdbcType=INTEGER}
+      exam_end_time = #{examEndTime,jdbcType=TIMESTAMP}
     where id = #{id,jdbcType=INTEGER}
   </update>
 
@@ -321,6 +306,7 @@
     SELECT COUNT(*)
     FROM party_exam WHERE (exam_end_time > #{examEndTime,jdbcType=TIMESTAMP} AND #{examEndTime,jdbcType=TIMESTAMP} > exam_start_time)
      OR (exam_end_time > #{examStartTime,jdbcType=TIMESTAMP} AND #{examStartTime,jdbcType=TIMESTAMP} > exam_start_time)
+      AND id != #{id,jdbcType=INTEGER}
   </select>
 
   <select id="findExamById" resultMap="BaseResultMap">

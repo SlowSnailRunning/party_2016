@@ -259,15 +259,71 @@ layui.use(['form', 'layer', 'laydate', 'upload', 'table', 'laytpl'], function ()
             var check = $("#openOrCloseExam").attr("check");
             if(check === "false"){
                 $("#openOrCloseExam").attr("check","true");
-                check="true";
-                console.log("id: "+data.id);
+
+               /* console.log("id: "+data.id);
                 console.log("examTime: "+data.examTime);
                 console.log("examStartTime: "+data.examStartTime);
-                console.log("examEndTime: "+data.examEndTime);
+                console.log("examEndTime: "+data.examEndTime);*/
+                var examStart = layui.util.toDateString(((new Date()).getTime()), 'yyyy-MM-dd HH:mm:ss');
+                var examEnd = layui.util.toDateString((((new Date()).getTime()) + (data.examTime * 60 *1000)), 'yyyy-MM-dd HH:mm:ss');
+                console.log(examStart +  " -----"  +   examEnd);
+
+
+                //验证此时加入的时间段是否与数据库中各个考试的时间段冲突，冲突则禁止加入！
+                $.ajax({
+                    url : "/exam/queryAppointTimeQuantum.do",
+                    type : "post",
+                    data:{examStartTime:examStart,examEndTime:examEnd},
+                    dataType: "text",
+                    success : function(data2){
+                        if(parseInt(data2)===0) {
+                            layer.msg("成功！");
+                            console.log(data.id  + " 类型："+ typeof (data.id));
+                            $.ajax({
+                                url: "/exam/updateTimeRangeById.do",
+                                type: "post",
+                                data: {id:data.id, examStartTime: examStart, examEndTime: examEnd},
+                                dataType: "text",
+                                success: function (data) {
+                                    if (data.status === 200) {
+                                        layer.msg("开启成功！考试5分钟后开启");
+                                     /*   var index = parent.layer.getFrameIndex(window.name); //获取窗口索引
+                                        parent.layer.close(index); // 关闭layer
+                                        //使父页面重新刷新
+                                        parent.location.reload();*/
+                                    } else if(data.status === 500){
+                                        layer.msg("开启失败！");
+                                       /* var index = parent.layer.getFrameIndex(window.name); //获取窗口索引
+                                        parent.layer.close(index); // 关闭layer*/
+                                    }
+                                }
+                            });
+                        }
+                        else if(parseInt(data2)>0){
+
+                            layer.msg("此时间段与数据库中某个时间段冲突！请重新选择");
+                        }
+                        else if(parseInt(data2)===-1){
+
+                            layer.msg("时间段为空！请重新选择");
+                        }
+                    },
+                    fail:function(data2){
+                        layer.msg("失败");
+                    },
+                    error: function (data2) {
+                        layer.msg("系统错误");
+                    }
+
+                });
+
+
+
+
             }
             if(check === "true"){
                 $("#openOrCloseExam").attr("check","false");
-                check="false";
+
             }
 
 

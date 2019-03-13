@@ -12,6 +12,9 @@ layui.use(['form','layer','layedit','laydate','upload'],function(){
         $('.label-zongfen').css("font-size","17px");
         $('.label-fen').css("font-size","17px");
         $('.examAllScore').css({"color":"blue","font-size":"19px"});
+        console.log("1111111111111111111111111:"+$("input:hidden[name='id']").val());
+         console.log("2222222222222222222222:"+$("input:text[name='id']").val());
+
 
         /*根据所选时间段计算出该时间段的分差值*/
         function TimeDifference(startTime,endTime)
@@ -114,6 +117,7 @@ layui.use(['form','layer','layedit','laydate','upload'],function(){
                 console.log(endDate); //得结束的日期时间对象，开启范围选择（range: true）才会返回。对象成员同上。*/
                 var str=new String();
                 var arr=new Array();
+                var examId = parseInt($("input:text[name='id']").val()) ;
 
                 //可以用字符或字符串分割
                 arr=value.split(' - ');
@@ -140,7 +144,7 @@ layui.use(['form','layer','layedit','laydate','upload'],function(){
                 $.ajax({
                     url : "/exam/queryAppointTimeQuantum.do",
                     type : "post",
-                    data:{examStartTime:arr[0],examEndTime:arr[1]},
+                    data:{id:examId,examStartTime:arr[0],examEndTime:arr[1]},
                     dataType: "text",
                     success : function(data){
                        if(parseInt(data)===0) {

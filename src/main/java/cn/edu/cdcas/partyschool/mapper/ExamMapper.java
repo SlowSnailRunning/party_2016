@@ -26,7 +26,7 @@ public interface ExamMapper {
 
     int updateByIdSelective(Exam exam) throws Exception;
 
-    int updateById(Exam exam)throws Exception;
+    int updateTimeRangeById(Exam exam)throws Exception;
 
     String isCurrentExam() throws Exception;
 

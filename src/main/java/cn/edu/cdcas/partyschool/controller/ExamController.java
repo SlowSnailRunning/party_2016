@@ -75,6 +75,18 @@ public class ExamController {
     }
 
     /**
+     * @Describe: 开启考试（更新考试开考为现在,考试时长不变）
+     */
+    @RequestMapping("/updateTimeRangeById")
+    public JSONResult updateTimeRangeById(Exam exam) throws Exception{
+        if(exam.getId()!=null){
+           examService.updateTimeRangeById(exam);
+           return new JSONResult(0, "开启考试成功！", 200);
+        }
+        return new JSONResult(3, "开启考试失败！", 500);
+    }
+
+    /**
      * @Describe: 查询指定时间段内是否有其他考试（此版本系统同一时间段内只能有一个考试）
      */
     @RequestMapping("/queryAppointTimeQuantum")

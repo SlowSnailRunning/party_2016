@@ -128,6 +128,9 @@ public class ExamServiceImpl implements ExamService {
         return map;
     }
 
+    @Override
+    public int updateTimeRangeById(Exam exam) throws Exception { return examMapper.updateTimeRangeById(exam) ; }
+
     /**
      *@Describe: 查找当前时段是否存在考试，返回考试id
      *
