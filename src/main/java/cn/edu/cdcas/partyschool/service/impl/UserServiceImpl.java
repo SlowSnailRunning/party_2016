@@ -32,6 +32,12 @@ public class UserServiceImpl implements UserService {
     @Autowired
     private QuestionMapper questionMapper;
 
+    public Exam  getNowExam ()
+    {
+        return  JSON.parseObject(jedisClient.hget("partySys2016", "nowExam"), Exam.class);
+    }
+
+
     @Override
     public Float getStuScores(String studentNo, String isMakeUp, Integer examId) {
         return userMapper.getStuScores(studentNo,isMakeUp,examId);

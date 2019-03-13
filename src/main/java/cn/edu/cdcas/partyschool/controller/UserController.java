@@ -1,5 +1,6 @@
 package cn.edu.cdcas.partyschool.controller;
 
+import cn.edu.cdcas.partyschool.listener.UniqueSession;
 import cn.edu.cdcas.partyschool.model.User;
 import cn.edu.cdcas.partyschool.service.UserService;
 import cn.edu.cdcas.partyschool.util.ExcelUtil;
@@ -37,7 +38,7 @@ public class UserController {
     /**
      * upload the list of student attending exam in a excel.
      *
-     * @param file
+     * @param
      * @return
      */
     @RequestMapping("/getStuScores")
@@ -212,6 +213,9 @@ public class UserController {
 
     @RequestMapping(value = "/logout",method =RequestMethod.POST)
     public String logout(HttpSession httpSession) {
+        //session過期，銷毀map中的session;
+        String studentNo=(String)httpSession.getAttribute("studentNo");
+        UniqueSession.sessionMap.remove(studentNo);
         httpSession.invalidate();
         return (String) httpSession.getServletContext().getAttribute("php_login");
     }
