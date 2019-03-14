@@ -231,9 +231,10 @@ layui.use(['form', 'layer', 'laydate', 'upload', 'table', 'laytpl'], function ()
             var check = $("#openOrCloseExam").attr("check");
             if(check === "false"){
                 $("#openOrCloseExam").attr("check","true");
+                var delayfiveMin = 5*60*1000;
 
-                var examStart = layui.util.toDateString(((new Date()).getTime()), 'yyyy-MM-dd HH:mm:ss');
-                var examEnd = layui.util.toDateString((((new Date()).getTime()) + (data.examTime * 60 *1000)), 'yyyy-MM-dd HH:mm:ss');
+                var examStart = layui.util.toDateString(((new Date()).getTime()+delayfiveMin), 'yyyy-MM-dd HH:mm:ss');
+                var examEnd = layui.util.toDateString((((new Date()).getTime()) + (data.examTime * 60 *1000) + delayfiveMin), 'yyyy-MM-dd HH:mm:ss');
                /* console.log(examStart +  " -----"  +   examEnd);*/
 
 
@@ -250,19 +251,32 @@ layui.use(['form', 'layer', 'laydate', 'upload', 'table', 'laytpl'], function ()
                                 type: "post",
                                 data: {id:data.id, examStartTime: examStart, examEndTime: examEnd},
                                 dataType: "json",
-                                success: function (data) {
-                                    if (data.status === 200) {
-                                        layer.alert("开启成功！考试5分钟后开启",{icon: 6});
+                                success: function (data3) {
+                                    if (data3.status === 200) {
+                                        layer.alert("考试："+data.examName+"开启成功！5分钟后开考！",{icon: 6});
 
-                                       /* table.reload("examListTable", {
+                                        table.reload("examListTable", {
                                             page: {
                                                 curr: 1 //重新从第 1 页开始
+                                            },
+                                            where: {
+                                                field: ''   //set field as '' to avoid error to retrieve data in db.
                                             }
-                                        });*/
+                                        })
 
-                                    } else if(data.status === 500){
+
+                                    } else if(data3.status === 500){
                                         layer.msg("开启失败！",{icon: 5});
-                                        console.log("开启失败！");
+                                        $('#openOrCloseExam').attr("checked", false);
+
+                                        table.reload("examListTable", {
+                                            page: {
+                                                curr: 1 //重新从第 1 页开始
+                                            },
+                                            where: {
+                                                field: ''   //set field as '' to avoid error to retrieve data in db.
+                                            }
+                                        })
 
                                     }
                                    /* console.log("状态码类型："+typeof data.status +" 值：" + data.status);*/
@@ -271,7 +285,15 @@ layui.use(['form', 'layer', 'laydate', 'upload', 'table', 'laytpl'], function ()
                         }
                         else if(parseInt(data2)>0){
 
-                            layer.alert("此时间段与数据库中某个时间段冲突！请重新选择",{icon: 5});
+                            layer.alert("此时间段与数据库中某个时间段冲突！考试："+data.examName+"开启失败！",{icon: 5});
+                            table.reload("examListTable", {
+                                page: {
+                                    curr: 1 //重新从第 1 页开始
+                                },
+                                where: {
+                                    field: ''   //set field as '' to avoid error to retrieve data in db.
+                                }
+                            })
                         }
                         else if(parseInt(data2)===-1){
 
@@ -280,9 +302,25 @@ layui.use(['form', 'layer', 'laydate', 'upload', 'table', 'laytpl'], function ()
                     },
                     fail:function(data2){
                         layer.msg("失败");
+                        table.reload("examListTable", {
+                            page: {
+                                curr: 1 //重新从第 1 页开始
+                            },
+                            where: {
+                                field: ''   //set field as '' to avoid error to retrieve data in db.
+                            }
+                        })
                     },
                     error: function (data2) {
                         layer.msg("系统错误");
+                        table.reload("examListTable", {
+                            page: {
+                                curr: 1 //重新从第 1 页开始
+                            },
+                            where: {
+                                field: ''   //set field as '' to avoid error to retrieve data in db.
+                            }
+                        })
                     }
 
                 });
@@ -296,10 +334,19 @@ layui.use(['form', 'layer', 'laydate', 'upload', 'table', 'laytpl'], function ()
 
             }
 
-
-
-
         }
+      /*  form.on('switch(openOrCloseExam)',function (data) {
+            console.log(data.elem.checked);
+            console.log(data.value);
+        });
+        layui.use('form',function () {
+            var form = layui.form;
+            form.render();
+        });*/
+
+
+
+
     });
 
 });
