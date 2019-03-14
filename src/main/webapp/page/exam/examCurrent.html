@@ -99,18 +99,14 @@
                         if(res && res.code===0){
                             var menuHtml="";
                             var obj = eval("("+JSON.stringify(res.data)+")");
-
                             $('#remainTime').css({"font-size":"18px","font-weight":"600","color":"#FF5722","line-height":"40px"});
                             $('.examName').val(obj[0].examName);
                             $('.examTime').val(obj[0].examTime+"分钟");
-
                             $('.examStatus').val('正在考试...');
                             $('.examStatus').css('color','red')
                             $('.passScore').val(obj[0].passScore+"分");
                             $('.residualTime').val(layui.util.toDateString(obj[0].examEndTime, 'yyyy-MM-dd HH:mm:ss'));
                             $('.test1').val(layui.util.toDateString(obj[0].examEndTime, 'yyyy-MM-dd HH:mm:ss'));
-
-
                             /*0：闭卷 ； 1：开卷*/
                             if(obj[0].openOrClose === 0){
                                 $('.openOrClose').val('闭卷');
@@ -118,31 +114,25 @@
                             if(obj[0].openOrClose !== 0){
                                 $('.openOrClose').val("开卷");
                             }
-
-                          /*  var examEndTime = layui.util.toDateString(obj[0].examEndTime, 'yyyy-MM-dd HH:mm:ss');
-                            var TimebeforeAndafter=new Array(examEndTime.split(" "));
-                            var Timebefore = new Array(TimebeforeAndafter[0].split("-"));
-                            var Timeafter =new Array(TimebeforeAndafter[1].split(":"));
-                            var y =parseInt(Timebefore[0]);
-                            var M =parseInt(Timebefore[1]-1);
-                            var d =parseInt(Timebefore[2]);
-                            var H =parseInt(Timeafter[0]);
-                            var m =parseInt(Timeafter[1]);
-                            var s =parseInt(Timeafter[2]);*/
+                            /*  var examEndTime = layui.util.toDateString(obj[0].examEndTime, 'yyyy-MM-dd HH:mm:ss');
+                              var TimebeforeAndafter=new Array(examEndTime.split(" "));
+                              var Timebefore = new Array(TimebeforeAndafter[0].split("-"));
+                              var Timeafter =new Array(TimebeforeAndafter[1].split(":"));
+                              var y =parseInt(Timebefore[0]);
+                              var M =parseInt(Timebefore[1]-1);
+                              var d =parseInt(Timebefore[2]);
+                              var H =parseInt(Timeafter[0]);
+                              var m =parseInt(Timeafter[1]);
+                              var s =parseInt(Timeafter[2]);*/
                             /*setCountdown(y,M,d,H,m,s);*/
-
-                         /*   alert(layui.util.toDateString(obj[0].examEndTime, 'yyyy-MM-dd HH:mm:ss'));*/
-
-
+                            /*   alert(layui.util.toDateString(obj[0].examEndTime, 'yyyy-MM-dd HH:mm:ss'));*/
                             /*-----------倒计时----------------*/
                             var SysSecond;
                             var InterValObj;
-
                             $(document).ready(function() {
                                 SysSecond = parseInt((obj[0].examEndTime - new Date())/1000); //这里获取倒计时的起始时间
                                 InterValObj = window.setInterval(SetRemainTime, 1000); //间隔函数，1秒执行
                             });
-
                             //将时间减去1秒，计算天、时、分、秒
                             function SetRemainTime() {
                                 if (SysSecond > 0) {
@@ -151,33 +141,26 @@
                                     var minite = Math.floor((SysSecond / 60) % 60);      //计算分
                                     var hour = Math.floor((SysSecond / 3600) % 24);      //计算小时
                                     var day = Math.floor((SysSecond / 3600) / 24);       //计算天
-
                                     var hourDiv = "<span id='hourSpan'>"+ hour + "小时"+"</span>";
                                     var dayDiv = "<span id='daySpan'>"+ day + "天"+"</span>";
-
                                     $("#remainTime").html(dayDiv + hourDiv + minite + "分" + second + "秒");
-
                                     if(hour === 0) {//当不足1小时时隐藏小时
                                         $('#hourSpan').css('display','none');
                                     }
                                     if(day === 0) {//当不足1天时隐藏天
                                         $('#daySpan').css('display','none');
                                     }
-
                                 } else {//剩余时间小于或等于0的时候，就停止间隔函数
                                     window.clearInterval(InterValObj);
                                     //这里可以添加倒计时时间为0后需要执行的事件
                                     layer.alert("考试时间到！");
                                 }
                             }
-
-
                         }
                     }
                 })
             };
             loadexamCurrent();
-
             var setInt=setInterval(function () {
                 $.ajax({
                     url : "/exam/studentSize.do",
@@ -189,9 +172,7 @@
             },2000);
         })
     });
-
-   /* .val(layui.util.toDateString(original_data.examEndTime, 'yyyy-MM-dd HH:mm:ss'));*/
-
+    /* .val(layui.util.toDateString(original_data.examEndTime, 'yyyy-MM-dd HH:mm:ss'));*/
 </script>
 
 
