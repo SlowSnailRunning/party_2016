@@ -241,7 +241,7 @@ layui.use(['form', 'layer', 'laydate', 'upload', 'table', 'laytpl'], function ()
                 $.ajax({
                     url : "/exam/queryAppointTimeQuantum.do",
                     type : "post",
-                    data:{examStartTime:examStart,examEndTime:examEnd},
+                    data:{id:data.id,examStartTime:examStart,examEndTime:examEnd},
                     dataType: "text",
                     success : function(data2){
                         if(parseInt(data2)===0) {
@@ -249,7 +249,7 @@ layui.use(['form', 'layer', 'laydate', 'upload', 'table', 'laytpl'], function ()
                                 url: "/exam/updateTimeRangeById.do",
                                 type: "post",
                                 data: {id:data.id, examStartTime: examStart, examEndTime: examEnd},
-                                dataType: "text",
+                                dataType: "json",
                                 success: function (data) {
                                     if (data.status === 200) {
                                         layer.alert("开启成功！考试5分钟后开启",{icon: 6});
@@ -262,8 +262,10 @@ layui.use(['form', 'layer', 'laydate', 'upload', 'table', 'laytpl'], function ()
 
                                     } else if(data.status === 500){
                                         layer.msg("开启失败！",{icon: 5});
+                                        console.log("开启失败！");
 
                                     }
+                                   /* console.log("状态码类型："+typeof data.status +" 值：" + data.status);*/
                                 }
                             });
                         }
