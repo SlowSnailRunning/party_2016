@@ -53,7 +53,7 @@ layui.use(['form','layer','layedit','laydate','upload'],function(){
         }*/
 
         /*计算总分通过各个文本框中值的求和计算*/
-        function sum(){
+        function sum(ob){
         var radioNum = parseInt($('.radioNum').val());
         var radioScore = parseInt($('.radioScore').val());
         var radio=0;
@@ -92,18 +92,46 @@ layui.use(['form','layer','layedit','laydate','upload'],function(){
         $('.examAllScore').text(allScore);
         return allScore;
     }
+
+        /*jQuery控制文本框只能输入数字[兼容IE、火狐等浏览器]*/
+        $.fn.numeral=function(bl){//限制金额输入、兼容浏览器、屏蔽粘贴拖拽等
+        $(this).keypress(function(e){
+            var keyCode=e.keyCode?e.keyCode:e.which;
+            if(bl){//浮点数
+                if((this.value.length==0 || this.value.indexOf(".")!=-1) && keyCode==46) return false;
+                return keyCode>=48&&keyCode<=57||keyCode==46||keyCode==8;
+            }else{//整数
+                return  keyCode>=48&&keyCode<=57||keyCode==8;
+            }
+        });
+        $(this).bind("copy cut paste", function (e) { // 通过空格连续添加复制、剪切、粘贴事件
+            if (window.clipboardData)//clipboardData.setData('text', clipboardData.getData('text').replace(/\D/g, ''));
+                return !clipboardData.getData('text').match(/\D/);
+            else
+                event.preventDefault();
+        });
+        $(this).bind("dragenter",function(){return false;});
+        $(this).css("ime-mode","disabled");
+        $(this).bind("focus", function() {
+            if (this.value.lastIndexOf(".") == (this.value.length - 1)) {
+                this.value = this.value.substr(0, this.value.length - 1);
+            } else if (isNaN(this.value)) {
+                this.value = "";
+            }
+        });
+    }
+
+
         /*引入jQuery-3.1后以下办法不能初始化（在谷歌浏览器）文本框，改用定时器处理*/
-    /* $('.examAllScore').text(sum());*/
+    /* $('.examAllScore').text(sumAndvalidate());*/
         window.setTimeout(sum,500);
         /*为需要参与计算总分的文本框设置键盘按键监听事件*/
-        $(".radioNum").keyup(sum);
-        $(".radioScore").keyup(sum);
-        $(".checkNum").keyup(sum);
-        $(".checkScore").keyup(sum);
-        $(".judgeNum").keyup(sum);
-        $(".judgeScore").keyup(sum);
-        $(".fillScore").keyup(sum);
-        $(".fillNum").keyup(sum);
+        $(".radioNum,.radioScore,.checkNum,.checkScore,.judgeNum,.judgeScore,.fillScore,.fillNum").keyup(sum);
+
+
+        $(".radioNum,.radioScore,.checkNum,.checkScore,.judgeNum,.judgeScore,.fillScore,.fillNum").numeral(false);//限制只能输入整数
+
+
 
 
     /* alert($('.examAllScore').text());*/
@@ -154,7 +182,7 @@ layui.use(['form','layer','layedit','laydate','upload'],function(){
                         dataType: "text",
                         success : function(data){
                             if(parseInt(data)===0) {
-                                layer.alert("此时间段无考试，加入时间段成功！");
+                                layer.alert("此时间段无考试，时间段已加入！");
                             }
                             else if(parseInt(data)>0){
                                 $('.examTimeRange').val("");
@@ -183,7 +211,7 @@ layui.use(['form','layer','layedit','laydate','upload'],function(){
                         dataType: "text",
                         success : function(data){
                             if(parseInt(data)===0) {
-                                layer.alert("此时间段无考试，加入时间段成功！");
+                                layer.alert("此时间段无考试，时间段已修改！");
                             }
                             else if(parseInt(data)>0){
                                 $('.examTimeRange').val("");
