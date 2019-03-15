@@ -12,12 +12,13 @@ layui.use(['form','layer','layedit','laydate','upload'],function(){
         $('.label-zongfen').css("font-size","17px");
         $('.label-fen').css("font-size","17px");
         $('.examAllScore').css({"color":"blue","font-size":"19px"});
-        console.log("1111111111111111111111111:"+$("input:hidden[name='id']").val());
-         console.log("2222222222222222222222:"+$("input:text[name='id']").val());
+      /*  console.log("1111111111111111111111111:"+$("input:hidden[name='id']").val());
+         console.log("2222222222222222222222:"+$("input:text[name='id']").val());*/
+
 
 
         /*根据所选时间段计算出该时间段的分差值*/
-        function TimeDifference(startTime,endTime)
+       /* function TimeDifference(startTime,endTime)
         {
             //定义两个变量time1,time2分别保存开始和结束时间
             var startTime=startTime;
@@ -49,7 +50,8 @@ layui.use(['form','layer','layedit','laydate','upload'],function(){
             //将日期和时间两个部分计算出来的差值相加，即得到两个时间相减后的分钟数
             var minutes=m+n;
             return minutes;
-        }
+        }*/
+
         /*计算总分通过各个文本框中值的求和计算*/
         function sum(){
         var radioNum = parseInt($('.radioNum').val());
@@ -86,7 +88,6 @@ layui.use(['form','layer','layedit','laydate','upload'],function(){
         var allScore = 0;
         if(radio!==''&&check!==''&&judge!==''&&fill!==''){
             allScore =  radio + check + judge + fill;
-            console.log("填0进入此if");
         }
         $('.examAllScore').text(allScore);
         return allScore;
@@ -118,6 +119,8 @@ layui.use(['form','layer','layedit','laydate','upload'],function(){
                 var str=new String();
                 var arr=new Array();
                 var examId = parseInt($("input:text[name='id']").val()) ;
+               /* console.log("testtest 类型："+typeof examId +"  value:" + examId);*/
+
 
                 //可以用字符或字符串分割
                 arr=value.split(' - ');
@@ -141,32 +144,68 @@ layui.use(['form','layer','layedit','laydate','upload'],function(){
                 console.log($('.examEndTime').val());
             /*    alert($('.examEndTime').val());*/
                 //验证此时加入的时间段是否与数据库中各个考试的时间段冲突，冲突则禁止加入！
-                $.ajax({
-                    url : "/exam/queryAppointTimeQuantum.do",
-                    type : "post",
-                    data:{id:examId,examStartTime:arr[0],examEndTime:arr[1]},
-                    dataType: "text",
-                    success : function(data){
-                       if(parseInt(data)===0) {
-                           $('.examTime').val(TimeDifference(arr[0],arr[1]));
-                       }
-                       else if(parseInt(data)>0){
-                           $('.examTime').val("");
-                           layer.alert("此时间段与数据库中某个时间段冲突！请重新选择",{icon: 5});
-                       }
-                       else if(parseInt(data)===-1){
-                           $('.examTime').val("");
-                           layer.alert("时间段为空！请重新选择",{icon: 5});
-                       }
-                    },
-                    fail:function(data){
-                        layer.msg("失败");
-                    },
-                    error: function (data) {
-                        layer.msg("系统错误");
-                    }
 
-                });
+                //为空（说明为新增）则加入
+                if(isNaN(examId)){
+                    $.ajax({
+                        url : "/exam/queryAppointTimeQuantum.do",
+                        type : "post",
+                        data:{examStartTime:arr[0],examEndTime:arr[1]},
+                        dataType: "text",
+                        success : function(data){
+                            if(parseInt(data)===0) {
+                                layer.alert("此时间段无考试，加入时间段成功！");
+                            }
+                            else if(parseInt(data)>0){
+                                $('.examTimeRange').val("");
+                                layer.alert("此时间段与数据库中某个时间段冲突！请重新选择",{icon: 5});
+                            }
+                            else if(parseInt(data)===-1){
+                                $('.examTime').val("");
+                                layer.alert("时间段为空！请重新选择",{icon: 5});
+                            }
+                        },
+                        fail:function(data){
+                            $('.examTimeRange').val("");
+                            layer.msg("失败");
+                        },
+                        error: function (data) {
+                            $('.examTimeRange').val("");
+                            layer.msg("错误");
+                        }
+
+                    });
+                }else{
+                    $.ajax({
+                        url : "/exam/queryAppointTimeQuantum.do",
+                        type : "post",
+                        data:{id:examId,examStartTime:arr[0],examEndTime:arr[1]},
+                        dataType: "text",
+                        success : function(data){
+                            if(parseInt(data)===0) {
+                                layer.alert("此时间段无考试，加入时间段成功！");
+                            }
+                            else if(parseInt(data)>0){
+                                $('.examTimeRange').val("");
+                                layer.alert("此时间段与数据库中某个时间段冲突！请重新选择",{icon: 5});
+                            }
+                            else if(parseInt(data)===-1){
+                                $('.examTime').val("");
+                                layer.alert("时间段为空！请重新选择",{icon: 5});
+                            }
+                        },
+                        fail:function(data){
+                            $('.examTimeRange').val("");
+                            layer.msg("失败");
+                        },
+                        error: function (data) {
+                            $('.examTimeRange').val("");
+                            layer.msg("错误");
+                        }
+
+                    });
+                }
+
 
 
             }
