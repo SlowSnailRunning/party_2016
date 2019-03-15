@@ -301,7 +301,7 @@
         $.ajax({
             type:"get",
             dataType:"json",
-            url:"json/question2.json",
+            url:"/examinee/allQuestionInfoForStu.do",
             success:function(result){
                 var msg=result;
                 console.log(msg);
@@ -638,9 +638,9 @@
                         var filled =$("input[name='"+this.name+"']");
                         var fillAnswer='';
                         filled.each(function(){
-                            if(this.value.trim()!=''){
+
                                 fillAnswer+="{"+this.value+"}";
-                            }
+
                         })
                         console.log(fillAnswer)
                         $.ajax({
