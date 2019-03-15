@@ -81,11 +81,24 @@ layui.use(['form', 'layer', 'laydate', 'upload', 'table', 'laytpl'], function ()
     });
 
     $(".addNewsList_btn").click(function () {
+        // 0:cover,1:append.
+        layer.confirm('请选择上传方式:', {btn: ['覆盖', '附加']},
+            function (index) {
+                uploadFile(0);
+                layer.close(index);
+            },
+            function () {
+                uploadFile(1);
+            });
+
+
+    });
+
+    function uploadFile(type_upload) {
         var upload = layui.upload; //得到 upload 对象
 
         //获取当前网址，如： http://localhost:8083/uimcardprj/share/meun.jsp
         //var curWwwPath = window.document.location.href;
-
         //var pos = curWwwPath.indexOf(pathName);
         //获取主机地址，如： http://localhost:8083
         // var localhostPaht = curWwwPath.substring(0, pos);
@@ -97,7 +110,7 @@ layui.use(['form', 'layer', 'laydate', 'upload', 'table', 'laytpl'], function ()
         //创建一个上传组件
         upload.render({
             elem: '#uploadDiv'
-            , url: projectName + '/user/upload.do'
+            , url: projectName + '/user/upload.do?type=' + type_upload
             , accept: 'file'
             , exts: 'xls|xlsx'
             , done: function (res, index, upload) { //上传后的回调
@@ -107,8 +120,8 @@ layui.use(['form', 'layer', 'laydate', 'upload', 'table', 'laytpl'], function ()
             }
             , error: function () {
             }
-        })
-    });
+        });
+    }
 
     $(".addNews_btn").click(function () {
         addNews();

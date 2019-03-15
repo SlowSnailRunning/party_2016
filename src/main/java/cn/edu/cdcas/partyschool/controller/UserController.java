@@ -43,13 +43,17 @@ public class UserController {
      */
     @RequestMapping("/getStuScores")
     public Float getStuScores(String studentNo, String isMakeUp, Integer examId) {
-        return userService.getStuScores(studentNo,isMakeUp,examId);
+        return userService.getStuScores(studentNo, isMakeUp, examId);
     }
+
     @RequestMapping("/upload")
-    public JSONResult upload(@RequestParam("file") MultipartFile file) {
-        if (!userService.isEmpty()) {
-            return new JSONResult(1, "导入前请清空学生列表!", 404);
-        }
+    public JSONResult upload(@RequestParam("file") MultipartFile file, @RequestParam("type") Integer type) {
+        if (file == null) return new JSONResult(0, "用户未选择文件", 200);
+//        if (!userService.isEmpty()) {
+//            return new JSONResult(1, "导入前请清空学生列表!", 200);
+//        }
+        // 0:cover, 1:append
+        if (type == 0) userService.clear();
         ExcelUtil excelUtil = new ExcelUtil();
         Map<Integer, List<String>> map = null;
         User user = new User();
@@ -70,7 +74,6 @@ public class UserController {
         } catch (IOException e) {
             return new JSONResult(1, e.getMessage(), 404);
         }
-
         return new JSONResult(0, "考生导入成功!", 200);
     }
 
@@ -211,18 +214,18 @@ public class UserController {
         return userService.dimQueryMangerByName(name);
     }
 
-    @RequestMapping(value = "/logout",method =RequestMethod.POST)
+    @RequestMapping(value = "/logout", method = RequestMethod.POST)
     public String logout(HttpSession httpSession) {
         //session過期，銷毀map中的session;
-        String studentNo=(String)httpSession.getAttribute("studentNo");
+        String studentNo = (String) httpSession.getAttribute("studentNo");
         UniqueSession.sessionMap.remove(studentNo);
         httpSession.invalidate();
         return (String) httpSession.getServletContext().getAttribute("php_login");
     }
 
-    @RequestMapping(value = "/getFiled",method =RequestMethod.GET)
+    @RequestMapping(value = "/getFiled", method = RequestMethod.GET)
     public String getFiled(HttpSession httpSession) throws Exception {
-        String stu_no=httpSession.getAttribute("studentNo").toString();
+        String stu_no = httpSession.getAttribute("studentNo").toString();
         User user = userService.queryByStuNo(stu_no);
         return user.getName();
     }
