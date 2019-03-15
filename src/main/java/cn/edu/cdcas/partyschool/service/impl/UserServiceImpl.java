@@ -385,7 +385,7 @@ public class UserServiceImpl implements UserService {
     }
 
     /**
-     *@Describe: 根据当前ExamState判断本次开始考试的状态变化,存入到数据库
+     *@Describe: 根据当前ExamState判断本次开始考试的状态变化,开考时间，存入到数据库
      *@Author Snail
      *@Date 2019/3/6
      */
@@ -398,7 +398,6 @@ public class UserServiceImpl implements UserService {
             examState=examState+1;
             userMapper.updateExamStateMakeupByStuNo(studentNo,examState);
         }
-
         return examState;
     }
 
@@ -471,7 +470,7 @@ public class UserServiceImpl implements UserService {
             exam = examMapper.queryCurrentExamInformation().get(0);
             jedisClient.hset("partySys2016","nowExam",JSON.toJSONString(exam));
         }
-       boolean b=examMapper.isOverTime(studentNo,exam.getExamTime())==0?true:false;
+       boolean b=examMapper.isOverTime(studentNo,exam.getExamTime()*60*1000)==0?true:false;
        return b;
     }
     /**

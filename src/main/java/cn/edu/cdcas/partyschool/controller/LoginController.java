@@ -54,7 +54,7 @@ public class LoginController {
     public void login(String token, HttpServletRequest request, HttpSession httpSession, HttpServletResponse response) {
         int flag = 0;
         try {
-            String student_no = token;/*userServiceImpl.isLoginSuccess(token,request.getRemoteAddr());*/
+            String student_no = token;//userServiceImpl.isLoginSuccess(token,request.getRemoteAddr());
             String type = null;
             if ("-1".equals(student_no)) {
                 flag = 11;//系统认证失败
@@ -68,32 +68,33 @@ public class LoginController {
                 } else {//学生
                     if (examServiceImpl.isCurrentExam() == null) {
                         flag = 9;//当前无考试
-                    }
-                    //查看考试的状态
-                    User user = userServiceImpl.queryByStuNo(student_no);
-                    Integer examState = user.getExamState();
-                    //当前考试是否允许补考
-                    Exam nowExam = userServiceImpl.getNowExam();
-                    Integer isMakeup = nowExam.getIsMakeup();
-                    if (isMakeup == 1) {//允许补考
-                        if (examState == 2 || examState == 5 || examState == 6) {//不可进入
-                            flag = examState;
-                        } else {//进入
-                            flag = 10;//成功跳转
-                            httpSession.setAttribute("studentNo", student_no);
-                            httpSession.setAttribute("type", type);
-                        }
-                    } else {//不允许补考
-                        if (examState == 0 || examState == 1) {//进入
-                            flag = 10;
-                            httpSession.setAttribute("studentNo", student_no);
-                            httpSession.setAttribute("type", type);
-                        } else {//不可进入
-                            flag = examState;
-                        }
-                    }
+                    }else {
+						//查看考试的状态
+						User user = userServiceImpl.queryByStuNo(student_no);
+						Integer examState = user.getExamState();
+						//当前考试是否允许补考
+						Exam nowExam = userServiceImpl.getNowExam();
+						Integer isMakeup = nowExam.getIsMakeup();
+						if (isMakeup == 1) {//允许补考
+							if (examState == 2 || examState == 5 || examState == 6) {//不可进入
+								flag = examState;
+							} else {//进入
+								flag = 10;//成功跳转
+								httpSession.setAttribute("studentNo", student_no);
+								httpSession.setAttribute("type", type);
+							}
+						} else {//不允许补考
+							if (examState == 0 || examState == 1) {//进入
+								flag = 10;
+								httpSession.setAttribute("studentNo", student_no);
+								httpSession.setAttribute("type", type);
+							} else {//不可进入
+								flag = examState;
+							}
+						}
+					}
                 }
-			/*	// TODO: 2019/3/11 拦截考试状态为未过的人
+			/*
 //				System.out.println("-----------------验证成功----------------");
 				if(examServiceImpl.isCurrentExam()==null&&"student".equals(type)){
 					flag=3;//未有该生考试
@@ -102,7 +103,6 @@ public class LoginController {
 					httpSession.setAttribute("studentNo",student_no);
 					httpSession.setAttribute("type", type);
 				}*/
-
             }
             String renderStr = "jsonCallBackTest" + "(" + flag + ")";
             response.getWriter().write(renderStr);
@@ -118,16 +118,22 @@ public class LoginController {
 //			UserSession userSession=(UserSession)httpSession.getAttribute("partySys_user");
             String type = (String) httpSession.getAttribute("type");
             if ("student".equals(type)) {
-                if (httpSession.getAttribute("dan") == null || httpSession.getAttribute("duo") == null) {
+				boolean isOverTime = userServiceImpl.isOvertime((String) httpSession.getAttribute("studentNo"));
+				if (httpSession.getAttribute("dan") == null || httpSession.getAttribute("duo") == null) {
                     //从数据库获取exam_state
-                    httpSession.setAttribute("examState", userServiceImpl.queryByStuNo((String) httpSession.getAttribute("studentNo")).getExamState());
-//					httpSession.setAttribute(((User)userServiceImpl.queryByStuNo(userSession.getNumber())).getExamState());
-					return "redirect:/exam/accept.html";
+					if(isOverTime){
+						//超时
+						return "redirect:/exam/score.html";
+					}else {
+						httpSession.setAttribute("examState", userServiceImpl.queryByStuNo((String) httpSession.getAttribute("studentNo")).getExamState());
+//						httpSession.setAttribute(((User)userServiceImpl.queryByStuNo(userSession.getNumber())).getExamState());
+						return "redirect:/exam/accept.html";
+					}
 				}else {
 					//非首次登录
 					// TODO: 2019/3/5
 
-					if(userServiceImpl.isOvertime((String)httpSession.getAttribute("studentNo"))){
+					if(isOverTime){
 						//超时
 						//统计answer表中，该考生初/补考数据，写入到user表
 						//userServiceImpl.writeScoreForAnswer((String)httpSession.getAttribute("studentNo"),(String)httpSession.getAttribute("examState"));

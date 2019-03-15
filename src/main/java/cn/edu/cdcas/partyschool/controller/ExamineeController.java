@@ -28,7 +28,7 @@ public class ExamineeController {
     public Map<String,Object> allQuestionInfoForStu(HttpSession httpSession){
         Map<String,Object> requiredQuestions=new HashMap<>();
         try {
-            //更新exam_state
+            //更新exam_state,开考时间
             int examState= (int) httpSession.getAttribute("examState");
             int nowExamState=userServiceImpl.changeExamState((String) httpSession.getAttribute("studentNo"),examState);
             httpSession.setAttribute("examState",nowExamState);
