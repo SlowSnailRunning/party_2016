@@ -74,10 +74,10 @@ public class ExamineeController {
 
         try {
             boolean b =userServiceImpl.saveAnswer(id, answer,String.valueOf(httpSession.getAttribute("studentNo")),String.valueOf(httpSession.getAttribute("examState")));
-            return new JSONResult();
+            return new JSONResult(0,"555",200);
         } catch (Exception e) {
             e.printStackTrace();
-            return new JSONResult();
+            return new JSONResult(-1,"seses",500);
         }
     }
     /**
