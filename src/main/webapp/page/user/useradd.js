@@ -14,13 +14,14 @@ layui.use(['form', 'layer', 'jquery'], function () {
         }, function (data) {
             var data = JSON.parse(data);
             if (data.code == 0) {
-                layer.msg(data.msg, {time: 400}, function () {
-                    $("input[type='text']").val("");
-                });
+                layer.msg(data.msg, {time: 500,end:function () {
+                        var index = parent.layer.getFrameIndex(window.name);
+                        parent.layer.close(index);
+                    }});
             } else if (data.code == 1) {
-                layer.msg(data.msg, {time: 2000});
+                layer.msg(data.msg, {time:1500});
             } else {
-                layer.msg(data.msg, {time: 2000});
+                layer.msg(data.msg, {time: 1500});
             }
         });
         return false;
