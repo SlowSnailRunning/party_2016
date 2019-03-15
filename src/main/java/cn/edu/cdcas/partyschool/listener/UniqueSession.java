@@ -1,17 +1,10 @@
 package cn.edu.cdcas.partyschool.listener;
 
-import java.util.HashMap;
-import java.util.Map;
-import java.util.Set;
-
 import javax.servlet.http.HttpSession;
 import javax.servlet.http.HttpSessionAttributeListener;
 import javax.servlet.http.HttpSessionBindingEvent;
-import javax.sound.midi.Soundbank;
-
-import cn.edu.cdcas.partyschool.model.UserSession;
-import cn.edu.cdcas.partyschool.util.impl.JedisClientSingle;
-import org.springframework.beans.factory.annotation.Autowired;
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  * 完成单账号，单地点登录

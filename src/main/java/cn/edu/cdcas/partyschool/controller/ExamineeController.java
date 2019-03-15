@@ -56,13 +56,6 @@ public class ExamineeController {
         }
         return studentExamInfo;
     }
-    /////////////////////////////////////del????
-    @RequestMapping("/test")
-    @ResponseBody
-    public String test()
-    {
-        return "asdfasf";
-    }
 
     /**
      *@Describe: update数据，注意isMakeUp字段
@@ -70,14 +63,14 @@ public class ExamineeController {
      *@Date 2019/3/9
      */
     @RequestMapping("/updateByQueId")
+    @ResponseBody
     public JSONResult updateByQueId(int id,String answer,HttpSession httpSession){
-
         try {
-            boolean b =userServiceImpl.saveAnswer(id, answer,String.valueOf(httpSession.getAttribute("studentNo")),String.valueOf(httpSession.getAttribute("examState")));
-            return new JSONResult(0,"555",200);
+            boolean b =userServiceImpl.saveAnswer(id, answer,String.valueOf(httpSession.getAttribute("studentNo")),"1".equals(String.valueOf(httpSession.getAttribute("examState")))?"0":"1");
+            return new JSONResult(0,"",200);
         } catch (Exception e) {
             e.printStackTrace();
-            return new JSONResult(-1,"seses",500);
+            return new JSONResult(-1,"更新失败",500);
         }
     }
     /**

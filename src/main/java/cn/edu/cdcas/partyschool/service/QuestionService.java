@@ -4,7 +4,6 @@ package cn.edu.cdcas.partyschool.service;
 import cn.edu.cdcas.partyschool.model.Question;
 
 import java.util.Map;
-import java.util.Set;
 
 public interface QuestionService {
 /*    int insert(Question record);

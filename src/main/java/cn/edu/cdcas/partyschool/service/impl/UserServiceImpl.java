@@ -1,4 +1,5 @@
 package cn.edu.cdcas.partyschool.service.impl;
+
 import cn.edu.cdcas.partyschool.mapper.ExamMapper;
 import cn.edu.cdcas.partyschool.mapper.QuestionMapper;
 import cn.edu.cdcas.partyschool.mapper.UserMapper;
@@ -9,7 +10,6 @@ import cn.edu.cdcas.partyschool.util.impl.JedisClientSingle;
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
 import com.alibaba.fastjson.TypeReference;
-import javafx.scene.AmbientLight;
 import org.apache.commons.collections4.map.HashedMap;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -18,7 +18,6 @@ import org.springframework.util.DigestUtils;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpSession;
-import java.beans.Transient;
 import java.util.*;
 
 @Service
@@ -403,7 +402,7 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public boolean saveAnswer(int id, String answer, String studentNo,String isMakeUp) throws Exception {
-       /* Answer answerObject=new Answer();
+        /*Answer answerObject=new Answer();
 
         answerObject.setStudentNo( studentNo);
         answerObject.setExamId(JSON.parseObject(jedisClient.hget("partySys2016","nowExam"),Exam.class).getId());
@@ -422,7 +421,8 @@ public class UserServiceImpl implements UserService {
             //update
 
         }*/
-//       userMapper.
+        Integer updateId=userMapper.updateAnswer(id,answer,studentNo,isMakeUp);
+
         return true;
     }
     /**

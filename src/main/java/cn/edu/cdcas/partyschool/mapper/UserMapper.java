@@ -4,10 +4,7 @@ import cn.edu.cdcas.partyschool.model.Answer;
 import cn.edu.cdcas.partyschool.model.Manger;
 import cn.edu.cdcas.partyschool.model.User;
 import org.apache.ibatis.annotations.Param;
-
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 public interface UserMapper {
     int deleteById(Integer id);
@@ -97,4 +94,10 @@ public interface UserMapper {
     Integer updateMakeUpEnd(@Param("student_no")String studentNo,@Param("score")Float score,@Param("pass_score")Float pass_score);
 
     Float getStuScores(@Param("student_no")String studentNo,@Param("is_make_up")String isMakeUp,@Param("exam_id") Integer examId);
+    /**
+     *@Describe: 更新答案
+     *@Author Snail
+     *@Date 2019/3/15
+     */
+    Integer updateAnswer(@Param("que_id") int id,@Param("answer") String answer,@Param("student_no") String studentNo,@Param("is_make_up") String isMakeUp);
 }
