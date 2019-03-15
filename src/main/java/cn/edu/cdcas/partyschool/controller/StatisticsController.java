@@ -1,8 +1,6 @@
 package cn.edu.cdcas.partyschool.controller;
 
-import cn.edu.cdcas.partyschool.mapper.StatisticsMapper;
 import cn.edu.cdcas.partyschool.model.Question;
-import cn.edu.cdcas.partyschool.model.Statistics;
 import cn.edu.cdcas.partyschool.service.QuestionService;
 import cn.edu.cdcas.partyschool.service.StatisticsInterface;
 import cn.edu.cdcas.partyschool.util.impl.StatisticsPage;
@@ -10,8 +8,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
-
-import java.util.List;
 
 /**
  * @Description TODO

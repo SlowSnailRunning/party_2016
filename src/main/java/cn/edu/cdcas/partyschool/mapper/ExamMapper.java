@@ -2,7 +2,6 @@ package cn.edu.cdcas.partyschool.mapper;
 
 import cn.edu.cdcas.partyschool.model.Exam;
 import org.apache.ibatis.annotations.Param;
-import sun.rmi.runtime.Log;
 
 import java.util.List;
 

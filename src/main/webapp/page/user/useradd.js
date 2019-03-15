@@ -26,5 +26,5 @@ layui.use(['form', 'layer', 'jquery'], function () {
         });
         return false;
     });
-    form.verify({account: [/^[\S]{12,15}$/, '密码必须12到15位，且不能出现空格']});
+    form.verify({account: [/^[\S]{6,15}$/, '密码必须12到15位，且不能出现空格']});
 });

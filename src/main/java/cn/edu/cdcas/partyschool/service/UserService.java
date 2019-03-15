@@ -3,7 +3,6 @@ package cn.edu.cdcas.partyschool.service;
 import cn.edu.cdcas.partyschool.model.Exam;
 import cn.edu.cdcas.partyschool.model.User;
 import cn.edu.cdcas.partyschool.util.JSONResult;
-import org.apache.ibatis.annotations.Param;
 
 import javax.servlet.http.HttpSession;
 import java.util.List;

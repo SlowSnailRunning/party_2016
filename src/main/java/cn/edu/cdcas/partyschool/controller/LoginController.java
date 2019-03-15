@@ -1,34 +1,19 @@
 package cn.edu.cdcas.partyschool.controller;
 
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
-
-import cn.edu.cdcas.partyschool.listener.UniqueSession;
 import cn.edu.cdcas.partyschool.model.Exam;
 import cn.edu.cdcas.partyschool.model.User;
 import cn.edu.cdcas.partyschool.service.ExamService;
-import cn.edu.cdcas.partyschool.service.QuestionService;
 import cn.edu.cdcas.partyschool.service.UserService;
-import cn.edu.cdcas.partyschool.util.JSONResult;
-import com.alibaba.fastjson.JSON;
-import com.alibaba.fastjson.JSONObject;
-import com.sun.deploy.net.HttpResponse;
-import org.apache.commons.collections4.map.HashedMap;
-import org.omg.CORBA.Request;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
-
-import cn.edu.cdcas.partyschool.model.UserSession;
 import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
-import sun.security.timestamp.HttpTimestamper;
 
-import java.io.IOException;
-import java.util.Map;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 
 /**
@@ -154,10 +139,4 @@ public class LoginController {
 			return "redirect:/page/404.html";
 		}
 	}
-////////            del????????????????????
-    @RequestMapping({"/", "/index"})
-    public String main() {
-        System.out.println("qweqe");
-        return "index";
-    }
 }

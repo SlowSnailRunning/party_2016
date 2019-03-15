@@ -499,11 +499,6 @@
 
 
                 });
-
-
-
-
-
                 var list= document.getElementsByTagName("input");
                 // console.log(list[i].name);
                 var buttonList=$(".btn");
@@ -518,7 +513,7 @@
                             $("#btn_"+index).attr("class","btn btn-primary");
                             //发送ajax将答案发送到后台
                             $.ajax({
-                                type: "POST",
+                                type: "GET",
                                 url: "/examinee/updateByQueId.do",
                                 async: false,
                                 dataType: "json",
@@ -529,7 +524,6 @@
                             });
 
                         }
-
                         //针对多选按钮
                         if(this.name.split("_")[0]=="duo"){
                             var current= $("input[name='"+this.name+"']:checked").val();
