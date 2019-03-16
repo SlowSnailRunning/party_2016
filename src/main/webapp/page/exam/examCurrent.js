@@ -92,6 +92,6 @@ layui.use(['layer','element','jquery','form','util', 'laydate'],function () {
                     $("#peopel").text("      "+data+" 人 ");
                 }
             });
-        },2000);
+        },5000);
     })
 });
