@@ -215,6 +215,8 @@ layui.use(['form','layer','layedit','laydate','upload'],function(){
                             }
                             else if(parseInt(data)>0){
                                 $('.examTimeRange').val("");
+                                $('.examStartTime').val("");
+                                $('.examEndTime').val("");
                                 layer.alert("此时间段与数据库中某个时间段冲突！请重新选择",{icon: 5});
                             }
                             else if(parseInt(data)===-1){
