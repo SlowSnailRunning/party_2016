@@ -71,7 +71,6 @@ layui.use(['form', 'layer', 'laydate', 'upload', 'table', 'laytpl'], function ()
                 }
             },
             {title: '操作', width: 210, fixed: "right", align: "center", templet: function (data) {
-
                     if((data.examStartTime<=(new Date()).getTime()) &&((new Date()).getTime()<=data.examEndTime)){
                         return " <a class=\"layui-btn layui-btn-xs layui-btn-danger\" lay-event=\"openOrCloseExam\" style=\"padding:0px !important;border-radius: 12px !important;background-color:#FFFFFF !important;\">\n" +
                             "        <input id=\"openOrCloseExam"+data.id+"\" check=\"true\" checked type=\"checkbox\"  name=\"openOrCloseExam\" lay-skin=\"switch\" lay-filter=\"filter"+data.id+"\" lay-text=\"开启|关闭\">\n" +
@@ -248,9 +247,9 @@ layui.use(['form', 'layer', 'laydate', 'upload', 'table', 'laytpl'], function ()
                             success : function(data2){
                                 if(parseInt(data2)===0) {
                                     $.ajax({
-                                        url: "/exam/updateTimeRangeById.do",
+                                        url: "/exam/updateStartTime.do",
                                         type: "post",
-                                        data: {id:data.id, examStartTime: examStart, examEndTime: examEnd},
+                                        data: {id:data.id},
                                         dataType: "json",
                                         success: function (data3) {
                                             if (data3.status === 200) {
@@ -307,12 +306,12 @@ layui.use(['form', 'layer', 'laydate', 'upload', 'table', 'laytpl'], function ()
                         var examEnd = layui.util.toDateString(((new Date()).getTime()), 'yyyy-MM-dd HH:mm:ss');
                         var examStart = layui.util.toDateString((((new Date()).getTime()) - (data.examTime * 60 *1000)), 'yyyy-MM-dd HH:mm:ss');
                         $.ajax({
-                            url: "/exam/updateTimeRangeById.do",
+                            url: "/exam/endNowExam.do",
                             type: "post",
-                            data: {id:data.id, examStartTime: examStart, examEndTime: examEnd},
-                            dataType: "json",
+                            data: {},
+                            dataType: "text",
                             success: function (data3) {
-                                if (data3.status === 200) {
+                                if (data3 === "0") {
                                     console.log(data4.elem);
                                     layer.alert("考试："+data.examName+"关闭成功！",{icon: 6});
 
@@ -325,7 +324,7 @@ layui.use(['form', 'layer', 'laydate', 'upload', 'table', 'laytpl'], function ()
                                         }
                                     })
 
-                                } else if(data3.status === 500){
+                                } else{
                                     layer.msg("关闭失败！",{icon: 5});
 
                                 }

@@ -147,6 +147,14 @@ public class ExamServiceImpl implements ExamService {
     }
 
     /**
+     *@Describe: 更新开始考试时间为现在
+     */
+    @Override
+    public int updateStartTime(Integer id) throws Exception {
+        return examMapper.updateStartTime(id);
+    }
+
+    /**
      *@Describe: 查找当前时段是否存在考试，返回考试id
      *
      *@Author Snail

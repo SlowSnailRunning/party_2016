@@ -21,4 +21,6 @@ public interface ExamService {
     int updateTimeRangeById(Exam exam)throws Exception;
 
     boolean endNowExam()throws Exception;
+
+    int updateStartTime(Integer id) throws Exception;
 }

@@ -45,4 +45,8 @@ public interface ExamMapper {
 
     //更新考试结束时间
     Integer updateEndTime(@Param("id") Integer id);
+
+    //更新考试结束时间
+    Integer updateStartTime(@Param("id") Integer id);
+
 }

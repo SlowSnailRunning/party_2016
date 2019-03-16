@@ -319,4 +319,8 @@
   <update id="updateEndTime">
     update party_exam set exam_end_time=CURRENT_TIMESTAMP where id=#{id}
   </update>
+
+  <update id="updateStartTime">
+    update party_exam set exam_start_time=CURRENT_TIMESTAMP where id=#{id}
+  </update>
 </mapper>

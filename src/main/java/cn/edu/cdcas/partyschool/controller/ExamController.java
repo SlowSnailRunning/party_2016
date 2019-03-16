@@ -79,6 +79,17 @@ public class ExamController {
         }
         return new JSONResult(3, "开启考试失败！", 500);
     }
+    /**
+     * @Describe: 更新考试开考为现在
+     */
+    @RequestMapping("/updateStartTime")
+    public JSONResult updateStartTime(Integer id) throws Exception{
+        if(id!=null){
+            examService.updateStartTime(id);
+            return new JSONResult(0, "开启考试成功！", 200);
+        }
+        return new JSONResult(3, "开启考试失败！", 500);
+    }
 
     /**
      * @Describe: 查询指定时间段内是否有其他考试（此版本系统同一时间段内只能有一个考试）
