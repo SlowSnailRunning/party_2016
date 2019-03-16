@@ -43,5 +43,6 @@ public interface ExamMapper {
     //查询初/补考是否超时
     Integer isOverTime(@Param("student_no")String student_no,@Param("exam_time")long exam_time) throws Exception;
 
-
+    //更新考试结束时间
+    Integer updateEndTime(@Param("id") Integer id);
 }

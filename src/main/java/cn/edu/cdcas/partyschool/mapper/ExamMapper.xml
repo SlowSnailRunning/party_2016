@@ -316,4 +316,7 @@
   <select id="isOverTime" resultType="int">
     SELECT count(*) FROM party_user WHERE student_no=#{student_no} AND (CURRENT_TIMESTAMP-exam_start&lt;#{exam_time} or CURRENT_TIMESTAMP-make_up_start&lt;#{exam_time})
   </select>
+  <update id="updateEndTime">
+    update party_exam set exam_end_time=CURRENT_TIMESTAMP where id=#{id}
+  </update>
 </mapper>

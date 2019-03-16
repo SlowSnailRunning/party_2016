@@ -5,10 +5,7 @@ import cn.edu.cdcas.partyschool.model.Exam;
 import cn.edu.cdcas.partyschool.service.ExamService;
 import cn.edu.cdcas.partyschool.util.JSONResult;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.Map;
 
@@ -221,6 +218,21 @@ public class ExamController {
     @RequestMapping("/studentSize")
     public int studentSize() throws Exception {
         return UniqueSession.sessionMap.size();
+    }
+
+    @RequestMapping("/endNowExam")
+    @ResponseBody
+    public String endNowExam(){
+        try {
+            if(examService.endNowExam()){
+                return "0";
+            }else {
+                return "-1";
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+            return "-1";
+        }
     }
 
 }

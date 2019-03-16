@@ -19,4 +19,6 @@ public interface ExamService {
     int queryAppointTimeQuantum(Exam exam) throws Exception;
     Map<String, Object> queryExamByName(int start,int pageSize,String examName) throws Exception;
     int updateTimeRangeById(Exam exam)throws Exception;
+
+    boolean endNowExam()throws Exception;
 }

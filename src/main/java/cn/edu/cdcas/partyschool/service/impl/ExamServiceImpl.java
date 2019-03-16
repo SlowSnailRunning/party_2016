@@ -3,6 +3,8 @@ package cn.edu.cdcas.partyschool.service.impl;
 import cn.edu.cdcas.partyschool.mapper.ExamMapper;
 import cn.edu.cdcas.partyschool.model.Exam;
 import cn.edu.cdcas.partyschool.service.ExamService;
+import cn.edu.cdcas.partyschool.util.impl.JedisClientSingle;
+import com.alibaba.fastjson.JSON;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -19,7 +21,8 @@ import java.util.Map;
 public class ExamServiceImpl implements ExamService {
     @Autowired
     private ExamMapper examMapper;
-
+    @Autowired
+    private JedisClientSingle jedisClient;
 
     /**
      *@Describe: 清空(删除)考试表
@@ -130,6 +133,18 @@ public class ExamServiceImpl implements ExamService {
 
     @Override
     public int updateTimeRangeById(Exam exam) throws Exception { return examMapper.updateTimeRangeById(exam) ; }
+
+    /**
+     *@Describe:结束考试，删除redis中的数据
+     *@Author Snail
+     *@Date 2019/3/16
+     */
+    @Override
+    public boolean endNowExam() throws Exception {
+        Integer examId=examMapper.updateEndTime(JSON.parseObject(jedisClient.hget("partySys2016", "nowExam"), Exam.class).getId());
+        jedisClient.del("partySys2016").equals(0) ;
+        return true;
+    }
 
     /**
      *@Describe: 查找当前时段是否存在考试，返回考试id
