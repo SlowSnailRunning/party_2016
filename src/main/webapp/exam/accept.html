@@ -184,7 +184,7 @@
         },
         methods: {
             getStudentInfo(){
-                axios.get("http://localhost:3000/examinee/examAndStuInfo.do")
+                axios.get("/examinee/examAndStuInfo.do")
                     .then(res=>{
                         this.studentInfo=res.data.user
                         console.log(this.studentInfo)
@@ -199,7 +199,7 @@
                     alert("请勾选同意！！！")
                     return false;
                 }
-                window.location.href="/exam.html";
+                window.location.href="exam.html";
             }
         },
 
