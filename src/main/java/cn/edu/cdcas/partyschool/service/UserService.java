@@ -78,5 +78,6 @@ public interface UserService {
     Float getStuScores(String studentNo, String isMakeUp,  Integer examId);
 
     Map<String, Object> getScoreAndIsMakeUpMap(String studentNo) throws Exception;
-    Exam getNowExam ();
+
+    Exam getNowExam () throws Exception;
 }
