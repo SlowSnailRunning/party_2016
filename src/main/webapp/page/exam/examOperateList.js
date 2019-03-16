@@ -71,9 +71,7 @@ layui.use(['form', 'layer', 'laydate', 'upload', 'table', 'laytpl'], function ()
                 }
             },
             {title: '操作', width: 210, fixed: "right", align: "center", templet: function (data) {
-                /*console.log("类型："+typeof data + "value：" + data+"结构："+JSON.stringify(data));*/
-                    var startTime = layui.util.toDateString(data.examStartTime, 'yyyy-MM-dd HH:mm:ss');
-                    var endTime = layui.util.toDateString(data.examEndTime, 'yyyy-MM-dd HH:mm:ss');
+
                     if((data.examStartTime<=(new Date()).getTime()) &&((new Date()).getTime()<=data.examEndTime)){
                         return " <a class=\"layui-btn layui-btn-xs layui-btn-danger\" lay-event=\"openOrCloseExam\" style=\"padding:0px !important;border-radius: 12px !important;background-color:#FFFFFF !important;\">\n" +
                             "        <input id=\"openOrCloseExam"+data.id+"\" check=\"true\" checked type=\"checkbox\"  name=\"openOrCloseExam\" lay-skin=\"switch\" lay-filter=\"filter"+data.id+"\" lay-text=\"开启|关闭\">\n" +
@@ -235,10 +233,6 @@ layui.use(['form', 'layer', 'laydate', 'upload', 'table', 'laytpl'], function ()
         }
         else if (layEvent === 'openOrCloseExam') { //开启考试
                 form.on("switch(filter"+data.id+")", function(data4){
-
-                    var check = $("#"+"openOrCloseExam"+data.id).attr("check",data4.elem.checked+"");
-
-
                     if(data4.elem.checked){
 
                         var examStart = layui.util.toDateString(((new Date()).getTime()), 'yyyy-MM-dd HH:mm:ss');
@@ -275,8 +269,6 @@ layui.use(['form', 'layer', 'laydate', 'upload', 'table', 'laytpl'], function ()
 
                                             } else if(data3.status === 500){
                                                 layer.msg("开启失败！",{icon: 5});
-                                                /*$('#openOrCloseExam').attr("checked", false);*/
-                                                /*$("#"+"openOrCloseExam"+data.id).removeAttr('checked');*/
                                             }
 
                                         }
@@ -347,17 +339,7 @@ layui.use(['form', 'layer', 'laydate', 'upload', 'table', 'laytpl'], function ()
                 });
 
 
-
-
-
-             //========================================
-
-
-
-
         }
-
-
 
 
 
