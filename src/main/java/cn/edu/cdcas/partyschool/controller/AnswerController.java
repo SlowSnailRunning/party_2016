@@ -27,6 +27,7 @@ public class AnswerController {
         List<Answer> answers = answerService.queryAnswerByStuNo(stuNo, (page - 1) * limit, limit);
         List<Map<String, Object>> data = new ArrayList<>();
         answers.forEach(answer -> {
+
             Question question = answer.getQuestion();
             Map<String, Object> map = new HashMap<>();
             String intro = question.getIntro(), content = "", type = "";
