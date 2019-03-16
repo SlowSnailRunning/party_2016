@@ -71,27 +71,27 @@ layui.use(['form', 'layer', 'laydate', 'upload', 'table', 'laytpl'], function ()
                 }
             },
             {title: '操作', width: 210, fixed: "right", align: "center", templet: function (data) {
-                    return " <a class=\"layui-btn layui-btn-xs layui-btn-danger\" lay-event=\"openOrCloseExam\" style=\"padding:0px !important;border-radius: 12px !important;background-color:#FFFFFF !important;\">\n" +
-                        "        <input id=\"openOrCloseExam\" check=\"false\" type=\"checkbox\"  name=\"openOrCloseExam\" lay-skin=\"switch\" lay-text=\"开启|关闭\">\n" +
-                        "        </a>\n" +
-                        "        <a class=\"layui-btn layui-btn-xs\" lay-event=\"edit\">编辑</a>\n" +
-                        "        <a class=\"layui-btn layui-btn-xs layui-btn-danger\" lay-event=\"del\">删除</a>"
+                /*console.log("类型："+typeof data + "value：" + data+"结构："+JSON.stringify(data));*/
+                    var startTime = layui.util.toDateString(data.examStartTime, 'yyyy-MM-dd HH:mm:ss');
+                    var endTime = layui.util.toDateString(data.examEndTime, 'yyyy-MM-dd HH:mm:ss');
+                    if((data.examStartTime<=(new Date()).getTime()) &&((new Date()).getTime()<=data.examEndTime)){
+                        return " <a class=\"layui-btn layui-btn-xs layui-btn-danger\" lay-event=\"openOrCloseExam\" style=\"padding:0px !important;border-radius: 12px !important;background-color:#FFFFFF !important;\">\n" +
+                            "        <input id=\"openOrCloseExam\" check=\"false\" checked type=\"checkbox\"  name=\"openOrCloseExam\" lay-skin=\"switch\" lay-text=\"开启|关闭\">\n" +
+                            "        </a>\n" +
+                            "        <a class=\"layui-btn layui-btn-xs\" lay-event=\"edit\">编辑</a>\n" +
+                            "        <a class=\"layui-btn layui-btn-xs layui-btn-danger\" lay-event=\"del\">删除</a>"
+                    }else{
+                        return " <a class=\"layui-btn layui-btn-xs layui-btn-danger\" lay-event=\"openOrCloseExam\" style=\"padding:0px !important;border-radius: 12px !important;background-color:#FFFFFF !important;\">\n" +
+                            "        <input id=\"openOrCloseExam\" check=\"false\" type=\"checkbox\"  name=\"openOrCloseExam\" lay-skin=\"switch\" lay-text=\"开启|关闭\">\n" +
+                            "        </a>\n" +
+                            "        <a class=\"layui-btn layui-btn-xs\" lay-event=\"edit\">编辑</a>\n" +
+                            "        <a class=\"layui-btn layui-btn-xs layui-btn-danger\" lay-event=\"del\">删除</a>"
+                    }
+
                 } }
         ]]
     });
 
-    //是否置顶
-    form.on('switch(newsTop)', function (data) {
-        var index = layer.msg('修改中，请稍候', {icon: 16, time: false, shade: 0.8});
-        setTimeout(function () {
-            layer.close(index);
-            if (data.elem.checked) {
-                layer.msg("置顶成功！");
-            } else {
-                layer.msg("取消置顶成功！");
-            }
-        }, 500);
-    });
 
     //搜索
     $(".search_btn").on("click", function () {

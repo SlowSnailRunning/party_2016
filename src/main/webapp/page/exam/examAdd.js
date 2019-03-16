@@ -94,7 +94,7 @@ layui.use(['form','layer','layedit','laydate','upload'],function(){
     }
 
         /*jQuery控制文本框只能输入数字[兼容IE、火狐等浏览器]*/
-        $.fn.numeral=function(bl){//限制金额输入、兼容浏览器、屏蔽粘贴拖拽等
+        $.fn.numeral=function(bl){//限制分数输入、兼容浏览器、屏蔽粘贴拖拽等
         $(this).keypress(function(e){
             var keyCode=e.keyCode?e.keyCode:e.which;
             if(bl){//浮点数
