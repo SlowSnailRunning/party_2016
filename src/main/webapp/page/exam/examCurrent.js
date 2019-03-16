@@ -93,5 +93,9 @@ layui.use(['layer','element','jquery','form','util', 'laydate'],function () {
                 }
             });
         },5000);
+        $("#endExam").click(function () {
+                console.log("sssssssssssssssss");
+            }
+        );
     })
 });
