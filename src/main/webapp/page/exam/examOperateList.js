@@ -70,7 +70,13 @@ layui.use(['form', 'layer', 'laydate', 'upload', 'table', 'laytpl'], function ()
 
                 }
             },
-            {title: '操作', width: 210, templet: '#examListBar', fixed: "right", align: "center"}
+            {title: '操作', width: 210, fixed: "right", align: "center", templet: function (data) {
+                    return " <a class=\"layui-btn layui-btn-xs layui-btn-danger\" lay-event=\"openOrCloseExam\" style=\"padding:0px !important;border-radius: 12px !important;background-color:#FFFFFF !important;\">\n" +
+                        "        <input id=\"openOrCloseExam\" check=\"false\" type=\"checkbox\"  name=\"openOrCloseExam\" lay-skin=\"switch\" lay-text=\"开启|关闭\">\n" +
+                        "        </a>\n" +
+                        "        <a class=\"layui-btn layui-btn-xs\" lay-event=\"edit\">编辑</a>\n" +
+                        "        <a class=\"layui-btn layui-btn-xs layui-btn-danger\" lay-event=\"del\">删除</a>"
+                } }
         ]]
     });
 
@@ -231,10 +237,10 @@ layui.use(['form', 'layer', 'laydate', 'upload', 'table', 'laytpl'], function ()
             var check = $("#openOrCloseExam").attr("check");
             if(check === "false"){
                 $("#openOrCloseExam").attr("check","true");
-                var delayfiveMin = 5*60*1000;
+               /* var delayfiveMin = 5*60*1000;*/
 
-                var examStart = layui.util.toDateString(((new Date()).getTime()+delayfiveMin), 'yyyy-MM-dd HH:mm:ss');
-                var examEnd = layui.util.toDateString((((new Date()).getTime()) + (data.examTime * 60 *1000) + delayfiveMin), 'yyyy-MM-dd HH:mm:ss');
+                var examStart = layui.util.toDateString(((new Date()).getTime()), 'yyyy-MM-dd HH:mm:ss');
+                var examEnd = layui.util.toDateString((((new Date()).getTime()) + (data.examTime * 60 *1000)), 'yyyy-MM-dd HH:mm:ss');
                /* console.log(examStart +  " -----"  +   examEnd);*/
 
 
@@ -253,7 +259,7 @@ layui.use(['form', 'layer', 'laydate', 'upload', 'table', 'laytpl'], function ()
                                 dataType: "json",
                                 success: function (data3) {
                                     if (data3.status === 200) {
-                                        layer.alert("考试："+data.examName+"开启成功！5分钟后开考！",{icon: 6});
+                                        layer.alert("考试："+data.examName+"开启成功！",{icon: 6});
 
                                         table.reload("examListTable", {
                                             page: {
@@ -312,7 +318,7 @@ layui.use(['form', 'layer', 'laydate', 'upload', 'table', 'laytpl'], function ()
                         })
                     },
                     error: function (data2) {
-                        layer.msg("系统错误");
+                        layer.msg("错误");
                         table.reload("examListTable", {
                             page: {
                                 curr: 1 //重新从第 1 页开始
