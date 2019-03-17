@@ -1,6 +1,8 @@
 package cn.edu.cdcas.partyschool.model;
 
-public class errorQue extends Exam{
+import java.io.Serializable;
+
+public class errorQue extends Question implements Serializable{
     private String answer;
 
     public String getAnswer() {
