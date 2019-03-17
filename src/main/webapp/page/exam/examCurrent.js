@@ -1,5 +1,6 @@
 layui.use(['layer','element','jquery','form','util', 'laydate'],function () {
     var $,element,form,util,laydate,layer;
+    var setInt;
     util = layui.util;
     laydate = layui.laydate;
     form =layui.form;
@@ -23,14 +24,30 @@ layui.use(['layer','element','jquery','form','util', 'laydate'],function () {
                         $('.passScore').css("width",$('.examTime').css('width'));
 
                         $('.layui-input').css({"font-size":"17px"})
-                        $('#peopel').css({"font-size":"18px","font-weight":"120","color":"#00CC00","line-height":"36px"})
-                        $('#remainTime').css({"font-size":"18px","font-weight":"120","color":"#FF5722","line-height":"36px"});
+                        $('#peopel').css({"font-size":"18px","font-weight":"120","color":"#FF2200","line-height":"36px"})
+                        $('#remainTime').css({"font-size":"18px","font-weight":"120","color":"#FF2200","line-height":"36px"});
                         $('#examStatus').css({"font-size":"18px","font-weight":"120","color":"#FF2200","line-height":"36px"});
 
                         if(typeof (obj[0]) == "undefined" ){
                             $('#examStatus').html(" 暂 无 考 试 ");
+                            clearInterval(setInt);
+                            $("#btnExam").empty();
+                            form.render();
                         }
                         else{
+                            $("#btnExam").append(" <center>\n" +
+                                "            <button class=\"layui-btn layui-btn-radius layui-btn-danger\" id=\"endExam\">立即结束本次考试</button>\n" +
+                                "        </center>");
+
+                            setInt=setInterval(function () {
+                                $.ajax({
+                                    url : "/exam/studentSize.do",
+                                    type : "get",
+                                    success : function(data){
+                                        $("#peopel").text("      "+data+" 人 ");
+                                    }
+                                });
+                            },5000);
                             $('#examStatus').html("  正 在 考 试 . . . ing");
                             $('.examName').val(obj[0].examName);
                             $('.examTime').val(obj[0].examTime+"分钟");
@@ -78,35 +95,35 @@ layui.use(['layer','element','jquery','form','util', 'laydate'],function () {
                                     layer.alert("考试时间到！");
                                 }
                             }
+                            form.render();
                         }
                     }
                 }
             })
         };
         loadexamCurrent();
-        var setInt=setInterval(function () {
-            $.ajax({
-                url : "/exam/studentSize.do",
-                type : "get",
-                success : function(data){
-                    $("#peopel").text("      "+data+" 人 ");
-                }
-            });
-        },5000);
-        $("#endExam").click(function () {
+
+    })
+    $(document).on('click','#endExam',function () {
+        layer.confirm('确定立即关闭这考试？', {
+            btn: ['确定','我再想想'] //按钮
+        }, function(){
             $.ajax({
                 url: "/exam/endNowExam.do",
                 type: "post",
                 success: function (data) {
                     if (data == 0) {
                         window.location.href = window.location.href;
-                        // layer.msg("关闭成功")
+                        layer.msg("关闭成功");
+                        clearInterval(setInt);
+
                     } else {
-                        layer.msg("关闭失败，请重试！！！");
+                        layer.msg("关闭失败，请联系开发人员！");
                     }
                 }
             });
-            }
-        );
+        }, function(){
+        });
     })
+
 });
