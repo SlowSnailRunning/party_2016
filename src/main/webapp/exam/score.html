@@ -15,16 +15,19 @@
 <div align="center" style="background-color: white;">
     <img src="images/logo.png"/>
 </div>
-<div style="font-size:31px;color:red;font-family:宋体;text-align:center;margin-top:10px;margin-bottom:-8px;">
+<br>
+<br>
+<br>
+<center>
+        <table class="layui-hide" id="LAY_table_user" lay-filter="demo" style="font-size: 10px;width: 100%;"></table>
+</center>
+<div style="position:fixed; top:120px;left:0; width:100%; font-size:31px;color:red;font-family:宋体;text-align:center;margin-top:10px;margin-bottom:-8px;">
     考试:<b id="examName"></b>
     &nbsp;&nbsp;&nbsp;&nbsp;分数:<b id="score"></b>
-    &nbsp;&nbsp;&nbsp;&nbsp;学生姓名:<b id="studentName"></b>
+    &nbsp;&nbsp;&nbsp;&nbsp;姓名:<b id="studentName"></b>
     &nbsp;&nbsp;&nbsp;&nbsp;学号:<b id="studentNo"></b>
     &nbsp;&nbsp;&nbsp;&nbsp;<input class="layui-btn layui-btn-radius layui-btn-danger" value="退出" id="endExam" type="button"/>
 </div>
-<center>
-    <table class="layui-hide" id="LAY_table_user" lay-filter="demo" style="font-size: 10px;width: 100%;"></table>
-</center>
 <script>
     layui.use(['table', 'jquery'], function () {
         var table = layui.table;
