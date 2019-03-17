@@ -235,7 +235,7 @@ layui.use(['form', 'layer', 'laydate', 'upload', 'table', 'laytpl'], function ()
                     if(data4.elem.checked){
 
                         var examStart = layui.util.toDateString(((new Date()).getTime()), 'yyyy-MM-dd HH:mm:ss');
-                        var examEnd = layui.util.toDateString((((new Date()).getTime()) + (data.examTime * 60 *1000)), 'yyyy-MM-dd HH:mm:ss');
+                        var examEnd = layui.util.toDateString(data.examEndTime, 'yyyy-MM-dd HH:mm:ss');
 
 
                         //验证此时加入的时间段是否与数据库中各个考试的时间段冲突，冲突则禁止加入！
@@ -249,7 +249,7 @@ layui.use(['form', 'layer', 'laydate', 'upload', 'table', 'laytpl'], function ()
                                     $.ajax({
                                         url: "/exam/updateStartTime.do",
                                         type: "post",
-                                        data: {id:data.id},
+                                        data: {id:parseInt(data.id)},
                                         dataType: "json",
                                         success: function (data3) {
                                             if (data3.status === 200) {
@@ -304,13 +304,14 @@ layui.use(['form', 'layer', 'laydate', 'upload', 'table', 'laytpl'], function ()
                     }else{
 
                         var examEnd = layui.util.toDateString(((new Date()).getTime()), 'yyyy-MM-dd HH:mm:ss');
-                        var examStart = layui.util.toDateString((((new Date()).getTime()) - (data.examTime * 60 *1000)), 'yyyy-MM-dd HH:mm:ss');
+                        var examStart = layui.util.toDateString(data.examStartTime, 'yyyy-MM-dd HH:mm:ss');
                         $.ajax({
                             url: "/exam/endNowExam.do",
                             type: "post",
                             data: {},
                             dataType: "text",
                             success: function (data3) {
+                                console.log(data3 + " leixing:"+typeof data3);
                                 if (data3 === "0") {
                                     console.log(data4.elem);
                                     layer.alert("考试："+data.examName+"关闭成功！",{icon: 6});

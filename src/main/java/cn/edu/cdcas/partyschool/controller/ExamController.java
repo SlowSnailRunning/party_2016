@@ -83,8 +83,8 @@ public class ExamController {
      * @Describe: 更新考试开考为现在
      */
     @RequestMapping("/updateStartTime")
-    public JSONResult updateStartTime(Integer id) throws Exception{
-        if(id!=null){
+    public JSONResult updateStartTime(@RequestParam("id") int  id) throws Exception{
+        if(id>0){
             examService.updateStartTime(id);
             return new JSONResult(0, "开启考试成功！", 200);
         }
