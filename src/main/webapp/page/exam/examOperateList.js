@@ -284,8 +284,7 @@ layui.use(['form', 'layer', 'laydate', 'upload', 'table', 'laytpl'], function ()
                                     dataType: "json",
                                     success: function (data3) {
                                         if (data3.status === 200) {
-                                            data0.elem.checked = true;
-                                            form.render();
+
                                             layer.alert("考试："+data.examName+"开启成功！",{icon: 6});
 
                                             table.reload("examListTable", {
@@ -296,6 +295,8 @@ layui.use(['form', 'layer', 'laydate', 'upload', 'table', 'laytpl'], function ()
                                                     field: ''   //set field as '' to avoid error to retrieve data in db.
                                                 }
                                             });
+                                            data0.elem.checked = true;
+                                            form.render();
 
                                         } else if(data3.status === 500){
                                             data0.elem.checked = false;
@@ -307,8 +308,7 @@ layui.use(['form', 'layer', 'laydate', 'upload', 'table', 'laytpl'], function ()
                                 });
                             }
                             else if(parseInt(data2)>0){
-                                data0.elem.checked = false;
-                                form.render();
+
                                 layer.alert("此时间段与数据库中某个时间段冲突！考试："+data.examName+"开启失败！",{icon: 5});
                                 table.reload("examListTable", {
                                     page: {
@@ -318,6 +318,8 @@ layui.use(['form', 'layer', 'laydate', 'upload', 'table', 'laytpl'], function ()
                                         field: ''   //set field as '' to avoid error to retrieve data in db.
                                     }
                                 });
+                                data0.elem.checked = false;
+                                form.render();
 
                             }
                             else if(parseInt(data2)===-1){
@@ -350,8 +352,7 @@ layui.use(['form', 'layer', 'laydate', 'upload', 'table', 'laytpl'], function ()
                         success: function (data3) {
                             console.log(data3.status + " leixing:"+typeof data3.status);
                             if (data3.status === 200) {
-                                data0.elem.checked = false;
-                                form.render();
+
                                 layer.alert("考试："+data.examName+"关闭成功！",{icon: 6});
 
                                 table.reload("examListTable", {
@@ -362,6 +363,8 @@ layui.use(['form', 'layer', 'laydate', 'upload', 'table', 'laytpl'], function ()
                                         field: ''   //set field as '' to avoid error to retrieve data in db.
                                     }
                                 });
+                                data0.elem.checked = false;
+                                form.render();
 
                             } else{
                                 data0.elem.checked = true;
