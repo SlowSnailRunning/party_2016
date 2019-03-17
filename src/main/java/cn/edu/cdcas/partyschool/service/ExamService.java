@@ -25,4 +25,6 @@ public interface ExamService {
     Integer updateStartTime(Integer id) throws Exception;
 
     Integer updateEndTime( Integer id)throws Exception;
+
+    Exam findExamById(Integer id) throws Exception;
 }

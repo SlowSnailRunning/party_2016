@@ -163,6 +163,14 @@ public class ExamServiceImpl implements ExamService {
     }
 
     /**
+     *@Describe: 通过考试id返回一个考试对象
+     */
+    @Override
+    public Exam findExamById(Integer id) throws Exception {
+        return examMapper.findExamById(id);
+    }
+
+    /**
      *@Describe: 查找当前时段是否存在考试，返回考试id
      *
      *@Author Snail
