@@ -18,13 +18,13 @@ public interface ExamService {
     int updateByIdSelective(Exam exam) throws Exception;
     int queryAppointTimeQuantum(Exam exam) throws Exception;
     Map<String, Object> queryExamByName(int start,int pageSize,String examName) throws Exception;
-    int updateTimeRangeById(Exam exam)throws Exception;
+//    int updateTimeRangeById(Exam exam)throws Exception;
 
     boolean endNowExam()throws Exception;
 
     Integer updateStartTime(Integer id) throws Exception;
 
-    Integer updateEndTime( Integer id)throws Exception;
+//    Integer updateEndTime( Integer id)throws Exception;
 
     Exam findExamById(Integer id) throws Exception;
 }

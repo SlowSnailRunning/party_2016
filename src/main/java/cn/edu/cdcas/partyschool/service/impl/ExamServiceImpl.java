@@ -131,8 +131,8 @@ public class ExamServiceImpl implements ExamService {
         return map;
     }
 
-    @Override
-    public int updateTimeRangeById(Exam exam) throws Exception { return examMapper.updateTimeRangeById(exam) ; }
+    /*@Override
+    public int updateTimeRangeById(Exam exam) throws Exception { return examMapper.updateTimeRangeById(exam) ; }*/
 
     /**
      *@Describe:结束考试，删除redis中的数据
@@ -141,26 +141,28 @@ public class ExamServiceImpl implements ExamService {
      */
     @Override
     public boolean endNowExam() throws Exception {
-        Integer examId=examMapper.updateEndTime(JSON.parseObject(jedisClient.hget("partySys2016", "nowExam"), Exam.class).getId());
-        jedisClient.del("partySys2016").equals(0) ;
+        examMapper.updateEndTime(JSON.parseObject(jedisClient.hget("partySys2016", "nowExam"), Exam.class).getId());
+        jedisClient.del("partySys2016");
         return true;
     }
+    /**
+     *@Describe: 更新结束考试时间为现在
+     */
+    /*@Override
+    public Integer updateEndTime(Integer id) throws Exception {
 
+        return examMapper.updateEndTime(id);
+    }*/
     /**
      *@Describe: 更新开始考试时间为现在
      */
     @Override
     public Integer updateStartTime(Integer id) throws Exception {
+        jedisClient.hset("partySys2016", "nowExam", JSON.toJSONString(examMapper.queryCurrentExamInformation().get(0)));
         return examMapper.updateStartTime(id);
     }
 
-    /**
-     *@Describe: 更新结束考试时间为现在
-     */
-    @Override
-    public Integer updateEndTime(Integer id) throws Exception {
-        return examMapper.updateEndTime(id);
-    }
+
 
     /**
      *@Describe: 通过考试id返回一个考试对象
