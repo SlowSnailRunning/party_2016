@@ -594,6 +594,28 @@
                         k=k+1;
                     }
                 }
+
+                //回显判断题
+                var x=0;
+                for(var i in pan){
+                    //循环四次，因为每道题有四个答案
+                    for(var j=1;j<=2;j++){
+                        if(danList[x].value==pan[i].result){
+                            $(danList[x]).attr("checked",true);
+                        }
+                        x=x+1;
+                    }
+                }
+
+
+
+
+
+
+
+
+
+
                 //回显所有的多选按钮
                 //1、获取所有的多选按钮
                 var duoList = $("input:checkbox");
