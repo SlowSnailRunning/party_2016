@@ -437,8 +437,7 @@ public class UserServiceImpl implements UserService {
             //update
 
         }*/
-        Integer updateId = userMapper.updateAnswer(id, answer, studentNo, isMakeUp);
-
+        Integer updateId = userMapper.updateAnswer(id, answer, studentNo, isMakeUp,getScore(id,answer));
         return true;
     }
 
@@ -481,13 +480,7 @@ public class UserServiceImpl implements UserService {
     @Override
     public boolean isOvertime(String studentNo) throws Exception {
 
-        Exam exam = null;
-        if (jedisClient.hexists("partySys2016", "nowExam")) {
-            exam = JSON.parseObject(jedisClient.hget("partySys2016", "nowExam"), Exam.class);
-        } else {
-            exam = examMapper.queryCurrentExamInformation().get(0);
-            jedisClient.hset("partySys2016", "nowExam", JSON.toJSONString(exam));
-        }
+        Exam exam = getNowExam();
         boolean b = examMapper.isOverTime(studentNo, exam.getExamTime() * 60 * 1000) == 0 ? true : false;
         return b;
     }

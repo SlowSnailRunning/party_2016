@@ -4,7 +4,7 @@ import cn.edu.cdcas.partyschool.model.Statistics;
 
 import java.util.List;
 /**
- * @Description TODO
+ * @Description
  * @Date 2019/1/22 17:15
  * @Created by YR
  */

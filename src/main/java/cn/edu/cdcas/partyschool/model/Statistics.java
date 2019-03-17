@@ -3,7 +3,7 @@ package cn.edu.cdcas.partyschool.model;
 import com.alibaba.fastjson.annotation.JSONField;
 
 /**
- * @Description TODO
+ * @Description
  * @Date 2019/1/22 11:05
  * @Created by YR
  */

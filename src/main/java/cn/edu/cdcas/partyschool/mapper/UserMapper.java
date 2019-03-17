@@ -95,9 +95,9 @@ public interface UserMapper {
 
     Float getStuScores(@Param("student_no")String studentNo,@Param("is_make_up")String isMakeUp,@Param("exam_id") Integer examId);
     /**
-     *@Describe: 更新答案
+     *@Describe: 更新答案;分数
      *@Author Snail
      *@Date 2019/3/15
      */
-    Integer updateAnswer(@Param("que_id") int id,@Param("answer") String answer,@Param("student_no") String studentNo,@Param("is_make_up") String isMakeUp);
+    Integer updateAnswer(@Param("que_id") int id,@Param("answer") String answer,@Param("student_no") String studentNo,@Param("is_make_up") String isMakeUp,@Param("score")int score);
 }

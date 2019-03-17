@@ -53,7 +53,7 @@ public class LoginController {
                 } else {//学生
                     if (examServiceImpl.isCurrentExam() == null) {
                         flag = 9;//当前无考试
-                    }else {
+                    }else{
 						//查看考试的状态
 						User user = userServiceImpl.queryByStuNo(student_no);
 						Integer examState = user.getExamState();
@@ -116,8 +116,6 @@ public class LoginController {
 					}
 				}else {
 					//非首次登录
-					// TODO: 2019/3/5
-
 					if(isOverTime){
 						//超时
 						//统计answer表中，该考生初/补考数据，写入到user表

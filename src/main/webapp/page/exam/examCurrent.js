@@ -94,7 +94,18 @@ layui.use(['layer','element','jquery','form','util', 'laydate'],function () {
             });
         },5000);
         $("#endExam").click(function () {
-                console.log("sssssssssssssssss");
+            $.ajax({
+                url: "/exam/endNowExam.do",
+                type: "post",
+                success: function (data) {
+                    if (data == 0) {
+                        window.location.href = window.location.href;
+                        // layer.msg("关闭成功")
+                    } else {
+                        layer.msg("关闭失败，请重试！！！");
+                    }
+                }
+            });
             }
         );
     })

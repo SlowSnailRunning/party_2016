@@ -1,7 +1,7 @@
 package cn.edu.cdcas.partyschool.model;
 
 /**
- * @Description TODO
+ * @Description
  * @Date 2019/1/26 9:37
  * @Created by YR
  */
