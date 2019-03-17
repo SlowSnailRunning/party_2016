@@ -310,7 +310,8 @@
   </select>
 
   <select id="findExamById" resultMap="BaseResultMap">
-    select * from party_exam where id=#{id}
+    select <include refid="Base_Column_List"/>
+    from party_exam where id=#{id}
   </select>
 
   <select id="isOverTime" resultType="int">

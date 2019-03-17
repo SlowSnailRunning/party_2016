@@ -55,6 +55,15 @@ public class ExamController {
         return map;
     }
 
+
+    /**
+     * @Describe: 通过id查询
+     */
+    @RequestMapping("/findExamById")
+    private Exam findExamById(@RequestParam("id") Integer  id) throws Exception {
+        return examService.findExamById(id);
+    }
+
     /**
      * @Describe: 新增或更新一个考试
      */

@@ -38,7 +38,7 @@ public interface ExamMapper {
 
     int queryExamNumsByField(@Param("field") String field, @Param("value") String value);
 
-    Exam findExamById(String id) throws Exception;
+    Exam findExamById(@Param("id") Integer id) throws Exception;
 
     //查询初/补考是否超时
     Integer isOverTime(@Param("student_no")String student_no,@Param("exam_time")long exam_time) throws Exception;

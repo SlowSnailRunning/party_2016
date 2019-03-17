@@ -1,12 +1,3 @@
-<?php
-/**
- * Created by IntelliJ IDEA.
- * User: YR
- * Date: 2019/2/16
- * Time: 20:11
- */
-
-?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -15,6 +6,7 @@
     <meta name="renderer" content="webkit">
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <link rel="shortcut icon" href="/images/favicon.ico">
     <link rel="stylesheet" href="../layui/css/layui.css" media="all">
     <!--<script type="text/javascript" src="../js/jquery-3.3.1.js"></script>-->
     <script type="text/javascript" src="../layui/layui.js"></script>
@@ -23,16 +15,19 @@
 <div align="center" style="background-color: white;">
     <img src="images/logo.png"/>
 </div>
-<div style="font-size:31px;color:red;font-family:宋体;text-align:center;margin-top:10px;margin-bottom:-8px;">
+<br>
+<br>
+<br>
+<center>
+        <table class="layui-hide" id="LAY_table_user" lay-filter="demo" style="font-size: 10px;width: 100%;"></table>
+</center>
+<div style="position:fixed; top:120px;left:0; width:100%; font-size:31px;color:red;font-family:宋体;text-align:center;margin-top:10px;margin-bottom:-8px;">
     考试:<b id="examName"></b>
     &nbsp;&nbsp;&nbsp;&nbsp;分数:<b id="score"></b>
-    &nbsp;&nbsp;&nbsp;&nbsp;学生姓名:<b id="studentName"></b>
+    &nbsp;&nbsp;&nbsp;&nbsp;姓名:<b id="studentName"></b>
     &nbsp;&nbsp;&nbsp;&nbsp;学号:<b id="studentNo"></b>
     &nbsp;&nbsp;&nbsp;&nbsp;<input class="layui-btn layui-btn-radius layui-btn-danger" value="退出" id="endExam" type="button"/>
 </div>
-<center>
-    <table class="layui-hide" id="LAY_table_user" lay-filter="demo" style="font-size: 10px;width: 100%;"></table>
-</center>
 <script>
     layui.use(['table', 'jquery'], function () {
         var table = layui.table;
@@ -68,7 +63,7 @@
                 $("#studentNo").text(res.studentNo);
                 $("#examName").text(res.examName);
                 $("#score").text(res.examScore);
-                if (res.makeUpBtn != 1) {
+                if (res.makeUpBtn == 1) {
                     $("#endExam").val("参加补考");
                     $("#endExam").click(function () {
                         window.location.href = "/loginSuccess.do";
