@@ -1,12 +1,3 @@
-<?php
-/**
- * Created by IntelliJ IDEA.
- * User: YR
- * Date: 2019/2/16
- * Time: 20:11
- */
-
-?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -15,6 +6,7 @@
     <meta name="renderer" content="webkit">
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <link rel="shortcut icon" href="/images/favicon.ico">
     <link rel="stylesheet" href="../layui/css/layui.css" media="all">
     <!--<script type="text/javascript" src="../js/jquery-3.3.1.js"></script>-->
     <script type="text/javascript" src="../layui/layui.js"></script>
@@ -68,7 +60,7 @@
                 $("#studentNo").text(res.studentNo);
                 $("#examName").text(res.examName);
                 $("#score").text(res.examScore);
-                if (res.makeUpBtn != 1) {
+                if (res.makeUpBtn == 1) {
                     $("#endExam").val("参加补考");
                     $("#endExam").click(function () {
                         window.location.href = "/loginSuccess.do";
