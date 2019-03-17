@@ -83,6 +83,7 @@ public class ExamController {
     @RequestMapping("/updateTimeRangeById")
     public JSONResult updateTimeRangeById(Exam exam) throws Exception{
         if(exam.getId()!=null){
+            // TODO: 2019/3/17 redis
            examService.updateTimeRangeById(exam);
            return new JSONResult(0, "开启考试成功！", 200);
         }
@@ -107,7 +108,7 @@ public class ExamController {
     @RequestMapping("/updateEndTime")
     public JSONResult updateEndTime(@RequestParam("id") Integer  id) throws Exception{
         if(id>0){
-            examService.updateStartTime(id);
+            examService.updateEndTime(id);
             return new JSONResult(0, "停止考试成功！", 200);
         }
         return new JSONResult(3, "停止考试失败！", 500);

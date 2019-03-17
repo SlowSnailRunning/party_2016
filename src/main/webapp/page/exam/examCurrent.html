@@ -13,7 +13,6 @@
     <link rel="stylesheet" href="../../css/public.css" media="all"/>
     <script type="text/javascript" src="../../layui/layui.js"></script>
     <script type="text/javascript" src="../../js/jquery-3.3.1.js"></script>
-    <script type="text/javascript" src="../../js/jquery-3.3.1.min.js"></script>
 </head>
 <body class="childrenBody" id="time">
 
@@ -89,12 +88,12 @@
                 <div class="layui-form-item magt3">
                     <label class="layui-form-label">在线人数:</label>
                     <div class="layui-input-inline">
-                        <span id="peopel">0</span>
+                        <span id="peopel" style="color: rgb(255, 34, 0)">0</span>
                     </div>
                 </div>
             </div>
         </div>
-        <div class="layui-row layui-col-space10">
+        <div class="layui-row layui-col-space15">
             <div class="layui-col-md12 layui-col-xs6">
                 <div class="layui-form-item magt3">
                     <label class="layui-form-label">试题及分值：</label>
@@ -108,11 +107,8 @@
         </div>
     </div>
 </form>
-    <center>
-        <button class="layui-btn layui-btn-radius layui-btn-danger" id="endExam">立即结束本次考试</button>
-    </center>
+    <div id="btnExam">
+    </div>
 <script src="examCurrent.js"></script>
-
-
 </body>
 </html>
