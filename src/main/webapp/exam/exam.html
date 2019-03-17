@@ -2,7 +2,7 @@
 <html>
 <head>
     <title>成都文理学院思想政治理论水平在线测试</title>
-    <link rel="shortcut icon" href="../images/favicon.ico">
+    <link rel="shortcut icon" href="images/favicon.ico">
     <meta name="renderer" content="webkit|ie-comp|ie-stand">
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=Edge,chrome=1">
@@ -80,6 +80,8 @@
                            onclick="selectTest(${status.index+1 },${qo.resultId })">3</a>-->
 
                     </ul>
+
+
                     <h5 class="title">
                         多选题</h5>
                     <ul class="unstyled inline duo">
@@ -278,9 +280,7 @@
         </ul>
     </div>
 </div>
-<script src="../layui/layui.js"></script>
 <script type="text/javascript" >
-
     function submitExam(){
         $.ajax({
             type: "get",
@@ -288,16 +288,8 @@
             async: false,
             dataType: "json",
             success: function (res) {
-                if(res){
-                    layer.msg("交卷成功",{icon:1,time:2000},function () {
-                        window.location.href='score.html';
-                    });
-                }else {
-                    layer.msg("交卷失败,请联系管理员!",{icon:1,time:2000},function () {
-                        window.location.href='score.html';
-                    });
-                }
-
+                var isSuccess=res==true?"交卷成功":"交卷失败"
+                alert(isSuccess);
             }
         });
     }
@@ -309,7 +301,7 @@
         $.ajax({
             type:"get",
             dataType:"json",
-            url:"/examinee/allQuestionInfoForStu.do",
+            url:"/examinee/allQuestionInfoForStu",
             success:function(result){
                 var msg=result;
                 console.log(msg);
@@ -507,6 +499,12 @@
 
 
                 });
+                //渲染填空题button
+
+
+
+
+
                 var list= document.getElementsByTagName("input");
                 // console.log(list[i].name);
                 var buttonList=$(".btn");
@@ -521,7 +519,7 @@
                             $("#btn_"+index).attr("class","btn btn-primary");
                             //发送ajax将答案发送到后台
                             $.ajax({
-                                type: "GET",
+                                type: "POST",
                                 url: "/examinee/updateByQueId.do",
                                 async: false,
                                 dataType: "json",
@@ -532,6 +530,7 @@
                             });
 
                         }
+
                         //针对多选按钮
                         if(this.name.split("_")[0]=="duo"){
                             var current= $("input[name='"+this.name+"']:checked").val();
@@ -594,11 +593,10 @@
                         k=k+1;
                     }
                 }
-
                 //回显判断题
                 var x=0;
                 for(var i in pan){
-                    //循环两次，因为每道题有个答案
+                    //循环四次，因为每道题有四个答案
                     for(var j=1;j<=2;j++){
                         if(danList[x].value==pan[i].result){
                             $(danList[x]).attr("checked",true);
@@ -606,12 +604,6 @@
                         x=x+1;
                     }
                 }
-
-
-
-
-
-
 
 
 
@@ -639,20 +631,43 @@
                     var str=tian[i].result
                     var regex=/\{(.+?)}/g;
                     var arr =str.match(regex);
+
+                    console.log(arr);
                     var newArr =[];
                     var text='';
                     for(j=0;j<arr.length;j++){
-                        var n = arr[j].substring(1,arr[j].length-1);
-                        text+="<input type='text' id=\"+tian[i].id+\" name='tian"+ (danTotal+duoTotal+panTotal+parseInt(i)+1)+"' value="+n+ ">";
-
-
+                        var n = arr[j].substring(1,arr[j].length-1).trim();
+                        text+="<input type='text' id="+tian[i].id+" name='tian_"+ (danTotal+duoTotal+panTotal+parseInt(i)+1)+"' value="+n+ ">";
                         newArr.push(n);
                     }
+                    console.log(newArr)
+                    var isNull=''
+                    newArr.forEach(function(item){
+                        isNull+=item;
+                    })
+                    console.log(isNull)
+                    //       console.log(isNull)
+                    //         if(isNull==""){newArr=[]}
+
+                    if(isNull!=[])
+                    {
+                        //   console.log(tian[i].id);
+                        //  console.log();
+                        //  var index =
+                        // var index=$("#"+tian[i]).attr("name");
+                        // index =index.split("_")[1]
+                        //console.log(index+"test");
+                        $("#btn_"+(danTotal+duoTotal+panTotal+parseInt(i)+1)).attr("class","btn btn-primary");
+
+                    }
+
+
                     //   console.log(i);
                     $('#'+tianList[i].id).append(text)
-                    console.log(newArr)
 
                 }
+
+
 
                 //获取所有的填空题文本框
 
@@ -661,12 +676,22 @@
                     tianText[i].onblur=function(){
                         var filled =$("input[name='"+this.name+"']");
                         var fillAnswer='';
+                        var value='';
+                        //console.log(this.name.split[])
                         filled.each(function(){
 
-                                fillAnswer+="{"+this.value+"}";
+                            fillAnswer+="{"+this.value+"}";
+
+                            value+=this.value
 
                         })
-                        console.log(fillAnswer)
+                        var index=this.name.split("_")[1];
+                        if(value!=""){
+                            $("#btn_"+index).attr("class","btn btn-primary");
+                        }else{
+                            $("#btn_"+index).attr("class","btn");
+                        }
+
                         $.ajax({
                             type: "POST",
                             url: "/examinee/updateByQueId.do",
