@@ -107,7 +107,7 @@ public class ExamController {
     @RequestMapping("/updateEndTime")
     public JSONResult updateEndTime(@RequestParam("id") Integer  id) throws Exception{
         if(id>0){
-            examService.updateStartTime(id);
+            examService.updateEndTime(id);
             return new JSONResult(0, "停止考试成功！", 200);
         }
         return new JSONResult(3, "停止考试失败！", 500);
