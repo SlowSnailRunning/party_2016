@@ -535,8 +535,13 @@ public class UserServiceImpl implements UserService {
         scoreInfo.put("code", 0);
         scoreInfo.put("examScore", user.getExamScore());
         scoreInfo.put("makeUpScore", user.getMakeUpScore());
-        scoreInfo.put("makeUpBtn", JSON.parseObject(jedisClient.hget("partySys2016", "nowExam"), Exam.class).getIsMakeup());
-        scoreInfo.put("examName", JSON.parseObject(jedisClient.hget("partySys2016", "nowExam"), Exam.class).getExamName());
+        //判断是否出现补考按钮0：不出现，1：出现
+        int makeUpBtn=0;
+        if(user.getExamState()==3&& getNowExam().getIsMakeup()==1){
+            makeUpBtn=1;
+        }
+        scoreInfo.put("makeUpBtn", makeUpBtn);
+        scoreInfo.put("examName", getNowExam().getExamName());
         scoreInfo.put("data", questionMapper.selectErrorQue(studentNo));
         return scoreInfo;
     }
