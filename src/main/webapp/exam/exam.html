@@ -643,7 +643,7 @@
                     var text='';
                     for(j=0;j<arr.length;j++){
                         var n = arr[j].substring(1,arr[j].length-1);
-                        text+="<input type='text' name='tian"+ (danTotal+duoTotal+panTotal+parseInt(i)+1)+"' value="+n+ ">";
+                        text+="<input type='text' id=\"+tian[i].id+\" name='tian"+ (danTotal+duoTotal+panTotal+parseInt(i)+1)+"' value="+n+ ">";
 
 
                         newArr.push(n);
