@@ -55,6 +55,8 @@ public class AnswerController {
                 case 4:
                     type = "填空题";
                     break;
+
+
                 case 5:
                     type = "解答题";
                     break;
