@@ -306,6 +306,7 @@
     SELECT COUNT(*)
     FROM party_exam WHERE (exam_end_time > #{examEndTime,jdbcType=TIMESTAMP} AND #{examEndTime,jdbcType=TIMESTAMP} > exam_start_time)
      OR (exam_end_time > #{examStartTime,jdbcType=TIMESTAMP} AND #{examStartTime,jdbcType=TIMESTAMP} > exam_start_time)
+      OR(exam_start_time > #{examStartTime,jdbcType=TIMESTAMP} AND #{examEndTime,jdbcType=TIMESTAMP} > exam_end_time )
       AND id != #{id,jdbcType=INTEGER}
   </select>
 
