@@ -387,7 +387,7 @@ public class UserServiceImpl implements UserService {
                     String[] split = question.getIntro().split("\\{\\}");
                     int length = split.length - 1;
                     for (int i = 0; i < length; i++) {
-                        answer += "{}";
+                        answer += "{ }";
                     }
                 }
             } else {
