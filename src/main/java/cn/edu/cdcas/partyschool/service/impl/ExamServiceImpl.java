@@ -150,8 +150,16 @@ public class ExamServiceImpl implements ExamService {
      *@Describe: 更新开始考试时间为现在
      */
     @Override
-    public int updateStartTime(Integer id) throws Exception {
+    public Integer updateStartTime(Integer id) throws Exception {
         return examMapper.updateStartTime(id);
+    }
+
+    /**
+     *@Describe: 更新结束考试时间为现在
+     */
+    @Override
+    public Integer updateEndTime(Integer id) throws Exception {
+        return examMapper.updateEndTime(id);
     }
 
     /**

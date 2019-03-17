@@ -22,5 +22,7 @@ public interface ExamService {
 
     boolean endNowExam()throws Exception;
 
-    int updateStartTime(Integer id) throws Exception;
+    Integer updateStartTime(Integer id) throws Exception;
+
+    Integer updateEndTime( Integer id)throws Exception;
 }

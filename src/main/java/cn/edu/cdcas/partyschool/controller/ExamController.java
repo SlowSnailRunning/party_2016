@@ -83,12 +83,25 @@ public class ExamController {
      * @Describe: 更新考试开考为现在
      */
     @RequestMapping("/updateStartTime")
-    public JSONResult updateStartTime(@RequestParam("id") int  id) throws Exception{
+    public JSONResult updateStartTime(@RequestParam("id") Integer  id) throws Exception{
         if(id>0){
             examService.updateStartTime(id);
             return new JSONResult(0, "开启考试成功！", 200);
         }
         return new JSONResult(3, "开启考试失败！", 500);
+    }
+
+
+    /**
+     * @Describe: 更新考试停考为现在
+     */
+    @RequestMapping("/updateEndTime")
+    public JSONResult updateEndTime(@RequestParam("id") Integer  id) throws Exception{
+        if(id>0){
+            examService.updateStartTime(id);
+            return new JSONResult(0, "停止考试成功！", 200);
+        }
+        return new JSONResult(3, "停止考试失败！", 500);
     }
 
     /**

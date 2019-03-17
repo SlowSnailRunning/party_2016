@@ -249,7 +249,7 @@ layui.use(['form', 'layer', 'laydate', 'upload', 'table', 'laytpl'], function ()
                                     $.ajax({
                                         url: "/exam/updateStartTime.do",
                                         type: "post",
-                                        data: {id:parseInt(data.id)},
+                                        data: {id:data.id},
                                         dataType: "json",
                                         success: function (data3) {
                                             if (data3.status === 200) {
@@ -306,13 +306,13 @@ layui.use(['form', 'layer', 'laydate', 'upload', 'table', 'laytpl'], function ()
                         var examEnd = layui.util.toDateString(((new Date()).getTime()), 'yyyy-MM-dd HH:mm:ss');
                         var examStart = layui.util.toDateString(data.examStartTime, 'yyyy-MM-dd HH:mm:ss');
                         $.ajax({
-                            url: "/exam/endNowExam.do",
+                            url: "/exam/updateEndTime.do",
                             type: "post",
-                            data: {},
-                            dataType: "text",
+                            data: {id:data.id},
+                            dataType: "json",
                             success: function (data3) {
-                                console.log(data3 + " leixing:"+typeof data3);
-                                if (data3 === "0") {
+                                console.log(data3.status + " leixing:"+typeof data3.status);
+                                if (data3.status === 200) {
                                     console.log(data4.elem);
                                     layer.alert("考试："+data.examName+"关闭成功！",{icon: 6});
 
