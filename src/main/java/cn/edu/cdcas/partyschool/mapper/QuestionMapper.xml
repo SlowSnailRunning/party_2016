@@ -14,6 +14,20 @@
         <result column="correct" jdbcType="INTEGER" property="correct"/>
         <result column="selected" jdbcType="INTEGER" property="selected"/>
     </resultMap>
+    <resultMap id="ResultMap" type="cn.edu.cdcas.partyschool.model.errorQue">
+        <id column="id" jdbcType="INTEGER" property="id"/>
+        <result column="state" jdbcType="CHAR" property="state"/>
+        <result column="type" jdbcType="INTEGER" property="type"/>
+        <result column="intro" jdbcType="VARCHAR" property="intro"/>
+        <result column="option_a" jdbcType="VARCHAR" property="optionA"/>
+        <result column="option_b" jdbcType="VARCHAR" property="optionB"/>
+        <result column="option_c" jdbcType="VARCHAR" property="optionC"/>
+        <result column="option_d" jdbcType="VARCHAR" property="optionD"/>
+        <result column="result" jdbcType="VARCHAR" property="result"/>
+        <result column="correct" jdbcType="INTEGER" property="correct"/>
+        <result column="selected" jdbcType="INTEGER" property="selected"/>
+        <result column="answer"  jdbcType="String" property="answer"/>
+    </resultMap>
     <sql id="Base_Column_List">
         id,
         `state`,
@@ -215,7 +229,7 @@
     <select id="selectEffectiveQueId" resultType="string">
         SELECT id FROM party_question WHERE `state`='checked'
     </select>
-    <select id="selectErrorQue" resultMap="BaseResultMap">
+    <select id="selectErrorQue" resultMap="ResultMap">
         SELECT que.intro,que.option_a,que.option_b,que.option_c,que.option_d,que.result,ans.answer FROM party_answer AS ans
         LEFT JOIN party_question AS que ON ans.question_id=que.id
         WHERE student_no=#{student_no} AND (score=0 OR score IS NULL)
