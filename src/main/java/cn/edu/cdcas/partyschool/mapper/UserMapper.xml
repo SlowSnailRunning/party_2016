@@ -460,7 +460,7 @@
     <select id="findAnswer" resultType="string">
         SELECT answer FROM party_answer WHERE student_no=#{student_no} AND exam_id=#{exam_id} AND question_id=#{question_id} AND is_make_up=#{is_make_up}
     </select>
-    <select id="getStuScores"  resultType="java.lang.Double">
+    <select id="getStuScores"  resultType="java.lang.Float">
        SELECT SUM(score) AS scores FROM party_answer WHERE exam_id=#{exam_id} AND is_make_up=#{is_make_up} AND student_no=#{student_no}
     </select>
 

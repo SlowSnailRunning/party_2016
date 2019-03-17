@@ -82,7 +82,7 @@ public class ExamineeController {
     @ResponseBody
     public boolean updateEndTime(HttpSession httpSession){
         try {
-            userServiceImpl.changeExamEnd((String) httpSession.getAttribute("studentNo"),Integer.parseInt((String) httpSession.getAttribute("examState")));
+            userServiceImpl.changeExamEnd((String) httpSession.getAttribute("studentNo"), (Integer) httpSession.getAttribute("examState"));
 //            userServiceImpl.updateScoreAndExamState((String)httpSession.getAttribute("studentNo"),"1".equals((String)httpSession.getAttribute("examState"))?"0":"1");
             httpSession.removeAttribute("dan");
             httpSession.removeAttribute("duo");
