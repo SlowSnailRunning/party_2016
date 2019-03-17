@@ -536,7 +536,7 @@ public class UserServiceImpl implements UserService {
         scoreInfo.put("examScore", user.getExamScore());
         scoreInfo.put("makeUpScore", user.getMakeUpScore());
         scoreInfo.put("makeUpBtn", JSON.parseObject(jedisClient.hget("partySys2016", "nowExam"), Exam.class).getIsMakeup());
-        scoreInfo.put("errorQue", questionMapper.selectErrorQue(studentNo));
+        scoreInfo.put("data", questionMapper.selectErrorQue(studentNo));
         return scoreInfo;
     }
 
