@@ -36,7 +36,7 @@ layui.use(['bodyTab', 'form', 'element', 'layer', 'jquery'], function () {
                 $.post("/user/MangerAuthority.do", {}, function (data) {
                     var data = JSON.parse(data);
                     if (data.code == 1) {//无权限
-                        dataStr.remove(3);//删除
+                        dataStr.splice(3,1);
                     }
                     tab.render(); //重新渲染左侧菜单
                 });
