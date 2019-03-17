@@ -21,7 +21,8 @@
 
 </div>
 <div style="font-size:31px;color:red;font-family:宋体;text-align:center;margin-top:10px;margin-bottom:-8px;">
-    <b>${user_in_session.examName}</b></div>
+    <b>${user_in_session.examName}</b>
+</div>
 <div class="row-fluid">
     <div class="container-fluid">
         <div class="span12 examcontent">
@@ -199,7 +200,6 @@
             $("#makeUpButtion").removeAttr('disabled');
         }
     };
-
     var disableButtion = function () {
         $("#examButtion").attr('disabled', "true");
         $("#makeUpState").attr('disabled', "true");
