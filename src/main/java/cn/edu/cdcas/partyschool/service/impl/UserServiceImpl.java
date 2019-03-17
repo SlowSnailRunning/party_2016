@@ -531,11 +531,12 @@ public class UserServiceImpl implements UserService {
     @Override
     public Map<String, Object> getScoreAndIsMakeUpMap(String studentNo) throws Exception {
         User user = userMapper.queryByStuNo(studentNo);
-        Map<String, Object> scoreInfo = new LinkedHashMap<>();
+        Map<String, Object> scoreInfo = new HashMap<>();
         scoreInfo.put("code", 0);
         scoreInfo.put("examScore", user.getExamScore());
         scoreInfo.put("makeUpScore", user.getMakeUpScore());
         scoreInfo.put("makeUpBtn", JSON.parseObject(jedisClient.hget("partySys2016", "nowExam"), Exam.class).getIsMakeup());
+        scoreInfo.put("examName", JSON.parseObject(jedisClient.hget("partySys2016", "nowExam"), Exam.class).getExamName());
         scoreInfo.put("data", questionMapper.selectErrorQue(studentNo));
         return scoreInfo;
     }

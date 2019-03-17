@@ -102,9 +102,12 @@ public class ExamineeController {
     @RequestMapping("/getScore")
     @ResponseBody
     public Map<String, Object> getScoreAndIsMakeUp(HttpSession httpSession){
-        Map<String,Object> scoreInfo=null;
+        Map<String,Object> scoreInfo=new HashMap<>();
         try {
-            scoreInfo=userServiceImpl.getScoreAndIsMakeUpMap((String)httpSession.getAttribute("studentNo"));
+            String studentNo = (String) httpSession.getAttribute("studentNo");
+            scoreInfo=userServiceImpl.getScoreAndIsMakeUpMap(studentNo);
+            scoreInfo.put("studentNo",studentNo);
+            scoreInfo.put("studentName",userServiceImpl.queryByStuNo(studentNo).getName());
             return scoreInfo;
         } catch (Exception e) {
             e.printStackTrace();

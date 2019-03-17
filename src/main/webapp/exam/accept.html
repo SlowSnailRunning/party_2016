@@ -10,7 +10,7 @@
           type="text/css"/>
     <link href="css/theme.css" rel="stylesheet"
           type="text/css"/>
-    <script src="https://unpkg.com/vue@2.6.8/dist/vue.js"></script>
+    <script src="../js/vue2.6.9.min.js"></script>
     <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
     <script src="js/jquery-1.8.3.min.js"></script>
     <style>
@@ -147,6 +147,7 @@
     <input id="examState" type="hidden" :value="studentInfo.makeUpState"/>
     <input id="makeUpState" type="hidden" value="${user_in_session.makeUpState }"/>
 </div>
+<script src="../layui/layui.js"></script>
 <script type="text/javascript">
     $.ajax({
         type: "GET",
@@ -159,7 +160,11 @@
         }
     });
     console.log(user);
-    console.log(exam)
+    console.log(exam);
+    var layer;
+    layui.use(['layer'],function () {
+        layer=layui.layer;
+    })
     Vue.prototype.$axios=axios;
     const vm = new Vue({
         el:"#app",
@@ -172,7 +177,7 @@
 
         },
         mounted() {
-            if(this.studentInfo.examState==1){
+            if(this.studentInfo.examState==0||this.studentInfo.examState==1){
                 $("#makeUpButtion").attr("disabled",true)
                 $("#makeUpButtion").css("cursor","not-allowed")
 
@@ -182,7 +187,7 @@
             }
         },
         methods: {
-            getStudentInfo(){
+            /*getStudentInfo(){
                 axios.get("/examinee/examAndStuInfo.do")
                     .then(res=>{
                         this.studentInfo=res.data.user
@@ -191,11 +196,10 @@
                     .catch(error=>{
                         console.log(error)
                     })
-            },
+            },*/
             exam(){
-
                 if(this.$refs.agree.checked==false){
-                    alert("请勾选同意！！！")
+                    layer.msg("请先阅读并勾选考试须知！");
                     return false;
                 }
                 window.location.href="exam.html";
