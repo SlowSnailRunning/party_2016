@@ -127,6 +127,21 @@ public class ExamController {
         return -1;
     }
 
+    /**
+     * @Describe: 根据id查询此id对应的时间段内是否有其他考试
+     */
+    @RequestMapping("/queryAppointTimeQuantumById")
+    public JSONResult queryAppointTimeQuantumById(@RequestParam("id") Integer  id) throws Exception{
+
+        int result = examService.queryAppointTimeQuantumById(id);
+        if(result==0){
+            return new JSONResult(0,"此时间段没其他考试",200);
+        }else{
+            return new JSONResult(3,"此时间段存在其他考试",500);
+        }
+
+    }
+
 
     /**
      * @Describe: 查询考试（包括有条件和无条件查询）

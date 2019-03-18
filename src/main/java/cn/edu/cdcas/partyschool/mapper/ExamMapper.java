@@ -34,11 +34,15 @@ public interface ExamMapper {
     //查询指定时间段内是否有另一个考试（此版本考试系统一个时间段内仅仅允许存在一个考试）
     int queryAppointTimeQuantum(Exam exam) throws Exception;
 
+    //查询考试时间是否冲突增强版
+    int queryAppointTimeQuantumById(@Param("id") Integer id) throws Exception;
+
     List<Exam> queryAllExamByKeyName(@Param("start") int start , @Param("pageSize") int pageSize , @Param("field") String field , @Param("value") String value);
 
     int queryExamNumsByField(@Param("field") String field, @Param("value") String value);
 
     Exam findExamById(@Param("id") Integer id) throws Exception;
+
 
     //查询初/补考是否超时
     Integer isOverTime(@Param("student_no")String student_no,@Param("exam_time")long exam_time) throws Exception;
