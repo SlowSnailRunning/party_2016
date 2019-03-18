@@ -139,22 +139,23 @@ public class ExamServiceImpl implements ExamService {
      *@Author Snail
      *@Date 2019/3/16
      */
-    @Override
+    /*@Override
     public boolean endNowExam() throws Exception {
         if(jedisClient.hexists("partySys2016", "nowExam")){
             examMapper.updateEndTime(JSON.parseObject(jedisClient.hget("partySys2016", "nowExam"), Exam.class).getId());
         }
         jedisClient.del("partySys2016");
+
         return true;
-    }
+    }*/
     /**
      *@Describe: 更新结束考试时间为现在
      */
-    /*@Override
+    @Override
     public Integer updateEndTime(Integer id) throws Exception {
 
         return examMapper.updateEndTime(id);
-    }*/
+    }
     /**
      *@Describe: 更新开始考试时间为现在
      */

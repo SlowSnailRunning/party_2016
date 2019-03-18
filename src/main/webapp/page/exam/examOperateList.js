@@ -283,7 +283,7 @@ layui.use(['form', 'layer', 'laydate', 'upload', 'table', 'laytpl'], function ()
                                     success: function (data3) {
                                         if (data3.status === 200) {
 
-                                            layer.alert("考试："+data.examName+"开启成功！",{icon: 6});
+                                            layer.msg("考试："+data.examName+"开启成功！",{icon: 6});
                                            /* $("#2args").attr("disabled",'disabled');*/
                                             $("#"+"edit"+data.id).removeAttr("lay-event");
                                             $("#"+"del"+data.id).removeAttr("lay-event");
@@ -364,7 +364,7 @@ layui.use(['form', 'layer', 'laydate', 'upload', 'table', 'laytpl'], function ()
                             console.log(data3.status + " leixing:"+typeof data3.status);
                             if (data3.status === 200) {
 
-                                layer.alert("考试："+data.examName+"关闭成功！",{icon: 6});
+                                layer.msg("考试："+data.examName+"关闭成功！",{icon: 6});
                                 $("#"+"edit"+data.id).attr("lay-event","edit");
                                 $("#"+"del"+data.id).attr("lay-event","del");
 

@@ -106,13 +106,32 @@ public class ExamController {
      * @Describe: 更新考试停考为现在
      */
     @RequestMapping("/updateEndTime")
-    public JSONResult updateEndTime(@RequestParam("id") Integer  id) throws Exception{
-        if(id>0){
-            examService.endNowExam();
+    public JSONResult updateEndTime(@RequestParam("id") Integer  id) {
+        try {
+            if(examService.updateEndTime(id)==0){
+                return new JSONResult(3, "数据库修改失败，停止考试失败！", 500);
+            }
             return new JSONResult(0, "停止考试成功！", 200);
+        } catch (Exception e) {
+            e.printStackTrace();
+            return new JSONResult(3, "停止考试失败！", 500);
         }
-        return new JSONResult(3, "停止考试失败！", 500);
     }
+
+/*    @RequestMapping("/endNowExam")
+    @ResponseBody
+    public int endNowExam(){
+        try {
+            if(examService.endNowExam()){
+                return 0;
+            }else {
+                return -1;
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+            return -1;
+        }
+    }*/
 
     /**
      * @Describe: 查询指定时间段内是否有其他考试（此版本系统同一时间段内只能有一个考试）
@@ -252,21 +271,6 @@ public class ExamController {
     @RequestMapping("/studentSize")
     public int studentSize() throws Exception {
         return UniqueSession.sessionMap.size();
-    }
-
-    @RequestMapping("/endNowExam")
-    @ResponseBody
-    public String endNowExam(){
-        try {
-            if(examService.endNowExam()){
-                return "0";
-            }else {
-                return "-1";
-            }
-        } catch (Exception e) {
-            e.printStackTrace();
-            return "-1";
-        }
     }
 
 }

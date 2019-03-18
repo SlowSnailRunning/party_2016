@@ -7,6 +7,7 @@ layui.use(['layer','element','jquery','form','util', 'laydate'],function () {
     layer = layui.layer;
     $=layui.jquery;
     element = layui.element;
+    var examId;
     $(function(){
         function loadexamCurrent(){
             $.ajax({
@@ -16,6 +17,11 @@ layui.use(['layer','element','jquery','form','util', 'laydate'],function () {
                 dataType:'json',
                 contentType: "application/json;charset=utf-8;",
                 success:function(res){
+                    // console.log(res.data);
+                    // console.log(res.data.length);
+                    if(res.data.length!=0){
+                        examId=res.data[0]['id'];
+                    }
                     if(res && res.code===0){
                         var menuHtml="";
                         var obj = eval("("+JSON.stringify(res.data)+")");
@@ -118,20 +124,43 @@ layui.use(['layer','element','jquery','form','util', 'laydate'],function () {
         layer.confirm('确定立即关闭这考试？', {
             btn: ['确定','我再想想'] //按钮
         }, function(){
-            $.ajax({
+            $.post('/exam/updateEndTime.do',
+                {"id":examId},
+                function (data) {
+                    console.log(data["code"]);
+                    if(data["code"]==0){
+                        clearInterval(setInt);
+                        layer.msg("关闭成功!",{icon:1},function () {
+                            location.reload();
+                        });
+                    }else {
+                        layer.msg("关闭失败，请联系开发人员！",{icon:2},function () {
+                            location.reload();
+                        });
+                    }
+                },
+                "json"
+            );
+
+           /* $.ajax({
                 url: "/exam/endNowExam.do",
                 type: "post",
                 success: function (data) {
+                    console.log(data+"0");
+                    console.log(data);
+                    console.log(data=="0");
                     if (data == 0) {
-                        window.location.href = window.location.href;
-                        layer.msg("关闭成功");
                         clearInterval(setInt);
-
+                        layer.msg("关闭成功!",{icon:1},function () {
+                            location.reload();
+                        });
                     } else {
-                        layer.msg("关闭失败，请联系开发人员！");
+                        layer.msg("关闭失败，请联系开发人员！",{icon:2},function () {
+                            location.reload();
+                        });
                     }
                 }
-            });
+            });*/
         }, function(){
         });
     })
