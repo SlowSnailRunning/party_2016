@@ -82,14 +82,16 @@ layui.use(['form', 'layer', 'laydate', 'upload', 'table', 'laytpl'], function ()
 
     $(".addNewsList_btn").click(function () {
         // 0:cover,1:append.
-        layer.confirm('请选择上传方式:', {btn: ['覆盖', '附加']},
+        uploadFile(1);
+
+        /*layer.confirm('请选择上传方式:', {btn: ['覆盖', '附加']},
             function (index) {
                 uploadFile(0);
                 layer.close(index);
             },
             function () {
                 uploadFile(1);
-            });
+            });*/
 
 
     });

@@ -141,7 +141,9 @@ public class ExamServiceImpl implements ExamService {
      */
     @Override
     public boolean endNowExam() throws Exception {
-        examMapper.updateEndTime(JSON.parseObject(jedisClient.hget("partySys2016", "nowExam"), Exam.class).getId());
+        if(jedisClient.hexists("partySys2016", "nowExam")){
+            examMapper.updateEndTime(JSON.parseObject(jedisClient.hget("partySys2016", "nowExam"), Exam.class).getId());
+        }
         jedisClient.del("partySys2016");
         return true;
     }
