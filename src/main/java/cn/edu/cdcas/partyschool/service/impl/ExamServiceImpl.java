@@ -208,5 +208,10 @@ public class ExamServiceImpl implements ExamService {
     @Override
     public int queryAppointTimeQuantum(Exam exam) throws Exception { return examMapper.queryAppointTimeQuantum(exam); }
 
+    @Override
+    public int queryAppointTimeQuantumById(Integer id) throws Exception {
+        return examMapper.queryAppointTimeQuantumById(id);
+    }
+
 
 }

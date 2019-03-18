@@ -310,10 +310,22 @@
       AND id != #{id,jdbcType=INTEGER}
   </select>
 
+  <select id="queryAppointTimeQuantumById"  resultType="int">
+    SELECT COUNT(*)
+    FROM party_exam WHERE (exam_end_time > (select exam_end_time from party_exam where id=#{id}) AND
+      (select exam_end_time from party_exam where id=#{id}) > exam_start_time)
+     OR (exam_end_time > (select exam_start_time from party_exam where id=#{id}) AND
+     (select exam_start_time from party_exam where id=#{id}) > exam_start_time)
+      OR(exam_start_time > (select exam_start_time from party_exam where id=#{id}) AND
+      (select exam_end_time from party_exam where id=#{id}) > exam_end_time )
+      AND id != #{id}
+  </select>
+
   <select id="findExamById" resultMap="BaseResultMap">
     select <include refid="Base_Column_List"/>
     from party_exam where id=#{id}
   </select>
+
 
   <select id="isOverTime" resultType="int">
     SELECT count(*) FROM party_user WHERE student_no=#{student_no} AND (CURRENT_TIMESTAMP-exam_start&lt;#{exam_time} or CURRENT_TIMESTAMP-make_up_start&lt;#{exam_time} OR exam_start IS NULL OR make_up_start IS NULL )
