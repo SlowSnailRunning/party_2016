@@ -82,6 +82,35 @@
         </div>
     </div>
 </div>
+<span id="time"></span>
+<script>
+    window.end =1552898530000/1000;
+    console.log(100 / 60);
+    function endTime() {
+        var end1 = parseInt((parseInt(window.end) / 60)) + ":"+(parseInt(window.end)%60);
+        window.end = --window.end;
+        //console.log(window.end);
+        console.log(end1);
+        if (window.end <= 0) {
+            //layer
+            /* layer.confirm('时间到！', {
+             icon:6,
+             btn: ['确定'] //按钮
+             }, function(){
+             submit();
+             }); layer非阻塞。。。。*/
+            // submitExam();
+            console.log("考试时间结束")
+            // clearInterval(timeId)
+            // alert("时间到！");
+
+        }
+        $("#time").text(end1);
+    }
+
+    setInterval(endTime, 1000);
+
+</script>
 
 </body>
 </html>
