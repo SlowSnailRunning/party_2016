@@ -288,8 +288,16 @@
             async: false,
             dataType: "json",
             success: function (res) {
-                var isSuccess=res==true?"交卷成功":"交卷失败"
-                alert(isSuccess);
+                if(res){
+                    layer.msg("交卷成功",{icon:1,time:1000},function () {
+                        window.location.href='score.html';
+                    });
+                }else {
+                    layer.msg("交卷失败,请联系管理员!",{icon:1,time:1000},function () {
+                        window.location.href='score.html';
+                    });
+                }
+
             }
         });
     }
