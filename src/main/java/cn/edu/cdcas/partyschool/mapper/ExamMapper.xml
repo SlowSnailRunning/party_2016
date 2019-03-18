@@ -306,18 +306,17 @@
     SELECT COUNT(*)
     FROM party_exam WHERE id != #{id,jdbcType=INTEGER} AND ( (exam_end_time > #{examEndTime,jdbcType=TIMESTAMP} AND #{examEndTime,jdbcType=TIMESTAMP} > exam_start_time)
      OR (exam_end_time > #{examStartTime,jdbcType=TIMESTAMP} AND #{examStartTime,jdbcType=TIMESTAMP} > exam_start_time)
-      OR(exam_start_time > #{examStartTime,jdbcType=TIMESTAMP} AND #{examEndTime,jdbcType=TIMESTAMP} > exam_end_time ) )
+      OR (exam_start_time > #{examStartTime,jdbcType=TIMESTAMP} AND #{examEndTime,jdbcType=TIMESTAMP} > exam_end_time ) )
   </select>
 
   <select id="queryAppointTimeQuantumById"  resultType="int">
     SELECT COUNT(*)
-    FROM party_exam WHERE (exam_end_time > (select exam_end_time from party_exam where id=#{id}) AND
+    FROM party_exam WHERE id != #{id} AND (exam_end_time > (select exam_end_time from party_exam where id=#{id}) AND
       (select exam_end_time from party_exam where id=#{id}) > exam_start_time)
      OR (exam_end_time > (select exam_start_time from party_exam where id=#{id}) AND
      (select exam_start_time from party_exam where id=#{id}) > exam_start_time)
-      OR(exam_start_time > (select exam_start_time from party_exam where id=#{id}) AND
+      OR (exam_start_time > (select exam_start_time from party_exam where id=#{id}) AND
       (select exam_end_time from party_exam where id=#{id}) > exam_end_time )
-      AND id != #{id}
   </select>
 
   <select id="findExamById" resultMap="BaseResultMap">
