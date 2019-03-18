@@ -178,7 +178,7 @@ layui.use(['form','layer','layedit','laydate','upload'],function(){
                     $.ajax({
                         url : "/exam/queryAppointTimeQuantum.do",
                         type : "post",
-                        data:{examStartTime:arr[0],examEndTime:arr[1]},
+                        data:{examStartTime:arr[0],examEndTime:arr[1],id:-1},
                         dataType: "text",
                         success : function(data){
                             if(parseInt(data)===0) {
@@ -252,9 +252,6 @@ layui.use(['form','layer','layedit','laydate','upload'],function(){
 
             }
         });
-
-
-
 
         //监听提交
         form.on('submit(signAdd)', function (data) {
