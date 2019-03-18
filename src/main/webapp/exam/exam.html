@@ -294,7 +294,6 @@
         });
     }
     document.getElementById("submitExam").onclick=submitExam;
-
     var data;
 
     window.onload=function(){
@@ -336,16 +335,13 @@
                         //"<input type='radio' name='dan_"+(parseInt(i)+1)+"'value='A'>A"+
                     }
                 }
-
                 if(duoTotal!=0){
-
                     for(var i=0;i<duoTotal;i++){
                         var duo="<a style='width:20px;margin-left:4px;margin-top:3px;' id='btn_"+(i+1+danTotal)+"' class='btn' onclick='selectTest(this,1)'>"+(i+1+danTotal)+"</a>";
                         $(".duo").append(duo);
                     }
                 }
                 if(panTotal!=0){
-
                     for(var i=0;i<panTotal;i++){
                         var pan="<a style='width:20px;margin-left:4px;margin-top:3px;' id='btn_"+(i+1+danTotal+duoTotal)+"' class='btn'  onclick='selectTest(this,1)'>"+(i+1+danTotal+duoTotal)+"</a>";
                         $(".pan").append(pan);
@@ -358,11 +354,6 @@
                         $(".tian").append(tian);
                     }
                 }
-
-
-
-
-
                 var dan;
                 var duo;
                 var pan;

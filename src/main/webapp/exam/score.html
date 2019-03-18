@@ -11,22 +11,29 @@
     <!--<script type="text/javascript" src="../js/jquery-3.3.1.js"></script>-->
     <script type="text/javascript" src="../layui/layui.js"></script>
 </head>
+
+
 <body style="font-size:12px; width:100%; margin:auto;">
-<div align="center" style="background-color: white;">
-    <img src="images/logo.png"/>
+<div style="height: 200px">
+    <div style="position:fixed; top:0px;left:0; width:100%; font-size:20px;color:red;font-family:宋体;text-align:center;margin-top:10px;margin-bottom:-8px;">
+        <img src="images/logo.png"/><br>
+        考试:<b id="examName"></b>
+        &nbsp;&nbsp;&nbsp;&nbsp;分数:<b id="score"></b>
+        &nbsp;&nbsp;&nbsp;&nbsp;姓名:<b id="studentName"></b>
+        &nbsp;&nbsp;&nbsp;&nbsp;学号:<b id="studentNo"></b>
+        &nbsp;&nbsp;&nbsp;&nbsp;<input class="layui-btn layui-btn-radius layui-btn-danger" value="退出" id="endExam"
+                                       type="button"/>
+    </div>
 </div>
-<br>
-<br>
-<br>
 <center>
+    <div style="overflow: scroll;height: 650px">
         <table class="layui-hide" id="LAY_table_user" lay-filter="demo" style="font-size: 10px;width: 100%;"></table>
+    </div>
 </center>
-<div style="position:fixed; top:120px;left:0; width:100%; font-size:31px;color:red;font-family:宋体;text-align:center;margin-top:10px;margin-bottom:-8px;">
-    考试:<b id="examName"></b>
-    &nbsp;&nbsp;&nbsp;&nbsp;分数:<b id="score"></b>
-    &nbsp;&nbsp;&nbsp;&nbsp;姓名:<b id="studentName"></b>
-    &nbsp;&nbsp;&nbsp;&nbsp;学号:<b id="studentNo"></b>
-    &nbsp;&nbsp;&nbsp;&nbsp;<input class="layui-btn layui-btn-radius layui-btn-danger" value="退出" id="endExam" type="button"/>
+<div class="layui-footer footer">
+    <center>
+        <a><p style="cursor: pointer" id="about">关于我们</p></a>
+    </center>
 </div>
 <script>
     layui.use(['table', 'jquery'], function () {
@@ -80,6 +87,22 @@
         });
 //end表格渲染
         //监听工具条	结束
+        $("#about").click(function () {
+            layer.open({
+                type: 2,
+                title: "关于开发团队",
+                shadeClose: true,
+                shade: [0.8, '#393D49'],
+                shadeClose: false, //开启遮罩关闭
+                maxmin: false, //开启最大化最小化按钮
+                area: ['800px', '530px'],
+                content: '../about.html'
+                // });
+                //   }
+            });
+        });
+
+
     });
 </script>
 

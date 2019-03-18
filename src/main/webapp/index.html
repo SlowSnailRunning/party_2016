@@ -103,10 +103,9 @@
 		</div>
 		<!-- 底部 -->
 		<div class="layui-footer footer">
-			<p><span>copyright @成都文理信息技术学院</span>
+			<a> <p style="cursor: pointer" id="about">关于我们</p></a>
 		</div>
 	</div>
-
 	<!-- 移动导航 -->
 	<div class="site-tree-mobile"><i class="layui-icon">&#xe602;</i></div>
 	<div class="site-mobile-shade"></div>
@@ -115,6 +114,25 @@
 	<script type="text/javascript" src="js/index.js"></script>
 	<script type="text/javascript" src="js/cache.js"></script>
 
+<script>
+	$("#about").click(function () {
+			layer.open({
+				type: 2,
+				title: "关于开发团队",
+				shadeClose: true,
+
+				shade: [0.8, '#393D49'],
+				shadeClose: false, //开启遮罩关闭
+				maxmin: false, //开启最大化最小化按钮
+				area: ['800px', '530px'],
+				content: 'about.html'
+				// });
+				//   }
+			});
+	});
+
+
+</script>
 
 </body>
 </html>
