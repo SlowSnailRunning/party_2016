@@ -537,6 +537,7 @@
                             var current= $("input[name='"+this.name+"']:checked").val();
                             console.log(current);
                             if(current==undefined){
+                                var index=this.name.split("_")[1];
                                 $("#btn_"+index).attr("class","btn");
                             }else{
                                 var index=this.name.split("_")[1];
