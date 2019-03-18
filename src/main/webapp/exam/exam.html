@@ -304,6 +304,7 @@
     document.getElementById("submitExam").onclick=submitExam;
     var data;
     var examStartTime;
+    var examTime;
     window.onload=function(){
         $.ajax({
             type:"get",
@@ -314,7 +315,7 @@
                 console.log(msg);
                 var count =msg.count;
                 var pass=msg.pass;
-                var examTime=msg.examTime;
+                 examTime=msg.examTime;
                 var examName=msg.examName;
                 var number =msg.number;
                 var name = msg.name;
@@ -796,7 +797,7 @@
     //倒计时
     function sessionTimeout() {
         var label = document.getElementById("currentTime");
-        label.value=(new Date()-examStartTime)/1000;
+        label.value=examTime*60-(Date.now()-examStartTime)/1000;
         var seconds = sessionStorage.nextTime != null ? sessionStorage.nextTime : parseInt(label.value);
         seconds = seconds - 1;
         sessionStorage.nextTime = seconds;
