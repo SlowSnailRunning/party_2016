@@ -420,8 +420,6 @@ public class UserServiceImpl implements UserService {
         } else if (examState == 3) {
             examState = examState + 1;
             userMapper.updateExamStateMakeupByStuNo(studentNo, examState);
-        }else {
-            throw new Exception("----------考生考试状态异常！！---------");
         }
         return examState;
     }
