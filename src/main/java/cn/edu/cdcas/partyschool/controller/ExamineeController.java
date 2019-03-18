@@ -39,6 +39,7 @@ public class ExamineeController {
         } catch (Exception e) {
             e.printStackTrace();
             requiredQuestions.put("status",500);
+            requiredQuestions.put("msg","----------考生考试状态异常！！---------");
             return requiredQuestions;
         }
     }

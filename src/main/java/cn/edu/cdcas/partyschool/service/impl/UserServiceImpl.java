@@ -324,10 +324,18 @@ public class UserServiceImpl implements UserService {
         //题目放入到map
         requiredQuestionAndOther.put("msg", "success");
         requiredQuestionAndOther.put("status", "200");
-        requiredQuestionAndOther.put("examStartTime", JSON.parseObject(jedisClient.hget("partySys2016", "nowExam")).getString("examStartTime"));
+        User examinee = queryByStuNo(studentNo);
+        Date makeUpStart;
+        if(examinee.getExamStart()!=null&&examinee.getMakeUpStart()!=null){
+            makeUpStart = examinee.getMakeUpStart();
+        }else if(examinee.getExamStart()!=null&&examinee.getMakeUpStart()==null){
+            makeUpStart = examinee.getExamStart();
+        }else {
+            makeUpStart = examinee.getMakeUpStart();
+        }
+        requiredQuestionAndOther.put("examStartTime", makeUpStart);
         requiredQuestionAndOther.put("examName", exam.getExamName());
         requiredQuestionAndOther.put("number", studentNo);
-        User examinee = queryByStuNo(studentNo);
         requiredQuestionAndOther.put("name", examinee.getName());
         requiredQuestionAndOther.put("grade", examinee.getGrade());
         requiredQuestionAndOther.put("major", examinee.getDepartment());
@@ -412,6 +420,8 @@ public class UserServiceImpl implements UserService {
         } else if (examState == 3) {
             examState = examState + 1;
             userMapper.updateExamStateMakeupByStuNo(studentNo, examState);
+        }else {
+            throw new Exception("----------考生考试状态异常！！---------");
         }
         return examState;
     }
