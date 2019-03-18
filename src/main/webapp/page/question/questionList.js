@@ -5,6 +5,7 @@ layui.use(['form', 'layer', 'laydate', 'upload', 'table', 'laytpl'], function ()
         laydate = layui.laydate,
         laytpl = layui.laytpl,
         table = layui.table;
+    var tableInsIsNull=false;
 
     //题库列表
     var tableIns = table.render({
@@ -42,7 +43,13 @@ layui.use(['form', 'layer', 'laydate', 'upload', 'table', 'laytpl'], function ()
                     return '<input type="checkbox" name="state" lay-filter="state" lay-skin="switch" lay-text="是|否" ' + d.state + '>'
                 }
             },
-        ]]
+        ]],
+        done:function (res, curr, count) {
+            // console.log(count);
+            if(count==0||count==null){
+                tableInsIsNull=true;
+            }
+        }
     });
 
     //是否启动
@@ -97,7 +104,7 @@ layui.use(['form', 'layer', 'laydate', 'upload', 'table', 'laytpl'], function ()
         } else {
             $(".searchVal").show();
         }
-        console.log(search); //得到被选中的值
+        // console.log(search); //得到被选中的值
 
     });
 
@@ -139,10 +146,13 @@ layui.use(['form', 'layer', 'laydate', 'upload', 'table', 'laytpl'], function ()
         }
     });
     $(".addNewsList_btn").click(function () {
-        if (true) {
+
+        addQue();
+        /*if (tableInsIsNull) {
             //tableIns为空
             addQue();
         } else {////tableIns不为空,第一次点击没有反应，第二次直接弹出来
+
             layer.confirm('发现题库数据不为空！！', {
                 btn: ['追加导入', '为我清空题库后导入'] //按钮
             }, function () {
@@ -154,7 +164,7 @@ layui.use(['form', 'layer', 'laydate', 'upload', 'table', 'laytpl'], function ()
                 addQue();
                 tableIns.reload();
             });
-        }
+        }*/
     });
 
     function addQue() {
@@ -170,6 +180,7 @@ layui.use(['form', 'layer', 'laydate', 'upload', 'table', 'laytpl'], function ()
         var pathName = window.document.location.pathname;
         //获取带"/"的项目名，如：/uimcardprj
         var projectName = pathName.substring(0, pathName.substr(1).indexOf("/page") + 1);
+        // console.log(projectName);
 
         //var index = layer.msg('文件上传中，请稍候', {icon: 16, time: false, shade: 0.8});
         //创建一个上传组件
