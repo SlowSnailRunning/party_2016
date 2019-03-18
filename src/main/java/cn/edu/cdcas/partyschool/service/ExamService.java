@@ -23,7 +23,9 @@ public interface ExamService {
     Map<String, Object> queryExamByName(int start,int pageSize,String examName) throws Exception;
 //    int updateTimeRangeById(Exam exam)throws Exception;
 
-    boolean endNowExam()throws Exception;
+//    boolean endNowExam()throws Exception;
+
+    Integer updateEndTime(Integer id) throws Exception;
 
     Integer updateStartTime(Integer id) throws Exception;
 

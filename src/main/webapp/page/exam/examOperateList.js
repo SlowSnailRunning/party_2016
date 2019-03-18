@@ -250,9 +250,9 @@ layui.use(['form', 'layer', 'laydate', 'upload', 'table', 'laytpl'], function ()
             if(data0.elem.checked){
 
                 //验证此时加入的时间段是否与数据库中各个考试的时间段冲突，冲突则禁止加入！
-                $.ajax({
-                    url : "/exam/queryAppointTimeQuantumById.do",
-                    type : "post",
+                $.ajax({am/queryAppointTimeQuantumById.do",
+                type : "post",
+                    url : "/ex
                     data:{id:id},
                     dataType: "json",
                     success : function(data2){
@@ -297,7 +297,7 @@ layui.use(['form', 'layer', 'laydate', 'upload', 'table', 'laytpl'], function ()
                                         form.render();
                                         layer.msg("开启失败！",{icon: 5});
                                     }
-
+                                    form.render();
                                 }
                             });
                         }
@@ -322,6 +322,8 @@ layui.use(['form', 'layer', 'laydate', 'upload', 'table', 'laytpl'], function ()
                             form.render();
                             layer.msg("时间段为空！请重新选择",{icon: 5});
                         }
+                        console.log("reload1");
+                        location.reload();
                     },
                     fail:function(data2){
                         data0.elem.checked = false;
@@ -364,6 +366,7 @@ layui.use(['form', 'layer', 'laydate', 'upload', 'table', 'laytpl'], function ()
                             form.render();
                             console.log("点击后（关闭成功）："+data0.elem.checked); //开关是否开启，true或者false
 
+
                         } else{
                             data0.elem.checked = true;
                             form.render();
@@ -374,8 +377,6 @@ layui.use(['form', 'layer', 'laydate', 'upload', 'table', 'laytpl'], function ()
                 });
 
             }
-
-
 
   /*      var x=data0.elem.checked;
         layer.open({
