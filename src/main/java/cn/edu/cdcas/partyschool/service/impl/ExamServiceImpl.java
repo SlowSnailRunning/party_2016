@@ -158,7 +158,7 @@ public class ExamServiceImpl implements ExamService {
      */
     @Override
     public Integer updateStartTime(Integer id) throws Exception {
-        jedisClient.hset("partySys2016", "nowExam", JSON.toJSONString(examMapper.queryCurrentExamInformation().get(0)));
+//        jedisClient.hset("partySys2016", "nowExam", JSON.toJSONString(examMapper.queryCurrentExamInformation().get(0)));
         return examMapper.updateStartTime(id);
     }
 
