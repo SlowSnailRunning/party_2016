@@ -111,6 +111,8 @@ public class ExamController {
             if(examService.updateEndTime(id)==0){
                 return new JSONResult(3, "数据库修改失败，停止考试失败！", 500);
             }
+
+
             return new JSONResult(0, "停止考试成功！", 200);
         } catch (Exception e) {
             e.printStackTrace();
