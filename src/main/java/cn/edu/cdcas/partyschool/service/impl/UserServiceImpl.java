@@ -392,8 +392,11 @@ public class UserServiceImpl implements UserService {
             if ("tian".equals(type)) {
                 if (answer == null||"".equals(answer)) {
                     answer = "";
+                    /*//有{}出现在题干最后，为一个bug
                     String[] split = question.getIntro().split("\\{\\}");
-                    int length = split.length - 1;
+                    int length = split.length - 1;*/
+
+                    int length=hit(question.getIntro(),"{}");
                     for (int i = 0; i < length; i++) {
                         answer += "{}";
                     }
@@ -406,12 +409,29 @@ public class UserServiceImpl implements UserService {
         }
         return questionList;
     }
-
     /**
-     * @Describe: 根据当前ExamState判断本次开始考试的状态变化, 开考时间，存入到数据库
-     * @Author Snail
-     * @Date 2019/3/6
+     * @param str 被匹配的长字符串
+     * @param key 匹配的短字符串
+     * @return 匹配次数
      */
+    private  int hit(String str, String key) {
+        int count = 0;// 计数器
+        int tmp = 0;// 记录截取后的新位置
+        while ((tmp = str.indexOf(key)) != -1) {// 查找key(ss),找到的地址码给tmp
+            str = str.substring(tmp + key.length());// 截取
+            // 地址码+key长度,截取后重组成新str,继续while
+            // 截取指导索引位置的字符串
+            // 子串第一次出现的位置+长度=下一次的起始位置
+            count++;
+        }
+        return count;
+    }
+
+        /**
+         * @Describe: 根据当前ExamState判断本次开始考试的状态变化, 开考时间，存入到数据库
+         * @Author Snail
+         * @Date 2019/3/6
+         */
     @Override
     public int changeExamState(String studentNo, int examState) throws Exception {
         if (examState == 0) {
