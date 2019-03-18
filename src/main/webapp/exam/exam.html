@@ -629,17 +629,24 @@
 
                 for(var i in tian){
                     // console.log(tianList[i].id)
-                    var str=tian[i].result
-                    var regex=/\{(.+?)}/g;
-                    var arr =str.match(regex);
+                    // var str=tian[i].result
+                    // var regex=/\{(.+?)}/g;
+                    // var arr =str.match(regex);
+                    //
+                    // console.log(arr);
+                    // var newArr =[];
+                    // var text='';
 
-                    console.log(arr);
                     var newArr =[];
                     var text='';
+                    var arr=str.split("}{");
+                    arr[0]= arr[0].substring(1);
+                    arr[arr.length-1]= arr[arr.length-1].substring(0,arr[arr.length-1].length-2);
+                    console.log(arr);
                     for(j=0;j<arr.length;j++){
                         var n = arr[j].substring(1,arr[j].length-1).trim();
-                        text+="<input type='text' id="+tian[i].id+" name='tian_"+ (danTotal+duoTotal+panTotal+parseInt(i)+1)+"' value="+n+ ">";
-                        newArr.push(n);
+                        text+="<input type='text' id="+tian[i].id+" name='tian_"+ (danTotal+duoTotal+panTotal+parseInt(i)+1)+"' value="+arr[j]+ ">";
+                        newArr.push(arr[j]);
                     }
                     console.log(newArr)
                     var isNull=''
