@@ -25,6 +25,7 @@ layui.use(['layer','element','jquery','form','util', 'laydate'],function () {
 
                         $('.layui-input').css({"font-size":"17px"})
                         $('#peopel').css({"font-size":"18px","font-weight":"120","color":"#FF2200","line-height":"36px"})
+                        $('#isMakeup').css({"font-size":"18px","font-weight":"120","color":"#FF2200","line-height":"36px"})
                         $('#remainTime').css({"font-size":"18px","font-weight":"120","color":"#FF2200","line-height":"36px"});
                         $('#examStatus').css({"font-size":"18px","font-weight":"120","color":"#FF2200","line-height":"36px"});
 
@@ -52,14 +53,23 @@ layui.use(['layer','element','jquery','form','util', 'laydate'],function () {
                             $('.examName').val(obj[0].examName);
                             $('.examTime').val(obj[0].examTime+"分钟");
                             $('.passScore').val(obj[0].passScore+"分");
+
                             $('.residualTime').val(layui.util.toDateString(obj[0].examEndTime, 'yyyy-MM-dd HH:mm:ss'));
                             /*0：闭卷 ； 1：开卷*/
                             if(obj[0].openOrClose === 0){
                                 $('.openOrClose').val('闭卷');
                             }
-                            if(obj[0].openOrClose !== 0){
+                            if(obj[0].openOrClose === 1){
                                 $('.openOrClose').val("开卷");
                             }
+                            if(obj[0].isMakeup === 0){
+                                $('#isMakeup').html("       不允许补考");
+                            }
+                            if(obj[0].isMakeup === 1){
+                                $('#isMakeup').html("       允许补考");
+                            }
+
+
                             $('#currentQuestion').val("单选："+obj[0].radioScore+"(分/道) * "+obj[0].radioNum+"道    ||    "+
                                 " 多选："+obj[0].checkScore+"(分/道) * "+obj[0].checkNum+"道    ||    "+
                                 " 判断："+obj[0].judgeScore+"(分/道) * "+obj[0].judgeNum+"道    ||    "+
