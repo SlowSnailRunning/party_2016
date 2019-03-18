@@ -74,12 +74,20 @@ layui.use(['form', 'layer', 'laydate', 'upload', 'table', 'laytpl'], function ()
             {title: '操作', width: 210, fixed: "right", align: "center", templet: function (data) {
                     if((data.examStartTime<=(new Date()).getTime()) &&((new Date()).getTime()<=data.examEndTime)){
                         return"        <input id=\"openOrCloseExam"+data.id+"\" check=\"true\" checked type=\"checkbox\"  name=\"openOrCloseExam\" lay-skin=\"switch\" lay-filter=\"filter\" lay-text=\"开启|关闭\">\n" +
-                            "        <a class=\"layui-btn layui-btn-xs\" lay-event=\"edit\">编辑</a>\n" +
-                            "        <a class=\"layui-btn layui-btn-xs layui-btn-danger\" lay-event=\"del\">删除</a>"
+                            "        <a class=\"layui-btn layui-btn-xs\"  id=\"edit"+data.id+"\" onclick='function() {\n" +
+                            "                                                layui.layer.msg(\"考试时间段内，不允许对当堂考试进行编辑！\", {\n" +
+                            "                                                         time: 2000, //2s后自动关闭\n" +
+                            "                                                 });\n" +
+                            "                                            }'>编辑</a>\n" +
+                            "        <a class=\"layui-btn layui-btn-xs layui-btn-danger\"  id=\"del"+data.id+"\" onclick='function() {\n" +
+                            "                                                layui.layer.msg(\"考试时间段内，不允许对当堂考试进行删除！\", {\n" +
+                            "                                                         time: 2000, //2s后自动关闭\n" +
+                            "                                                 });\n" +
+                            "                                            }'>删除</a>"
                     }else{
                         return"        <input id=\"openOrCloseExam"+data.id+"\" check=\"false\" type=\"checkbox\"  name=\"openOrCloseExam\" lay-skin=\"switch\" lay-filter=\"filter\" lay-text=\"开启|关闭\">\n" +
-                            "        <a class=\"layui-btn layui-btn-xs\" lay-event=\"edit\">编辑</a>\n" +
-                            "        <a class=\"layui-btn layui-btn-xs layui-btn-danger\" lay-event=\"del\">删除</a>"
+                            "        <a class=\"layui-btn layui-btn-xs\" lay-event=\"edit\" id=\"edit"+data.id+"\">编辑</a>\n" +
+                            "        <a class=\"layui-btn layui-btn-xs layui-btn-danger\" lay-event=\"del\" id=\"del"+data.id+"\">删除</a>"
                     }
 
                 } }
@@ -230,21 +238,11 @@ layui.use(['form', 'layer', 'laydate', 'upload', 'table', 'laytpl'], function ()
                 })
             });
         }
-   /*     else if (layEvent === 'openOrCloseExam') { //开启考试
-                form.on("switch(filter)", function(data4){
-
-
-                });
-
-
-        }*/
-
-
 
 
     });
 
-    //监听提交
+    //监听开启考试开关按钮
     form.on('switch(filter)', function (data0) {
         console.log(data0.elem.id + ":id   type:"+typeof data0.elem.id); //得到checkbox原始DOM对象
         console.log(data0.elem.checked); //开关是否开启，true或者false
@@ -286,7 +284,20 @@ layui.use(['form', 'layer', 'laydate', 'upload', 'table', 'laytpl'], function ()
                                         if (data3.status === 200) {
 
                                             layer.alert("考试："+data.examName+"开启成功！",{icon: 6});
-
+                                           /* $("#2args").attr("disabled",'disabled');*/
+                                            $("#"+"edit"+data.id).removeAttr("lay-event");
+                                            $("#"+"del"+data.id).removeAttr("lay-event");
+                                        /*    $("#"+"edit"+data.id).click(function() {
+                                                layer.msg("考试时间段内，不允许对当堂考试进行编辑！", {
+                                                         time: 2000, //2s后自动关闭
+                                                 });
+                                            });
+                                            $("#"+"del"+data.id).click(function() {
+                                                layer.msg("考试时间段内，不允许对当堂考试进行删除！", {
+                                                    time: 2000, //2s后自动关闭
+                                                });
+                                            });
+*/
                                             table.reload("examListTable", {
                                                 page: {
                                                     curr: 1 //重新从第 1 页开始
@@ -354,6 +365,8 @@ layui.use(['form', 'layer', 'laydate', 'upload', 'table', 'laytpl'], function ()
                             if (data3.status === 200) {
 
                                 layer.alert("考试："+data.examName+"关闭成功！",{icon: 6});
+                                $("#"+"edit"+data.id).attr("lay-event","edit");
+                                $("#"+"del"+data.id).attr("lay-event","del");
 
                                 table.reload("examListTable", {
                                     page: {
