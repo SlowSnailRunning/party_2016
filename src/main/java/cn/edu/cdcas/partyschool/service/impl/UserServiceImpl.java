@@ -390,15 +390,15 @@ public class UserServiceImpl implements UserService {
             //查找对应在answer表中，存放的学生数据
             String answer = userMapper.findAnswer(studentNo, "1".equals(isMakeUp) ? "0" : "1", question.getId(), examId);
             if ("tian".equals(type)) {
-                if (answer == null) {
+                if (answer == null||"".equals(answer)) {
                     answer = "";
                     String[] split = question.getIntro().split("\\{\\}");
                     int length = split.length - 1;
                     for (int i = 0; i < length; i++) {
-                        answer += "{ }";
+                        answer += "{}";
                     }
                 }
-            } else {
+            } else{
                 answer = answer == null ? "" : answer;
             }
             question.setResult(answer);

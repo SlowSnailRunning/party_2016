@@ -141,26 +141,6 @@ layui.use(['layer','element','jquery','form','util', 'laydate'],function () {
                 },
                 "json"
             );
-
-           /* $.ajax({
-                url: "/exam/endNowExam.do",
-                type: "post",
-                success: function (data) {
-                    console.log(data+"0");
-                    console.log(data);
-                    console.log(data=="0");
-                    if (data == 0) {
-                        clearInterval(setInt);
-                        layer.msg("关闭成功!",{icon:1},function () {
-                            location.reload();
-                        });
-                    } else {
-                        layer.msg("关闭失败，请联系开发人员！",{icon:2},function () {
-                            location.reload();
-                        });
-                    }
-                }
-            });*/
         }, function(){
         });
     })
