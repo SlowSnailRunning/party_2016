@@ -271,7 +271,7 @@
     </div>
 </div>
 
-<input type="hidden" id="currentTime" value="5400"/>
+<input type="hidden" id="currentTime" value=""/>
 <div class="row-fluid">
     <div class="container-fluid logfooter">
         <ul class="inline unstyled" style="background-color: white;">
@@ -303,12 +303,12 @@
     }
     document.getElementById("submitExam").onclick=submitExam;
     var data;
-
+    var examStartTime;
     window.onload=function(){
         $.ajax({
             type:"get",
             dataType:"json",
-            url:"/examinee/allQuestionInfoForStu.do",
+            url:"json/web-question.json",
             success:function(result){
                 var msg=result;
                 console.log(msg);
@@ -320,6 +320,7 @@
                 var name = msg.name;
                 var grade =msg.grade;
                 var major=msg.major;
+                examStartTime=msg.examStartTime;
                 //渲染考生 基本信息
                 $(".allquestionnumber").text(count);
                 $(".pass").text(pass);
@@ -593,16 +594,17 @@
                     }
                 }
                 //回显判断题
-                var x=0;
                 for(var i in pan){
                     //循环四次，因为每道题有四个答案
                     for(var j=1;j<=2;j++){
-                        if(danList[x].value==pan[i].result){
-                            $(danList[x]).attr("checked",true);
+                        if(danList[k].value==pan[i].result){
+                            $(danList[k]).attr("checked",true);
+                            //console.log("判断题回显"+danList[x].checked)
                         }
-                        x=x+1;
+                        k=k+1;
                     }
                 }
+
 
 
 
@@ -783,11 +785,11 @@
 
 
 <script type="application/javascript">
-
+    var timeId= window.setInterval(sessionTimeout, 1000);
     //倒计时
     function sessionTimeout() {
         var label = document.getElementById("currentTime");
-
+        label.value=(new Date()-examStartTime)/1000;
         var seconds = sessionStorage.nextTime != null ? sessionStorage.nextTime : parseInt(label.value);
         seconds = seconds - 1;
         sessionStorage.nextTime = seconds;
@@ -799,6 +801,7 @@
             time.html(Math.floor(seconds / 60) + ":" + seconds % 60);
         }
         if (seconds == 0) {
+            label.value="考试结束"
             //layer
             /* layer.confirm('时间到！', {
             icon:6,
@@ -807,12 +810,13 @@
             submit();
             }); layer非阻塞。。。。*/
             submitExam();
+            clearInterval(timeId)
             alert("时间到！");
 
         }
     }
 
-    window.setInterval(sessionTimeout, 1000);
+
 
 </script>
 
