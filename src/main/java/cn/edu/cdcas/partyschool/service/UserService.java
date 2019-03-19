@@ -80,4 +80,5 @@ public interface UserService {
     Map<String, Object> getScoreAndIsMakeUpMap(String studentNo) throws Exception;
 
     Exam getNowExam () throws Exception;
+    int modify(String stu_no) ;
 }

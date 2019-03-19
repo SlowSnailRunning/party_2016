@@ -7,25 +7,25 @@ import java.util.List;
 
 public interface ExamMapper {
 
-    int queryAllExamRows()throws Exception;
+    int queryAllExamRows() throws Exception;
 
-    void clear()throws Exception;
+    void clear() throws Exception;
 
-    int queryExamRowsByName(String examName)throws Exception;
+    int queryExamRowsByName(String examName) throws Exception;
 
-    List<Exam> queryAllExamList(@Param(value = "start")int start, @Param(value = "pageSize") int pageSize)throws Exception;
+    List<Exam> queryAllExamList(@Param(value = "start") int start, @Param(value = "pageSize") int pageSize) throws Exception;
 
     int deleteById(Integer id) throws Exception;
 
-    int insert(Exam exam)throws Exception;
+    int insert(Exam exam) throws Exception;
 
     int insertSelective(Exam exam) throws Exception;
 
-    List<Exam> queryExamByName(@Param(value = "start")int start, @Param(value = "pageSize") int pageSize,@Param(value="examName") String examName) throws Exception;
+    List<Exam> queryExamByName(@Param(value = "start") int start, @Param(value = "pageSize") int pageSize, @Param(value = "examName") String examName) throws Exception;
 
     int updateByIdSelective(Exam exam) throws Exception;
 
-    int updateTimeRangeById(Exam exam)throws Exception;
+    int updateTimeRangeById(Exam exam) throws Exception;
 
     String isCurrentExam() throws Exception;
 
@@ -37,7 +37,7 @@ public interface ExamMapper {
     //查询考试时间是否冲突增强版
     int queryAppointTimeQuantumById(@Param("id") Integer id) throws Exception;
 
-    List<Exam> queryAllExamByKeyName(@Param("start") int start , @Param("pageSize") int pageSize , @Param("field") String field , @Param("value") String value);
+    List<Exam> queryAllExamByKeyName(@Param("start") int start, @Param("pageSize") int pageSize, @Param("field") String field, @Param("value") String value);
 
     int queryExamNumsByField(@Param("field") String field, @Param("value") String value);
 
@@ -45,12 +45,13 @@ public interface ExamMapper {
 
 
     //查询初/补考是否超时
-    Integer isOverTime(@Param("student_no")String student_no,@Param("exam_time")long exam_time) throws Exception;
+    Integer isOverTime(@Param("student_no") String student_no, @Param("exam_time") long exam_time) throws Exception;
 
     //更新考试结束时间
     Integer updateEndTime(@Param("id") Integer id);
 
     //更新考试开始时间
     Integer updateStartTime(@Param("id") Integer id);
+
 
 }

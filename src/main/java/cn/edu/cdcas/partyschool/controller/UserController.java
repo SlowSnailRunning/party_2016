@@ -68,6 +68,8 @@ public class UserController {
                     user.setName(value.get(4));
                     user.setStudentNo(value.get(5));
                     user.setPartyNumber(value.get(6));
+
+
                     userService.insertSelective(user);
                 }
             });
@@ -153,6 +155,13 @@ public class UserController {
         int stuId = Integer.valueOf(request.getParameter("stuId"));
         this.userService.deleteById(stuId);
         return new JSONResult(0, "删除成功!", 200);
+    }
+
+
+    //重置考生考试状态
+    @RequestMapping(value = "modify", method = RequestMethod.POST)
+    public int modify(String stu_no) {
+        return userService.modify(stu_no);
     }
 
     /**

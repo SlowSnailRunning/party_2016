@@ -29,7 +29,7 @@ layui.use(['form', 'layer', 'laydate', 'upload', 'table', 'laytpl'], function ()
             {field: 'examStateStr', title: '考试状态', width: 86, align: 'center'},
             {field: 'examScore', title: '考试成绩', width: 86, align: 'center'},
             {field: 'makeUpScore', title: '补考成绩', width: 86, align: 'center'},
-            {title: '操作', width: 120, templet: '#studentListBar', fixed: "right", align: "center"}
+            {title: '操作', width: 190, templet: '#studentListBar', fixed: "right", align: "center"}
         ]]
     });
 
@@ -201,6 +201,11 @@ layui.use(['form', 'layer', 'laydate', 'upload', 'table', 'laytpl'], function ()
     table.on('tool(studentList)', function (obj) {
         var layEvent = obj.event,
             data = obj.data;
+         // if(layEvent=="modify")
+         // {
+         //     console.log("asdfsaf");
+         // }
+
 
         if (layEvent === 'edit') { //编辑
             addNews(data);
@@ -217,7 +222,31 @@ layui.use(['form', 'layer', 'laydate', 'upload', 'table', 'laytpl'], function ()
             });
         } else if (layEvent === 'look') { //预览
             layer.alert("此功能需要前台展示，实际开发中传入对应的必要参数进行文章内容页面访问")
+        } else if (layEvent === "modify") { //预览
+              console.log(12312);
+            layer.confirm('确认重置考生状态吗？', {icon: 3, title: '提示信息'}, function (index) {
+                $.post("/user//modify.do", {
+                    stu_no: data.studentNo  //将需要删除的学生学号作为参数传入
+                }, function (data) {
+                    if (data == 1) {
+                        layer.msg("重置成功！！！", {time:1000,
+                            end: function () {
+                                var index = parent.layer.getFrameIndex(window.name); //先得到当前iframe层的索引
+                                parent.layer.close(index); //再执行关闭
+                            }
+                        });
+                    } else {
+                        layer.msg("重置失败请重试！！！", {time:2000,
+                            end: function () {
+                                var index = parent.layer.getFrameIndex(window.name); //先得到当前iframe层的索引
+                                parent.layer.close(index); //再执行关闭
+                            }
+                        });
+                    }
+                });
+            });
         }
+
     });
 
 });

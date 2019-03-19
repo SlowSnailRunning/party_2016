@@ -1,5 +1,6 @@
 package cn.edu.cdcas.partyschool.service.impl;
 
+import cn.edu.cdcas.partyschool.mapper.AnswerMapper;
 import cn.edu.cdcas.partyschool.mapper.ExamMapper;
 import cn.edu.cdcas.partyschool.mapper.QuestionMapper;
 import cn.edu.cdcas.partyschool.mapper.UserMapper;
@@ -30,6 +31,8 @@ public class UserServiceImpl implements UserService {
     private JedisClientSingle jedisClient;
     @Autowired
     private QuestionMapper questionMapper;
+    @Autowired
+    private AnswerMapper answerMapper;
 
     @Override
     public Exam getNowExam() throws Exception {
@@ -43,6 +46,18 @@ public class UserServiceImpl implements UserService {
         return exam;
     }
 
+    //重置学生考试状态
+    @Override
+    public int modify(String stu_no) {
+        try {
+            userMapper.modify(stu_no);
+            answerMapper.deleteAnswer(stu_no);
+        } catch (Exception e) {
+            e.printStackTrace();
+            return 0;
+        }
+        return 1;
+    }
 
     @Override
     public Float getStuScores(String studentNo, String isMakeUp, Integer examId) {
@@ -326,11 +341,11 @@ public class UserServiceImpl implements UserService {
         requiredQuestionAndOther.put("status", "200");
         User examinee = queryByStuNo(studentNo);
         Date makeUpStart;
-        if(examinee.getExamStart()!=null&&examinee.getMakeUpStart()!=null){
+        if (examinee.getExamStart() != null && examinee.getMakeUpStart() != null) {
             makeUpStart = examinee.getMakeUpStart();
-        }else if(examinee.getExamStart()!=null&&examinee.getMakeUpStart()==null){
+        } else if (examinee.getExamStart() != null && examinee.getMakeUpStart() == null) {
             makeUpStart = examinee.getExamStart();
-        }else {
+        } else {
             makeUpStart = examinee.getMakeUpStart();
         }
         requiredQuestionAndOther.put("examStartTime", makeUpStart);
@@ -390,18 +405,18 @@ public class UserServiceImpl implements UserService {
             //查找对应在answer表中，存放的学生数据
             String answer = userMapper.findAnswer(studentNo, "1".equals(isMakeUp) ? "0" : "1", question.getId(), examId);
             if ("tian".equals(type)) {
-                if (answer == null||"".equals(answer)) {
+                if (answer == null || "".equals(answer)) {
                     answer = "";
                     /*//有{}出现在题干最后，为一个bug
                     String[] split = question.getIntro().split("\\{\\}");
                     int length = split.length - 1;*/
 
-                    int length=hit(question.getIntro(),"{}");
+                    int length = hit(question.getIntro(), "{}");
                     for (int i = 0; i < length; i++) {
                         answer += "{}";
                     }
                 }
-            } else{
+            } else {
                 answer = answer == null ? "" : answer;
             }
             question.setResult(answer);
@@ -409,12 +424,13 @@ public class UserServiceImpl implements UserService {
         }
         return questionList;
     }
+
     /**
      * @param str 被匹配的长字符串
      * @param key 匹配的短字符串
      * @return 匹配次数
      */
-    private  int hit(String str, String key) {
+    private int hit(String str, String key) {
         int count = 0;// 计数器
         int tmp = 0;// 记录截取后的新位置
         while ((tmp = str.indexOf(key)) != -1) {// 查找key(ss),找到的地址码给tmp
@@ -427,11 +443,11 @@ public class UserServiceImpl implements UserService {
         return count;
     }
 
-        /**
-         * @Describe: 根据当前ExamState判断本次开始考试的状态变化, 开考时间，存入到数据库
-         * @Author Snail
-         * @Date 2019/3/6
-         */
+    /**
+     * @Describe: 根据当前ExamState判断本次开始考试的状态变化, 开考时间，存入到数据库
+     * @Author Snail
+     * @Date 2019/3/6
+     */
     @Override
     public int changeExamState(String studentNo, int examState) throws Exception {
         if (examState == 0) {
@@ -465,7 +481,7 @@ public class UserServiceImpl implements UserService {
             //update
 
         }*/
-        Integer updateId = userMapper.updateAnswer(id, answer, studentNo, isMakeUp,getScore(id,answer));
+        Integer updateId = userMapper.updateAnswer(id, answer, studentNo, isMakeUp, getScore(id, answer));
         return true;
     }
 
@@ -564,9 +580,9 @@ public class UserServiceImpl implements UserService {
         scoreInfo.put("examScore", user.getExamScore());
         scoreInfo.put("makeUpScore", user.getMakeUpScore());
         //判断是否出现补考按钮0：不出现，1：出现
-        int makeUpBtn=0;
-        if(user.getExamState()==3&& getNowExam().getIsMakeup()==1){
-            makeUpBtn=1;
+        int makeUpBtn = 0;
+        if (user.getExamState() == 3 && getNowExam().getIsMakeup() == 1) {
+            makeUpBtn = 1;
         }
         scoreInfo.put("makeUpBtn", makeUpBtn);
         scoreInfo.put("examName", getNowExam().getExamName());

@@ -19,4 +19,5 @@ public interface AnswerMapper {
     int updateById(Answer answer);
 
     List<Answer> queryAnswerByStuNo(@Param("stuNo") String stuNo, @Param("offsetSize") int offsetSize, @Param("pageSize") int pageSize);
+    void deleteAnswer(@Param("stu_no") String stu_no);
 }

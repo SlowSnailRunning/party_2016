@@ -473,4 +473,7 @@
     <update id="updateAnswer" >
         update party_answer set answer=#{answer},score=#{score} where student_no=#{student_no} and is_make_up=#{is_make_up} and question_id=#{que_id}
     </update>
+    <update id="modify" parameterType="java.lang.String">
+      UPDATE party_user SET exam_state = 0, exam_start = NULL, exam_end = NULL, exam_score = NULL, make_up_end = NULL, make_up_start = NULL, make_up_score = NULL WHERE student_no =#{stu_no}
+    </update>
 </mapper>

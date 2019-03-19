@@ -164,4 +164,11 @@
             `result`      = #{result,jdbcType=VARCHAR}
         where id = #{id,jdbcType=INTEGER}
     </update>
+
+
+
+    <delete id="deleteAnswer" parameterType="java.lang.String">
+       DELETE FROM party_answer WHERE student_no=#{stu_no}
+    </delete>
+
 </mapper>
