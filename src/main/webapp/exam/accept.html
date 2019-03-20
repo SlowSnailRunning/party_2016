@@ -176,6 +176,8 @@
 
         },
         mounted() {
+            //1是开卷，0是闭卷
+            window.localStorage.setItem("openOrClose",this.examInfo.openOrClose)
             if(this.studentInfo.examState==0||this.studentInfo.examState==1){
                 $("#makeUpButtion").attr("disabled",true)
                 $("#makeUpButtion").css("cursor","not-allowed")
@@ -212,6 +214,11 @@
                 window.location.href = data.replace(/"/g, "");
             });
         });
+    });
+    //防止页面后退
+    history.pushState(null, null, document.URL);
+    window.addEventListener('popstate', function () {
+        history.pushState(null, null, document.URL);
     });
 </script>
 

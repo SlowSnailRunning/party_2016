@@ -818,6 +818,10 @@
 </script>
 
 <script language="javascript">
+
+    if(localStorage.getItem("openOrClose")==1){
+        document.body.style.userSelect="text"
+    }
     //防止页面后退
     history.pushState(null, null, document.URL);
     window.addEventListener('popstate', function () {
