@@ -74,7 +74,7 @@ public class UserController {
                 }
             });
         } catch (IOException e) {
-            return new JSONResult(1, e.getMessage(), 404);
+            return new JSONResult(0, "请检查表格数据格式是否正确", 200);
         }
         return new JSONResult(0, "考生导入成功!", 200);
     }
