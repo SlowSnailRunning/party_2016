@@ -46,7 +46,7 @@
     </style>
 
 </head>
-<body>
+<body oncontextmenu = "return false">
 <div align="center" style="background-color: White">
     <img src="images/logo.png"/>
 </div>
@@ -783,8 +783,6 @@
 <script type="application/javascript">
     var timeId = window.setInterval(sessionTimeout, 1000);
     var flag = 0;
-
-
     //倒计时
     function sessionTimeout() {
         // var examStartTime;
@@ -815,39 +813,17 @@
                 alert("时间到！");
         }
 
-
-       // console.log(--window.second1);
-        // var label = document.getElementById("currentTime");
-        // label.value=examTime*60-(Date.now()-examStartTime)/1000;
-        // var seconds = sessionStorage.nextTime != null ? sessionStorage.nextTime : parseInt(label.value);
-        // seconds = seconds - 1;
-        // sessionStorage.nextTime = seconds;
-        // label.value = seconds;
-        // var time = $("#time");
-        // if (seconds % 60 < 10) {
-        //     time.html(Math.floor(seconds / 60) + ":0" + seconds % 60);
-        // } else {
-        //     time.html(Math.floor(seconds / 60) + ":" + seconds % 60);
-        // }
-        // if (seconds <= 0) {
-        //     label.value="考试结束"
-        //     //layer
-        //     /* layer.confirm('时间到！', {
-        //     icon:6,
-        //     btn: ['确定'] //按钮
-        //     }, function(){
-        //     submit();
-        //     }); layer非阻塞。。。。*/
-        //     submitExam();
-        //     clearInterval(timeId)
-        //     alert("时间到！");
-        //
-        // }
     }
-
 
 </script>
 
+<script language="javascript">
+    //防止页面后退
+    history.pushState(null, null, document.URL);
+    window.addEventListener('popstate', function () {
+        history.pushState(null, null, document.URL);
+    });
+</script>
 
 </body>
 </html>
