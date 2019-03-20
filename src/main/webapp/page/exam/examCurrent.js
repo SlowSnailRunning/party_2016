@@ -12,7 +12,7 @@ layui.use(['layer','element','jquery','form','util', 'laydate'],function () {
         function loadexamCurrent(){
             $.ajax({
                 type:"POST",
-                url:'/exam/queryCurrentExamInformation.do',
+                url:projectName+'/exam/queryCurrentExamInformation.do',
                 data:{},
                 dataType:'json',
                 contentType: "application/json;charset=utf-8;",
@@ -48,7 +48,7 @@ layui.use(['layer','element','jquery','form','util', 'laydate'],function () {
 
                             setInt=setInterval(function () {
                                 $.ajax({
-                                    url : "/exam/studentSize.do",
+                                    url : projectName+"/exam/studentSize.do",
                                     type : "get",
                                     success : function(data){
                                         $("#peopel").text("      "+data+" 人 ");
@@ -124,7 +124,7 @@ layui.use(['layer','element','jquery','form','util', 'laydate'],function () {
         layer.confirm('确定立即关闭这考试？', {
             btn: ['确定','我再想想'] //按钮
         }, function(){
-            $.post('/exam/updateEndTime.do',
+            $.post(projectName+'/exam/updateEndTime.do',
                 {"id":examId},
                 function (data) {
                     console.log(data["code"]);

@@ -40,7 +40,7 @@ public class LoginController {
         int flag = 0;
         try {
             String student_no =token;/*userServiceImpl.isLoginSuccess(token,request.getRemoteAddr());*/
-            String type = null;
+			String type = null;
             if ("-1".equals(student_no)) {
                 flag = 11;//系统认证失败
             } else if ((type = userServiceImpl.findType(student_no)) == null) {

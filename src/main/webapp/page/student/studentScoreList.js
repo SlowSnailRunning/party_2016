@@ -7,7 +7,7 @@ layui.use(['form', 'layer', 'table'], function () {
     //学生成绩表
     var tableIns = table.render({
         elem: '#studentScoreList',
-        url: '/user/all.do',
+        url: projectName+'/user/all.do',
         cellMinWidth: 95,
         page: true,
         height: "full-125",

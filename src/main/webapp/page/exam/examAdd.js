@@ -176,7 +176,7 @@ layui.use(['form','layer','layedit','laydate','upload'],function(){
                 //为空（说明为新增）则加入
                 if(isNaN(examId)){
                     $.ajax({
-                        url : "/exam/queryAppointTimeQuantum.do",
+                        url : projectName+"/exam/queryAppointTimeQuantum.do",
                         type : "post",
                         data:{examStartTime:arr[0],examEndTime:arr[1],id:-1},
                         dataType: "text",
@@ -213,7 +213,7 @@ layui.use(['form','layer','layedit','laydate','upload'],function(){
                     });
                 }else{
                     $.ajax({
-                        url : "/exam/queryAppointTimeQuantum.do",
+                        url : projectName+"/exam/queryAppointTimeQuantum.do",
                         type : "post",
                         data:{id:examId,examStartTime:arr[0],examEndTime:arr[1]},
                         dataType: "text",
@@ -259,7 +259,7 @@ layui.use(['form','layer','layedit','laydate','upload'],function(){
             // return;
             //signAdd为提交按钮的id
 
-            $.post("/exam/add-update.do", data.field,
+            $.post(projectName+"/exam/add-update.do", data.field,
                 function (data) {
                     if (data.status === 200) {
                         layer.msg(data['msg']);

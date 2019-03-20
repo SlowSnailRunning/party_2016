@@ -10,7 +10,7 @@ layui.use(['form', 'layer', 'laydate', 'upload', 'table', 'laytpl'], function ()
     //题库列表
     var tableIns = table.render({
         elem: '#questionList',
-        url: '/question/selectQue.do',
+        url: projectName+'/question/selectQue.do',
         /* url:'questionList.json',*/
         cellMinWidth: 95,
         page: true,
@@ -68,7 +68,7 @@ layui.use(['form', 'layer', 'laydate', 'upload', 'table', 'laytpl'], function ()
                         console.log(data2["state"]);
                         console.log(data2["state"]=="checked"?"":"checked");*/
             $.ajaxSettings.async = false;
-            $.post("/question/modifyState.do", {
+            $.post(projectName+"/question/modifyState.do", {
                 state: data2["state"] == "checked" ? "" : "checked",
                 id: data2["id"]
             }, function (res) {
@@ -120,7 +120,7 @@ layui.use(['form', 'layer', 'laydate', 'upload', 'table', 'laytpl'], function ()
                     /*context:"",*/
 
                 },
-                url: '/question/selectQue.do' + '?type=' + search
+                url: projectName+'/question/selectQue.do' + '?type=' + search
             })
             console.log("一");
         } else {
@@ -134,7 +134,7 @@ layui.use(['form', 'layer', 'laydate', 'upload', 'table', 'laytpl'], function ()
                         /*type:"",*/
                         /*context:$(".searchVal").val() */  //按题干搜索
                     },
-                    url: '/question/selectQue.do' + '?intro=' + $(".searchVal").val()
+                    url: projectName+'/question/selectQue.do' + '?intro=' + $(".searchVal").val()
                 })
                 console.log("er");
                 return;
@@ -251,7 +251,7 @@ layui.use(['form', 'layer', 'laydate', 'upload', 'table', 'laytpl'], function ()
 
         var havaExam = "";
         $.ajaxSettings.async = false;
-        $.post("/exam/haveExam.do", function (res) {
+        $.post(projectName+"/exam/haveExam.do", function (res) {
             havaExam = res;
         })
         $.ajaxSettings.async = true;
@@ -265,7 +265,7 @@ layui.use(['form', 'layer', 'laydate', 'upload', 'table', 'laytpl'], function ()
                 queId.push(data[i].id);
             }
             layer.confirm('确定删除选中的题目吗？', {icon: 3, title: '提示信息'}, function (index) {
-                $.post("/question/delete-multiple.do", {
+                $.post(projectName+"/question/delete-multiple.do", {
                     queId: queId  //将需要删除的stuNo作为参数传入
                 }, function (data) {
                     if (data == "true") {
@@ -282,13 +282,13 @@ layui.use(['form', 'layer', 'laydate', 'upload', 'table', 'laytpl'], function ()
 
     //清空所有
     $(".clearAllStu_btn").click(function () {
-        $.post("/exam/haveExam.do", function (res) {
+        $.post(projectName+"/exam/haveExam.do", function (res) {
             if (res == "true") {
                 layer.alert('考试期间，不允许清空题库！', {icon: 4});
                 tableIns.reload();
             } else {
                 layer.confirm('确认清空题库吗?', {icon: 3, title: '提示信息'}, function (index) {
-                    $.post("/question/clear.do", function (data) {
+                    $.post(projectName+"/question/clear.do", function (data) {
                         if (data == 'true') {
                             layer.msg("清空成功!");     //"清空成功!" from backend.
                         } else {
@@ -311,7 +311,7 @@ layui.use(['form', 'layer', 'laydate', 'upload', 'table', 'laytpl'], function ()
             addNews(data);
         } else if (layEvent === 'del') { //删除
             layer.confirm('确定删除此学生？', {icon: 3, title: '提示信息'}, function (index) {
-                $.post("/user/delete-individual.do", {
+                $.post(projectName+"/user/delete-individual.do", {
                     studentNo: data.studentNo  //将需要删除的学生学号作为参数传入
                 }, function (data) {
                     tableIns.reload();

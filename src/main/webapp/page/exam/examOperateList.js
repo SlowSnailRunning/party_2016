@@ -10,7 +10,7 @@ layui.use(['form', 'layer', 'laydate', 'upload', 'table', 'laytpl'], function ()
     //考试列表
     var tableIns = table.render({
         elem: '#examList',
-        url: '/exam/queryExamList.do',
+        url: projectName+'/exam/queryExamList.do',
         cellMinWidth: 95,
         page: true,
         height: "full-125",
@@ -196,7 +196,7 @@ layui.use(['form', 'layer', 'laydate', 'upload', 'table', 'laytpl'], function ()
                 examId.push(data[i].id);
             }
             layer.confirm('确定删除选中的考试吗？', {icon: 3, title: '提示信息'}, function (index) {
-                $.post("/exam/deleteExam-multiple.do", {
+                $.post(projectName+"/exam/deleteExam-multiple.do", {
                     examId: examId  //将需要删除的stuNo作为参数传入
                 }, function (data) {
                     layer.msg(JSON.parse(data)['msg']);     //"删除成功!" or "清空成功!" from backend.
@@ -212,7 +212,7 @@ layui.use(['form', 'layer', 'laydate', 'upload', 'table', 'laytpl'], function ()
     //清空所有考试
     $(".clearAllexam_btn").click(function () {
         layer.confirm('确认清空此考试列表吗?', {icon: 3, title: '提示信息'}, function (index) {
-            $.post("/exam/clear.do", function (data) {
+            $.post(projectName+"/exam/clear.do", function (data) {
                 layer.msg(JSON.parse(data)['msg']);     //"清空成功!" from backend.
                 tableIns.reload();
                 layer.close(index);
@@ -230,7 +230,7 @@ layui.use(['form', 'layer', 'laydate', 'upload', 'table', 'laytpl'], function ()
             addNews(data);
         } else if (layEvent === 'del') { //删除
             layer.confirm('确定删除此考试？', {icon: 3, title: '提示信息'}, function (index) {
-                $.post("/exam/deleteExam.do", {
+                $.post(projectName+"/exam/deleteExam.do", {
                     examId: data.id  //将需要删除的考试id作为参数传入
                 }, function (data) {
                     tableIns.reload();
@@ -264,13 +264,13 @@ layui.use(['form', 'layer', 'laydate', 'upload', 'table', 'laytpl'], function ()
             //验证此时加入的时间段是否与数据库中各个考试的时间段冲突，冲突则禁止加入！
             $.ajax({
                 type: "post",
-                url: "/exam/queryAppointTimeQuantumById.do",
+                url: projectName+"/exam/queryAppointTimeQuantumById.do",
                 data: {id: id},
                 dataType: "json",
                 success: function (data2) {
                     if (data2.status === 200) {
                         $.ajax({
-                            url: "/exam/updateStartTime.do",
+                            url: projectName+"/exam/updateStartTime.do",
                             type: "post",
                             data: {id: id},
                             dataType: "json",
@@ -357,7 +357,7 @@ layui.use(['form', 'layer', 'laydate', 'upload', 'table', 'laytpl'], function ()
         } else {
 
             $.ajax({
-                url: "/exam/updateEndTime.do",
+                url: projectName+"/exam/updateEndTime.do",
                 type: "post",
                 data: {id: id},
                 dataType: "json",

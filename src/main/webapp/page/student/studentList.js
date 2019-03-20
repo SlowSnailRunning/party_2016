@@ -9,7 +9,7 @@ layui.use(['form', 'layer', 'laydate', 'upload', 'table', 'laytpl'], function ()
     //新闻列表
     var tableIns = table.render({
         elem: '#studentList',
-        url: '/user/all.do',
+        url: projectName+'/user/all.do',
         cellMinWidth: 95,
         page: true,
         height: "full-125",
@@ -173,7 +173,7 @@ layui.use(['form', 'layer', 'laydate', 'upload', 'table', 'laytpl'], function ()
                 stuId.push(data[i].id);
             }
             layer.confirm('确定删除选中的学生吗？', {icon: 3, title: '提示信息'}, function (index) {
-                $.post("/user/delete-multiple.do", {
+                $.post(projectName+"/user/delete-multiple.do", {
                     stuId: stuId  //将需要删除的stuNo作为参数传入
                 }, function (data) {
                     layer.msg(JSON.parse(data)['msg']);     //"删除成功!" or "清空成功!" from backend.
@@ -189,7 +189,7 @@ layui.use(['form', 'layer', 'laydate', 'upload', 'table', 'laytpl'], function ()
     //清空所有考生
     $(".clearAllStu_btn").click(function () {
         layer.confirm('确认清空此学生列表吗?', {icon: 3, title: '提示信息'}, function (index) {
-            $.post("/user/clear.do", function (data) {
+            $.post(projectName+"/user/clear.do", function (data) {
                 layer.msg(JSON.parse(data)['msg']);     //"清空成功!" from backend.
                 tableIns.reload();
                 layer.close(index);
@@ -211,7 +211,7 @@ layui.use(['form', 'layer', 'laydate', 'upload', 'table', 'laytpl'], function ()
             addNews(data);
         } else if (layEvent === 'del') { //删除
             layer.confirm('确定删除此学生？', {icon: 3, title: '提示信息'}, function (index) {
-                $.post("/user/delete-individual.do", {
+                $.post(projectName+"/user/delete-individual.do", {
                     stuId: data.id  //将需要删除的学生学号作为参数传入
                 }, function (data) {
                     tableIns.reload();
@@ -225,7 +225,7 @@ layui.use(['form', 'layer', 'laydate', 'upload', 'table', 'laytpl'], function ()
         } else if (layEvent === "modify") { //预览
               console.log(12312);
             layer.confirm('确认重置考生状态吗？', {icon: 3, title: '提示信息'}, function (index) {
-                $.post("/user//modify.do", {
+                $.post(projectName+"/user//modify.do", {
                     stu_no: data.studentNo  //将需要删除的学生学号作为参数传入
                 }, function (data) {
                     if (data == 1) {

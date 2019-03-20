@@ -69,7 +69,7 @@
 				{
 					"title": "管理员列表",
 					"icon": "&#xe61c;",
-					"href": "/page/user/userList.html",
+					"href": "page/user/userList.html",
 					"spread": false
 				}
 			]

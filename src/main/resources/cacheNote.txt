@@ -20,5 +20,9 @@ session:
     private static final String[] IGNORE_URI = {"/login.do"};
     private static final String php_Address="http://172.20.253.19/core/default.php?from=iframe";
 
+package:
+    db的url应为27，测试应为19
+    login的登录验证
+
 
 

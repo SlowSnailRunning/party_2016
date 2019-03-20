@@ -6,6 +6,7 @@
     <version>0.0.1-SNAPSHOT</version>
     <packaging>war</packaging>
 
+
     <properties>
         <!-- spring版本号 -->
         <spring.version>4.3.9.RELEASE</spring.version>
@@ -282,5 +283,6 @@
                 <filtering>false</filtering>
             </resource>
         </resources>
+        <finalName>party</finalName>
     </build>
 </project>

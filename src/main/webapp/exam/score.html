@@ -42,7 +42,7 @@
         //渲染表格
         table.render({
             elem: '#LAY_table_user'
-            , url: '/examinee/getScore.do'
+            , url: projectName+'/examinee/getScore.do'
             , size: 'sm'
             , heigth: "full-500"
             , cols: [[
@@ -73,12 +73,12 @@
                 if (res.makeUpBtn == 1) {
                     $("#endExam").val("参加补考");
                     $("#endExam").click(function () {
-                        window.location.href = "/loginSuccess.do";
+                        window.location.href = projectName+"/loginSuccess.do";
                     });
                 } else {
                     $("#endExam").val("退出");
                     $("#endExam").click(function () {
-                        $.post("/user/logout.do", {}, function (data) {
+                        $.post(projectName+"/user/logout.do", {}, function (data) {
                             window.location.href = data.replace(/"/g, "");
                         });
                     });

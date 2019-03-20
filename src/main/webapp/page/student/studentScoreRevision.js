@@ -10,7 +10,7 @@ layui.use(['form', 'layer', 'layedit', 'laydate', 'upload'], function () {
     //监听提交
     //signAdd为提交按钮的id
     form.on('submit(signAdd)', function (data) {
-        $.post("/user/add-update.do", data.field,
+        $.post(projectName+"/user/add-update.do", data.field,
             function (data) {
                 if (data.status === 200) {
                     layer.msg(data['msg']);

@@ -284,7 +284,7 @@
     function submitExam() {
         $.ajax({
             type: "get",
-            url: "/examinee/updateEndTime.do",
+            url: projectName+"/examinee/updateEndTime.do",
             async: false,
             dataType: "json",
             success: function (res) {
@@ -310,7 +310,7 @@
         $.ajax({
             type: "get",
             dataType: "json",
-            url: "/examinee/allQuestionInfoForStu.do",
+            url: projectName+"/examinee/allQuestionInfoForStu.do",
             success: function (result) {
                 var msg = result;
                 console.log(msg);
@@ -519,7 +519,7 @@
                             //发送ajax将答案发送到后台
                             $.ajax({
                                 type: "POST",
-                                url: "/examinee/updateByQueId.do",
+                                url: projectName+"/examinee/updateByQueId.do",
                                 async: false,
                                 dataType: "json",
                                 data: {id: this.id, answer: this.value},
@@ -550,7 +550,7 @@
                             console.log(answer)
                             $.ajax({
                                 type: "POST",
-                                url: "/examinee/updateByQueId.do",
+                                url: projectName+"/examinee/updateByQueId.do",
                                 async: false,
                                 dataType: "json",
                                 data: {id: this.id, answer: answer},
@@ -696,7 +696,7 @@
 
                         $.ajax({
                             type: "POST",
-                            url: "/examinee/updateByQueId.do",
+                            url: projectName+"/examinee/updateByQueId.do",
                             async: false,
                             dataType: "json",
                             data: {id: this.id, answer: fillAnswer},
