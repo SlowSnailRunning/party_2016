@@ -13,10 +13,12 @@ public class Initia_par implements ServletContextListener {
     @Override
     public void contextInitialized(ServletContextEvent servletContextEvent) {
         ServletContext servletContext = servletContextEvent.getServletContext();
+        //正式
 //        servletContext.setAttribute("php_Address","https://my.cdcas.edu.cn/core/default.php?from=iframe");
 //        servletContext.setAttribute("php_login","https://my.cdcas.edu.cn");
-        servletContext.setAttribute("php_Address", "https://172.20.253.19/core/default.php?from=iframe");
-        servletContext.setAttribute("php_login", "https://172.20.253.19");
+        //19
+        servletContext.setAttribute("php_Address", "http://172.20.253.19/core/default.php?from=iframe");
+        servletContext.setAttribute("php_login", "http://172.20.253.19");
     }
 
 
