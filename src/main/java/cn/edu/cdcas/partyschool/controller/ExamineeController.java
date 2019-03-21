@@ -116,5 +116,14 @@ public class ExamineeController {
             return scoreInfo;
         }
     }
-
+    /**
+     *@Describe: 获取当前时间
+     *@Author Snail
+     *@Date 2019/3/21
+     */
+    @RequestMapping("/currentTime")
+    @ResponseBody
+    public String getCurrentTime(){
+        return String.valueOf(System.currentTimeMillis());
+    }
 }

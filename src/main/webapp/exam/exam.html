@@ -46,6 +46,18 @@
     </style>
 
 </head>
+<script >
+    var currentTime;
+    $(document).ready(function () {
+        $.post(projectName+"/examinee/currentTime.do",
+            function (data) {
+                console.log(data);
+                currentTime=data;
+            },
+            "text"
+        );
+    });
+</script>
 <body oncontextmenu = "return false" >
 <div align="center" style="background-color: White">
     <img src="images/logo.png"/>
@@ -783,6 +795,7 @@
 <script type="application/javascript">
     var timeId = window.setInterval(sessionTimeout, 1000);
     var flag = 0;
+
     //倒计时
     function sessionTimeout() {
         // var examStartTime;
@@ -792,7 +805,9 @@
         if (flag == 0) {
             console.log( examTime * 60);
             //剩余秒数
-            window.second1 = examTime * 60 - Math.ceil((new Date().getTime() - examStartTime) / 1000);
+            // window.second1 = examTime * 60 - Math.ceil((new Date().getTime() - examStartTime) / 1000);
+
+            window.second1 = examTime * 60 - Math.ceil((currentTime - examStartTime) / 1000);
             flag=1;
         }
         --window.second1;
