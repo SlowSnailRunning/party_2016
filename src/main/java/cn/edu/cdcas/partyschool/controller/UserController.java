@@ -223,7 +223,7 @@ public class UserController {
         return userService.dimQueryMangerByName(name);
     }
 
-    @RequestMapping(value = "/logout", method = RequestMethod.POST)
+    @RequestMapping(value = "/logout")
     public String logout(HttpSession httpSession) {
         //session過期，銷毀map中的session;
         String studentNo = (String) httpSession.getAttribute("studentNo");
