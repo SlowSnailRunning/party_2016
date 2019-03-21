@@ -102,6 +102,7 @@ public class LoginController {
         try {
 //			UserSession userSession=(UserSession)httpSession.getAttribute("partySys_user");
             String type = (String) httpSession.getAttribute("type");
+			System.out.println("--------------------"+type);
             if ("student".equals(type)) {
 				boolean isOverTime = userServiceImpl.isOvertime((String) httpSession.getAttribute("studentNo"));
 				if (httpSession.getAttribute("dan") == null || httpSession.getAttribute("duo") == null) {
@@ -128,7 +129,9 @@ public class LoginController {
 					}
 				}
 			}else if("ROOT".equals(type)||"manger".equals(type)){
-				return "redirect:/index.html";
+				System.out.println(type);
+				//return "redirect:/exam/accept.html";
+            	return "redirect:/index.html";
 			}else {
 				throw  new Exception("非法登录方式！！");
 			}
