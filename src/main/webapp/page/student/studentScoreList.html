@@ -40,7 +40,7 @@
             </div>
 
             <div class="layui-inline">
-                <a class="layui-btn layui-btn-normal" href="/user/download-score.do">
+                <a class="layui-btn layui-btn-normal" href="#" id="url">
                     <i class="layui-icon" style="font-size:22px">&#xe601;</i>下载成绩单
                 </a>
             </div>
@@ -55,6 +55,9 @@
     </script>
 </form>
 <script type="text/javascript" src="../../layui/layui.js"></script>
+<script>
+    document.getElementById("url").href=projectName+"/user/download-score.do";
+</script>
 <script type="text/javascript" src="studentScoreList.js"></script>
 </body>
 </html>
