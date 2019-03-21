@@ -248,7 +248,7 @@ public class UserServiceImpl implements UserService {
         //判断
         /*  String MD5 = DigestUtils.md5DigestAsHex((ip + token).getBytes());*/
         String MD5 = DigestUtils.md5DigestAsHex((ip + token).getBytes());
-        String redisMD5 = jedisClient.hget("party", token);
+        String redisMD5 = jedisClient.hget("party"+token, token);
         if (MD5.equals(redisMD5)) {
             return token;
         } else {
