@@ -23,7 +23,7 @@
 
             <div class="layui-col-md6 layui-col-xs8">
                 <!--the id of student in db.-->
-                <input type="text" class="layui-input layui-hide id" name="id">
+                <input type="text" class="layui-input layui-hide id" id="id" name="id">
                 <!--A text box that concealment the beginning and end of a exam, but it still needs to be used here.-->
                 <input type="text" name="examStartTime" id="examStartTimeId" class="layui-input layui-hide examStartTime" placeholder="yyyy-MM-dd HH:mm:ss" required
                        lay-verify="required">
@@ -40,9 +40,9 @@
             </div>
                 <div class="layui-col-md6 layui-col-xs3">
                     <div class="layui-form-item magt3">
-                        <label class="layui-form-label">考试时长(分):</label>
+                        <label class="layui-form-label">考试时长  (分钟):</label>
                         <div class="layui-input-block">
-                            <input type="text" name="examTime" class="layui-input examTime layui-disabled" disabled required lay-verify="required" placeholder="以分为单位">
+                            <input type="text" name="examTime" class="layui-input examTime"  required lay-verify="required">
                         </div>
                     </div>
                 </div>
@@ -53,7 +53,7 @@
                     <div class="layui-form-item magt3">
                         <label class="layui-form-label">开考-停考:</label>
                         <div class="layui-input-inline">
-                            <input type="text" name="examTimeRange" class="layui-input examTimeRange" id="examTimeRangeId" placeholder=" - ">
+                            <input type="text" name="examTimeRange" class="layui-input examTimeRange"  required lay-verify="required" id="examTimeRangeId" placeholder=" - ">
                         </div>
                     </div>
                 </div>
@@ -75,7 +75,7 @@
                     <div class="layui-form-item magt3">
                         <label class="layui-form-label">开闭卷:</label>
                         <div class="layui-input-block" lay-filter="selFilter">
-                            <select id="sel-openOrClose" name="openOrClose" class="layui-input openOrClose" lay-verify="required" >
+                            <select id="sel-openOrClose" name="openOrClose" class="layui-input openOrClose"  required lay-verify="required" >
                                 <option value="">请选择</option>
                                 <option value="0">闭卷</option>
                                 <option value="1">开卷</option>
@@ -87,7 +87,7 @@
                     <div class="layui-form-item magt3">
                         <label class="layui-form-label">能否补考:</label>
                         <div class="layui-input-block" lay-filter="selFilter">
-                            <select id="sel-isMakeup" name="isMakeup" class="layui-input isMakeup" lay-verify="required" >
+                            <select id="sel-isMakeup" name="isMakeup" class="layui-input isMakeup"  required lay-verify="required" >
                                 <option value="">请选择</option>
                                 <option value="0">不能补考</option>
                                 <option value="1">允许补考</option>

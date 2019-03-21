@@ -2,9 +2,115 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>score</title>
+    <title>成绩页面</title>
+    <meta name="renderer" content="webkit">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <link rel="shortcut icon" href="/images/favicon.ico">
+    <link rel="stylesheet" href="../layui/css/layui.css" media="all">
+    <!--<script type="text/javascript" src="../js/jquery-3.3.1.js"></script>-->
+    <script type="text/javascript" src="../layui/layui.js"></script>
 </head>
-<body>
-        score
+
+
+<body style="font-size:12px; width:100%; margin:auto;">
+<div style="height: 200px">
+    <div style="position:fixed; top:0px;left:0; width:100%; font-size:20px;color:red;font-family:宋体;text-align:center;margin-top:10px;margin-bottom:-8px;">
+        <img src="images/logo.png"/><br>
+        考试:<b id="examName"></b>
+        &nbsp;&nbsp;&nbsp;&nbsp;分数:<b id="score"></b>
+        &nbsp;&nbsp;&nbsp;&nbsp;姓名:<b id="studentName"></b>
+        &nbsp;&nbsp;&nbsp;&nbsp;学号:<b id="studentNo"></b>
+        &nbsp;&nbsp;&nbsp;&nbsp;<input class="layui-btn layui-btn-radius layui-btn-danger" value="退出" id="endExam"
+                                       type="button"/>
+    </div>
+</div>
+<center>
+    <div style="overflow: scroll;height: 650px">
+        <table class="layui-hide" id="LAY_table_user" lay-filter="demo" style="font-size: 10px;width: 100%;"></table>
+    </div>
+</center>
+<div class="layui-footer footer">
+    <center>
+        <a><p style="cursor: pointer" id="about">关于我们</p></a>
+    </center>
+</div>
+<script>
+    layui.use(['table', 'jquery'], function () {
+        var table = layui.table;
+        var $ = layui.jquery;
+        //渲染表格
+        table.render({
+            elem: '#LAY_table_user'
+            , url: projectName+'/examinee/getScore.do'
+            , size: 'sm'
+            , heigth: "full-500"
+            , cols: [[
+                {field: 'unmber', title: '序号', width: 40, type: "numbers"}
+                , {field: 'intro', title: '题干', width: 450}
+                , {field: 'optionA', title: '选项A', width: 150}
+                , {field: 'optionB', title: '选项B', width: 150}
+                , {field: 'optionC', title: '选项C', width: 150}
+                , {field: 'optionD', title: '选项D', width: 150}
+                // , {field: 'result', title: '正确答案', width: 80}
+                , {field: 'answer', title: '答案', width: 60}
+                , {
+                    title: '结果', width: 60, templet: function (data) {
+                        if (data.result == data.selected) {
+                            return '<i class="layui-icon" style="color: red">&#xe605;</i>';
+                        } else {
+                            return '<i class="layui-icon">&#x1006;</i>';
+                        }
+                    }
+                }
+            ]]
+            , id: 'testReload'
+            , done: function (res) {
+                $("#studentName").text(res.studentName);
+                $("#studentNo").text(res.studentNo);
+                $("#examName").text(res.examName);
+                $("#score").text(res.examScore);
+                if (res.makeUpBtn == 1) {
+                    $("#endExam").val("参加补考");
+                    $("#endExam").click(function () {
+                        window.location.href = projectName+"/loginSuccess.do";
+                    });
+                } else {
+                    $("#endExam").val("退出");
+                    $("#endExam").click(function () {
+                        $.post(projectName+"/user/logout.do", {}, function (data) {
+                            window.location.href = data.replace(/"/g, "");
+                        });
+                    });
+                }
+            }
+        });
+//end表格渲染
+        //监听工具条	结束
+        $("#about").click(function () {
+            layer.open({
+                type: 2,
+                title: "关于开发团队",
+                shadeClose: true,
+                shade: [0.8, '#393D49'],
+                shadeClose: false, //开启遮罩关闭
+                maxmin: false, //开启最大化最小化按钮
+                area: ['800px', '530px'],
+                content: '../about.html'
+                // });
+                //   }
+            });
+        });
+
+
+    });
+
+    //防止页面后退
+    history.pushState(null, null, document.URL);
+    window.addEventListener('popstate', function () {
+        history.pushState(null, null, document.URL);
+    });
+</script>
+
 </body>
 </html>

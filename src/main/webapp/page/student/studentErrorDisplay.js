@@ -10,7 +10,7 @@ layui.use(['form', 'layer', 'layedit', 'laydate', 'table', 'upload'], function (
 
     var tableIns = table.render({
         elem: '#wrongQuesDisplayList',
-        url: '/answer/displayError.do',
+        url: projectName+'/answer/displayError.do',
         cellMinWidth: 80,
         page: true,
         height: "full",

@@ -10,10 +10,9 @@
 	<meta name="apple-mobile-web-app-status-bar-style" content="black">
 	<meta name="apple-mobile-web-app-capable" content="yes">
 	<meta name="format-detection" content="telephone=no">
-	<link rel="icon" href="favicon---image---.ico">
+	<link rel="icon" href="images/favicon.ico">
 	<link rel="stylesheet" href="layui/css/layui.css" media="all" />
 	<link rel="stylesheet" href="css/index.css" media="all" />
-
 	<style>
 		.icon-caidan:before {
 			content: "\e606";
@@ -45,7 +44,7 @@
 		<div class="layui-header header">
 			<div class="layui-main mag0" style="text-align:center;">
 				<a href="#" class="logo">党务</a>
-				<span style="color: #fff;font-size: 18px;">成都文理学院党务考试后台管理系统</span>
+				<span style="color: #fff;font-size: 18px;">成都文理学院党务考试管理系统</span>
 				<!-- 显示/隐藏菜单 -->
 				<a href="javascript:;" class="seraph hideMenu icon-caidan"></a>
 			    <!-- 顶部右侧菜单 -->
@@ -62,26 +61,27 @@
 		<!-- 左侧导航 -->
 		<div class="layui-side layui-bg-black">
 			<div class="user-photo">
-				<a class="img" title="我的头像" ><img src="images/favicon.ico" class="userAvatar"></a>
+				<a class="img" ><img src="images/favicon.ico" class="userAvatar"></a>
 				<p>你好！<span class="userName" id="userName"></span>, 欢迎登录</p>
 			</div>
 			<!-- 搜索 -->
 			<div class="layui-form component">
-				<i class="layui-icon">&#xe615;</i>
+				<!--<i class="layui-icon">&#xe615;</i>-->
 			</div>
 			<div class="navBar layui-side-scroll" id="navBar">
 				<ul class="layui-nav layui-nav-tree">
-					<li class="layui-nav-item layui-this">
-						<a href="javascript:;" data-url="page/main.html"><i class="layui-icon" data-icon=""></i><cite>后台首页</cite></a>
-					</li>
+					<!--<li class="layui-nav-item layui-this">
+						&lt;!&ndash;<a href="javascript:;" data-url="page/exam/examCurrent.html"><i class="layui-icon" data-icon=""></i><cite>后台33w3242342333</cite></a>&ndash;&gt;
+					</li>-->
 				</ul>
 			</div>
+
 		</div>
 		<!-- 右侧内容 -->
 		<div class="layui-body layui-form">
 			<div class="layui-tab mag0" lay-filter="bodyTab" id="top_tabs_box">
 				<ul class="layui-tab-title top_tab" id="top_tabs">
-					<li class="layui-this" lay-id=""><i class="layui-icon">&#xe68e;</i> <cite>后台首页</cite></li>
+					<li class="layui-this" lay-id=""><i class="layui-icon">&#xe68e;</i> <cite>成绩查询</cite></li>
 				</ul>
 				<ul class="layui-nav closeBox">
 				  <li class="layui-nav-item">
@@ -95,25 +95,43 @@
 				</ul>
 				<div class="layui-tab-content clildFrame">
 					<div class="layui-tab-item layui-show">
-						<iframe src="page/main.html"></iframe>
+						<iframe src="page/student/studentScoreList.html"></iframe>
 					</div>
 				</div>
 			</div>
 		</div>
 		<!-- 底部 -->
 		<div class="layui-footer footer">
-			<p><span>copyright @成都文理党务考试</span>
+			<a> <p style="cursor: pointer" id="about">关于我们</p></a>
 		</div>
 	</div>
-
 	<!-- 移动导航 -->
 	<div class="site-tree-mobile"><i class="layui-icon">&#xe602;</i></div>
 	<div class="site-mobile-shade"></div>
 	<script type="text/javascript" src="layui/layui.js"></script>
-	<script src="/js/jquery-3.3.1.js"></script>
+	<script src="/party/js/jquery-3.3.1.js"></script>
 	<script type="text/javascript" src="js/index.js"></script>
 	<script type="text/javascript" src="js/cache.js"></script>
 
+<script>
+	$("#about").click(function () {
+			layer.open({
+				type: 2,
+				title: "关于开发团队",
+				shadeClose: true,
+
+				shade: [0.8, '#393D49'],
+				shadeClose: false, //开启遮罩关闭
+				maxmin: false, //开启最大化最小化按钮
+				area: ['800px', '530px'],
+				content: 'about.html'
+				// });
+				//   }
+			});
+	});
+
+
+</script>
 
 </body>
 </html>

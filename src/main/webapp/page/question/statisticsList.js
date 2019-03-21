@@ -3,7 +3,7 @@ layui.use('table', function () {
     var loading = layer.load();
     table.render({
         elem: '#test'
-        , url: '/statisticsCorrect.do'
+        , url: projectName+'/statisticsCorrect.do'
         , toolbar: '#toolbarDemo'
         , title: '考试分析数据'
         , limit: 10
@@ -46,7 +46,7 @@ layui.use('table', function () {
         var data = obj.data;
         if (data.type == "单选" || data.type == "多选") {
             if (obj.event === 'look') {
-                $.post('/getQuestion.do?question_id=' + data.id, {}, function (str) {
+                $.post(projectName+'/getQuestion.do?question_id=' + data.id, {}, function (str) {
                     var obj = JSON.parse(str);
                     var question = "<br><font size='3.5' color='#2F4056'>optionA:&#8195" + obj.optionA + "<br><br>optionB:&#8195" + obj.optionB + "<br><br>optionC:&#8195" + obj.optionC + "<br><br>optionD:&#8195" + obj.optionD + "<font>";
                     layer.open({

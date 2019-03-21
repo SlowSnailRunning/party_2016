@@ -14,6 +14,9 @@
         <result column="correct" jdbcType="INTEGER" property="correct"/>
         <result column="selected" jdbcType="INTEGER" property="selected"/>
     </resultMap>
+    <resultMap id="ResultMap" type="cn.edu.cdcas.partyschool.model.errorQue" extends="BaseResultMap">
+       <result column="answer" property="answer"></result>
+    </resultMap>
     <sql id="Base_Column_List">
         id,
         `state`,
@@ -214,5 +217,10 @@
     </select>
     <select id="selectEffectiveQueId" resultType="string">
         SELECT id FROM party_question WHERE `state`='checked'
+    </select>
+    <select id="selectErrorQue" resultMap="ResultMap">
+        SELECT que.intro,que.option_a ,que.option_b,que.option_c,que.option_d,que.type,que.result,ans.answer FROM party_answer AS ans
+        LEFT JOIN party_question AS que ON ans.question_id=que.id
+        WHERE student_no=#{student_no} AND (score=0 OR score IS NULL)
     </select>
 </mapper>

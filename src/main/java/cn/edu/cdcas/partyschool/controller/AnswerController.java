@@ -19,13 +19,13 @@ import java.util.Map;
 public class AnswerController {
     @Resource
     private AnswerService answerService;
-
     @RequestMapping("/displayError")
     public JSONTableResult displayWrongAnswer(@RequestParam(value = "stuNo", required = false) String stuNo,
                                               @RequestParam(value = "page", required = false) int page, @RequestParam(value = "limit", required = false) int limit) {
         List<Answer> answers = answerService.queryAnswerByStuNo(stuNo, (page - 1) * limit, limit);
         List<Map<String, Object>> data = new ArrayList<>();
         answers.forEach(answer -> {
+
             Question question = answer.getQuestion();
             Map<String, Object> map = new HashMap<>();
             String intro = question.getIntro(), content = "", type = "";
@@ -55,6 +55,8 @@ public class AnswerController {
                 case 4:
                     type = "填空题";
                     break;
+
+
                 case 5:
                     type = "解答题";
                     break;

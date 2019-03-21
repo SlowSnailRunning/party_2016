@@ -3,16 +3,10 @@ package cn.edu.cdcas.partyschool.controller;
 import cn.edu.cdcas.partyschool.listener.UniqueSession;
 import cn.edu.cdcas.partyschool.model.Exam;
 import cn.edu.cdcas.partyschool.service.ExamService;
-import cn.edu.cdcas.partyschool.service.QuestionService;
 import cn.edu.cdcas.partyschool.util.JSONResult;
-import org.mybatis.spring.annotation.MapperScan;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
-import javax.annotation.Resource;
 import java.util.Map;
 
 /**
@@ -61,6 +55,15 @@ public class ExamController {
         return map;
     }
 
+
+    /**
+     * @Describe: 通过id查询
+     */
+    @RequestMapping("/findExamById")
+    private Exam findExamById(@RequestParam("id") Integer  id) throws Exception {
+        return examService.findExamById(id);
+    }
+
     /**
      * @Describe: 新增或更新一个考试
      */
@@ -75,6 +78,64 @@ public class ExamController {
     }
 
     /**
+     * @Describe: 开启考试（更新考试开考为现在,考试时长不变）
+     */
+   /* @RequestMapping("/updateTimeRangeById")
+    public JSONResult updateTimeRangeById(Exam exam) throws Exception{
+        if(exam.getId()!=null){
+           examService.updateTimeRangeById(exam);
+           return new JSONResult(0, "开启考试成功！", 200);
+        }
+        return new JSONResult(3, "开启考试失败！", 500);
+    }*/
+    /**
+     * @Describe: 更新考试开考为现在
+     */
+    @RequestMapping("/updateStartTime")
+    public JSONResult updateStartTime(@RequestParam("id") Integer  id) throws Exception{
+        if(id>0){
+            examService.updateStartTime(id);
+
+            return new JSONResult(0, "开启考试成功！", 200);
+        }
+        return new JSONResult(3, "开启考试失败！", 500);
+    }
+
+
+    /**
+     * @Describe: 更新考试停考为现在
+     */
+    @RequestMapping("/updateEndTime")
+    public JSONResult updateEndTime(@RequestParam("id") Integer  id) {
+        try {
+            if(examService.updateEndTime(id)==0){
+                return new JSONResult(3, "数据库修改失败，停止考试失败！", 500);
+            }
+
+
+            return new JSONResult(0, "停止考试成功！", 200);
+        } catch (Exception e) {
+            e.printStackTrace();
+            return new JSONResult(3, "停止考试失败！", 500);
+        }
+    }
+
+/*    @RequestMapping("/endNowExam")
+    @ResponseBody
+    public int endNowExam(){
+        try {
+            if(examService.endNowExam()){
+                return 0;
+            }else {
+                return -1;
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+            return -1;
+        }
+    }*/
+
+    /**
      * @Describe: 查询指定时间段内是否有其他考试（此版本系统同一时间段内只能有一个考试）
      */
     @RequestMapping("/queryAppointTimeQuantum")
@@ -85,6 +146,21 @@ public class ExamController {
             return result;
         }
         return -1;
+    }
+
+    /**
+     * @Describe: 根据id查询此id对应的时间段内是否有其他考试
+     */
+    @RequestMapping("/queryAppointTimeQuantumById")
+    public JSONResult queryAppointTimeQuantumById(@RequestParam("id") Integer  id) throws Exception{
+
+        int result = examService.queryAppointTimeQuantumById(id);
+        if(result==0){
+            return new JSONResult(0,"此时间段没其他考试",200);
+        }else{
+            return new JSONResult(3,"此时间段存在其他考试",500);
+        }
+
     }
 
 

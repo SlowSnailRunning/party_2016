@@ -9,7 +9,7 @@ layui.use(['bodyTab', 'form', 'element', 'layer', 'jquery'], function () {
         element = layui.element;
     $ = layui.$;
     $(function () {
-        $.getJSON('/user/getFiled.do', function (data) {
+        $.getJSON(projectName+'/user/getFiled.do', function (data) {
             $("#userName").text(data);
         });
     });
@@ -19,7 +19,7 @@ layui.use(['bodyTab', 'form', 'element', 'layer', 'jquery'], function () {
         layer.msg("请到统一身份认证系统修改密码！！！",{time:2000});
     });
     $("#signOut").click(function () {
-        $.post("user/logout.do", {}, function (data) {
+        $.post(projectName+"/user/logout.do", {}, function (data) {
             window.location.href = data.replace(/"/g, "");
         });
     });
@@ -33,10 +33,10 @@ layui.use(['bodyTab', 'form', 'element', 'layer', 'jquery'], function () {
         $.getJSON(tab.tabConfig.url, function (data) {
             if (json == "contentManagement") {
                 dataStr = data.contentManagement;
-                $.post("/user/MangerAuthority.do", {}, function (data) {
+                $.post(projectName+"/user/MangerAuthority.do", {}, function (data) {
                     var data = JSON.parse(data);
                     if (data.code == 1) {//无权限
-                        dataStr.remove(3);//删除
+                        dataStr.splice(3,1);
                     }
                     tab.render(); //重新渲染左侧菜单
                 });
@@ -158,42 +158,3 @@ layui.use(['bodyTab', 'form', 'element', 'layer', 'jquery'], function () {
 function addTab(_this) {
     tab.tabAdd(_this);
 }
-//捐赠弹窗
-/*function donation() {
-    layer.tab({
-        area: ['260px', '367px'],
-        tab: [{
-            title: "微信",
-            content: "<div style='padding:30px;overflow:hidden;background:#d2d0d0;'><img src='images/wechat.jpg'></div>"
-        }, {
-            title: "支付宝",
-            content: "<div style='padding:30px;overflow:hidden;background:#d2d0d0;'><img src='images/alipay.jpg'></div>"
-        }]
-    })
-}*/
-//图片管理弹窗
-/*
-function showImg() {
-    $.getJSON('json/images.json', function (json) {
-        var res = json;
-        layer.photos({
-            photos: res,
-            anim: 5
-        });
-    });
-}
-*/
-
-//删除数组中的元素，用作超级管理员权限的控制
-/*
-Array.prototype.remove = function (dx) {
-    if (isNaN(dx) || dx > this.length) {
-        return false;
-    }
-    for (var i = 0, n = 0; i < this.length; i++) {
-        if (this[i] != this[dx]) {
-            this[n++] = this[i]
-        }
-    }
-    this.length -= 1
-}*/

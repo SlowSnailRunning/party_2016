@@ -460,10 +460,20 @@
     <select id="findAnswer" resultType="string">
         SELECT answer FROM party_answer WHERE student_no=#{student_no} AND exam_id=#{exam_id} AND question_id=#{question_id} AND is_make_up=#{is_make_up}
     </select>
+    <select id="getStuScores"  resultType="java.lang.Float">
+       SELECT SUM(score) AS scores FROM party_answer WHERE exam_id=#{exam_id} AND is_make_up=#{is_make_up} AND student_no=#{student_no}
+    </select>
+
     <update id="updateExamStartEnd">
-        update party_user set exam_end=CURRENT_TIMESTAMP when student_no=#{student_no}
+         update party_user set exam_end=CURRENT_TIMESTAMP,exam_score=#{score},exam_state=(IF (exam_score>=#{pass_score},'2','3')) WHERE student_no=#{student_no}
     </update>
     <update id="updateMakeUpEnd">
-        update party_user set make_up_end=CURRENT_TIMESTAMP when student_no=#{student_no}
+         update party_user set make_up_end=CURRENT_TIMESTAMP,make_up_score=#{score},exam_state=(IF (make_up_score>=#{pass_score},'5','6')) WHERE student_no=#{student_no}
+    </update>
+    <update id="updateAnswer" >
+        update party_answer set answer=#{answer},score=#{score} where student_no=#{student_no} and is_make_up=#{is_make_up} and question_id=#{que_id}
+    </update>
+    <update id="modify" parameterType="java.lang.String">
+      UPDATE party_user SET exam_state = 0, exam_start = NULL, exam_end = NULL, exam_score = NULL, make_up_end = NULL, make_up_start = NULL, make_up_score = NULL WHERE student_no =#{stu_no}
     </update>
 </mapper>

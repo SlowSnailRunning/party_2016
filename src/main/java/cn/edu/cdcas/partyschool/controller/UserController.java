@@ -1,5 +1,6 @@
 package cn.edu.cdcas.partyschool.controller;
 
+import cn.edu.cdcas.partyschool.listener.UniqueSession;
 import cn.edu.cdcas.partyschool.model.User;
 import cn.edu.cdcas.partyschool.service.UserService;
 import cn.edu.cdcas.partyschool.util.ExcelUtil;
@@ -37,14 +38,22 @@ public class UserController {
     /**
      * upload the list of student attending exam in a excel.
      *
-     * @param file
+     * @param
      * @return
      */
+    @RequestMapping("/getStuScores")
+    public Float getStuScores(String studentNo, String isMakeUp, Integer examId) {
+        return userService.getStuScores(studentNo, isMakeUp, examId);
+    }
+
     @RequestMapping("/upload")
-    public JSONResult upload(@RequestParam("file") MultipartFile file) {
-        if (!userService.isEmpty()) {
-            return new JSONResult(1, "导入前请清空学生列表!", 404);
-        }
+    public JSONResult upload(@RequestParam("file") MultipartFile file, @RequestParam("type") Integer type) {
+        if (file == null) return new JSONResult(0, "用户未选择文件", 200);
+//        if (!userService.isEmpty()) {
+//            return new JSONResult(1, "导入前请清空学生列表!", 200);
+//        }
+        // 0:cover, 1:append
+        if (type == 0) userService.clear();
         ExcelUtil excelUtil = new ExcelUtil();
         Map<Integer, List<String>> map = null;
         User user = new User();
@@ -59,13 +68,14 @@ public class UserController {
                     user.setName(value.get(4));
                     user.setStudentNo(value.get(5));
                     user.setPartyNumber(value.get(6));
+
+
                     userService.insertSelective(user);
                 }
             });
         } catch (IOException e) {
-            return new JSONResult(1, e.getMessage(), 404);
+            return new JSONResult(0, "请检查表格数据格式是否正确", 200);
         }
-
         return new JSONResult(0, "考生导入成功!", 200);
     }
 
@@ -147,6 +157,13 @@ public class UserController {
         return new JSONResult(0, "删除成功!", 200);
     }
 
+
+    //重置考生考试状态
+    @RequestMapping(value = "modify", method = RequestMethod.POST)
+    public int modify(String stu_no) {
+        return userService.modify(stu_no);
+    }
+
     /**
      * @param stuId the array of student numbers to be deleted.
      * @return
@@ -206,15 +223,18 @@ public class UserController {
         return userService.dimQueryMangerByName(name);
     }
 
-    @RequestMapping(value = "/logout",method =RequestMethod.POST)
+    @RequestMapping(value = "/logout")
     public String logout(HttpSession httpSession) {
+        //session過期，銷毀map中的session;
+        String studentNo = (String) httpSession.getAttribute("studentNo");
+        UniqueSession.sessionMap.remove(studentNo);
         httpSession.invalidate();
         return (String) httpSession.getServletContext().getAttribute("php_login");
     }
 
-    @RequestMapping(value = "/getFiled",method =RequestMethod.GET)
+    @RequestMapping(value = "/getFiled", method = RequestMethod.GET)
     public String getFiled(HttpSession httpSession) throws Exception {
-        String stu_no=httpSession.getAttribute("studentNo").toString();
+        String stu_no = httpSession.getAttribute("studentNo").toString();
         User user = userService.queryByStuNo(stu_no);
         return user.getName();
     }

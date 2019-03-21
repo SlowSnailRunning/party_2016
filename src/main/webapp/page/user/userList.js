@@ -7,7 +7,7 @@ layui.use(['form', 'layer', 'table', 'laytpl'], function () {
     //用户列表
     var tableIns = table.render({
         elem: '#userList',
-        url: '/user/allManger.do',
+        url: projectName+'/user/allManger.do',
         cellMinWidth: 95,
         page: true,
         height: "full-120",
@@ -35,7 +35,7 @@ layui.use(['form', 'layer', 'table', 'laytpl'], function () {
             var name = $(".searchVal").val();
             //执行重载
             table.reload('userListTable', {
-                url: '/user/dimQueryMangerByName.do',
+                url: projectName+'/user/dimQueryMangerByName.do',
                 method: 'get',
                 page: {curr: 1}, //重新从第 1 页开始
                 where: {name: name}//传入日期参数
@@ -67,7 +67,7 @@ layui.use(['form', 'layer', 'table', 'laytpl'], function () {
             content:"./userAdd.html",
             end:function () {
                 table.reload('userListTable', {
-                    url: '/user/allManger.do',
+                    url: projectName+'/user/allManger.do',
                     method: 'get',
                     page: {curr: 1}, //重新从第 1 页开始
                 });
@@ -103,7 +103,7 @@ layui.use(['form', 'layer', 'table', 'laytpl'], function () {
             } else {
 
                 layer.confirm('确定删除此用户？', {icon: 3, title: '提示信息'}, function (index) {
-                    $.post("/user/delete-individual.do", {
+                    $.post(projectName+"/user/delete-individual.do", {
                         stuId: data.id  //将需要删除的newsId作为参数传入
                     }, function (data) {
                         if (data.code != 0) {

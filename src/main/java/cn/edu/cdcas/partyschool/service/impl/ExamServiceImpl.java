@@ -3,6 +3,8 @@ package cn.edu.cdcas.partyschool.service.impl;
 import cn.edu.cdcas.partyschool.mapper.ExamMapper;
 import cn.edu.cdcas.partyschool.model.Exam;
 import cn.edu.cdcas.partyschool.service.ExamService;
+import cn.edu.cdcas.partyschool.util.impl.JedisClientSingle;
+import com.alibaba.fastjson.JSON;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -19,7 +21,8 @@ import java.util.Map;
 public class ExamServiceImpl implements ExamService {
     @Autowired
     private ExamMapper examMapper;
-
+    @Autowired
+    private JedisClientSingle jedisClient;
 
     /**
      *@Describe: 清空(删除)考试表
@@ -128,6 +131,54 @@ public class ExamServiceImpl implements ExamService {
         return map;
     }
 
+    /*@Override
+    public int updateTimeRangeById(Exam exam) throws Exception { return examMapper.updateTimeRangeById(exam) ; }*/
+
+    /**
+     *@Describe:结束考试，删除redis中的数据
+     *@Author Snail
+     *@Date 2019/3/16
+     */
+    /*@Override
+    public boolean endNowExam() throws Exception {
+        if(jedisClient.hexists("partySys2016", "nowExam")){
+            examMapper.updateEndTime(JSON.parseObject(jedisClient.hget("partySys2016", "nowExam"), Exam.class).getId());
+        }
+        jedisClient.del("partySys2016");
+
+        return true;
+    }*/
+    /**
+     *@Describe: 更新结束考试时间为现在
+     */
+    @Override
+    public Integer updateEndTime(Integer id) throws Exception {
+        if(jedisClient.hexists("partySys2016", "nowExam")){
+            examMapper.updateEndTime(JSON.parseObject(jedisClient.hget("partySys2016", "nowExam"), Exam.class).getId());
+        }
+        jedisClient.del("partySys2016");
+
+        return examMapper.updateEndTime(id);
+    }
+    /**
+     *@Describe: 更新开始考试时间为现在
+     */
+    @Override
+    public Integer updateStartTime(Integer id) throws Exception {
+//        jedisClient.hset("partySys2016", "nowExam", JSON.toJSONString(examMapper.queryCurrentExamInformation().get(0)));
+        return examMapper.updateStartTime(id);
+    }
+
+
+
+    /**
+     *@Describe: 通过考试id返回一个考试对象
+     */
+    @Override
+    public Exam findExamById(Integer id) throws Exception {
+        return examMapper.findExamById(id);
+    }
+
     /**
      *@Describe: 查找当前时段是否存在考试，返回考试id
      *
@@ -160,6 +211,11 @@ public class ExamServiceImpl implements ExamService {
 
     @Override
     public int queryAppointTimeQuantum(Exam exam) throws Exception { return examMapper.queryAppointTimeQuantum(exam); }
+
+    @Override
+    public int queryAppointTimeQuantumById(Integer id) throws Exception {
+        return examMapper.queryAppointTimeQuantumById(id);
+    }
 
 
 }

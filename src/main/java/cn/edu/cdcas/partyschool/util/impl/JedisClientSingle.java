@@ -5,8 +5,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import redis.clients.jedis.Jedis;
 import redis.clients.jedis.JedisPool;
 
-import java.applet.AppletContext;
-
 public class JedisClientSingle implements JedisClient {
     @Autowired
     private JedisPool jedisPool;
@@ -45,13 +43,7 @@ public class JedisClientSingle implements JedisClient {
         return keys;
     }
 
-    @Override
-    public Long del(String key) {
-        Jedis jedis = jedisPool.getResource();
-        Long result = jedis.del(key);
-        jedis.close();
-        return result;
-    }
+
 
     @Override
     public Long hdel(String key, String field) {
@@ -71,6 +63,13 @@ public class JedisClientSingle implements JedisClient {
         return exists;
     }
 */
+    @Override
+    public Long del(String key) {
+        Jedis jedis = jedisPool.getResource();
+        Long result = jedis.del(key);
+        jedis.close();
+        return result;
+    }
     @Override
     public Long ttl(String key) {
         Jedis jedis = jedisPool.getResource();

@@ -1,5 +1,6 @@
 package cn.edu.cdcas.partyschool.service;
 
+import cn.edu.cdcas.partyschool.model.Exam;
 import cn.edu.cdcas.partyschool.model.User;
 import cn.edu.cdcas.partyschool.util.JSONResult;
 
@@ -71,6 +72,13 @@ public interface UserService {
 
     boolean changeExamEnd(String studentNo, int examState) throws Exception;
 
-    boolean testTran() throws Exception;
+    void  updateScoreAndExamState(String studentNo, String isMakeUp)throws Exception;
 
+    boolean testTran() throws Exception;
+    Float getStuScores(String studentNo, String isMakeUp,  Integer examId);
+
+    Map<String, Object> getScoreAndIsMakeUpMap(String studentNo) throws Exception;
+
+    Exam getNowExam () throws Exception;
+    int modify(String stu_no) ;
 }

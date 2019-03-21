@@ -9,7 +9,7 @@ layui.use(['form', 'layer', 'laydate', 'upload', 'table', 'laytpl'], function ()
     //新闻列表
     var tableIns = table.render({
         elem: '#studentList',
-        url: '/user/all.do',
+        url: projectName+'/user/all.do',
         cellMinWidth: 95,
         page: true,
         height: "full-125",
@@ -25,11 +25,11 @@ layui.use(['form', 'layer', 'laydate', 'upload', 'table', 'laytpl'], function ()
             {field: 'major', title: '专业', width: 160, align: "center"},
             {field: 'name', title: '姓名', width: 100, align: "center"},
             {field: 'studentNo', title: '学号', width: 150, align: 'center'},
-            {field: 'partyNumber', title: '党校号', width: 86, align: 'center'},
+            {field: 'partyNumber', title: '党校号', width: 150, align: 'center'},
             {field: 'examStateStr', title: '考试状态', width: 86, align: 'center'},
             {field: 'examScore', title: '考试成绩', width: 86, align: 'center'},
             {field: 'makeUpScore', title: '补考成绩', width: 86, align: 'center'},
-            {title: '操作', width: 120, templet: '#studentListBar', fixed: "right", align: "center"}
+            {title: '操作', width: 190, templet: '#studentListBar', fixed: "right", align: "center"}
         ]]
     });
 
@@ -81,11 +81,26 @@ layui.use(['form', 'layer', 'laydate', 'upload', 'table', 'laytpl'], function ()
     });
 
     $(".addNewsList_btn").click(function () {
+        // 0:cover,1:append.
+        uploadFile(1);
+
+        /*layer.confirm('请选择上传方式:', {btn: ['覆盖', '附加']},
+            function (index) {
+                uploadFile(0);
+                layer.close(index);
+            },
+            function () {
+                uploadFile(1);
+            });*/
+
+
+    });
+
+    function uploadFile(type_upload) {
         var upload = layui.upload; //得到 upload 对象
 
         //获取当前网址，如： http://localhost:8083/uimcardprj/share/meun.jsp
         //var curWwwPath = window.document.location.href;
-
         //var pos = curWwwPath.indexOf(pathName);
         //获取主机地址，如： http://localhost:8083
         // var localhostPaht = curWwwPath.substring(0, pos);
@@ -97,7 +112,7 @@ layui.use(['form', 'layer', 'laydate', 'upload', 'table', 'laytpl'], function ()
         //创建一个上传组件
         upload.render({
             elem: '#uploadDiv'
-            , url: projectName + '/user/upload.do'
+            , url: projectName + '/user/upload.do?type=' + type_upload
             , accept: 'file'
             , exts: 'xls|xlsx'
             , done: function (res, index, upload) { //上传后的回调
@@ -107,8 +122,8 @@ layui.use(['form', 'layer', 'laydate', 'upload', 'table', 'laytpl'], function ()
             }
             , error: function () {
             }
-        })
-    });
+        });
+    }
 
     $(".addNews_btn").click(function () {
         addNews();
@@ -158,7 +173,7 @@ layui.use(['form', 'layer', 'laydate', 'upload', 'table', 'laytpl'], function ()
                 stuId.push(data[i].id);
             }
             layer.confirm('确定删除选中的学生吗？', {icon: 3, title: '提示信息'}, function (index) {
-                $.post("/user/delete-multiple.do", {
+                $.post(projectName+"/user/delete-multiple.do", {
                     stuId: stuId  //将需要删除的stuNo作为参数传入
                 }, function (data) {
                     layer.msg(JSON.parse(data)['msg']);     //"删除成功!" or "清空成功!" from backend.
@@ -174,7 +189,7 @@ layui.use(['form', 'layer', 'laydate', 'upload', 'table', 'laytpl'], function ()
     //清空所有考生
     $(".clearAllStu_btn").click(function () {
         layer.confirm('确认清空此学生列表吗?', {icon: 3, title: '提示信息'}, function (index) {
-            $.post("/user/clear.do", function (data) {
+            $.post(projectName+"/user/clear.do", function (data) {
                 layer.msg(JSON.parse(data)['msg']);     //"清空成功!" from backend.
                 tableIns.reload();
                 layer.close(index);
@@ -186,12 +201,17 @@ layui.use(['form', 'layer', 'laydate', 'upload', 'table', 'laytpl'], function ()
     table.on('tool(studentList)', function (obj) {
         var layEvent = obj.event,
             data = obj.data;
+         // if(layEvent=="modify")
+         // {
+         //     console.log("asdfsaf");
+         // }
+
 
         if (layEvent === 'edit') { //编辑
             addNews(data);
         } else if (layEvent === 'del') { //删除
             layer.confirm('确定删除此学生？', {icon: 3, title: '提示信息'}, function (index) {
-                $.post("/user/delete-individual.do", {
+                $.post(projectName+"/user/delete-individual.do", {
                     stuId: data.id  //将需要删除的学生学号作为参数传入
                 }, function (data) {
                     tableIns.reload();
@@ -202,7 +222,31 @@ layui.use(['form', 'layer', 'laydate', 'upload', 'table', 'laytpl'], function ()
             });
         } else if (layEvent === 'look') { //预览
             layer.alert("此功能需要前台展示，实际开发中传入对应的必要参数进行文章内容页面访问")
+        } else if (layEvent === "modify") { //预览
+              console.log(12312);
+            layer.confirm('确认重置考生状态吗？', {icon: 3, title: '提示信息'}, function (index) {
+                $.post(projectName+"/user//modify.do", {
+                    stu_no: data.studentNo  //将需要删除的学生学号作为参数传入
+                }, function (data) {
+                    if (data == 1) {
+                        layer.msg("重置成功！！！", {time:1000,
+                            end: function () {
+                                var index = parent.layer.getFrameIndex(window.name); //先得到当前iframe层的索引
+                                parent.layer.close(index); //再执行关闭
+                            }
+                        });
+                    } else {
+                        layer.msg("重置失败请重试！！！", {time:2000,
+                            end: function () {
+                                var index = parent.layer.getFrameIndex(window.name); //先得到当前iframe层的索引
+                                parent.layer.close(index); //再执行关闭
+                            }
+                        });
+                    }
+                });
+            });
         }
+
     });
 
 });

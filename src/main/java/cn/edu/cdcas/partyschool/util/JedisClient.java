@@ -11,7 +11,7 @@ import java.util.Set;
 public interface JedisClient {
 //    String set(String key,String value);
 //    String get(String key);
-//    Long del(String key);
+    Long del(String key);
 //
     long hset(String hkey,String key,String value);
     String hget(String hkey,String key);

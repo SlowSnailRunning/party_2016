@@ -41,11 +41,10 @@ public class ExcelUtil {
         int i = -1;
         while (rowIterator.hasNext()) {
             Row row = rowIterator.next();
-            Iterator<Cell> cellIterator = row.iterator();
             List<String> list = new ArrayList<>();
             int j = 0;
-            while (cellIterator.hasNext()) {
-                Cell cell = cellIterator.next();
+            for (int cellNum = 0; cellNum < colNum; cellNum++) {
+                Cell cell = row.getCell(cellNum, Row.MissingCellPolicy.CREATE_NULL_AS_BLANK);
                 cell.setCellType(CellType.STRING);
                 list.add(j++, cell.getStringCellValue());
                 if (j == colNum) break;

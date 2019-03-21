@@ -4,14 +4,14 @@ import cn.edu.cdcas.partyschool.model.Question;
 import cn.edu.cdcas.partyschool.service.QuestionService;
 import cn.edu.cdcas.partyschool.util.ExcelUtil;
 import cn.edu.cdcas.partyschool.util.JSONResult;
-import com.sun.org.glassfish.gmbal.ParameterNames;
-import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.annotation.Resource;
 import java.io.IOException;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 

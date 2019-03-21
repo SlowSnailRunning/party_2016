@@ -12,9 +12,13 @@ layui.use(['form','layer','layedit','laydate','upload'],function(){
         $('.label-zongfen').css("font-size","17px");
         $('.label-fen').css("font-size","17px");
         $('.examAllScore').css({"color":"blue","font-size":"19px"});
+      /*  console.log("1111111111111111111111111:"+$("input:hidden[name='id']").val());
+         console.log("2222222222222222222222:"+$("input:text[name='id']").val());*/
+
+
 
         /*根据所选时间段计算出该时间段的分差值*/
-        function TimeDifference(startTime,endTime)
+       /* function TimeDifference(startTime,endTime)
         {
             //定义两个变量time1,time2分别保存开始和结束时间
             var startTime=startTime;
@@ -22,7 +26,7 @@ layui.use(['form','layer','layedit','laydate','upload'],function(){
             //判断开始时间是否大于结束日期
             if(startTime>endTime)
             {
-                alert("开始时间不能大于结束时间！");
+                layui.alert("开始时间不能大于结束时间！",{icon: 5});
                 return false;
             }
             //截取字符串，得到日期部分"2009-12-02",用split把字符串分隔成数组
@@ -46,9 +50,10 @@ layui.use(['form','layer','layedit','laydate','upload'],function(){
             //将日期和时间两个部分计算出来的差值相加，即得到两个时间相减后的分钟数
             var minutes=m+n;
             return minutes;
-        }
+        }*/
+
         /*计算总分通过各个文本框中值的求和计算*/
-        function sum(){
+        function sum(ob){
         var radioNum = parseInt($('.radioNum').val());
         var radioScore = parseInt($('.radioScore').val());
         var radio=0;
@@ -83,26 +88,50 @@ layui.use(['form','layer','layedit','laydate','upload'],function(){
         var allScore = 0;
         if(radio!==''&&check!==''&&judge!==''&&fill!==''){
             allScore =  radio + check + judge + fill;
-            console.log("填0进入此if");
         }
         $('.examAllScore').text(allScore);
         return allScore;
     }
 
+        /*jQuery控制文本框只能输入数字[兼容IE、火狐等浏览器]*/
+        $.fn.numeral=function(bl){//限制分数输入、兼容浏览器、屏蔽粘贴拖拽等
+        $(this).keypress(function(e){
+            var keyCode=e.keyCode?e.keyCode:e.which;
+            if(bl){//浮点数
+                if((this.value.length==0 || this.value.indexOf(".")!=-1) && keyCode==46) return false;
+                return keyCode>=48&&keyCode<=57||keyCode==46||keyCode==8;
+            }else{//整数
+                return  keyCode>=48&&keyCode<=57||keyCode==8;
+            }
+        });
+        $(this).bind("copy cut paste", function (e) { // 通过空格连续添加复制、剪切、粘贴事件
+            if (window.clipboardData)//clipboardData.setData('text', clipboardData.getData('text').replace(/\D/g, ''));
+                return !clipboardData.getData('text').match(/\D/);
+            else
+                event.preventDefault();
+        });
+        $(this).bind("dragenter",function(){return false;});
+        $(this).css("ime-mode","disabled");
+        $(this).bind("focus", function() {
+            if (this.value.lastIndexOf(".") == (this.value.length - 1)) {
+                this.value = this.value.substr(0, this.value.length - 1);
+            } else if (isNaN(this.value)) {
+                this.value = "";
+            }
+        });
+    }
+
+
         /*引入jQuery-3.1后以下办法不能初始化（在谷歌浏览器）文本框，改用定时器处理*/
-    /* $('.examAllScore').text(sum());*/
+    /* $('.examAllScore').text(sumAndvalidate());*/
         window.setTimeout(sum,500);
-
-
         /*为需要参与计算总分的文本框设置键盘按键监听事件*/
-        $(".radioNum").keyup(sum);
-        $(".radioScore").keyup(sum);
-        $(".checkNum").keyup(sum);
-        $(".checkScore").keyup(sum);
-        $(".judgeNum").keyup(sum);
-        $(".judgeScore").keyup(sum);
-        $(".fillScore").keyup(sum);
-        $(".fillNum").keyup(sum);
+        $(".radioNum,.radioScore,.checkNum,.checkScore,.judgeNum,.judgeScore,.fillScore,.fillNum").keyup(sum);
+
+
+        $(".radioNum,.radioScore,.checkNum,.checkScore,.judgeNum,.judgeScore,.fillScore,.fillNum,.passScore,.examTime").numeral(false);//限制只能输入整数
+
+
 
 
     /* alert($('.examAllScore').text());*/
@@ -117,6 +146,9 @@ layui.use(['form','layer','layedit','laydate','upload'],function(){
                 console.log(endDate); //得结束的日期时间对象，开启范围选择（range: true）才会返回。对象成员同上。*/
                 var str=new String();
                 var arr=new Array();
+                var examId = parseInt($("input:text[name='id']").val()) ;
+               /* console.log("testtest 类型："+typeof examId +"  value:" + examId);*/
+
 
                 //可以用字符或字符串分割
                 arr=value.split(' - ');
@@ -140,39 +172,86 @@ layui.use(['form','layer','layedit','laydate','upload'],function(){
                 console.log($('.examEndTime').val());
             /*    alert($('.examEndTime').val());*/
                 //验证此时加入的时间段是否与数据库中各个考试的时间段冲突，冲突则禁止加入！
-                $.ajax({
-                    url : "/exam/queryAppointTimeQuantum.do",
-                    type : "post",
-                    data:{examStartTime:arr[0],examEndTime:arr[1]},
-                    dataType: "text",
-                    success : function(data){
-                       if(parseInt(data)===0) {
-                           $('.examTime').val(TimeDifference(arr[0],arr[1]));
-                       }
-                       else if(parseInt(data)>0){
-                           $('.examTime').val("");
-                           layer.alert("此时间段与数据库中某个时间段冲突！请重新选择");
-                       }
-                       else if(parseInt(data)===-1){
-                           $('.examTime').val("");
-                           layer.alert("时间段为空！请重新选择");
-                       }
-                    },
-                    fail:function(data){
-                        layer.alert("失败");
-                    },
-                    error: function (data) {
-                        layer.alert("系统错误");
-                    }
 
-                });
+                //为空（说明为新增）则加入
+                if(isNaN(examId)){
+                    $.ajax({
+                        url : projectName+"/exam/queryAppointTimeQuantum.do",
+                        type : "post",
+                        data:{examStartTime:arr[0],examEndTime:arr[1],id:-1},
+                        dataType: "text",
+                        success : function(data){
+                            if(parseInt(data)===0) {
+                                /*layer.alert("此时间段无考试，时间段已加入！");*/
+                            }
+                            else if(parseInt(data)>0){
+                                $('.examTimeRange').val("");
+                                $('.examStartTime').val("");
+                                $('.examEndTime').val("");
+                                layer.alert("此时间段与数据库中某个时间段冲突！请重新选择",{icon: 5});
+                            }
+                            else if(parseInt(data)===-1){
+                                $('.examTimeRange').val("");
+                                $('.examStartTime').val("");
+                                $('.examEndTime').val("");
+                                layer.alert("时间段为空！请重新选择",{icon: 5});
+                            }
+                        },
+                        fail:function(data){
+                            $('.examTimeRange').val("");
+                            $('.examStartTime').val("");
+                            $('.examEndTime').val("");
+                            layer.msg("失败");
+                        },
+                        error: function (data) {
+                            $('.examTimeRange').val("");
+                            $('.examStartTime').val("");
+                            $('.examEndTime').val("");
+                            layer.msg("错误");
+                        }
+
+                    });
+                }else{
+                    $.ajax({
+                        url : projectName+"/exam/queryAppointTimeQuantum.do",
+                        type : "post",
+                        data:{id:examId,examStartTime:arr[0],examEndTime:arr[1]},
+                        dataType: "text",
+                        success : function(data){
+                            if(parseInt(data)===0) {
+                                /*layer.alert("此时间段无考试，时间段已修改！");*/
+                            }
+                            else if(parseInt(data)>0){
+                                $('.examTimeRange').val("");
+                                $('.examStartTime').val("");
+                                $('.examEndTime').val("");
+                                layer.alert("此时间段与数据库中某个时间段冲突！请重新选择",{icon: 5});
+                            }
+                            else if(parseInt(data)===-1){
+                                $('.examTime').val("");
+                                layer.alert("时间段为空！请重新选择",{icon: 5});
+                            }
+                        },
+                        fail:function(data){
+                            $('.examTimeRange').val("");
+                            $('.examStartTime').val("");
+                            $('.examEndTime').val("");
+                            layer.msg("失败");
+                        },
+                        error: function (data) {
+                            $('.examTimeRange').val("");
+                            $('.examStartTime').val("");
+                            $('.examEndTime').val("");
+                            layer.msg("错误");
+                        }
+
+                    });
+                }
+
 
 
             }
         });
-
-
-
 
         //监听提交
         form.on('submit(signAdd)', function (data) {
@@ -180,7 +259,7 @@ layui.use(['form','layer','layedit','laydate','upload'],function(){
             // return;
             //signAdd为提交按钮的id
 
-            $.post("/exam/add-update.do", data.field,
+            $.post(projectName+"/exam/add-update.do", data.field,
                 function (data) {
                     if (data.status === 200) {
                         layer.msg(data['msg']);
@@ -198,93 +277,6 @@ layui.use(['form','layer','layedit','laydate','upload'],function(){
         });
 
 
-
-    //用于同步编辑器内容到textarea
-    layedit.sync(editIndex);
-
-    //上传缩略图
-    upload.render({
-        elem: '.thumbBox',
-        url: '../../json/userface.json',
-        method : "get",  //此处是为了演示之用，实际使用中请将此删除，默认用post方式提交
-        done: function(res, index, upload){
-            var num = parseInt(4*Math.random());  //生成0-4的随机数，随机显示一个头像信息
-            $('.thumbImg').attr('src',res.data[num].src);
-            $('.thumbBox').css("background","#fff");
-        }
-    });
-
-    //格式化时间
-    function filterTime(val){
-        if(val < 10){
-            return "0" + val;
-        }else{
-            return val;
-        }
-    }
-    //定时发布
-    var time = new Date();
-    var submitTime = time.getFullYear()+'-'+filterTime(time.getMonth()+1)+'-'+filterTime(time.getDate())+' '+filterTime(time.getHours())+':'+filterTime(time.getMinutes())+':'+filterTime(time.getSeconds());
-    laydate.render({
-        elem: '#release',
-        type: 'datetime',
-        trigger : "click",
-        done : function(value, date, endDate){
-            submitTime = value;
-        }
-    });
-    form.on("radio(release)",function(data){
-        if(data.elem.title == "定时发布"){
-            $(".releaseDate").removeClass("layui-hide");
-            $(".releaseDate #release").attr("lay-verify","required");
-        }else{
-            $(".releaseDate").addClass("layui-hide");
-            $(".releaseDate #release").removeAttr("lay-verify");
-            submitTime = time.getFullYear()+'-'+(time.getMonth()+1)+'-'+time.getDate()+' '+time.getHours()+':'+time.getMinutes()+':'+time.getSeconds();
-        }
-    });
-
-    form.verify({
-        newsName : function(val){
-            if(val == ''){
-                return "文章标题不能为空";
-            }
-        },
-        content : function(val){
-            if(val == ''){
-                return "文章内容不能为空";
-            }
-        }
-    })
-    form.on("submit(addNews)",function(data){
-        //截取文章内容中的一部分文字放入文章摘要
-        var abstract = layedit.getText(editIndex).substring(0,50);
-        //弹出loading
-        var index = top.layer.msg('数据提交中，请稍候',{icon: 16,time:false,shade:0.8});
-
-        setTimeout(function(){
-            top.layer.close(index);
-            top.layer.msg("文章添加成功！");
-            layer.closeAll("iframe");
-            //刷新父页面
-            parent.location.reload();
-        },500);
-        return false;
-    })
-
-    //预览
-    form.on("submit(look)",function(){
-        layer.alert("此功能需要前台展示，实际开发中传入对应的必要参数进行文章内容页面访问");
-        return false;
-    })
-
-    //创建一个编辑器
-    var editIndex = layedit.build('news_content',{
-        height : 535,
-        uploadImage : {
-            url : "../../json/newsImg.json"
-        }
-    });
 
 })
 

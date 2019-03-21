@@ -93,7 +93,7 @@
         form.on('submit(signAdd)', function (data) {
             // console.log(data.field);
             // return;
-            $.post("/user/add-update.do", data.field,
+            $.post(projectName+"/user/add-update.do", data.field,
                 function (data) {
                     if (data.status === 200) {
                         layer.msg(data['msg']);

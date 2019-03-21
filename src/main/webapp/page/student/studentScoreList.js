@@ -7,7 +7,7 @@ layui.use(['form', 'layer', 'table'], function () {
     //学生成绩表
     var tableIns = table.render({
         elem: '#studentScoreList',
-        url: '/user/all.do',
+        url: projectName+'/user/all.do',
         cellMinWidth: 95,
         page: true,
         height: "full-125",
@@ -21,7 +21,7 @@ layui.use(['form', 'layer', 'table'], function () {
             {field: 'studentNo', title: '学号', width: 150, align: 'center'},
             {field: 'examScore', title: '考试成绩', width: 86, align: 'center'},
             {field: 'makeUpScore', title: '补考成绩', width: 86, align: 'center'},
-            {field: 'partyNumber', title: '党校号', width: 86, align: 'center'},
+            {field: 'partyNumber', title: '党校号', width: 150, align: 'center'},
             {field: 'examStateStr', title: '考试状态', width: 86, align: 'center'},
             {field: 'major', title: '专业', width: 160, align: "center"},
             {field: 'department', title: '学院', width: 110, align: "center"},
