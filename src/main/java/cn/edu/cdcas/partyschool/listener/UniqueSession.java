@@ -25,9 +25,9 @@ public class UniqueSession implements HttpSessionAttributeListener {
         if (name.equals("studentNo")) {
             HttpSession nowSession = event.getSession();
             String studentNo = (String) nowSession.getAttribute("studentNo");
-
+// TODO: 2019/3/25 是否需要设置更新type ，同一个浏览器不能存在两个账号，混乱？？？
             HttpSession sessionInMap = sessionMap.get(studentNo == null ? 0 : studentNo);
-            if (sessionInMap != null) {
+            if (sessionInMap != null) {// TODO: 2019/3/25 排除管理员端的
                 //复制sessionMap中的session到现在的session
                 nowSession.setAttribute("examState", sessionInMap.getAttribute("examState"));
                 nowSession.setAttribute("dan", sessionInMap.getAttribute("dan"));

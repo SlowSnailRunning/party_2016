@@ -64,13 +64,13 @@ public class LoginController {
 							if (examState == 2 || examState == 5 || examState == 6) {//不可进入
 								flag = examState;
 							} else {//进入
-								flag = 10;//成功跳转
+								flag = 10;//学生端成功跳转
 								httpSession.setAttribute("studentNo", student_no);
 								httpSession.setAttribute("type", type);
 							}
 						} else {//不允许补考
 							if (examState == 0 || examState == 1) {//进入
-								flag = 10;
+								flag = 10;//学生端成功跳转
 								httpSession.setAttribute("studentNo", student_no);
 								httpSession.setAttribute("type", type);
 							} else {//不可进入
@@ -110,9 +110,12 @@ public class LoginController {
 					if(isOverTime){
 						//超时
 						return "redirect:/exam/score.html";
+					//	return "/exam/score";//不能使用转发，会导致资源找不到
 					}else {
 						httpSession.setAttribute("examState", userServiceImpl.queryByStuNo((String) httpSession.getAttribute("studentNo")).getExamState());
 //						httpSession.setAttribute(((User)userServiceImpl.queryByStuNo(userSession.getNumber())).getExamState());
+//						return "redirect:/exam/accept.html";
+						//	return "/exam/accept";
 						return "redirect:/exam/accept.html";
 					}
 				}else {
@@ -130,14 +133,15 @@ public class LoginController {
 				}
 			}else if("ROOT".equals(type)||"manger".equals(type)){
 				System.out.println(type);
-				//return "redirect:/exam/accept.html";
+		//		return "redirect:/exam/accept.html";
             	return "redirect:/index.html";
 			}else {
 				throw  new Exception("非法登录方式！！");
 			}
 		} catch (Exception e) {
 			e.printStackTrace();
-			return "redirect:/page/404.html";
+//			return "redirect:/page/404.html";
+			return "/page/404.html";
 		}
 	}
 }

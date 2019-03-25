@@ -804,9 +804,11 @@
         //剩余秒数
         if (flag == 0) {
             console.log( examTime * 60);
+
             //剩余秒数
             // window.second1 = examTime * 60 - Math.ceil((new Date().getTime() - examStartTime) / 1000);
-
+            console.log("currentTime:"+currentTime);
+            console.log("examStartTime"+examStartTime);
             window.second1 = examTime * 60 - Math.ceil((currentTime - examStartTime) / 1000);
             flag=1;
         }
