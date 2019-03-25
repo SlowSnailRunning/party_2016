@@ -248,7 +248,7 @@ public class UserServiceImpl implements UserService {
         //判断
         /*  String MD5 = DigestUtils.md5DigestAsHex((ip + token).getBytes());*/
         String MD5 = DigestUtils.md5DigestAsHex((ip + token).getBytes());
-        String redisMD5 = jedisClient.hget("party"+token, token);
+        String redisMD5 = jedisClient.hget("party" + token, token);
         if (MD5.equals(redisMD5)) {
             return token;
         } else {
@@ -576,8 +576,9 @@ public class UserServiceImpl implements UserService {
     public Map<String, Object> getScoreAndIsMakeUpMap(String studentNo) throws Exception {
         User user = userMapper.queryByStuNo(studentNo);
         Map<String, Object> scoreInfo = new HashMap<>();
+
         scoreInfo.put("code", 0);
-        scoreInfo.put("examScore", user.getExamScore());
+        scoreInfo.put("examScore", user.getMakeUpScore() == null || "".equals(user.getMakeUpScore()) ? user.getExamScore() : user.getMakeUpScore()/*user.getExamScore()*/);
         scoreInfo.put("makeUpScore", user.getMakeUpScore());
         //判断是否出现补考按钮0：不出现，1：出现
         int makeUpBtn = 0;
