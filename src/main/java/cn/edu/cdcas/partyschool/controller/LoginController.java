@@ -109,14 +109,14 @@ public class LoginController {
                     //从数据库获取exam_state
 					if(isOverTime){
 						//超时
-						return "redirect:https://my.cdcas.edu.cn/party/exam/score.html";
+//						return "redirect:https://my.cdcas.edu.cn/party/exam/score.html";
+						return "redirect:/exam/score.html";
 					//	return "/exam/score";//不能使用转发，会导致资源找不到
 					}else {
 						httpSession.setAttribute("examState", userServiceImpl.queryByStuNo((String) httpSession.getAttribute("studentNo")).getExamState());
 //						httpSession.setAttribute(((User)userServiceImpl.queryByStuNo(userSession.getNumber())).getExamState());
-//						return "redirect:/exam/accept.html";
-						//	return "/exam/accept";
-						return "redirect:https://my.cdcas.edu.cn/party/exam/accept.html";
+						return "redirect:/exam/accept.html";
+//						return "redirect:https://my.cdcas.edu.cn/party/exam/accept.html";
 					}
 				}else {
 					//非首次登录
@@ -124,24 +124,26 @@ public class LoginController {
 						//超时
 						//统计answer表中，该考生初/补考数据，写入到user表
 						//userServiceImpl.writeScoreForAnswer((String)httpSession.getAttribute("studentNo"),(String)httpSession.getAttribute("examState"));
-						return "redirect:https://my.cdcas.edu.cn/party/exam/score.html";
+//						return "redirect:https://my.cdcas.edu.cn/party/exam/score.html";
+						return "redirect:/exam/score.html";
 					}else {
 						//未超时
 						userServiceImpl.requiredQuestionAndOther(httpSession);
-						return "redirect:https://my.cdcas.edu.cn/party/exam/exam.html";
+//						return "redirect:https://my.cdcas.edu.cn/party/exam/exam.html";
+						return "redirect:/exam/exam.html";
 					}
 				}
 			}else if("ROOT".equals(type)||"manger".equals(type)){
 //				System.out.println(type);
-		//		return "redirect:/exam/accept.html";
-            	return "redirect:https://my.cdcas.edu.cn/party/index.html";
+				return "redirect:/index.html";
+//            	return "redirect:https://my.cdcas.edu.cn/party/index.html";
 			}else {
 				throw  new Exception("非法登录方式！！");
 			}
 		} catch (Exception e) {
 			e.printStackTrace();
-			return "redirect:https://my.cdcas.edu.cn/party/page/404.html";
-//			return "/page/404.html";
+//			return "redirect:https://my.cdcas.edu.cn/party/page/404.html";
+			return "redirect:/page/404.html";
 		}
 	}
 }
