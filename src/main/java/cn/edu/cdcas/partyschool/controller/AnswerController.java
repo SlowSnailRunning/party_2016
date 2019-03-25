@@ -19,11 +19,13 @@ import java.util.Map;
 public class AnswerController {
     @Resource
     private AnswerService answerService;
+
     @RequestMapping("/displayError")
     public JSONTableResult displayWrongAnswer(@RequestParam(value = "stuNo", required = false) String stuNo,
                                               @RequestParam(value = "page", required = false) int page, @RequestParam(value = "limit", required = false) int limit) {
         List<Answer> answers = answerService.queryAnswerByStuNo(stuNo, (page - 1) * limit, limit);
         List<Map<String, Object>> data = new ArrayList<>();
+        int count = answerService.queryErrorCountByStuNo(stuNo);
         answers.forEach(answer -> {
 
             Question question = answer.getQuestion();
@@ -73,7 +75,7 @@ public class AnswerController {
             data.add(map);
         });
 
-        return new JSONTableResult(0, "success", data.size(), 200, data);
+        return new JSONTableResult(0, "success", count, 200, data);
     }
 
 }

@@ -15,7 +15,7 @@
         <result column="selected" jdbcType="INTEGER" property="selected"/>
     </resultMap>
     <resultMap id="ResultMap" type="cn.edu.cdcas.partyschool.model.errorQue" extends="BaseResultMap">
-       <result column="answer" property="answer"></result>
+        <result column="answer" property="answer"></result>
     </resultMap>
     <sql id="Base_Column_List">
         id,
@@ -177,14 +177,14 @@
         </trim>
     </insert>
     <select id="selectQueList" resultMap="BaseResultMap">
-      select
+        select
         <include refid="Base_Column_List"/>
-      from party_question
-      <where>
-          <include refid="queryQueWhere"/>
-      </where>
-      order by `type`
-      LIMIT #{start},#{pageSize}
+        from party_question
+        <where>
+            <include refid="queryQueWhere"/>
+        </where>
+        order by `type`
+        LIMIT #{start},#{pageSize}
     </select>
     <select id="countQue" resultType="int">
         select count(*) from party_question
@@ -193,7 +193,8 @@
         </where>
     </select>
     <delete id="clear">
-        delete from party_question
+        delete
+        from party_question
     </delete>
     <delete id="deleteById" parameterType="java.lang.Integer">
         delete
@@ -203,24 +204,50 @@
     <update id="updateState">
         update party_question
         set `state`=#{state}
-        where `id`=#{id}
+        where `id` = #{id}
     </update>
     <select id="findQuestionIdMin" resultType="int">
-        SELECT id FROM party_question ORDER BY id LIMIT 1
+        SELECT id
+        FROM party_question
+        ORDER BY id
+        LIMIT 1
     </select>
     <select id="findQuestionIdMax" resultType="int">
-        SELECT id FROM party_question ORDER BY id DESC LIMIT 1
+        SELECT id
+        FROM party_question
+        ORDER BY id DESC
+        LIMIT 1
     </select>
     <select id="findAllQuestionNum" resultType="int">
-        SELECT  radio_num+check_num+judge_num+fill_num+saq_num AS allNumbers FROM party_exam WHERE id=(
-        SELECT id FROM party_exam WHERE exam_start_time&lt;=CURRENT_TIMESTAMP AND CURRENT_TIMESTAMP&lt;=exam_end_time)
+        SELECT radio_num + check_num + judge_num + fill_num + saq_num AS allNumbers
+        FROM party_exam
+        WHERE id = (
+            SELECT id
+            FROM party_exam
+            WHERE exam_start_time &lt;= CURRENT_TIMESTAMP
+              AND CURRENT_TIMESTAMP &lt;= exam_end_time)
     </select>
     <select id="selectEffectiveQueId" resultType="string">
-        SELECT id FROM party_question WHERE `state`='checked'
+        SELECT id
+        FROM party_question
+        WHERE `state` = 'checked'
     </select>
     <select id="selectErrorQue" resultMap="ResultMap">
-        SELECT que.intro,que.option_a ,que.option_b,que.option_c,que.option_d,que.type,que.result,ans.answer FROM party_answer AS ans
-        LEFT JOIN party_question AS que ON ans.question_id=que.id
-        WHERE student_no=#{student_no} AND (score=0 OR score IS NULL)
+        SELECT que.intro,
+               que.option_a,
+               que.option_b,
+               que.option_c,
+               que.option_d,
+               que.type,
+               que.result,
+               ans.answer
+        FROM party_answer AS ans
+                 LEFT JOIN party_question AS que ON ans.question_id = que.id
+        WHERE student_no = #{student_no}
+          AND (score = 0 OR score IS NULL)
+    </select>
+    <select id="queryAll" resultType="cn.edu.cdcas.partyschool.model.Question">
+        select *
+        from party_question
     </select>
 </mapper>

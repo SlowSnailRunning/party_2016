@@ -8,4 +8,5 @@ public interface AnswerService {
 
     List<Answer> queryAnswerByStuNo(String stuNo, int offsetSize, int pageSize);
 
+    int queryErrorCountByStuNo(String stuNo);
 }
