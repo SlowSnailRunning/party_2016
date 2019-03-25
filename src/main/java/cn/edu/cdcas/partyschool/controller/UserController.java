@@ -225,8 +225,8 @@ public class UserController {
     @RequestMapping(value = "/logout")
     public String logout(HttpSession httpSession) {
         //session過期，銷毀map中的session;
-        String studentNo = (String) httpSession.getAttribute("studentNo");
-        UniqueSession.sessionMap.remove(studentNo);
+//        String studentNo = (String) httpSession.getAttribute("studentNo");
+//        UniqueSession.sessionMap.remove(studentNo);
         httpSession.invalidate();
         return (String) httpSession.getServletContext().getAttribute("php_login");
     }
