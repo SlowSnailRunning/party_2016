@@ -39,7 +39,7 @@ public class LoginController {
     public void login(String token, HttpServletRequest request, HttpSession httpSession, HttpServletResponse response) {
         int flag = 0;
         try {
-            String student_no =token;/*userServiceImpl.isLoginSuccess(token,request.getRemoteAddr());*/
+            String student_no =/*token;*/userServiceImpl.isLoginSuccess(token);
 			String type = null;
             if ("-1".equals(student_no)) {
                 flag = 11;//系统认证失败
