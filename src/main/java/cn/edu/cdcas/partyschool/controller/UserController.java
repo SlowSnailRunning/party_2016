@@ -89,7 +89,7 @@ public class UserController {
     public void download(HttpServletResponse response) throws UnsupportedEncodingException {
         response.setContentType("application/x-xls");
         response.setCharacterEncoding("utf-8");
-        response.addHeader("Content-Disposition", "attachment;filename=" + URLEncoder.encode("学生成绩表.xls", "utf-8"));
+        response.addHeader("Content-Disposition", "attachment;filename=" + URLEncoder.encode("学生成绩表.xlsx", "utf-8"));
 
         try {
             ExcelUtil excelUtil = new ExcelUtil();

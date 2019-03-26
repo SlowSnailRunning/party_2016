@@ -3,7 +3,7 @@ package cn.edu.cdcas.partyschool.util;
 import cn.edu.cdcas.partyschool.model.User;
 import org.apache.poi.hssf.usermodel.*;
 import org.apache.poi.ss.usermodel.*;
-import org.apache.poi.xssf.usermodel.XSSFWorkbook;
+import org.apache.poi.xssf.usermodel.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
@@ -70,32 +70,32 @@ public class ExcelUtil {
 
         int rowCount = map.size() - 1, columnCount = header_list.size();
 
-        HSSFWorkbook workbook = new HSSFWorkbook();
-        HSSFSheet sheet = workbook.createSheet("Info");
-        HSSFRow header = sheet.createRow(0);
+        XSSFWorkbook workbook = new XSSFWorkbook();
+        XSSFSheet sheet = workbook.createSheet("Info");
+        XSSFRow header = sheet.createRow(0);
         sheet.setDefaultColumnWidth(14);
 
         for (int i = 0; i < columnCount; i++) {
-            HSSFCell cell = header.createCell(i, CellType.STRING);
-            cell.setCellStyle(this.createHSSFCellStyle(workbook, "宋体", 12, BorderStyle.THIN, true, false));
+            XSSFCell cell = header.createCell(i, CellType.STRING);
+            cell.setCellStyle(this.createXSSFCellStyle(workbook, "宋体", 12, BorderStyle.THIN, true, false));
             cell.setCellValue(header_list.get(i));
         }
 
-        HSSFCellStyle contentCellStyle = this.createHSSFCellStyle(workbook, "宋体", 12, BorderStyle.THIN, false, false);
+        XSSFCellStyle contentCellStyle = this.createXSSFCellStyle(workbook, "宋体", 12, BorderStyle.THIN, false, false);
         for (int rowNum = 0; rowNum < rowCount; rowNum++) {
-            HSSFRow row = sheet.createRow(rowNum + 1);
+            XSSFRow row = sheet.createRow(rowNum + 1);
             List<String> row_list = map.get(rowNum);
+            XSSFCellStyle numericCellStyle = this.createXSSFCellStyle(workbook, "宋体", 12, BorderStyle.THIN, false, true);
             for (int colNum = 0; colNum < columnCount; colNum++) {
                 if (colNum == 0 || colNum == 5 || colNum == 6 || colNum == 7) {
-                    HSSFCellStyle numericCellStyle = this.createHSSFCellStyle(workbook, "宋体", 12, BorderStyle.THIN, false, true);
-                    HSSFCell cell = row.createCell(colNum, CellType.NUMERIC);
+                    XSSFCell cell = row.createCell(colNum, CellType.NUMERIC);
                     cell.setCellStyle(numericCellStyle);
                     if (row_list.get(colNum).equals("null"))
                         cell.setCellValue(0d);
                     else
                         cell.setCellValue(Double.valueOf(row_list.get(colNum)));
                 } else {
-                    HSSFCell cell = row.createCell(colNum, CellType.STRING);
+                    XSSFCell cell = row.createCell(colNum, CellType.STRING);
                     cell.setCellStyle(contentCellStyle);
                     cell.setCellValue(row_list.get(colNum));
                 }
@@ -150,17 +150,17 @@ public class ExcelUtil {
      * @param borderStyle
      * @return HSSFCellStyle
      */
-    public HSSFCellStyle createHSSFCellStyle(HSSFWorkbook workbook, String fontName, int fontSize, BorderStyle borderStyle,
+    public XSSFCellStyle createXSSFCellStyle(XSSFWorkbook workbook, String fontName, int fontSize, BorderStyle borderStyle,
                                              boolean fontBold, boolean isNumeric) {
-        HSSFCellStyle style = workbook.createCellStyle();
-        HSSFFont font = workbook.createFont();
+        XSSFCellStyle style = workbook.createCellStyle();
+        XSSFFont font = workbook.createFont();
         font.setFontName(fontName);
         font.setFontHeightInPoints((short) fontSize);
         font.setBold(fontBold);
         style.setFont(font);
 
         if (isNumeric) {
-            HSSFDataFormat dataFormat = workbook.createDataFormat();
+            XSSFDataFormat dataFormat = workbook.createDataFormat();
             style.setDataFormat(dataFormat.getFormat("#"));
         }
 
