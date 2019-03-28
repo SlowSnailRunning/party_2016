@@ -28,7 +28,6 @@ public class LoginController {
     private UserService userServiceImpl;
     @Autowired
     private ExamService examServiceImpl;
-
     /**
      * @Describe: 跨服务器之间的安全验证，基于Ajax请求
      * @Author Snail
