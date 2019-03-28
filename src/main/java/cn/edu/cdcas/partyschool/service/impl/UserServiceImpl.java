@@ -1,5 +1,6 @@
 package cn.edu.cdcas.partyschool.service.impl;
 
+import cn.edu.cdcas.partyschool.aspect.DynamicDataSourceHolder;
 import cn.edu.cdcas.partyschool.mapper.AnswerMapper;
 import cn.edu.cdcas.partyschool.mapper.ExamMapper;
 import cn.edu.cdcas.partyschool.mapper.QuestionMapper;
@@ -96,6 +97,8 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public List<User> queryAll() {
+/*        DynamicDataSourceHolder.markAsSlave();
+        System.out.println("--------------------------------markAsSlave--------------------------------------");*/
         return userMapper.queryAll();
     }
 

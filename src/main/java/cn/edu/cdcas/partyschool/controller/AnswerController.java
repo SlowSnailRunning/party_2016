@@ -4,6 +4,7 @@ import cn.edu.cdcas.partyschool.model.Answer;
 import cn.edu.cdcas.partyschool.model.Question;
 import cn.edu.cdcas.partyschool.service.AnswerService;
 import cn.edu.cdcas.partyschool.util.JSONTableResult;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
@@ -17,7 +18,7 @@ import java.util.Map;
 @RestController
 @RequestMapping("/answer")
 public class AnswerController {
-    @Resource
+    @Autowired
     private AnswerService answerService;
 
     @RequestMapping("/displayError")

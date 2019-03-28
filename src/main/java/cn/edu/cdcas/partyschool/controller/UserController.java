@@ -45,7 +45,7 @@ public class UserController {
     public Float getStuScores(String studentNo, String isMakeUp, Integer examId) {
         return userService.getStuScores(studentNo, isMakeUp, examId);
     }
-
+    // TODO: 2019/3/25 加入考生学号检测功能
     @RequestMapping("/upload")
     public JSONResult upload(@RequestParam("file") MultipartFile file, @RequestParam("type") Integer type) {
         if (file == null) return new JSONResult(0, "用户未选择文件", 200);

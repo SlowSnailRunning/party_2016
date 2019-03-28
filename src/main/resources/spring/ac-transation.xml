@@ -1,0 +1,58 @@
+<beans xmlns="http://www.springframework.org/schema/beans"
+	   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	   xmlns:aop="http://www.springframework.org/schema/aop" xmlns:tx="http://www.springframework.org/schema/tx"
+	   xsi:schemaLocation="http://www.springframework.org/schema/beans
+		http://www.springframework.org/schema/beans/spring-beans-3.2.xsd 
+		http://www.springframework.org/schema/aop
+		http://www.springframework.org/schema/aop/spring-aop-3.2.xsd http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx.xsd">
+
+
+	<!-- 事务管理器 -->
+	<bean id="transactionManager" class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
+		<property name="dataSource" ref="dataSource" />
+	</bean>
+	<!-- 开启注解方式声明事务 -->
+	<tx:annotation-driven transaction-manager="transactionManager" />
+
+	<!-- 通知 -->
+	<tx:advice id="txAdvice" transaction-manager="transactionManager">
+		<tx:attributes>
+			<!--定义查询方法都是只读的 -->
+			<tx:method name="query*" read-only="true" />
+			<tx:method name="find*" read-only="true" />
+			<tx:method name="get*" read-only="true" />
+			<!-- 主库执行操作，事务传播行为定义为默认行为 -->
+			<tx:method name="save*" propagation="REQUIRED" />
+			<tx:method name="update*" propagation="REQUIRED" />
+			<tx:method name="delete*" propagation="REQUIRED" />
+			<!-- 主库执行操作，事务传播行为定义为默认行为 -->
+			<!--其他方法使用默认事务策略 -->
+			<tx:method name="*" />
+		</tx:attributes>
+	</tx:advice>
+
+	<!-- 主从数据库配置  part2 start -->
+	<!-- 配置数据库注解aop  aop aspect（poincut+advice）  切面（切入点+通知）（） --><!--注入属性setSlaveMethodStart-->
+	<bean class="cn.edu.cdcas.partyschool.aspect.DataSourceAspect2" id="dataSourceAspect">
+		<!--<property name="slaveMethodStart">
+			<array>
+				<value>select</value>
+			</array>
+		</property>-->
+	</bean>
+	<!-- 配置xml事务 切面 -->
+	<aop:config expose-proxy="true">
+		<aop:pointcut id="txPointcut" expression="execution(* cn.edu.cdcas.partyschool.service..*.*(..))" />
+		<aop:advisor advice-ref="txAdvice" pointcut-ref="txPointcut"/>
+
+		<!-- 将切面应用到自定义的切面处理器上，-9999保证该切面优先级最高执行 -->
+		<aop:aspect ref="dataSourceAspect" order="-9999">
+			<aop:pointcut id="tx" expression="execution(* cn.edu.cdcas.partyschool.mapper..*.*(..))"/>
+			<aop:before method="before" pointcut-ref="tx" />
+			<!--<aop:after method="after" pointcut-ref="tx"/>-->
+			<aop:after-returning method="afterReturning" pointcut-ref="tx"/>
+		</aop:aspect>
+	</aop:config>
+	<!-- 主从数据库配置  part2 end -->
+
+</beans>

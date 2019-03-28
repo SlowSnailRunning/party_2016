@@ -41,17 +41,16 @@
 	<!-- 配置视图解析器 要求将jstl的包加到classpath -->
 	<!-- ViewResolver -->
 	<bean class="org.springframework.web.servlet.view.InternalResourceViewResolver" >
-		<!--<property name="prefix" value="/jsp/" />-->
-		<!--<property name="suffix" value=".jsp" />-->
 		<!--<property name="prefix" value="/page/" />-->
 		<property name="suffix" value=".html" />
 	</bean>
+	<!--session校验拦截器
 	<mvc:interceptors>
 		<mvc:interceptor>
 			<mvc:mapping path="/**"/>
 			<bean class="cn.edu.cdcas.partyschool.interceptor.ValidateSession"></bean>
 		</mvc:interceptor>
-	</mvc:interceptors>
+	</mvc:interceptors>-->
 
 
 	<!-- file upload. -->

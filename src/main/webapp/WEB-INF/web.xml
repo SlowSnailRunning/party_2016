@@ -3,9 +3,9 @@
          xmlns="http://xmlns.jcp.org/xml/ns/javaee"
          xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/javaee http://xmlns.jcp.org/xml/ns/javaee/web-app_3_1.xsd"
          id="WebApp_ID" version="3.1">
-    <!--<welcome-file-list>
+    <welcome-file-list>
         <welcome-file>jsp/test.jsp</welcome-file>
-    </welcome-file-list>-->
+    </welcome-file-list>
 
     <!--时间单位为分钟-->
     <session-config>
@@ -16,7 +16,7 @@
     <!-- spring容器 -->
     <context-param>
         <param-name>contextConfigLocation</param-name>
-        <param-value>classpath:/spring/applicationContext-*.xml</param-value>
+        <param-value>classpath:/spring/ac-*.xml</param-value>
     </context-param>
     <listener>
         <listener-class>org.springframework.web.context.ContextLoaderListener</listener-class>
