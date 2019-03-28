@@ -116,6 +116,10 @@ public class DataSourceAspect2
             DynamicDataSourceHolder.markAsMaster();
         }
     }
+
+    /**
+     * 非常重要的一个方法，在方法正常执行完成后，立即将ThreadLocal中存储的数据源标签清除，保证ThreadLocal用完即删
+     */
     public void afterReturning() {
         DynamicDataSourceHolder.clearDataSource();
     }
