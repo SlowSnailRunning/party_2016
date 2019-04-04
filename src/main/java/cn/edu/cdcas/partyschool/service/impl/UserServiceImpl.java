@@ -244,13 +244,14 @@ public class UserServiceImpl implements UserService {
      * @Date 2019/3/4
      */
     @Override
-    public String isLoginSuccess(String token, String ip) throws Exception {
+    public String isLoginSuccess(String token) throws Exception {
         //判断
         /*  String MD5 = DigestUtils.md5DigestAsHex((ip + token).getBytes());*/
-        String MD5 = DigestUtils.md5DigestAsHex((ip + token).getBytes());
-        String redisMD5 = jedisClient.hget("party"+token, token);
-        if (MD5.equals(redisMD5)) {
-            return token;
+        String[] split = token.split("//");
+        String inRedis = jedisClient.hget("party" + split[1], "party" + split[1]);
+        String MD5 = DigestUtils.md5DigestAsHex((inRedis).getBytes());
+        if (split[0].equals(MD5)) {
+            return split[1];
         } else {
             return "-1";
         }
@@ -576,8 +577,9 @@ public class UserServiceImpl implements UserService {
     public Map<String, Object> getScoreAndIsMakeUpMap(String studentNo) throws Exception {
         User user = userMapper.queryByStuNo(studentNo);
         Map<String, Object> scoreInfo = new HashMap<>();
+
         scoreInfo.put("code", 0);
-        scoreInfo.put("examScore", user.getExamScore());
+        scoreInfo.put("examScore", user.getMakeUpScore() == null || "".equals(user.getMakeUpScore()) ? user.getExamScore() : user.getMakeUpScore()/*user.getExamScore()*/);
         scoreInfo.put("makeUpScore", user.getMakeUpScore());
         //判断是否出现补考按钮0：不出现，1：出现
         int makeUpBtn = 0;

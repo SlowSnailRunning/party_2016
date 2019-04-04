@@ -16,7 +16,7 @@ layui.use(['form', 'layer', 'laydate', 'upload', 'table', 'laytpl'], function ()
         page: true,
         height: "full-125",
         limit: 20,
-        limits: [10, 15, 20, 25],
+        limits: [10, 15, 20, 100,200],
         id: "questionListTable",
         cols: [[
             {type: 'checkbox', fixed: 'left', width: 50},
@@ -203,10 +203,11 @@ layui.use(['form', 'layer', 'laydate', 'upload', 'table', 'laytpl'], function ()
     }
 
     $(".addNews_btn").click(function () {
+        // todo 题目添加修改
         addNews();
     });
 
-    //添加和修改考生信息
+    //添加和修改题目信息
     function addNews(original_data) {
         var index = layui.layer.open({
             title: "添加考题",

@@ -19,4 +19,9 @@ public class AnswerServiceImpl implements AnswerService {
         return answerMapper.queryAnswerByStuNo(stuNo, offsetSize, pageSize);
     }
 
+    @Override
+    public int queryErrorCountByStuNo(String stuNo) {
+        return answerMapper.queryErrorCountByStuNo(stuNo);
+    }
+
 }

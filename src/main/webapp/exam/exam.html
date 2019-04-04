@@ -2,7 +2,7 @@
 <html>
 <head>
     <title>成都文理学院思想政治理论水平在线测试</title>
-    <link rel="shortcut icon" href="images/favicon.ico">
+    <link rel="shortcut icon" href="../images/favicon.ico">
     <meta name="renderer" content="webkit|ie-comp|ie-stand">
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=Edge,chrome=1">
@@ -46,6 +46,18 @@
     </style>
 
 </head>
+<script >
+    var currentTime;
+    $(document).ready(function () {
+        $.post(projectName+"/examinee/currentTime.do",
+            function (data) {
+                console.log("======"+data);
+                currentTime=data;
+            },
+            "text"
+        );
+    });
+</script>
 <body oncontextmenu = "return false" >
 <div align="center" style="background-color: White">
     <img src="images/logo.png"/>
@@ -313,7 +325,7 @@
             url: projectName+"/examinee/allQuestionInfoForStu.do",
             success: function (result) {
                 var msg = result;
-                console.log(msg);
+              //  console.log(msg);
                 var count = msg.count;
                 var pass = msg.pass;
                 examTime = msg.examTime;
@@ -508,7 +520,7 @@
                 // console.log(list[i].name);
                 var buttonList = $(".btn");
                 var danDiv = $(".d");
-                console.log(buttonList);
+               // console.log(buttonList);
                 //为每个input绑定值
                 for (var i = 0; i < list.length; i++) {
                     list[i].onclick = function () {
@@ -533,7 +545,7 @@
                         //针对多选按钮
                         if (this.name.split("_")[0] == "duo") {
                             var current = $("input[name='" + this.name + "']:checked").val();
-                            console.log(current);
+                          //  console.log(current);
                             if (current == undefined) {
                                 var index = this.name.split("_")[1];
                                 $("#btn_" + index).attr("class", "btn");
@@ -547,7 +559,7 @@
                             selected.each(function () {
                                 answer += this.value;
                             })
-                            console.log(answer)
+                          //  console.log(answer)
                             $.ajax({
                                 type: "POST",
                                 url: projectName+"/examinee/updateByQueId.do",
@@ -569,7 +581,7 @@
                 for (var i = 0; i < buttonList.length - 3; i++) {
                     buttonList[i].onclick = function () {
                         var index = this.id.split("_")[1];
-                        console.log(index);
+                       // console.log(index);
                         $(".d").css("display", "none");
                         $(danDiv[index - 1]).css("display", "block");
 
@@ -638,18 +650,18 @@
                     var arr = str.split("}{");
                     arr[0] = arr[0].substring(1);
                     arr[arr.length - 1] = arr[arr.length - 1].substring(0, arr[arr.length - 1].length - 2);
-                    console.log(arr);
+                  //  console.log(arr);
                     for (j = 0; j < arr.length; j++) {
                         var n = arr[j].substring(1, arr[j].length - 1).trim();
                         text += "<input type='text' id=" + tian[i].id + " name='tian_" + (danTotal + duoTotal + panTotal + parseInt(i) + 1) + "' value=" + arr[j] + ">";
                         newArr.push(arr[j]);
                     }
-                    console.log(newArr)
+                  //  console.log(newArr)
                     var isNull = ''
                     newArr.forEach(function (item) {
                         isNull += item;
                     })
-                    console.log(isNull)
+                   // console.log(isNull)
                     //       console.log(isNull)
                     //         if(isNull==""){newArr=[]}
 
@@ -701,7 +713,7 @@
                             dataType: "json",
                             data: {id: this.id, answer: fillAnswer},
                             success: function (res) {
-                                console.log('发送成功')
+                            //    console.log('发送成功')
                             }
                         });
 
@@ -718,7 +730,7 @@
                 $("#dan1").css("display", "block");
                 var all = $("input:checked");
                 for (var i = 0; i < all.length; i++) {
-                    console.log(all[i].name.split("_")[1]);
+                   // console.log(all[i].name.split("_")[1]);
                     if (all[i].name.split("_")[1] == (i + 1)) ;
                     $("#btn_" + all[i].name.split("_")[1]).attr("class", "btn btn-primary");
 
@@ -745,11 +757,11 @@
                     if (i == d.length - 1) {
                         return;
                     }
-                    console.log(d[i]);
+                   // console.log(d[i]);
                     $(".d").css("display", "none");
 
                     $(d[i + 1]).css("display", "block");
-                    console.log(d[i]);
+                  //  console.log(d[i]);
                     return;
                 }
             }
@@ -767,11 +779,11 @@
                         return
                     }
                     ;
-                    console.log(d[i]);
+                   // console.log(d[i]);
                     $(".d").css("display", "none");
 
                     $(d[i - 1]).css("display", "block");
-                    console.log(d[i]);
+                   // console.log(d[i]);
 
                 }
             }
@@ -783,6 +795,7 @@
 <script type="application/javascript">
     var timeId = window.setInterval(sessionTimeout, 1000);
     var flag = 0;
+
     //倒计时
     function sessionTimeout() {
         // var examStartTime;
@@ -791,8 +804,19 @@
         //剩余秒数
         if (flag == 0) {
             console.log( examTime * 60);
+
             //剩余秒数
-            window.second1 = examTime * 60 - Math.ceil((new Date().getTime() - examStartTime) / 1000);
+            // window.second1 = examTime * 60 - Math.ceil((new Date().getTime() - examStartTime) / 1000);
+            console.log("currentTime:"+currentTime);
+            console.log("examStartTime"+examStartTime);
+            window.second1 = examTime * 60 - Math.ceil((currentTime - examStartTime) / 1000);
+
+
+            console.log("当前时间戳:"+ currentTime );
+            console.log("开始考试时间戳:"+ examStartTime );
+            console.log("考试剩余考试分钟:"+ examTime * 60);
+            console.log("考试剩余考试秒数:"+ window.second1);
+
             flag=1;
         }
         --window.second1;

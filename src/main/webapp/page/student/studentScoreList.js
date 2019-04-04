@@ -3,23 +3,24 @@ layui.use(['form', 'layer', 'table'], function () {
         layer = parent.layer === undefined ? layui.layer : top.layer,
         $ = layui.jquery,
         table = layui.table;
-
     //学生成绩表
     var tableIns = table.render({
         elem: '#studentScoreList',
-        url: projectName+'/user/all.do',
+        url: projectName + '/user/all.do',
         cellMinWidth: 95,
         page: true,
         height: "full-125",
+        toolbar: '#toolbarDemo',
+        defaultToolbar: ['filter', 'print', 'exports'],
         limit: 20,
-        limits: [10, 15, 20, 25],
+        limits: [100, 200,500,1000,1500],
         id: "studentScoreListTable",
         cols: [[
             {field: 'id', title: 'ID', width: 86, align: "center", hide: true},
             {field: 'idx', title: '序号', width: 86, align: "center"},
             {field: 'name', title: '姓名', width: 100, align: "center"},
             {field: 'studentNo', title: '学号', width: 150, align: 'center'},
-            {field: 'examScore', title: '考试成绩', width: 86, align: 'center'},
+            {field: 'examScore', title: '考11试成绩', width: 86, align: 'center'},
             {field: 'makeUpScore', title: '补考成绩', width: 86, align: 'center'},
             {field: 'partyNumber', title: '党校号', width: 150, align: 'center'},
             {field: 'examStateStr', title: '考试状态', width: 86, align: 'center'},
@@ -86,11 +87,12 @@ layui.use(['form', 'layer', 'table'], function () {
             });
         }
         if (layEvent === 'view_error') {
-            layui.layer.open({
+            var index = layui.layer.open({
                 type: 2,
                 title: data.name + ' ' + data.studentNo + '  错题预览:',
                 content: 'studentErrorDisplay.html',
                 area: ['820px', '400px'],
+                maxmin: true,
                 success: function (object, index) {
                     var body = layui.layer.getChildFrame('body', index);
                     if (data) {
@@ -99,6 +101,7 @@ layui.use(['form', 'layer', 'table'], function () {
                     }
                 }
             });
+            layui.layer.full(index);
 
         }
     });

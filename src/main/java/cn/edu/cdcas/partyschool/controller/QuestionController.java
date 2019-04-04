@@ -20,6 +20,7 @@ import java.util.Map;
 public class QuestionController {
     @Resource
     private QuestionService questionService;
+
     @RequestMapping("/upload")
     public JSONResult upload(@RequestParam("file") MultipartFile file) {
         ExcelUtil excelUtil = new ExcelUtil();
@@ -44,19 +45,24 @@ public class QuestionController {
         }
         return new JSONResult(0, "题库导入成功!", 200);
     }
+
+    @RequestMapping("/download-file")
+    public List<Question> download() {
+        return questionService.queryAll();
+    }
+
     /**
-     *@Describe: 查找题库，包括有/无条件
-     *
-     *@Author Snail
-     *@Date 2019/1/26
+     * @Describe: 查找题库，包括有/无条件
+     * @Author Snail
+     * @Date 2019/1/26
      */
     @RequestMapping("/selectQue")
-    public Map<String, Object> showAllStuInfo(@RequestParam(required = false,defaultValue = "1") int page, @RequestParam(required = false,defaultValue = "20") int limit,
-                                              @RequestParam(required = false,defaultValue="") String intro,@RequestParam(required = false,defaultValue="")String type) {
-        Map<String,Object> map = null;
+    public Map<String, Object> showAllStuInfo(@RequestParam(required = false, defaultValue = "1") int page, @RequestParam(required = false, defaultValue = "20") int limit,
+                                              @RequestParam(required = false, defaultValue = "") String intro, @RequestParam(required = false, defaultValue = "") String type) {
+        Map<String, Object> map = null;
         try {
             //page：防止错误的page参数
-            map = this.questionService.selectQue(page-1<0?0:page-1,limit,intro.trim(),type.trim());
+            map = this.questionService.selectQue(page - 1 < 0 ? 0 : page - 1, limit, intro.trim(), type.trim());
         } catch (Exception e) {
             e.printStackTrace();
             //到异常页面，通知管理员
@@ -64,11 +70,11 @@ public class QuestionController {
         }
         return map;
     }
+
     /**
-     *@Describe: 清空题库
-     *
-     *@Author Snail
-     *@Date 2019/1/26
+     * @Describe: 清空题库
+     * @Author Snail
+     * @Date 2019/1/26
      */
     @RequestMapping(value = "/clear", method = RequestMethod.POST)
     private boolean clear() {
@@ -80,14 +86,15 @@ public class QuestionController {
             return false;
         }
     }
+
     /**
-     *@Describe: 删除选中
-     *前端传入的数组在后台接收时，需要注意使用RequestParam
-     *@Author Snail
-     *@Date 2019/1/26
+     * @Describe: 删除选中
+     * 前端传入的数组在后台接收时，需要注意使用RequestParam
+     * @Author Snail
+     * @Date 2019/1/26
      */
-    @RequestMapping(value = "/delete-multiple",method=RequestMethod.POST)
-    private boolean deleteMultipleQue(@RequestParam("queId[]") int[] queId){
+    @RequestMapping(value = "/delete-multiple", method = RequestMethod.POST)
+    private boolean deleteMultipleQue(@RequestParam("queId[]") int[] queId) {
         try {
             questionService.deleteById(queId);
             return true;
@@ -96,16 +103,16 @@ public class QuestionController {
             return false;
         }
     }
+
     /**
-     *@Describe:
-     *
-     *@Author Snail
-     *@Date 2019/1/27
+     * @Describe:
+     * @Author Snail
+     * @Date 2019/1/27
      */
-    @RequestMapping(value = "/modifyState",method = RequestMethod.POST)
-    private boolean modifyState(String state,int id){
+    @RequestMapping(value = "/modifyState", method = RequestMethod.POST)
+    private boolean modifyState(String state, int id) {
         try {
-            int rowsAffected = questionService.updateState(id,state);
+            int rowsAffected = questionService.updateState(id, state);
 
             return true;
         } catch (Exception e) {

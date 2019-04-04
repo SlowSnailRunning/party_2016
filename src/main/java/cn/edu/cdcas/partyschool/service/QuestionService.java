@@ -3,6 +3,7 @@ package cn.edu.cdcas.partyschool.service;
 
 import cn.edu.cdcas.partyschool.model.Question;
 
+import java.util.List;
 import java.util.Map;
 
 public interface QuestionService {
@@ -20,9 +21,11 @@ public interface QuestionService {
 
     void deleteById(int[] id) throws Exception;
 
+    List<Question> queryAll();
+
     void clear() throws Exception;
 
-    int updateState(Integer id,String state)throws Exception;
+    int updateState(Integer id, String state) throws Exception;
 
     /*Set<Integer> randomQuestionIdArray() throws Exception;*/
 }

@@ -2,6 +2,7 @@ package cn.edu.cdcas.partyschool.mapper;
 
 import cn.edu.cdcas.partyschool.model.Answer;
 import org.apache.ibatis.annotations.Param;
+import org.apache.ibatis.annotations.Select;
 
 import java.util.List;
 
@@ -19,5 +20,8 @@ public interface AnswerMapper {
     int updateById(Answer answer);
 
     List<Answer> queryAnswerByStuNo(@Param("stuNo") String stuNo, @Param("offsetSize") int offsetSize, @Param("pageSize") int pageSize);
+
     void deleteAnswer(@Param("stu_no") String stu_no);
+
+    int queryErrorCountByStuNo(@Param("stuNo") String stuNo);
 }

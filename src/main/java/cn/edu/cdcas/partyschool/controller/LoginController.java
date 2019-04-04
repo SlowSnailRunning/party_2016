@@ -28,7 +28,6 @@ public class LoginController {
     private UserService userServiceImpl;
     @Autowired
     private ExamService examServiceImpl;
-
     /**
      * @Describe: 跨服务器之间的安全验证，基于Ajax请求
      * @Author Snail
@@ -39,7 +38,7 @@ public class LoginController {
     public void login(String token, HttpServletRequest request, HttpSession httpSession, HttpServletResponse response) {
         int flag = 0;
         try {
-            String student_no =token;/*userServiceImpl.isLoginSuccess(token,request.getRemoteAddr());*/
+          String student_no =/*token;*/userServiceImpl.isLoginSuccess(token);
 			String type = null;
             if ("-1".equals(student_no)) {
                 flag = 11;//系统认证失败
@@ -64,13 +63,13 @@ public class LoginController {
 							if (examState == 2 || examState == 5 || examState == 6) {//不可进入
 								flag = examState;
 							} else {//进入
-								flag = 10;//成功跳转
+								flag = 10;//学生端成功跳转
 								httpSession.setAttribute("studentNo", student_no);
 								httpSession.setAttribute("type", type);
 							}
 						} else {//不允许补考
 							if (examState == 0 || examState == 1) {//进入
-								flag = 10;
+								flag = 10;//学生端成功跳转
 								httpSession.setAttribute("studentNo", student_no);
 								httpSession.setAttribute("type", type);
 							} else {//不可进入
@@ -109,11 +108,14 @@ public class LoginController {
                     //从数据库获取exam_state
 					if(isOverTime){
 						//超时
+//						return "redirect:https://my.cdcas.edu.cn/party/exam/score.html";
 						return "redirect:/exam/score.html";
+					//	return "/exam/score";//不能使用转发，会导致资源找不到
 					}else {
 						httpSession.setAttribute("examState", userServiceImpl.queryByStuNo((String) httpSession.getAttribute("studentNo")).getExamState());
 //						httpSession.setAttribute(((User)userServiceImpl.queryByStuNo(userSession.getNumber())).getExamState());
 						return "redirect:/exam/accept.html";
+//						return "redirect:https://my.cdcas.edu.cn/party/exam/accept.html";
 					}
 				}else {
 					//非首次登录
@@ -121,22 +123,25 @@ public class LoginController {
 						//超时
 						//统计answer表中，该考生初/补考数据，写入到user表
 						//userServiceImpl.writeScoreForAnswer((String)httpSession.getAttribute("studentNo"),(String)httpSession.getAttribute("examState"));
+//						return "redirect:https://my.cdcas.edu.cn/party/exam/score.html";
 						return "redirect:/exam/score.html";
 					}else {
 						//未超时
 						userServiceImpl.requiredQuestionAndOther(httpSession);
+//						return "redirect:https://my.cdcas.edu.cn/party/exam/exam.html";
 						return "redirect:/exam/exam.html";
 					}
 				}
 			}else if("ROOT".equals(type)||"manger".equals(type)){
-				System.out.println(type);
-				//return "redirect:/exam/accept.html";
-            	return "redirect:/index.html";
+//				System.out.println(type);
+				return "redirect:/index.html";
+//            	return "redirect:https://my.cdcas.edu.cn/party/index.html";
 			}else {
 				throw  new Exception("非法登录方式！！");
 			}
 		} catch (Exception e) {
 			e.printStackTrace();
+//			return "redirect:https://my.cdcas.edu.cn/party/page/404.html";
 			return "redirect:/page/404.html";
 		}
 	}

@@ -17,6 +17,8 @@ public interface QuestionMapper {
 
     Question queryById(Integer id);
 
+    List<Question> queryAll();
+
     List<Question> selectQueList(@Param(value = "start")int start,@Param(value = "pageSize") int pageSize,
                                  @Param(value = "intro") String intro,@Param(value = "type") String type) throws Exception;
 

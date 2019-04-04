@@ -62,6 +62,14 @@
         order by party_question.type
         limit #{offsetSize},#{pageSize}
     </select>
+    <select id="queryErrorCountByStuNo" resultType="java.lang.Integer">
+        select count(*)
+        from `party_answer`,
+             `party_question`
+        where party_answer.question_id = party_question.id
+          and student_no = #{stuNo}
+          and score = 0
+    </select>
     <delete id="deleteById" parameterType="java.lang.Integer">
         delete
         from party_answer
@@ -166,9 +174,10 @@
     </update>
 
 
-
     <delete id="deleteAnswer" parameterType="java.lang.String">
-       DELETE FROM party_answer WHERE student_no=#{stu_no}
+        DELETE
+        FROM party_answer
+        WHERE student_no = #{stu_no}
     </delete>
 
 </mapper>
