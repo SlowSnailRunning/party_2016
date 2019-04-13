@@ -821,7 +821,7 @@
             flag=1;
         }
         --window.second1;
-        var t=parseInt(window.second1/60)+":"+window.second1%60>=10?window.second1:0+window.second1;
+        var t=parseInt(window.second1/60)+":"+window.second1%60>=10?window.second1%60:0+window.second1%60;
         $("#time").text(t);
         if(window.second1<=0)
         {
