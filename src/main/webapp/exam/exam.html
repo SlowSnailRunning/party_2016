@@ -71,9 +71,8 @@
                         <li>
                             <h6>
                                 <div class="cssfont2">
-                                    共<span
-                                        class="allquestionnumber"></span>
-                                    题&nbsp;&nbsp;总分:<span class="orange">100</span>分&nbsp;&nbsp;
+
+                                    共<span  class="allquestionnumber"></span>题&nbsp;&nbsp;总分:<span class="orange">100</span>分&nbsp;&nbsp;
                                     合格分数线:<span class="pass"></span>分&nbsp;&nbsp;
                                     考试时间:
                                     <sapn class="examTime"></sapn>
@@ -329,7 +328,7 @@
             success: function (result) {
                 var msg = result;
               //  console.log(msg);
-                var count = msg.count;
+                var count = msg.countQue;
                 var pass = msg.pass;
                 examTime = msg.examTime;
                 var examName = msg.examName;
