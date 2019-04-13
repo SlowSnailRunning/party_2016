@@ -64,18 +64,18 @@
 </div>
 <div class="row-fluid">
     <div class="container-fluid">
-        <div class="span4 examcontent">
+        <div class="span4 examcontent" style="width:280px">
             <div class="exambox">
                 <div class="examform">
                     <ul class="unstyled">
                         <li>
                             <h6>
                                 <div class="cssfont2">
-                                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;共 <span
+                                    共<span
                                         class="allquestionnumber"></span>
-                                    题 总分：<span class="orange">100</span>分
-                                    合格分数线：<span class="pass"></span>分
-                                    考试时间：
+                                    题&nbsp;&nbsp;总分:<span class="orange">100</span>分&nbsp;&nbsp;
+                                    合格分数线:<span class="pass"></span>分&nbsp;&nbsp;
+                                    考试时间:
                                     <sapn class="examTime"></sapn>
                                     分钟
                                 </div>
@@ -139,16 +139,19 @@
         <div class="span8 examcontent">
             <div class="exambox">
                 <div class="examform">
+                    <div class="cssfont1" style="text-align: center;font-size:24px"><b class="examName">132</b></div>
                     <div class="container-fluid footcontent">
 
                         <div class="span7">
                             <ul class="unstyled">
-                                <div class="cssfont1"><b class="examName">132</b></div>
+                                <!--<div class="cssfont1"><b class="examName">132</b></div>-->
                                 <li>
                                     <h6>
-                                        编号：<span class="number">${user_in_session.idx}</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                                        姓名：<span class="name">${user_in_session.name}</span><br>
-                                        年级专业：<span class="grade">${user_in_session.grade</span>级<span class="major">${user_in_session.major}</span>
+                                        编号：<span class="number">${user_in_session.idx}</span><br/>
+                                        姓名：<span class="name">${user_in_session.name}</span><br/>
+                                        年级专业：<span class="grade">${user_in_session.grade</span>级<span class="major">${user_in_session.major}</span><br/>
+                                        <h4>
+                                            距考试结束：<span class="orange" id="time" style="color:red"></span></h4>
                                     </h6>
                                 </li>
                             </ul>
@@ -156,13 +159,13 @@
                         <div class="span3">
                             <ul class="unstyled">
                                 <li>
-                                    <h4>
-                                        距考试结束：<span class="orange" id="time" style="color:red"></span></h4>
+                                    <!--<h4>-->
+                                        <!--距考试结束：<span class="orange" id="time" style="color:red"></span></h4>-->
                                 </li>
                             </ul>
                         </div>
                         <div class="span2">
-                            <a id="submitExam" class="btn btn-danger" onclick="advanceSubmit()" id="submit">交卷</a>
+                            <a style="float: right" id="submitExam" class="btn btn-danger" onclick="advanceSubmit()" id="submit">交卷</a>
                         </div>
                     </div>
                     <div class="paperexamcontent" id="question_396">
@@ -388,7 +391,7 @@
 
                         for (var i in dan) {
                             //渲染每道题画面开始
-                            var questionList = "<div id='dan" + (parseInt(i) + 1) + "'style='display:none' class='d'><h4 class='type'>单选题（每题有且只有一个选项）</h4>" +
+                            var questionList = "<div id='dan" + (parseInt(i) + 1) + "'style='display:none' class='d'><h4 class='type'>单选题</h4>" +
                                 "            <div class='media-body well' style='font-weight: bold;color: black;'>" +
                                 "                <h4 id=''>" + (parseInt(i) + 1) + ". " + dan[i].intro + "</h4>" +
                                 "            </div>" +
@@ -425,7 +428,7 @@
 
                         for (var i in duo) {
 
-                            var questionList = "<div id='duo" + (parseInt(i) + 1 + danTotal) + "'style='display:none' class='d'><h4 class='type'>不定项选择（每题有一个或者多个选项）</h4>" +
+                            var questionList = "<div id='duo" + (parseInt(i) + 1 + danTotal) + "'style='display:none' class='d'><h4 class='type'>多选题</h4>" +
                                 "            <div class='media-body well' style='font-weight: bold;color: black;'>" +
                                 "                <h4 id=''>" + (parseInt(i) + 1 + danTotal) + ". " + duo[i].intro + "</h4>" +
                                 "            </div>" +
@@ -734,9 +737,7 @@
                     if (all[i].name.split("_")[1] == (i + 1)) ;
                     $("#btn_" + all[i].name.split("_")[1]).attr("class", "btn btn-primary");
 
-
                 }
-
 
             }
 
@@ -820,7 +821,7 @@
             flag=1;
         }
         --window.second1;
-        var t=parseInt(window.second1/60)+":"+window.second1%60;
+        var t=parseInt(window.second1/60)+":"+window.second1%60>=10?window.second1:0+window.second1;
         $("#time").text(t);
         if(window.second1<=0)
         {
