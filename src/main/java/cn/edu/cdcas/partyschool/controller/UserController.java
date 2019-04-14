@@ -6,6 +6,8 @@ import cn.edu.cdcas.partyschool.service.UserService;
 import cn.edu.cdcas.partyschool.util.ExcelUtil;
 import cn.edu.cdcas.partyschool.util.JSONResult;
 import cn.edu.cdcas.partyschool.util.JSONTableResult;
+import cn.edu.cdcas.partyschool.util.impl.JedisClientSingle;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -27,14 +29,11 @@ import java.util.Map;
  * @author Char Jin
  * @date 2019-01-20
  */
-
 @RestController
 @RequestMapping("/user")
 public class UserController {
-
     @Resource
     private UserService userService;
-
     /**
      * upload the list of student attending exam in a excel.
      *
