@@ -7,8 +7,10 @@
     <meta http-equiv="Expires" content="0">
     <title>后台登录</title>
     <link rel="icon" href="images/favicon.ico">
-
     <link href="css/login.css" type="text/css" rel="stylesheet">
+
+    <script src="js/jquery-3.3.1.js"></script> <!-- 你必须先引入jQuery1.8或以上版本 -->
+    <script src="layui/layui.all.js"></script>
 </head>
 <body>
 <div class="login">
@@ -17,11 +19,14 @@
     <form id="jump" method="post" action="loginSuccess.do">
         <input id="account" name="account" placeholder="账号" required="" type="text">
         <hr class="hr15">
-        <input id="validate" name="validate" placeholder="验证码" required="" type="text">
+        <input id="validate" name="validate" style="width:50%" placeholder="验证码" required="" type="text">
+        <label style="position:relative;display:inline-block;height:50px"><img style="position: absolute;top:26px;left:10px;height:80%" type="image" src="authCode.do" id="codeImage" onclick="chageCode()" title="图片看不清？点击重新得到验证码"
+                    style="cursor:pointer;"/>
+
+        </label>
         <hr class="hr15">
         <!--这里img标签的src属性的值为后台实现图片验证码方法的请求地址-->
-        <label><img type="image" src="authCode.do" id="codeImage" onclick="chageCode()" title="图片看不清？点击重新得到验证码"
-                    style="cursor:pointer;"/></label>
+
         <input id="submit" value="登录" style="width:100%;" type="button">
         <hr class="hr20">
         <!-- 帮助 <a onClick="alert('请联系管理员')">忘记密码</a> -->
@@ -36,21 +41,24 @@
     $("#submit").click(function () {
         var account = $("#account").val();
         var validate = $("#validate").val();
+
         switch (true) {
             case account == null || account == "":
-                alert("账号不可为空");
+                    layer.msg('账号不能为空！');
                 break;
             case validate == null || validate == "":
-                alert("验证码不可为空");
+                    layer.msg('验证码不能为空！');
+
                 break;
             default:
                 $.post(
+
                     "validate.do",
                     {"value": validate},
                     function (res) {
-                        alert(res)
+                       // alert(res)
                         if (res == 1) {
-                            alert("验证成功！！");
+                            layer.msg('验证成功');
                             $.get(
                                 "login.do",
                                 {"token": account},
@@ -58,13 +66,13 @@
                                     if (res == "jsonCallBackTest(10)") {
                                      window.location.href="loginSuccess.do?token="+account;
                                     } else {
-                                        alert("用户非法");
+                                        layer.msg('用户非法');
                                     }
 
                                 }
                             );
                         } else {
-                            alert("验证失败");
+                            layer.msg('验证非法');
                             //刷新验证码图片
                             $("#codeImage").trigger("click");
                         }
