@@ -32,8 +32,11 @@
         <!-- 帮助 <a onClick="alert('请联系管理员')">忘记密码</a> -->
     </form>
 </div>
-<script src="./js/jquery-3.3.1.js"></script>
+
 <script>
+    // layer.config({
+    //     offset:"150px"
+    // })
     function chageCode() {
         $('#codeImage').attr('src', 'authCode.do?abc=' + Math.random());//链接后添加Math.random，确保每次产生新的验证码，避免缓存问题。
     }
