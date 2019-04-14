@@ -38,7 +38,7 @@ public class LoginController {
     public void login(String token, HttpServletRequest request, HttpSession httpSession, HttpServletResponse response) {
         int flag = 0;
         try {
-          String student_no =token;/*userServiceImpl.isLoginSuccess(token);*/
+          String student_no =userServiceImpl.isLoginSuccess(token);
 			String type = null;
             if ("-1".equals(student_no)) {
                 flag = 11;//系统认证失败
@@ -94,7 +94,6 @@ public class LoginController {
             e.printStackTrace();
         }
     }
-
     @RequestMapping("/loginSuccess")
     public String loginSuccess(HttpSession httpSession, RedirectAttributes redirectAttributes) {
         //认证成功，流程详见流程图2
@@ -144,5 +143,11 @@ public class LoginController {
 //			return "redirect:https://my.cdcas.edu.cn/party/page/404.html";
 			return "redirect:/page/404.html";
 		}
+	}
+	@RequestMapping(value = "/testJesid")
+	@ResponseBody
+	public String testJesid()
+	{
+		return userServiceImpl.getCloseOrOpen();
 	}
 }

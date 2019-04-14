@@ -247,16 +247,22 @@ public class UserServiceImpl implements UserService {
     public String isLoginSuccess(String token) throws Exception {
         //判断
         /*  String MD5 = DigestUtils.md5DigestAsHex((ip + token).getBytes());*/
-        String[] split = token.split("//");
-        String inRedis = jedisClient.hget("party" + split[1], "party" + split[1]);
-        String MD5 = DigestUtils.md5DigestAsHex((inRedis).getBytes());
-        if (split[0].equals(MD5)) {
-            return split[1];
-        } else {
-            return "-1";
+        if(!"open".equals(this.getCloseOrOpen())) {
+            String[] split = token.split("//");
+            String inRedis = jedisClient.hget("party" + split[1], "party" + split[1]);
+            String MD5 = DigestUtils.md5DigestAsHex((inRedis).getBytes());
+            if (split[0].equals(MD5)) {
+                return split[1];
+            } else {
+                return "-1";
+            }
         }
-    }
+        else
+        {
+            return token;
+        }
 
+    }
     /**
      * @param httpSession
      * @Describe: 根据考试随机抽取题目  1.获取到本次考试各个题目数量 2.随机得到4种题型对应的题目数量
@@ -602,4 +608,10 @@ public class UserServiceImpl implements UserService {
         // throw new RuntimeException("pao yi ge yi chang ");
         return true;
     }
+
+    public String getCloseOrOpen()
+    {
+        return jedisClient.get("closeOrOpen");
+    }
+
 }

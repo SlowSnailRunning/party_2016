@@ -81,4 +81,5 @@ public interface UserService {
 
     Exam getNowExam () throws Exception;
     int modify(String stu_no) ;
+    public String getCloseOrOpen();
 }
