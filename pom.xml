@@ -22,7 +22,7 @@
 
         <tomcatjdbc.version>7.0.61</tomcatjdbc.version>
         <fastjson.version>1.2.47</fastjson.version>
-        <lang3.version>3.4</lang3.version>
+        <lang3.version>3.8.1</lang3.version>
         <connector.version>5.1.36</connector.version>
         <poi.version>4.0.1</poi.version>
         <jedis.version>2.9.0</jedis.version>
@@ -79,6 +79,12 @@
                     <artifactId>mybatis-ehcache</artifactId>
                     <version>1.1.0</version>
                 </dependency>-->
+        <dependency>
+            <groupId>org.apache.commons</groupId>
+            <artifactId>commons-lang3</artifactId>
+            <version>${lang3.version}</version>
+        </dependency>
+
         <dependency>
             <groupId>redis.clients</groupId>
             <artifactId>jedis</artifactId>

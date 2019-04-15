@@ -15,39 +15,16 @@
 
     <!-- 加载配置文件 -->
     <context:property-placeholder location="classpath:db.properties"/>
-
-    <!-- 从库 -->
-    <bean id="slave01DataSource" class="com.alibaba.druid.pool.DruidDataSource" destroy-method="close" init-method="init" lazy-init="true">
+    <!-- 数据库连接池 -->
+    <bean id="dataSource" class="com.alibaba.druid.pool.DruidDataSource"
+          destroy-method="close">
         <property name="driverClassName" value="${jdbc.driverClassName}"/>
-        <property name="url" value="${jdbc.urlSlave}"/>
-        <property name="username" value="${jdbc.usernameSlave}"/>
-        <property name="password" value="${jdbc.passwordSlave}"/>
-        <!--读库必须开启只读-->
-        <property name="defaultReadOnly" value="true"/>
+        <property name="url" value="${jdbc.url}"/>
+        <property name="username" value="${jdbc.username}"/>
+        <property name="password" value="${jdbc.password}"/>
+        <property name="maxActive" value="10"/>
+        <property name="maxIdle" value="5"/>
     </bean>
-    <!--主库-->
-    <bean id="masterDataSource" class="com.alibaba.druid.pool.DruidDataSource" destroy-method="close" init-method="init" lazy-init="true">
-        <property name="driverClassName" value="${jdbc.driverClassName}"/>
-        <property name="url" value="${jdbc.urlMaster}"/>
-        <property name="username" value="${jdbc.usernameMaster}"/>
-        <property name="password" value="${jdbc.passwordMaster}"/>
-    </bean>
-    <!-- 定义数据源，使用自己实现的数据源 -->
-    <bean id="dataSource" class="cn.edu.cdcas.partyschool.aspect.DynamicDataSource">
-        <!-- 设置多个数据源 -->
-        <property name="targetDataSources">
-            <map key-type="java.lang.String">
-                <!-- 这个key需要和程序中的key一致 -->
-                <entry key="master" value-ref="masterDataSource" />
-                <entry key="slave" value-ref="slave01DataSource" />
-            </map>
-        </property>
-        <!-- 配置默认使用的数据源为读库 -->
-        <property name="defaultTargetDataSource" ref="masterDataSource" />
-    </bean>
-
-
-
     <!-- SqlsessionFactory -->
     <bean id="sqlSessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean">
         <!-- 数据源 -->

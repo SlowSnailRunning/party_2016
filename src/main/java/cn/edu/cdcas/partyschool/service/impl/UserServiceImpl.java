@@ -247,18 +247,25 @@ public class UserServiceImpl implements UserService {
     public String isLoginSuccess(String token) throws Exception {
         //判断
         /*  String MD5 = DigestUtils.md5DigestAsHex((ip + token).getBytes());*/
-        if(!"open".equals(this.getCloseOrOpen())) {
-            String[] split = token.split("//");
-            String inRedis = jedisClient.hget("party" + split[1], "party" + split[1]);
-            String MD5 = DigestUtils.md5DigestAsHex((inRedis).getBytes());
-            if (split[0].equals(MD5)) {
-                return split[1];
-            } else {
-                return "-1";
+        String[] split = token.split("//");
+        if (!"open".equals(this.getCloseOrOpen())) {//关闭临时入口
+            if (split.length == 2) {
+                String inRedis = jedisClient.hget("party" + split[1], "party" + split[1]);
+                String MD5 = DigestUtils.md5DigestAsHex((inRedis).getBytes());
+                if (split[0].equals(MD5)) {
+                    return split[1];
+                }
             }
-        }
-        else
+            return "-1";
+        } else//开启临时
         {
+            if (split.length == 2) {
+                String inRedis = jedisClient.hget("party" + split[1], "party" + split[1]);
+                String MD5 = DigestUtils.md5DigestAsHex((inRedis).getBytes());
+                if (split[0].equals(MD5)) {
+                    return split[1];
+                }
+            }
             return token;
         }
 
@@ -609,8 +616,7 @@ public class UserServiceImpl implements UserService {
         return true;
     }
 
-    public String getCloseOrOpen()
-    {
+    public String getCloseOrOpen() {
         return jedisClient.get("closeOrOpen");
     }
 
