@@ -157,7 +157,11 @@
         dataType: "json",
         success: function (res) {
             window.user=res.user;
-            window.exam=res.exam
+            window.exam=res.exam;
+            var totalScore = exam.radioNum*exam.radioScore/*+  user.saqNum * user.saqScore*/+ exam.judgeNum*exam.judgeScore+ exam.fillNum*exam.fillScore;
+            console.log(totalScore);
+            console.log(exam);
+               localStorage.setItem("totalScore",totalScore);
         }
     });
     var layer;

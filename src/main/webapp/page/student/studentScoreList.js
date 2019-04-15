@@ -20,7 +20,7 @@ layui.use(['form', 'layer', 'table'], function () {
             {field: 'idx', title: '序号', width: 86, align: "center"},
             {field: 'name', title: '姓名', width: 100, align: "center"},
             {field: 'studentNo', title: '学号', width: 150, align: 'center'},
-            {field: 'examScore', title: '考11试成绩', width: 86, align: 'center'},
+            {field: 'examScore', title: '考试成绩', width: 86, align: 'center'},
             {field: 'makeUpScore', title: '补考成绩', width: 86, align: 'center'},
             {field: 'partyNumber', title: '党校号', width: 150, align: 'center'},
             {field: 'examStateStr', title: '考试状态', width: 86, align: 'center'},
