@@ -120,7 +120,7 @@ public class DataSourceAspect
     }
 
     /**
-     * xml中DIslave的方法名前缀
+     * xml中Islave的方法名前缀
      * @param slaveMethodStart
      */
     public void setSlaveMethodStart(String[] slaveMethodStart)

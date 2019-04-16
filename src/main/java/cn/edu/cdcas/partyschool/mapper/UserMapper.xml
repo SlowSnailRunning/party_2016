@@ -62,8 +62,7 @@
     <select id="queryMangerCount" resultType="java.lang.Integer">
         select count(*)
         from party_user
-        where type = 'ROOT'
-           or type = 'manger'
+        where type = 'ROOT' or type = 'manger'
     </select>
     <select id="queryStuNums" resultType="java.lang.Integer">
         select count(*)
@@ -74,14 +73,12 @@
             parameterType="java.lang.String">
         select id,student_no studentNo,`name`,sex,`type`
         from party_user
-        where (type = 'ROOT' or type = 'manger')
-          and name like '%${name}%'
+        where (type = 'ROOT' or type = 'manger') and name like '%${name}%'
     </select>
     <select id="queryMangerList" resultType="cn.edu.cdcas.partyschool.model.Manger" parameterType="java.lang.Integer">
         select id,student_no studentNo,`name`,sex,`type`
         from party_user
-        where (type = 'ROOT' or type = 'manger')
-        limit #{page},#{limit}
+        where (type = 'ROOT' or type = 'manger') limit #{page},#{limit}
     </select>
     <select id="queryAll" resultType="cn.edu.cdcas.partyschool.model.User" resultMap="BaseResultMap">
         select *

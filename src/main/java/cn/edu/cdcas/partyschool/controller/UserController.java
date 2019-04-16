@@ -1,13 +1,10 @@
 package cn.edu.cdcas.partyschool.controller;
 
-import cn.edu.cdcas.partyschool.listener.UniqueSession;
 import cn.edu.cdcas.partyschool.model.User;
 import cn.edu.cdcas.partyschool.service.UserService;
 import cn.edu.cdcas.partyschool.util.ExcelUtil;
 import cn.edu.cdcas.partyschool.util.JSONResult;
 import cn.edu.cdcas.partyschool.util.JSONTableResult;
-import cn.edu.cdcas.partyschool.util.impl.JedisClientSingle;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
