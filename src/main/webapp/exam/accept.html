@@ -41,15 +41,18 @@
                                         <b>学号：</b><span id="studentNo">{{studentInfo.studentNo}}</span>
                                     </div>
                                     <div class="span6">
-                                        <b>性别：</b> <span id="sex">{{studentInfo.sex}}</span>
+                                        <b>姓名：</b> <span id="name">{{studentInfo.name}}</span>
                                     </div>
+                                   <!-- <div class="span6">
+                                        <b>性别：</b> <span id="sex">{{studentInfo.sex}}</span>
+                                    </div>-->
                                 </div>
                                 <div class="row-fluid">
                                     <div class="span6">
-                                        <b>姓名：</b> <span id="name">{{studentInfo.name}}</span>
+                                        <b>班级：</b> <span id="clazz">{{studentInfo.clazz}}</span>
                                     </div>
                                     <div class="span6">
-                                        <b>班级：</b> <span id="clazz">{{studentInfo.clazz}}</span>
+                                        <b>专业：</b><span id="major">{{studentInfo.major}}</span>
                                     </div>
                                 </div>
                                 <div class="row-fluid">
@@ -57,7 +60,7 @@
                                         <b>年级：</b><span id="grade">{{studentInfo.grade}}</span>
                                     </div>
                                     <div class="span6">
-                                        <b>专业：</b><span id="major">{{studentInfo.major}}</span>
+                                        <b>优秀学员：</b><span id="excellent">{{studentInfo.excellent}}</span>
                                     </div>
                                 </div>
                                 <!--    <div class="row-fluid">
@@ -74,9 +77,7 @@
                                     <div class="span6">
                                         <b>是否毕业：</b><span id="graduated">{{studentInfo.graduated}}</span>
                                     </div>
-                                    <div class="span6">
-                                        <b>优秀学员：</b><span id="excellent">{{studentInfo.excellent}}</span>
-                                    </div>
+
                                 </div>
                                 <div class="row-fluid">
                                     <!-- <div class="span12">
@@ -106,10 +107,10 @@
                                 <div class="row-fluid">
                                     <div class="span12">
                                         <b>1.考试时间：{{examInfo.examTime}}分钟。<br/>
-                                            2.考试题型：单选题（{{examInfo.radioScore}}分*{{examInfo.radioNum}}题）、多选题（{{examInfo.saqScore==null?0:examInfo.saqScore}}分*{{examInfo.saqNum==null?0:examInfo.saqNum}}题）、判断题
-                                            （{{examInfo.judgeScore}}分*{{examInfo.judgeNum}}题）、填空题（{{examInfo.fillScore}}分*{{examInfo.fillNum}}题）及格线（{{examInfo.passScore}}分）。<br/>3.中途退出考试的作为放弃考试处理。考试完成后确认交卷成功后，即可看到考试成绩。<br/>4.提前交卷未成功
-                                            的，请等待考试时间结束，系统自动交卷，并不要连续点击交卷按钮。<br/>以上事项有不清楚的地方和网上考试期间登录有问题，
-                                            请与监考老师联系。</b><br/> <br/>
+                                            2.考试题型：单选题（{{examInfo.radioScore}}分*{{examInfo.radioNum}}题）、多选题（{{examInfo.checkScore==null?0:examInfo.checkScore}}分*{{examInfo.checkNum==null?0:examInfo.checkNum}}题）、判断题
+                                            （{{examInfo.judgeScore}}分*{{examInfo.judgeNum}}题）、填空题（{{examInfo.fillScore}}分*{{examInfo.fillNum}}题）及格线（{{examInfo.passScore}}分）。<br/>
+                                            3.考试途中，若浏览器关闭或电脑关机，请及时重新登录该系统继续作答。<br/>
+                                            以上事项有不清楚的地方和网上考试期间登录有问题,请与监考老师联系。</b><br/> <br/>
                                     </div>
                                 </div>
 
