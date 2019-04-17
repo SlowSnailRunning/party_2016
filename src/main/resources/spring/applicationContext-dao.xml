@@ -17,7 +17,7 @@
     <context:property-placeholder location="classpath:db.properties"/>
 
     <!-- 从库 -->
-    <bean id="slave01DataSource" class="com.alibaba.druid.pool.DruidDataSource" destroy-method="close" init-method="init" lazy-init="true">
+    <bean id="slave01DataSource" class="com.alibaba.druid.pool.DruidDataSource" destroy-method="close" init-method="init" >
         <property name="driverClassName" value="${jdbc.driverClassName}"/>
         <property name="url" value="${jdbc.urlSlave}"/>
         <property name="username" value="${jdbc.usernameSlave}"/>
@@ -26,7 +26,7 @@
         <property name="defaultReadOnly" value="true"/>
     </bean>
     <!--主库-->
-    <bean id="masterDataSource" class="com.alibaba.druid.pool.DruidDataSource" destroy-method="close" init-method="init" lazy-init="true">
+    <bean id="masterDataSource" class="com.alibaba.druid.pool.DruidDataSource" destroy-method="close" init-method="init" >
         <property name="driverClassName" value="${jdbc.driverClassName}"/>
         <property name="url" value="${jdbc.urlMaster}"/>
         <property name="username" value="${jdbc.usernameMaster}"/>
