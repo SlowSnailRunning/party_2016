@@ -289,7 +289,7 @@
     <div class="container-fluid logfooter">
         <ul class="inline unstyled" style="background-color: white;">
             <!--  <li><a href="http://phpems.net">成都文理学院党校</a></li>-->
-            <li><a href="#">成都文理学院党校</a></li>
+            <li><a id="about" href="#">成都文理学院党校</a></li>
         </ul>
     </div>
 </div>
@@ -346,7 +346,7 @@
                 $(".name").text(name);
                 $(".grade").text(grade);
                 $(".major").text(major);
-                $(".total-score").text(localStorage.getItem("totalScore"));
+                $(".total-score").text(msg.totalScore);
                 //获取考试题型以及题量
                 var danTotal = msg.danTotal;
                 var duoTotal = msg.duoTotal;
@@ -840,7 +840,21 @@
 </script>
 
 <script language="javascript">
+    $("#about").click(function () {
+        layer.open({
+            type: 2,
+            title: "关于开发团队",
+            shadeClose: true,
 
+            shade: [0.8, '#393D49'],
+            shadeClose: false, //开启遮罩关闭
+            maxmin: false, //开启最大化最小化按钮
+            area: ['800px', '530px'],
+            content: projectName+'/about.html'
+            // });
+            //   }
+        });
+    });
     if(localStorage.getItem("openOrClose")==1){
         document.body.style.userSelect="text"
     }

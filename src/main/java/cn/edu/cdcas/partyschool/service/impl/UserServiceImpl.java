@@ -350,6 +350,12 @@ public class UserServiceImpl implements UserService {
                     break;
             }
         }
+
+        float totalScore = exam.getRadioNum() == null ? 0 : exam.getRadioNum() * exam.getRadioScore();
+        totalScore += exam.getCheckNum() == null ? 0 : exam.getCheckNum() * exam.getCheckScore();
+        totalScore += exam.getJudgeNum() == null ? 0 : exam.getJudgeNum() * exam.getJudgeScore();
+        totalScore += exam.getFillNum() == null ? 0 : exam.getFillNum() * exam.getFillScore();
+        requiredQuestionAndOther.put("totalScore",totalScore);
         //题目放入到map
         requiredQuestionAndOther.put("msg", "success");
         requiredQuestionAndOther.put("status", "200");
