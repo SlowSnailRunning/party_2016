@@ -64,6 +64,7 @@
                                 "login.do",
                                 {"token": account},
                                 function (res) {
+                                    console.log(res)
                                     if (res == "jsonCallBackTest(10)") {
                                      window.location.href="loginSuccess.do?token="+account;
                                     } else {
