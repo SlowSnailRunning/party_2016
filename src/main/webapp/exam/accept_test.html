@@ -1,0 +1,41 @@
+<!DOCTYPE>
+<html>
+<head>
+    <meta name="renderer" content="webkit|ie-comp|ie-stand">
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge,chrome=1">
+    <title>成都文理学院思想政治理论水平在线测试</title>
+    <link rel="shortcut icon" href="../images/favicon.ico">
+    <link href="css/bootstrap.min.css" rel="stylesheet"
+          type="text/css"/>
+    <link href="css/theme.css" rel="stylesheet"
+          type="text/css"/>
+    <script src="../js/vue2.6.9.min.js"></script>
+    <!--<script src="https://unpkg.com/axios/dist/axios.min.js"></script>-->
+    <script src="../js/jquery-3.3.1.js"></script>
+    <style>
+        .btn:hover {
+            /* cursor: not-allowed !important; */
+        }
+    </style>
+</head>
+<script src="../layui/layui.js"></script>
+<script type="text/javascript">
+    $.ajax({
+        type: "GET",
+        url: projectName + "/examinee/examAndStuInfo.do",
+        async: false,
+        dataType: "json",
+        success: function (res) {
+            window.user = res.user;
+            window.exam = res.exam;
+            var totalScore = exam.radioNum * exam.radioScore/*+  user.saqNum * user.saqScore*/ + exam.judgeNum * exam.judgeScore + exam.fillNum * exam.fillScore;
+            console.log(totalScore);
+            console.log(exam);
+            localStorage.setItem("totalScore", totalScore);
+            window.location.href = "exam.html";
+        }
+    });
+</script>
+</body>
+</html>

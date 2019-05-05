@@ -46,12 +46,12 @@
         var validate = $("#validate").val();
 
         switch (true) {
-            case account == null || account == "":
-                    layer.msg('账号不能为空！');
-                break;
-            case validate == null || validate == "":
-                    layer.msg('验证码不能为空！')
-                break;
+            // case account == null || account == "":
+            //         layer.msg('账号不能为空！');
+            //     break;
+            // case validate == null || validate == "":
+            //         layer.msg('验证码不能为空！')
+            //     break;
             default:
                 $.post(
                     "validate.do",

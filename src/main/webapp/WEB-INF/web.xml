@@ -11,8 +11,8 @@
     <session-config>
         <session-timeout>40</session-timeout>
     </session-config>
-
-
+    <!--集群session共享-->
+    <distributable/>
     <!-- spring容器 -->
     <context-param>
         <param-name>contextConfigLocation</param-name>
