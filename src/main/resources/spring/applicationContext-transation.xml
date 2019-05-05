@@ -6,9 +6,6 @@
 		http://www.springframework.org/schema/aop
 		http://www.springframework.org/schema/aop/spring-aop-3.2.xsd http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx.xsd">
 
-
-	<!-- 使用声明式事务配置，可以有效规范代码 -->
-
 	<!-- 事务管理器 -->
 	<bean id="transactionManager" class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
 		<property name="dataSource" ref="dataSource" />
@@ -34,11 +31,6 @@
 		</tx:attributes>
 	</tx:advice>
 
-	<!-- aop aspect（poincut+advice）  切面（切入点+通知）（） -->
-	<aop:config>
-		<!-- crm.service.*.*(..) ： service里所有  类 下的所有  方法 的所有  参数 个数 -->
-		<!--<aop:advisor advice-ref="txAdvice" pointcut="execution(* cn.edu.cdcas.partyschool.service.*.*(..))" />-->
-	</aop:config>
 
 	<!-- 主从数据库配置  part2 start -->
 	<!-- 配置数据库注解aop  aop aspect（poincut+advice）  切面（切入点+通知）（） -->
@@ -54,6 +46,7 @@
 	</bean>
 	<!-- 配置xml事务 切面 -->
 	<aop:config expose-proxy="true">
+
 		<aop:pointcut id="txPointcut" expression="execution(* cn.edu.cdcas.partyschool.service..*.*(..))" />
 		<aop:advisor advice-ref="txAdvice" pointcut-ref="txPointcut"/>
 

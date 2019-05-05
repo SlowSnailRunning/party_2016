@@ -24,6 +24,11 @@
         <property name="password" value="${jdbc.passwordSlave}"/>
         <!--读库必须开启只读-->
         <property name="defaultReadOnly" value="true"/>
+        <!--该方法依然无法解决自动停止的问题-->
+        <!--主动关闭长时间不使用的连接-->
+        <!--<property name="removeAbandoned" value="true" /> --><!-- 打开removeAbandoned功能 -->
+        <!--<property name="removeAbandonedTimeout" value="1800" />--> <!-- 1800秒，也就是30分钟 -->
+        <!--<property name="logAbandoned" value="true" /> --><!-- 关闭abanded连接时输出错误日志 -->
     </bean>
     <!--主库-->
     <bean id="masterDataSource" class="com.alibaba.druid.pool.DruidDataSource" destroy-method="close" init-method="init" >
@@ -46,8 +51,6 @@
         <property name="defaultTargetDataSource" ref="masterDataSource" />
     </bean>
 
-
-
     <!-- SqlsessionFactory -->
     <bean id="sqlSessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean">
         <!-- 数据源 -->
@@ -56,7 +59,6 @@
         <property name="configLocation" value="classpath:mybatis/SqlMapConfig.xml"/>
         <property name="mapperLocations" value="classpath:cn/edu/cdcas/partyschool/mapper/*.xml"/>
     </bean>
-
 
     <!--
     MapperScannerConfigurer：mapper的扫描器，将包下边的mapper接口自动创建代理对象，
@@ -72,7 +74,6 @@
         <property name="sqlSessionFactoryBeanName" value="sqlSessionFactory"/>
     </bean>
 
-
     <!--jedis,单机-->
     <bean id="jedisSingle" class="redis.clients.jedis.JedisPool">
         <constructor-arg index="0" ref="jedisPoolConfig"/>
@@ -80,7 +81,6 @@
         <constructor-arg index="2" value="${redis.port}" type="int"/>
         <constructor-arg index="3" value="${redis.timeout}" type="int"/>
         <constructor-arg index="4" value="${redis.pwd}"/>
-
     </bean>
 
     <bean id="jedisPoolConfig" class="redis.clients.jedis.JedisPoolConfig">
@@ -89,18 +89,6 @@
         <property name="testOnBorrow" value="true"/><!--当调用borrow Oject方法时，是否进行有效性检查-->
     </bean>
 
-
     <!--jedis工具-->
     <bean id="jedisSingleUtil" class="cn.edu.cdcas.partyschool.util.impl.JedisClientSingle"/>
-    <bean id="contextMap" class="java.util.HashMap"/>
-
-
-    <!--	spring存储session到redis需要的bean
-    <bean class="org.springframework.session.data.redis.config.annotation.web.http.RedisHttpSessionConfiguration">
-
-        </bean>
-        <bean class="org.springframework.data.redis.connection.jedis.JedisConnectionFactory">
-            <property name="hostName" value="${redis.host}" />
-            <property name="port" value="${redis.port}" />
-        </bean>-->
 </beans>
